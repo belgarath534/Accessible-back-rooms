@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.3**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.4**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.4**: 3D sound, endless mode, two new levels (Electrical Station, Thalassophobia), eight tapes and a secret ending, markers, achievements.
 - **0.3**: main and pause menus, settings, seven levels, new monsters and items, difficulty modes, checkpoints, Portuguese language.
 - **0.2**: recorded sounds and music, jump scares, blackouts, choice of voice or buttons.
 - **0.1**: first version, three levels, voice commands, spoken narration and screen reader support.
@@ -36,7 +37,7 @@ Opening `index.html` directly from disk will not load the audio files in most br
 
 ## Credits
 
-Music by Kevin MacLeod (incompetech.com): "Dark Hallway", "Unseen Horrors", "Dark Fog", "Penumbra", "Gathering Darkness", "Lightless Dawn", "Long Note Four" and "Echoes of Time v2". Licensed under Creative Commons: By Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/).
+Music by Kevin MacLeod (incompetech.com): "Dark Hallway", "Unseen Horrors", "Dark Fog", "Penumbra", "Gathering Darkness", "Lightless Dawn", "Long Note Four", "Echoes of Time v2", "Spider Eyes" and "Ossuary 6 - Air". Licensed under Creative Commons: By Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/).
 
 Sound effects from OpenGameArt.org:
 
@@ -48,3 +49,9 @@ Sound effects from OpenGameArt.org:
 The audio files were trimmed, converted to mono MP3 and loudness-normalized for the game. The files adapted from CC BY-SA sources (`impact.mp3`, `sting.mp3`, `riser.mp3`) are shared under the same licenses as their originals.
 
 Inspired by the Backrooms, a shared internet legend, and the community wiki that grew around it.
+
+## Voice acting
+
+The game plays recorded voice lines when they exist, and falls back to the device's text-to-speech when they do not. Put MP3 files in `www/audio/voice/en/` and `www/audio/voice/pt/` and list them in `www/audio/voice/manifest.json`, for example `{"en":["tape1","tape2"],"pt":["tape1"]}`.
+
+Line ids: `tape1` to `tape8`, `lure1` to `lure5` (Skin-Stealer), `radio1` to `radio3`, `whisper1` to `whisper5`, `marcus1` to `marcus4` and `marcusFound`.

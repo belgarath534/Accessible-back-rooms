@@ -97,9 +97,11 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       <p class="subtitle"><span data-l="en">Main menu</span><span data-l="pt">Menu principal</span></p>
       <div class="stack">
         <button id="mPlay" class="primary"><span data-l="en">Play</span><span data-l="pt">Jogar</span></button>
+        <button id="mEndless"><span data-l="en">Endless mode</span><span data-l="pt">Modo infinito</span></button>
         <button id="mContinue" hidden><span data-l="en">Continue from checkpoint</span><span data-l="pt">Continuar do checkpoint</span></button>
         <button id="mSettings"><span data-l="en">Settings</span><span data-l="pt">Configurações</span></button>
         <button id="mHowto"><span data-l="en">How to play</span><span data-l="pt">Como jogar</span></button>
+        <button id="mAch"><span data-l="en">Achievements</span><span data-l="pt">Conquistas</span></button>
         <button id="mNews"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></button>
         <button id="mCredits"><span data-l="en">Credits</span><span data-l="pt">Créditos</span></button>
       </div>
@@ -172,7 +174,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="howto" class="screen" hidden aria-labelledby="howTitle">
     <h1 id="howTitle" tabindex="-1"><span data-l="en">How to play</span><span data-l="pt">Como jogar</span></h1>
     <div data-l="en">
-      <p>You have noclipped out of reality into the Backrooms. Find the exit on each of seven levels before your sanity runs out. Every step costs a little sanity. Monsters cost a lot. Your progress is saved at the start of every level.</p>
+      <p>You have noclipped out of reality into the Backrooms. Find the exit on each of nine levels before your sanity runs out. Every step costs a little sanity. Monsters cost a lot. Your progress is saved at the start of every level.</p>
       <p>Everything is spoken and played as sound. Headphones help: sounds come from the left or right to show where things are.</p>
       <h2>Moving</h2>
       <ul>
@@ -192,13 +194,16 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
         <li><b>Talk</b>: speak to a Faceling when one is next to you.</li>
         <li><b>Radio</b>: the walkie-talkie static gets stronger near the exit.</li>
         <li><b>Tape</b>: replay the last tape you found.</li>
+        <li><b>Mark</b>: scratch a mark where you stand. <b>Find mark</b>: hear the way back to it.</li>
         <li><b>Status</b>, <b>repeat</b>, <b>help</b>. <b>Pause</b> opens the pause menu, where you can resume, restart the level, or <b>quit to main menu</b>.</li>
       </ul>
+      <h2>Endless mode</h2>
+      <p>Random Backrooms levels that never end. Each level is bigger and more crowded than the last. How deep can you go?</p>
       <h2>Keyboard</h2>
-      <p>Arrows walk. Shift plus left or right arrow turns. Shift plus up arrow sprints. L listen, K look, B hide, D drink, F flashlight, T throw, N sneak, G talk, O radio, P tape, S status, R repeat, H help, M microphone, Escape pauses and resumes.</p>
+      <p>X mark, C find mark. Arrows walk. Shift plus left or right arrow turns. Shift plus up arrow sprints. L listen, K look, B hide, D drink, F flashlight, T throw, N sneak, G talk, O radio, P tape, S status, R repeat, H help, M microphone, Escape pauses and resumes.</p>
     </div>
     <div data-l="pt">
-      <p>Você atravessou a realidade e caiu nos Backrooms. Encontre a saída de cada um dos sete níveis antes que sua sanidade acabe. Cada passo custa um pouco de sanidade. Monstros custam muito. Seu progresso é salvo no começo de cada nível.</p>
+      <p>Você atravessou a realidade e caiu nos Backrooms. Encontre a saída de cada um dos nove níveis antes que sua sanidade acabe. Cada passo custa um pouco de sanidade. Monstros custam muito. Seu progresso é salvo no começo de cada nível.</p>
       <p>Tudo é falado e tocado como som. Fones de ouvido ajudam: os sons vêm da esquerda ou da direita para mostrar onde as coisas estão.</p>
       <h2>Movimento</h2>
       <ul>
@@ -218,10 +223,13 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
         <li><b>Falar</b>: conversar com um Sem-Rosto quando houver um do seu lado.</li>
         <li><b>Rádio</b>: a estática do walkie-talkie fica mais forte perto da saída.</li>
         <li><b>Fita</b>: ouvir de novo a última fita encontrada.</li>
+        <li><b>Marcar</b>: deixar uma marca onde você está. <b>Achar marca</b>: ouvir o caminho de volta até ela.</li>
         <li><b>Status</b>, <b>repetir</b>, <b>ajuda</b>. <b>Pausa</b> abre o menu de pausa, onde você pode retomar, reiniciar o nível ou <b>sair para o menu principal</b>.</li>
       </ul>
+      <h2>Modo infinito</h2>
+      <p>Níveis aleatórios dos Backrooms que nunca acabam. Cada nível é maior e mais cheio que o anterior. Até onde você consegue descer?</p>
       <h2>Teclado</h2>
-      <p>Setas andam. Shift com seta esquerda ou direita gira. Shift com seta para cima corre. L escutar, K olhar, B esconder, D beber, F lanterna, T bombinha, N agachar, G falar, O rádio, P fita, S status, R repetir, H ajuda, M microfone, Esc pausa e retoma.</p>
+      <p>X marcar, C achar marca. Setas andam. Shift com seta esquerda ou direita gira. Shift com seta para cima corre. L escutar, K olhar, B esconder, D beber, F lanterna, T bombinha, N agachar, G falar, O rádio, P fita, S status, R repetir, H ajuda, M microfone, Esc pausa e retoma.</p>
     </div>
     <div class="stack"><button class="backBtn primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
   </section>
@@ -230,6 +238,15 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.4: the endless update</h2>
+      <ul>
+        <li>3D sound: with headphones, you hear things in front of you, behind you, above you in the vents and below you in the water.</li>
+        <li>Endless mode: random levels that never end. How deep can you go?</li>
+        <li>Two new levels: the Electrical Station, with live wires, and Thalassophobia, where something lives in the water.</li>
+        <li>Two new tapes, eight in all. Find every tape for a secret ending.</li>
+        <li>Markers: leave a mark and find your way back to it.</li>
+        <li>Achievements.</li>
+      </ul>
       <h2>Version 0.3: the big update</h2>
       <ul>
         <li>Main menu with its own music, a pause menu, settings, how to play, and credits.</li>
@@ -252,6 +269,15 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.4: a atualização infinita</h2>
+      <ul>
+        <li>Som 3D: com fones de ouvido, você ouve coisas na sua frente, atrás de você, acima de você nos dutos e abaixo de você na água.</li>
+        <li>Modo infinito: níveis aleatórios que nunca acabam. Até onde você consegue descer?</li>
+        <li>Dois níveis novos: a Estação Elétrica, com fios desencapados, e Talassofobia, onde algo vive na água.</li>
+        <li>Duas fitas novas, oito no total. Encontre todas para um final secreto.</li>
+        <li>Marcas: deixe uma marca e encontre o caminho de volta até ela.</li>
+        <li>Conquistas.</li>
+      </ul>
       <h2>Versão 0.3: a grande atualização</h2>
       <ul>
         <li>Menu principal com música própria, menu de pausa, configurações, como jogar e créditos.</li>
@@ -276,13 +302,21 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
     <div class="stack"><button class="backBtn primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
   </section>
 
+  <!-- ============ ACHIEVEMENTS ============ -->
+  <section id="ach" class="screen" hidden aria-labelledby="achTitle">
+    <h1 id="achTitle" tabindex="-1"><span data-l="en">Achievements</span><span data-l="pt">Conquistas</span></h1>
+    <p id="achCount"></p>
+    <ul id="achList" class="stats"></ul>
+    <div class="stack"><button class="backBtn primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
+  </section>
+
   <!-- ============ CREDITS ============ -->
   <section id="credits" class="screen credits" hidden aria-labelledby="credTitle">
     <h1 id="credTitle" tabindex="-1"><span data-l="en">Credits</span><span data-l="pt">Créditos</span></h1>
     <p data-l="en"><b>Accessible Backrooms</b>, designed and built with Claude Code. Inspired by the Backrooms, a shared internet legend, and the community wiki that grew around it.</p>
     <p data-l="pt"><b>Backrooms Acessível</b>, criado e construído com o Claude Code. Inspirado nos Backrooms, uma lenda compartilhada da internet, e na wiki da comunidade que cresceu em volta dela.</p>
     <h2><span data-l="en">Music</span><span data-l="pt">Música</span></h2>
-    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four”, “Echoes of Time v2”. <span data-l="en">Licensed under</span><span data-l="pt">Licença</span> <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
+    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four”, “Echoes of Time v2”, “Spider Eyes”, “Ossuary 6 - Air”. <span data-l="en">Licensed under</span><span data-l="pt">Licença</span> <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
     <h2><span data-l="en">Sound effects</span><span data-l="pt">Efeitos sonoros</span></h2>
     <p>“Female Screams”, congusbongus, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
     <p>“Long deep impact”, ROHHSA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
@@ -294,7 +328,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
   <!-- ============ END / STATS ============ -->
   <section id="end" class="screen" hidden aria-labelledby="endTitle">
-    <h1 id="endTitle" class="title" tabindex="-1"><span data-l="en">YOU ESCAPED</span><span data-l="pt">VOCÊ ESCAPOU</span></h1>
+    <h1 id="endTitle" class="title" tabindex="-1"></h1>
     <ul class="stats" id="statsList"></ul>
     <div class="stack">
       <button id="endAgain" class="primary"><span data-l="en">Play again</span><span data-l="pt">Jogar de novo</span></button>
@@ -328,6 +362,8 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       <button data-cmd="throw"><span data-l="en">Throw firecracker</span><span data-l="pt">Atirar bombinha</span></button>
       <button data-cmd="sprint"><span data-l="en">Sprint forward</span><span data-l="pt">Correr</span></button>
       <button data-cmd="sneak" id="sneakBtn" aria-pressed="false"><span data-l="en">Sneak</span><span data-l="pt">Agachar</span></button>
+      <button data-cmd="mark"><span data-l="en">Drop mark</span><span data-l="pt">Marcar</span></button>
+      <button data-cmd="findmark"><span data-l="en">Find mark</span><span data-l="pt">Achar marca</span></button>
       <button data-cmd="talk"><span data-l="en">Talk</span><span data-l="pt">Falar</span></button>
       <button data-cmd="radio"><span data-l="en">Radio</span><span data-l="pt">Rádio</span></button>
       <button data-cmd="tape"><span data-l="en">Replay tape</span><span data-l="pt">Ouvir fita</span></button>
@@ -347,7 +383,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
 <script>
 "use strict";
-const VERSION='0.3';
+const VERSION='0.4';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -384,7 +420,7 @@ const PT={
  'How to play. Say back to return.':'Como jogar. Diga voltar para sair.',
  'What is new. Version {v}. Say back to return.':'Novidades. Versão {v}. Diga voltar para sair.',
  'You are in the main menu. Say play, continue, settings, how to play, or credits.':'Você está no menu principal. Diga jogar, continuar, configurações, como jogar ou créditos.',
- 'Say play, continue, settings, how to play, what is new, or credits.':'Diga jogar, continuar, configurações, como jogar, novidades ou créditos.',
+ 'Say play, continue, endless mode, settings, how to play, achievements, what is new, or credits.':'Diga jogar, continuar, modo infinito, configurações, como jogar, conquistas, novidades ou créditos.',
  'Say resume, restart level, settings, how to play, or quit to main menu.':'Diga retomar, reiniciar nível, configurações, como jogar ou sair para o menu principal.',
  'Say back to return to the menu.':'Diga voltar para ir ao menu.',
  'There is nothing to resume.':'Não há nada para retomar.',
@@ -512,7 +548,7 @@ const PT={
  'Flashlight on, battery {n} percent.':'Lanterna ligada, pilha em {n} por cento.','Flashlight off, battery {n} percent.':'Lanterna desligada, pilha em {n} por cento.',
  'A battery, but no flashlight.':'Uma pilha, mas nenhuma lanterna.','You have a walkie-talkie.':'Você tem um walkie-talkie.','You have the keycard.':'Você tem o cartão de acesso.','You need the keycard.':'Você precisa do cartão de acesso.',
  'Tapes found: {n} of 6.':'Fitas encontradas: {n} de 6.','You are sneaking.':'Você está agachado.','Facing {d}. Difficulty: {diff}.':'Virado para o {d}. Dificuldade: {diff}.',
- 'Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Talk to Facelings. Radio to check the static. Tape to replay a tape. Also status, repeat, faster, slower, and pause.':'Diga frente, esquerda, direita ou trás para andar. Virar à esquerda, virar à direita ou meia volta. Correr para avançar duas salas. Agachar para andar em silêncio. Escutar para achar a saída. Olhar em volta. Esconder quando algo estiver perto. Beber água de amêndoa. Lanterna para a luz. Bombinha para atrair os monstros. Falar com os Sem-Rosto. Rádio para ouvir a estática. Fita para ouvir uma fita de novo. Também: status, repetir, mais rápido, mais devagar e pausa.',
+ 'Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Talk to Facelings. Radio to check the static. Tape to replay a tape. Mark to leave a mark, and find mark to hear the way back. Also status, repeat, faster, slower, and pause.':'Diga frente, esquerda, direita ou trás para andar. Virar à esquerda, virar à direita ou meia volta. Correr para avançar duas salas. Agachar para andar em silêncio. Escutar para achar a saída. Olhar em volta. Esconder quando algo estiver perto. Beber água de amêndoa. Lanterna para a luz. Bombinha para atrair os monstros. Falar com os Sem-Rosto. Rádio para ouvir a estática. Fita para ouvir uma fita de novo. Marcar para deixar uma marca, e achar marca para ouvir o caminho de volta. Também: status, repetir, mais rápido, mais devagar e pausa.',
  'You lost your mind. Say try again, or menu.':'Você enlouqueceu. Diga tentar de novo, ou menu.','The game is paused. Say resume.':'O jogo está pausado. Diga retomar.','Say play to start a new game.':'Diga jogar para começar um novo jogo.',
  '{m} minutes and {s} seconds':'{m} minutos e {s} segundos',
  'Difficulty':'Dificuldade','Time':'Tempo','Steps':'Passos','Times you lost your mind':'Vezes que você enlouqueceu','Tapes found':'Fitas encontradas','{n} of 6':'{n} de 6',
@@ -525,7 +561,30 @@ const PT={
  'Nothing to repeat yet.':'Nada para repetir ainda.',
  'You are already in the Backrooms. Say pause to stop.':'Você já está nos Backrooms. Diga pausa para parar.',
  'You can change difficulty from the settings.':'Você pode mudar a dificuldade nas configurações.',
- 'YOU ESCAPED':'VOCÊ ESCAPOU','YOU LOST YOUR MIND':'VOCÊ ENLOUQUECEU'
+ 'YOU ESCAPED':'VOCÊ ESCAPOU','YOU LOST YOUR MIND':'VOCÊ ENLOUQUECEU',
+ 'endless mode':'modo infinito',
+ 'The water explodes. Something huge drags you under, then lets you go. You crawl out, coughing.':'A água explode. Algo enorme puxa você para o fundo, depois solta. Você se arrasta para fora, tossindo.','achievements':'conquistas','Depth':'Profundidade',
+ 'Marcus is very close now, {w}. You can hear him breathing.':'Marcus está muito perto agora, {w}. Você consegue ouvir a respiração dele.',
+ 'ZAP! You walk straight into a live wire. You lose {n} sanity.':'ZAP! Você esbarra num fio desencapado. Você perde {n} de sanidade.',
+ 'You step into cold, black water.':'Você pisa numa água negra e gelada.','You climb out of the water.':'Você sai da água.',
+ 'You are back at your mark.':'Você voltou para a sua marca.','{n} of {total}':'{n} de {total}',
+ 'You feel yourself falling deeper.':'Você sente que está caindo mais fundo.','Depth {n}.':'Profundidade {n}.',
+ 'SECRET ENDING':'FINAL SECRETO','THE BACKROOMS WIN':'OS BACKROOMS VENCERAM','Depth reached':'Profundidade alcançada','Best depth':'Melhor profundidade',
+ 'You find him sitting against the wall, holding a tape recorder. He looks up at you.':'Você o encontra sentado encostado na parede, segurando um gravador. Ele olha para você.',
+ 'He takes your hand. Together you walk toward a door that was never there before. Daylight. Real daylight. Behind you, the hum stops, for good. Secret ending: you brought Marcus home.':'Ele segura sua mão. Juntos, vocês caminham até uma porta que nunca esteve ali. Luz do dia. Luz do dia de verdade. Atrás de vocês, o zumbido para, para sempre. Final secreto: você levou Marcus para casa.',
+ 'Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
+ 'You found {n} of {total} tapes. Some say that with all of them, the daylight is not the real ending.':'Você encontrou {n} de {total} fitas. Dizem que, com todas elas, a luz do dia não é o final de verdade.',
+ 'Your sanity hits zero. The Backrooms swallow you at depth {n}.':'Sua sanidade chega a zero. Os Backrooms engolem você na profundidade {n}.',
+ 'You scratch a mark into the wall. Say find mark to hear your way back to it.':'Você risca uma marca na parede. Diga achar marca para ouvir o caminho de volta até ela.',
+ 'You have not left a mark on this level. Say mark to leave one.':'Você não deixou nenhuma marca neste nível. Diga marcar para deixar uma.',
+ 'You are standing at your mark.':'Você está em cima da sua marca.',
+ 'Your mark is {route}, about {n} steps away.':'Sua marca fica {route}, a uns {n} passos.',
+ 'Sparks crackle {dirs}.':'Faíscas estalam: {dirs}.',
+ 'Somewhere {w}, a tired voice calls:':'Em algum lugar {w}, uma voz cansada chama:',
+ 'Endless mode. The Backrooms go on forever. How deep can you go? Your best is depth {b}.':'Modo infinito. Os Backrooms não acabam nunca. Até onde você consegue descer? Seu recorde é a profundidade {b}.',
+ 'Achievement unlocked: {name}.':'Conquista desbloqueada: {name}.','Secret achievement':'Conquista secreta','(locked)':'(bloqueada)',
+ '{n} of {total} unlocked.':'{n} de {total} desbloqueadas.','Achievements. {n} of {total} unlocked.':'Conquistas. {n} de {total} desbloqueadas.','Say back to return.':'Diga voltar para sair.',
+ 'Endless mode, depth {n}.':'Modo infinito, profundidade {n}.','Tapes found: {n} of {total}.':'Fitas encontradas: {n} de {total}.'
 };
 function t(s,v){let r=(LANG==='pt'&&PT[s]!==undefined)?PT[s]:s;if(v)r=r.replace(/\{(\w+)\}/g,(m,k)=>v[k]!==undefined?v[k]:m);return r;}
 const DIRN=i=>t(['north','east','south','west'][i]);
@@ -558,20 +617,24 @@ const MT={
   party:{name:'a Partygoer',sound:'giggling and a party horn',pt:{name:'um Festeiro',sound:'risadinhas e uma língua de sogra'},sfx:['giggle','cackle','laughter'],sense:6,chase:0.72,hostile:true},
   moths:{name:'a swarm of Deathmoths',sound:'the flutter of hundreds of wings',pt:{name:'um enxame de Mariposas da Morte',sound:'o bater de centenas de asas'},sfx:null,sense:7,chase:0.8,hostile:false},
   face:{name:'a Faceling',sound:'soft, tuneless humming',pt:{name:'um Sem-Rosto',sound:'um cantarolar baixo e sem melodia'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
+  deep:{name:'the Thing in the Water',sound:'a deep, rumbling song',pt:{name:'a Coisa na Água',sound:'um canto grave e retumbante'},sfx:null,sense:6,chase:0.6,hostile:true},
+  marcus:{name:'Marcus',sound:'a tired voice',pt:{name:'Marcus',sound:'uma voz cansada'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   chaser:{name:'something enormous',sound:'thundering footsteps',pt:{name:'algo enorme',sound:'passos estrondosos'},sfx:['growl4','attack','attack2'],sense:99,chase:0.72,hostile:true}
 };
 const MN=m=>LANG==='pt'?MT[m.type].pt.name:MT[m.type].name;
 const MS=m=>LANG==='pt'?MT[m.type].pt.sound:MT[m.type].sound;
 const LURES={en:['Hey! Over here! I found the exit!','Help me! Please, I am stuck!','It is okay. It is safe this way.','Wait for me! Do not leave me here!','Is someone there? Come closer, I cannot see.'],
   pt:['Ei! Aqui! Achei a saída!','Me ajuda! Por favor, estou preso!','Está tudo bem. Por aqui é seguro.','Espera por mim! Não me deixa aqui!','Tem alguém aí? Chega mais perto, eu não consigo ver.']};
-const WHISPERS={en:['turn around','you can not leave','it sees you','stay with us','behind you','wrong way','you were never here'],pt:['vire-se','você não pode sair','ele vê você','fique com a gente','atrás de você','caminho errado','você nunca esteve aqui']};
+const WHISPERS={en:['turn around','it sees you','stay with us','behind you','you were never here'],pt:['vire-se','ele vê você','fique com a gente','atrás de você','você nunca esteve aqui']};
+const MARCUS={en:['Hello? Is someone there?','Over here. Please, follow my voice.','It is really me this time. I promise.','I can hear your footsteps. Keep going.'],pt:['Olá? Tem alguém aí?','Aqui. Por favor, siga a minha voz.','Desta vez sou eu de verdade. Eu prometo.','Consigo ouvir seus passos. Continue.']};
+const MARCUS_FOUND={en:'You found me. You actually found me. I thought I would be here forever. Come on. Let us go home.',pt:'Você me encontrou. Você me encontrou mesmo. Achei que ficaria aqui para sempre. Vamos. Vamos para casa.'};
 const RADIOV={en:['Is anyone out there?','Come find me.','I can hear you breathing.'],pt:['Tem alguém aí?','Venha me encontrar.','Eu consigo ouvir você respirando.']};
 
 /* ============================== levels ============================== */
 const LEVELS=[
  { name:'Level 0, The Lobby', short:'0', w:7,h:7, loops:0.16, mons:['howler'], dark:0, lights:true,
    items:{water:3,fire:1,tape:1},
-   wall:[50,55,58], floor:[42,35,30], ceil:[52,45,74], amb:'hum', music:'music0', step:'carpet',
+   wall:[50,55,58], floor:[42,35,30], ceil:[52,45,74], amb:'hum', music:'music0', step:'carpet', beacon:'buzz',
    exitWhat:'the exit sign buzzing',
    intro:'Level 0, The Lobby. You have noclipped out of reality. Damp yellow wallpaper, moist old carpet, and the endless buzz of fluorescent lights. Somewhere in this maze is a door with a glowing exit sign. Say listen at any time to hear which way it is. You are not alone in here.',
    exitText:'A battered wooden door with a buzzing red exit sign above it. You push it open and fall through the floor.',
@@ -582,7 +645,7 @@ const LEVELS=[
    flavor:['O papel de parede está descascando aqui, úmido nas emendas.','O carpete faz barulho de água sob seus pés.','Uma lâmpada acima de você pisca, depois se estabiliza.','Uma sala vazia. Exatamente igual à anterior.','Você sente cheiro de carpete velho e molhado.','O zumbido parece mais alto nesta sala.','Há uma única cadeira de escritório virada para a parede.','Alguém riscou marcas de contagem no papel de parede. Centenas delas.']}},
  { name:'Level 1, The Habitable Zone', short:'1', w:9,h:9, loops:0.16, mons:['smiler','smiler'], dark:0.45, lights:true,
    items:{water:3,fire:1,battery:2,tape:1,flashlight:1},
-   wall:[40,6,46], floor:[30,5,26], ceil:[40,4,38], amb:'drip', music:'music1', step:'concrete',
+   wall:[40,6,46], floor:[30,5,26], ceil:[40,4,38], amb:'drip', music:'music1', step:'concrete', beacon:'radio',
    exitWhat:'a radio playing on the stairwell',
    intro:'Level 1, The Habitable Zone. Cold concrete, puddles, and failing lights. Half of this level is in darkness, and Smilers hunt in the dark. There is a flashlight somewhere close by. Find it, and say light to switch it on. Then find the stairwell going down.',
    exitText:'A metal stairwell, leading down into warm, dark tunnels. You take the stairs.',
@@ -593,18 +656,29 @@ const LEVELS=[
    flavor:['Água pinga de uma rachadura no teto.','Uma poça reflete as luzes piscando.','Pilhas de caixas vazias cobrem a parede.','Um pilar de concreto fica no meio da sala.','Você ouve uma máquina distante ligar e depois parar.','Um orelhão velho está pendurado na parede. O fio foi cortado.','Prateleiras enferrujadas, vazias, a não ser pela poeira.']}},
  { name:'Level 2, Pipe Dreams', short:'2', w:10,h:10, loops:0.14, mons:['hound','skin'], dark:0.2, lights:false,
    items:{water:3,fire:2,battery:1,energy:1,tape:1,radio:1},
-   wall:[18,30,30], floor:[15,20,16], ceil:[20,25,20], amb:'pipes', music:'music2', step:'metal',
+   wall:[18,30,30], floor:[15,20,16], ceil:[20,25,20], amb:'pipes', music:'music2', step:'metal', beacon:'air',
    exitWhat:'a hiss of cold, fresh air',
    intro:'Level 2, Pipe Dreams. Narrow tunnels lined with hot, hissing pipes. Hounds hunt here. And something else: something that copies voices. If someone calls out to you, do not trust it. Listen for the real exit. A walkie-talkie is somewhere on this level.',
-   exitText:'A rusty hatch with cold air blowing through it. You squeeze inside and slide down, down, into water.',
+   exitText:'A rusty hatch with cold air blowing through it. You squeeze inside and drop into a room full of humming machines.',
    flavor:['A pipe hisses steam right beside your head.','The floor is slick with oil.','Pipes clank and groan somewhere above you.','It is so hot here your shirt sticks to you.','A valve wheel turns slowly on its own.','Someone has written TURN BACK on the pipe in marker.','The tunnel narrows. You squeeze through sideways.'],
    pt:{name:'Nível 2, Sonhos de Canos',short:'2',exitWhat:'um chiado de ar fresco e frio',
    intro:'Nível 2, Sonhos de Canos. Túneis estreitos cheios de canos quentes chiando. Cães caçam aqui. E algo mais: algo que copia vozes. Se alguém chamar você, não confie. Escute a saída de verdade. Há um walkie-talkie em algum lugar deste nível.',
-   exitText:'Uma escotilha enferrujada com ar frio soprando. Você se espreme para dentro e escorrega, descendo, descendo, até cair na água.',
+   exitText:'Uma escotilha enferrujada com ar frio soprando. Você se espreme para dentro e cai numa sala cheia de máquinas zumbindo.',
    flavor:['Um cano solta vapor bem ao lado da sua cabeça.','O chão está escorregadio de óleo.','Canos batem e rangem em algum lugar acima de você.','Está tão quente que sua camisa gruda no corpo.','Uma válvula gira devagar sozinha.','Alguém escreveu VOLTE no cano com caneta.','O túnel fica estreito. Você passa de lado.']}},
+ { name:'Level 3, The Electrical Station', short:'3', w:10,h:10, loops:0.14, mons:['hound','smiler'], dark:0.25, lights:true, hazards:0.09,
+   items:{water:3,fire:1,battery:2,energy:1,tape:1},
+   wall:[40,15,30], floor:[35,10,20], ceil:[45,10,28], amb:'electric', music:'music7', step:'metal', beacon:'hum',
+   exitWhat:'a maintenance door humming with power',
+   intro:'Level 3, The Electrical Station. Cramped corridors full of humming machines and sparking wires. Live wires hang everywhere, so listen for the crackle before you step forward. Hounds and Smilers hunt between the generators.',
+   exitText:'A maintenance door, sparks dancing around its frame. You shoulder it open and fall into warm water.',
+   flavor:['A transformer buzzes so loud you feel it in your teeth.','The air smells like burnt plastic.','Cables cover the floor like vines.','A warning sign says: DANGER, HIGH VOLTAGE.','A fuse box hangs open. Every fuse is blown.','The lights pulse in time with the hum.'],
+   pt:{name:'Nível 3, A Estação Elétrica',short:'3',exitWhat:'uma porta de manutenção zumbindo de energia',
+   intro:'Nível 3, A Estação Elétrica. Corredores apertados cheios de máquinas zumbindo e fios soltando faíscas. Há fios desencapados por toda parte, então escute o estalo antes de dar um passo. Cães e Sorridentes caçam entre os geradores.',
+   exitText:'Uma porta de manutenção, com faíscas dançando em volta do batente. Você empurra com o ombro e cai em água morna.',
+   flavor:['Um transformador zumbe tão alto que você sente nos dentes.','O ar cheira a plástico queimado.','Cabos cobrem o chão como cipós.','Uma placa de aviso diz: PERIGO, ALTA TENSÃO.','Uma caixa de fusíveis está aberta. Todos os fusíveis queimaram.','As luzes pulsam no ritmo do zumbido.']}},
  { name:'Level 37, The Poolrooms', short:'37', w:9,h:9, loops:0.25, mons:['face','face'], dark:0, lights:true, calm:true,
    items:{water:2,battery:1,energy:1,tape:1},
-   wall:[190,30,82], floor:[195,45,70], ceil:[190,20,90], amb:'pool', music:'music3', step:'tile',
+   wall:[190,30,82], floor:[195,45,70], ceil:[190,20,90], amb:'pool', music:'music3', step:'tile', beacon:'bubbles',
    exitWhat:'water gurgling down a drain',
    intro:'Level 37, The Poolrooms. You surface in warm water and climb out onto white tiles. Endless pools, soft light, the gentle lapping of water. It is peaceful here. Too peaceful. Faceless people wander these halls. They will not hurt you. Say talk when one is near. Find the drain that leads down.',
    exitText:'A huge drain at the bottom of a shallow pool. The water pulls at your ankles, then swallows you.',
@@ -615,7 +689,7 @@ const LEVELS=[
    flavor:['A água está perfeitamente parada. Você não consegue ver o fundo.','Todo som ecoa para sempre aqui.','Azulejos brancos, azulejos brancos, azulejos brancos.','Um escorregador sobe até o teto. Nada desce por ele.','Você ouve alguém nadando na sala ao lado. Depois para.','A água é morna, como um banho. Você tem vontade de se deitar nela.']}},
  { name:'Level Fun', short:'Fun', w:10,h:10, loops:0.16, mons:['party','party'], dark:0, lights:true, locked:true,
    items:{water:3,fire:2,energy:1,tape:1,keycard:1},
-   wall:[320,45,60], floor:[280,25,40], ceil:[50,60,80], amb:'party', music:'musicbox', step:'carpet',
+   wall:[320,45,60], floor:[280,25,40], ceil:[50,60,80], amb:'party', music:'musicbox', step:'carpet', beacon:'chime',
    exitWhat:'an elevator chime',
    intro:'Level Fun. Balloons. Streamers. A cake that has gone grey. A music box plays happy birthday, slightly wrong. The Partygoers are here, and they want you to join the party. The exit door is locked: find the keycard first. Do not let them hug you.',
    exitText:'You swipe the keycard. The elevator doors slide open. Behind you, someone whispers: party is over. The doors close and the lights go out.',
@@ -626,18 +700,29 @@ const LEVELS=[
    flavor:['Uma faixa na parede diz: FELIZ ANIVERSÁRIO =)','Balões murchos cobrem o chão.','Há pratos de papel postos para cem convidados.','Um chapéu de festa está no chão. Está molhado.','Alguém escreveu na parede com glacê: FIQUE =)','Confete cai do nada.']}},
  { name:'Level 6, Lights Out', short:'6', w:10,h:10, loops:0.16, mons:['skin','moths'], dark:1, lights:false,
    items:{water:3,fire:1,battery:2,energy:1,tape:1},
-   wall:[40,10,40], floor:[30,10,30], ceil:[30,10,30], amb:'void', music:'music5', step:'concrete',
+   wall:[40,10,40], floor:[30,10,30], ceil:[30,10,30], amb:'void', music:'music5', step:'concrete', beacon:'wind',
    exitWhat:'a faint wind',
    intro:'Level 6, Lights Out. Total darkness. Your eyes are useless here, so trust your ears. Your flashlight attracts Deathmoths, but without it you are alone with whatever is breathing in the dark. The voice-copier followed you. Do not trust anything that calls your way.',
-   exitText:'Your hand finds a door handle in the dark. You open it, and hear an alarm start to scream.',
+   exitText:'Your hand finds a door handle in the dark. You open it, and smell salt water.',
    flavor:['You cannot see your own hand.','Something crunches under your foot.','The air is cold and still.','You hear dripping, very far away.','Your fingertips trace a word scratched into the wall: RUN.'],
    pt:{name:'Nível 6, Luzes Apagadas',short:'6',exitWhat:'um vento fraco',
    intro:'Nível 6, Luzes Apagadas. Escuridão total. Seus olhos não servem aqui, então confie nos ouvidos. Sua lanterna atrai Mariposas da Morte, mas sem ela você fica sozinho com o que está respirando no escuro. O imitador de vozes seguiu você. Não confie em nada que chame você.',
-   exitText:'Sua mão encontra uma maçaneta no escuro. Você abre a porta e ouve um alarme começar a gritar.',
+   exitText:'Sua mão encontra uma maçaneta no escuro. Você abre a porta e sente cheiro de água salgada.',
    flavor:['Você não consegue ver a própria mão.','Algo estala sob seu pé.','O ar está frio e parado.','Você ouve gotejar, muito longe.','Seus dedos encontram uma palavra riscada na parede: CORRA.']}},
+ { name:'Level 7, Thalassophobia', short:'7', w:11,h:7, loops:0.18, mons:['deep'], dark:0.3, lights:false, water:0.45,
+   items:{water:3,fire:1,battery:1,energy:2,tape:1},
+   wall:[205,25,22], floor:[210,35,14], ceil:[205,20,18], amb:'ocean', music:'music8', step:'concrete', beacon:'bell',
+   exitWhat:'a bell ringing somewhere above the water',
+   intro:'Level 7, Thalassophobia. A narrow walkway beside an endless black ocean. Parts of the floor are flooded. Something enormous lives under the water, and it can only reach you while you are in it. Listen before you step, and stay dry when it sings.',
+   exitText:'A rusted ladder rises out of the water toward a red light. You climb. Somewhere above, an alarm begins to scream.',
+   flavor:['Waves slap against the concrete.','The water is black and perfectly still, until it is not.','Something brushes your ankle. Seaweed. Probably.','Far away, something sings under the water.','The air tastes of salt and rust.'],
+   pt:{name:'Nível 7, Talassofobia',short:'7',exitWhat:'um sino tocando em algum lugar acima da água',
+   intro:'Nível 7, Talassofobia. Uma passarela estreita ao lado de um oceano negro sem fim. Partes do chão estão alagadas. Algo enorme vive debaixo da água, e só consegue pegar você enquanto você estiver nela. Escute antes de pisar, e fique no seco quando ele cantar.',
+   exitText:'Uma escada enferrujada sobe da água em direção a uma luz vermelha. Você sobe. Em algum lugar acima, um alarme começa a gritar.',
+   flavor:['Ondas batem no concreto.','A água está negra e perfeitamente parada, até que não está mais.','Algo roça seu tornozelo. Alga. Provavelmente.','Bem longe, algo canta debaixo da água.','O ar tem gosto de sal e ferrugem.']}},
  { name:'Level Run For Your Life', short:'!', w:12,h:5, loops:0.06, mons:['chaser'], dark:0, lights:true, run:true,
    items:{water:2,energy:3},
-   wall:[0,60,45], floor:[0,40,25], ceil:[0,50,40], amb:'alarm', music:'music6', step:'concrete',
+   wall:[0,60,45], floor:[0,40,25], ceil:[0,50,40], amb:'alarm', music:'music6', step:'concrete', beacon:'birds',
    exitWhat:'daylight and birdsong',
    intro:'Level Run For Your Life. An alarm is blaring. The hallway stretches ahead, and behind you, something enormous wakes up. Do not stop. Do not hide. Run! Say sprint to move two rooms at once.',
    exitText:'A red door. Daylight leaks around its edges. You throw it open.',
@@ -645,28 +730,43 @@ const LEVELS=[
    pt:{name:'Nível Corra Pela Sua Vida',short:'!',exitWhat:'luz do dia e passarinhos',
    intro:'Nível Corra Pela Sua Vida. Um alarme está tocando. O corredor se estende à frente, e atrás de você algo enorme acorda. Não pare. Não se esconda. Corra! Diga correr para avançar duas salas de uma vez.',
    exitText:'Uma porta vermelha. Luz do dia escapa pelas bordas. Você abre a porta com força.',
-   flavor:['Luzes vermelhas giram no teto.','O chão treme a cada passo atrás de você.','Você ouve aquilo bater numa parede e continuar vindo.','Papéis voam por você no corredor.']}}
+   flavor:['Luzes vermelhas giram no teto.','O chão treme a cada passo atrás de você.','Você ouve aquilo bater numa parede e continuar vindo.','Papéis voam por você no corredor.']}},
+ { name:'The Last Room', short:'?', w:6,h:6, loops:0.3, mons:['marcus'], dark:0, lights:true, calm:true, secret:true,
+   items:{}, wall:[45,12,55], floor:[40,10,35], ceil:[45,8,70], amb:'last', music:'menu', step:'carpet', beacon:'chime',
+   exitWhat:'Marcus breathing',
+   intro:'The Last Room. It looks like the Lobby, but grey and silent. No hum. No monsters. Just one tired voice, somewhere in the maze, calling for help. Follow it.',
+   exitText:'',
+   flavor:['The wallpaper here has no color at all.','It is completely silent. No hum at all.','Tally marks cover every wall. Thousands of them.','A tape recorder lies on the floor, its batteries removed.'],
+   pt:{name:'A Última Sala',short:'?',exitWhat:'a respiração de Marcus',
+   intro:'A Última Sala. Parece o Lobby, mas cinza e silencioso. Nenhum zumbido. Nenhum monstro. Só uma voz cansada, em algum lugar do labirinto, pedindo ajuda. Siga essa voz.',
+   exitText:'',
+   flavor:['O papel de parede aqui não tem cor nenhuma.','Está completamente silencioso. Nenhum zumbido.','Marcas de contagem cobrem todas as paredes. Milhares delas.','Um gravador está no chão, sem pilhas.']}}
 ];
 const TAPES={en:[
  'Tape one. My name is Marcus. I do not know what day it is. The lights never turn off. I counted the rooms. Four thousand and twelve. Then I found my own tally marks on the wall.',
  'Tape two. There is water here, and people. Or there were. Someone left a note that says: do not stand in the dark. I did not understand it until I saw the teeth.',
  'Tape three. It is so hot. I heard my sister calling me from the pipes. My sister died nine years ago. I did not follow the voice. Do not follow the voice.',
- 'Tape four. The pools are beautiful. Nothing hurts you here. I could stay. I think that is the trap. The longer you stay, the less you want to leave.',
- 'Tape five. Balloons. Cake. Everyone is smiling. They said, hello friend, come to the party. If you hear this, do not go to the party. Find the keycard. Run.',
- 'Tape six. I cannot see anything anymore. My batteries are dead. Something keeps telling me it found the exit. It sounds just like me now. If you hear me calling you... it is not me.'],
+ 'Tape four. Everything here hums. The wires talk, if you listen long enough. They told me there is a way out at the very end, past the red door, past the daylight. They said: find all my tapes, and you will find me.',
+ 'Tape five. The pools are beautiful. Nothing hurts you here. I could stay. I think that is the trap. The longer you stay, the less you want to leave.',
+ 'Tape six. Balloons. Cake. Everyone is smiling. They said, hello friend, come to the party. If you hear this, do not go to the party. Find the keycard. Run.',
+ 'Tape seven. I cannot see anything anymore. My batteries are dead. Something keeps telling me it found the exit. It sounds just like me now. If you hear me calling you... it is not me.',
+ 'Tape eight. The water goes on forever. Something huge moves under it, and it sings. I am so tired. I am going to the room behind the daylight. If you have all eight tapes, come find me. Please. It is really me this time.'],
  pt:[
  'Fita um. Meu nome é Marcus. Não sei que dia é hoje. As luzes nunca se apagam. Contei as salas. Quatro mil e doze. Depois encontrei minhas próprias marcas de contagem na parede.',
  'Fita dois. Tem água aqui, e pessoas. Ou tinha. Alguém deixou um bilhete que diz: não fique no escuro. Eu não entendi até ver os dentes.',
  'Fita três. Está tão quente. Ouvi minha irmã me chamando dos canos. Minha irmã morreu há nove anos. Eu não segui a voz. Não siga a voz.',
- 'Fita quatro. As piscinas são lindas. Nada machuca você aqui. Eu poderia ficar. Acho que essa é a armadilha. Quanto mais você fica, menos quer ir embora.',
- 'Fita cinco. Balões. Bolo. Todo mundo sorrindo. Eles disseram: olá, amigo, venha para a festa. Se você ouvir isso, não vá para a festa. Encontre o cartão. Corra.',
- 'Fita seis. Não consigo ver mais nada. Minhas pilhas acabaram. Algo fica me dizendo que encontrou a saída. Agora soa igualzinho a mim. Se você me ouvir chamando... não sou eu.']};
+ 'Fita quatro. Tudo aqui zumbe. Os fios falam, se você escutar por tempo suficiente. Eles me disseram que existe uma saída bem no final, depois da porta vermelha, depois da luz do dia. Eles disseram: encontre todas as minhas fitas, e você vai me encontrar.',
+ 'Fita cinco. As piscinas são lindas. Nada machuca você aqui. Eu poderia ficar. Acho que essa é a armadilha. Quanto mais você fica, menos quer ir embora.',
+ 'Fita seis. Balões. Bolo. Todo mundo sorrindo. Eles disseram: olá, amigo, venha para a festa. Se você ouvir isso, não vá para a festa. Encontre o cartão. Corra.',
+ 'Fita sete. Não consigo ver mais nada. Minhas pilhas acabaram. Algo fica me dizendo que encontrou a saída. Agora soa igualzinho a mim. Se você me ouvir chamando... não sou eu.',
+ 'Fita oito. A água não acaba nunca. Algo enorme se move debaixo dela, e canta. Estou tão cansado. Vou para a sala atrás da luz do dia. Se você tiver as oito fitas, venha me encontrar. Por favor. Desta vez sou eu de verdade.']};
+const NTAPES=8;
 const ITEMNAME={en:{water:'a bottle of almond water',fire:'a firecracker',battery:'a battery',energy:'an energy bar',tape:'a cassette tape',flashlight:'a flashlight',radio:'a walkie-talkie',keycard:'a keycard'},
   pt:{water:'uma garrafa de água de amêndoa',fire:'uma bombinha',battery:'uma pilha',energy:'uma barra de energia',tape:'uma fita cassete',flashlight:'uma lanterna',radio:'um walkie-talkie',keycard:'um cartão de acesso'}};
-const LX=k=>{const lv=LEVELS[G.level];return LANG==='pt'&&lv.pt[k]!==undefined?lv.pt[k]:lv[k];};
+const LX=k=>{const lv=L();return LANG==='pt'&&lv.pt[k]!==undefined?lv.pt[k]:lv[k];};
 
 /* ============================== state ============================== */
-const G={ level:0, maze:null, w:0,h:0, x:0,y:0, f:0, exit:null, mons:[], items:new Map(), dark:new Set(),
+const G={ mode:'story', depth:0, level:0, maze:null, w:0,h:0, x:0,y:0, f:0, exit:null, mons:[], items:new Map(), dark:new Set(),
   inv:null, sanity:100, steps:0, deaths:0, tapes:new Set(), lastTape:-1, startTime:0, state:'menu', sneak:false,
   visited:new Set(), lastText:'', entBand:99, blackout:0, sinceScare:0, extras:[], noise:null, sprinted:false };
 function freshInv(){return {water:0,fire:1,battery:0,energy:0,flashlight:false,light:false,radio:false,keycard:false};}
@@ -685,16 +785,18 @@ function genMaze(w,h,loops){
 }
 const isOpen=(x,y,d)=>!(G.maze[y][x]&(1<<d));
 const key=(x,y)=>x+','+y;
-function bfs(sx,sy){
+function bfs(sx,sy,mask){
   const dist=[...Array(G.h)].map(()=>Array(G.w).fill(Infinity)); dist[sy][sx]=0; const q=[[sx,sy]];
-  for(let qi=0;qi<q.length;qi++){const [x,y]=q[qi];for(let d=0;d<4;d++){if(!isOpen(x,y,d))continue;const nx=x+DX[d],ny=y+DY[d];if(dist[ny][nx]>dist[y][x]+1){dist[ny][nx]=dist[y][x]+1;q.push([nx,ny]);}}}
+  for(let qi=0;qi<q.length;qi++){const [x,y]=q[qi];for(let d=0;d<4;d++){if(!isOpen(x,y,d))continue;const nx=x+DX[d],ny=y+DY[d];if(mask&&!mask.has(key(nx,ny)))continue;if(dist[ny][nx]>dist[y][x]+1){dist[ny][nx]=dist[y][x]+1;q.push([nx,ny]);}}}
   return dist;
 }
 function stepToward(dist,x,y){let best=-1,bd=dist[y][x];for(const d of [0,1,2,3].sort(()=>Math.random()-.5)){if(!isOpen(x,y,d))continue;const v=dist[y+DY[d]][x+DX[d]];if(v<bd){bd=v;best=d;}}return best;}
 function stepAway(dist,x,y){let best=-1,bd=dist[y][x];for(const d of [0,1,2,3].sort(()=>Math.random()-.5)){if(!isOpen(x,y,d))continue;const v=dist[y+DY[d]][x+DX[d]];if(v>bd){bd=v;best=d;}}return best;}
 const rel=d=>(d-G.f+4)%4, abs=r=>(G.f+r)%4;
 const isDark=(x,y)=>G.dark.has(key(x,y));
-const L=()=>LEVELS[G.level];
+const L=()=>(G.mode==='endless'&&G.edef)?G.edef:LEVELS[G.level];
+const isWater=(x,y)=>!!(G.wet&&G.wet.has(key(x,y)));
+const isHazard=(x,y)=>!!(G.haz&&G.haz.has(key(x,y)));
 
 /* ============================== audio ============================== */
 const A={ctx:null,ambNodes:[],timers:[],buf:{}};
@@ -711,7 +813,7 @@ function initAudio(){
   A.music=ctx.createGain(); A.music.gain.value=S.music; A.music.connect(A.master); A.music.connect(A.rev);
   A.amb=ctx.createGain(); A.amb.gain.value=0.7; A.amb.connect(A.fx);
   A.noise=(()=>{const b=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate);const d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;return b;})();
-  loadAssets(); unlockTracks();
+  loadAssets(); unlockTracks(); loadVoices();
 }
 function impulse(sec,decay){const c=A.ctx,len=c.sampleRate*sec,b=c.createBuffer(2,len,c.sampleRate);for(let ch=0;ch<2;ch++){const d=b.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,decay);}return b;}
 const now=()=>A.ctx.currentTime;
@@ -721,14 +823,23 @@ function noise(t,dur){const s=A.ctx.createBufferSource();s.buffer=A.noise;s.loop
 function osc(type,f,t,dur){const o=A.ctx.createOscillator();o.type=type;o.frequency.setValueAtTime(f,t);o.start(t);o.stop(t+dur+0.05);return o;}
 function filt(type,f,q=1){const b=A.ctx.createBiquadFilter();b.type=type;b.frequency.value=f;b.Q.value=q;return b;}
 function spot(pan=0,vol=1,muffle=0,dest){
-  const g=gainNode(vol); const lp=filt('lowpass',clamp(9000-muffle*8200,500,9000),0.7);
-  let p; if(A.ctx.createStereoPanner){p=A.ctx.createStereoPanner();p.pan.value=clamp(pan,-1,1);}else p=gainNode(1);
+  const g=gainNode(vol); const lp=filt('lowpass',clamp(9000-muffle*8200,500,9000),0.7); let p;
+  if(typeof pan==='object'&&A.ctx.createPanner){
+    // 3D: HRTF lets headphones place sounds in front, behind, above and below
+    p=A.ctx.createPanner();p.panningModel='HRTF';p.distanceModel='inverse';p.refDistance=1;p.rolloffFactor=0;
+    let x=pan.x||0,y=pan.y||0,z=pan.z===undefined?-1:(pan.z||0); if(Math.abs(x)+Math.abs(y)+Math.abs(z)<0.05)z=-0.3;
+    if(p.positionX){p.positionX.value=x;p.positionY.value=y;p.positionZ.value=z;}else p.setPosition(x,y,z);
+  }else if(A.ctx.createStereoPanner){p=A.ctx.createStereoPanner();p.pan.value=clamp(typeof pan==='object'?(pan.x||0):pan,-1,1);}
+  else p=gainNode(1);
   g.connect(lp).connect(p).connect(dest||A.sfx); return g;
 }
+const V3=(x,y,z)=>({x,y,z});
+const rndPos=(up=0)=>{const a=Math.random()*Math.PI*2;return V3(Math.sin(a),up,-Math.cos(a));};
 function sfx(fn,...args){if(!A.ctx)return;try{fn(...args);}catch(e){}}
 
 /* ---------- synthesized sounds ---------- */
-function footstep(vol=1,muffle=0){const t=now(),st=L().step;for(let i=0;i<2;i++){const tt=t+i*0.27;const out=spot(i?0.15:-0.15,(st==='carpet'?0.55:0.45)*vol*(G.sneak?0.35:1),muffle);
+function footstep(vol=1,muffle=0){const t=now(),st=isWater(G.x,G.y)?'water':L().step;
+  if(st==='water'){for(let i=0;i<2;i++){const tt=t+i*0.3;const n=noise(tt,0.4);const g=gainNode(0);envelope(g,tt,0.02,0.5*vol,0.3);n.connect(filt('bandpass',700+rand(300),0.8)).connect(g).connect(spot(i?0.2:-0.2,1,muffle));}return;}for(let i=0;i<2;i++){const tt=t+i*0.27;const out=spot(i?0.15:-0.15,(st==='carpet'?0.55:0.45)*vol*(G.sneak?0.35:1),muffle);
   const n=noise(tt,0.12);const f=st==='carpet'?filt('lowpass',420,0.8):st==='tile'?filt('bandpass',3200,2):st==='metal'?filt('bandpass',2400,2):filt('bandpass',1300,1.2);
   const g=gainNode(0);envelope(g,tt,0.005,1,st==='carpet'?0.12:0.08);n.connect(f).connect(g).connect(out);
   if(st==='metal'){const o=osc('sine',880+rand(80),tt,0.25);const og=gainNode(0);envelope(og,tt,0.002,0.12,0.22);o.connect(og).connect(out);}
@@ -757,13 +868,25 @@ function tapeClick(){const t=now();[0,0.08].forEach(d=>{const n=noise(t+d,0.02);
 function radioBurst(vol){if(!play('static',{vol:vol,rate:0.9+Math.random()*0.2})){const t=now();const n=noise(t,0.6);const g=gainNode(0);envelope(g,t,0.01,vol*0.3,0.55);n.connect(filt('bandpass',2000,0.7)).connect(g).connect(spot(0,1));}}
 function synthGrowl(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const o=osc('sawtooth',58,t,1.4);const am=osc('sine',23,t,1.4);const amg=gainNode(0.5);const g=gainNode(0);
   am.connect(amg).connect(g.gain);envelope(g,t,0.15,0.7,1.2);o.connect(filt('lowpass',380,3)).connect(g).connect(out);}
-function beacon(pan,vol,muffle){const t=now(),lv=G.level;const out=spot(pan,vol,muffle);
-  if(lv===0){const o=osc('square',120,t,1.2);const g=gainNode(0);for(let i=0;i<5;i++){const tt=t+i*0.22;g.gain.setValueAtTime(0.0001,tt);g.gain.exponentialRampToValueAtTime(0.25,tt+0.02);g.gain.setValueAtTime(0.25,tt+0.14);g.gain.exponentialRampToValueAtTime(0.0001,tt+0.18);}o.connect(filt('bandpass',1800,1.5)).connect(g).connect(out);}
-  else if(lv===1){[392,523,659,587,523].forEach((f,i)=>{const tt=t+i*0.22;const o=osc('square',f,tt,0.3);const g=gainNode(0);envelope(g,tt,0.01,0.25,0.22);o.connect(filt('bandpass',1500,2)).connect(g).connect(out);});}
-  else if(lv===2||lv===5){const n=noise(t,1.5);const g=gainNode(0);envelope(g,t,0.4,0.4,1);n.connect(filt('bandpass',lv===2?700:400,0.8)).connect(g).connect(out);}
-  else if(lv===3){if(!play('bubbles',{pan,vol,muffle})){const n=noise(t,1);const g=gainNode(0);envelope(g,t,0.1,0.4,0.8);n.connect(filt('lowpass',500)).connect(g).connect(out);}}
-  else if(lv===4){[1318.5,1046.5].forEach((f,i)=>{const tt=t+i*0.35;const o=osc('sine',f,tt,1.2);const g=gainNode(0);envelope(g,tt,0.005,0.3,1.1);o.connect(g).connect(out);});}
+function beacon(pan,vol,muffle){const t=now(),ty=L().beacon;const out=spot(pan,vol,muffle);
+  if(ty==='buzz'||ty==='hum'){const o=osc('square',ty==='hum'?60:120,t,1.2);const g=gainNode(0);for(let i=0;i<5;i++){const tt=t+i*0.22;g.gain.setValueAtTime(0.0001,tt);g.gain.exponentialRampToValueAtTime(0.25,tt+0.02);g.gain.setValueAtTime(0.25,tt+0.14);g.gain.exponentialRampToValueAtTime(0.0001,tt+0.18);}o.connect(filt('bandpass',ty==='hum'?600:1800,1.5)).connect(g).connect(out);}
+  else if(ty==='radio'){[392,523,659,587,523].forEach((f,i)=>{const tt=t+i*0.22;const o=osc('square',f,tt,0.3);const g=gainNode(0);envelope(g,tt,0.01,0.25,0.22);o.connect(filt('bandpass',1500,2)).connect(g).connect(out);});}
+  else if(ty==='air'||ty==='wind'){const n=noise(t,1.5);const g=gainNode(0);envelope(g,t,0.4,0.4,1);n.connect(filt('bandpass',ty==='air'?700:400,0.8)).connect(g).connect(out);}
+  else if(ty==='bubbles'){if(!play('bubbles',{pan,vol,muffle})){const n=noise(t,1);const g=gainNode(0);envelope(g,t,0.1,0.4,0.8);n.connect(filt('lowpass',500)).connect(g).connect(out);}}
+  else if(ty==='chime'){[1318.5,1046.5].forEach((f,i)=>{const tt=t+i*0.35;const o=osc('sine',f,tt,1.2);const g=gainNode(0);envelope(g,tt,0.005,0.3,1.1);o.connect(g).connect(out);});}
+  else if(ty==='bell'){[523.3,1046.5,1568,2093].forEach((f,i)=>{const o=osc('sine',f*(1+i*0.003),t,3);const g=gainNode(0);envelope(g,t,0.004,[0.3,0.12,0.07,0.04][i],2.8);o.connect(g).connect(out);});}
   else{[1568,1976,2349,2637].forEach((f,i)=>{const tt=t+i*0.13+Math.random()*0.05;const o=osc('sine',f,tt,1.5);const g=gainNode(0);envelope(g,tt,0.005,0.22,1.3);o.connect(g).connect(out);});}}
+function crackle(pan,vol){const t=now();const out=spot(pan,vol,0.1);for(let i=0;i<7;i++){const tt=t+Math.random()*0.5;const n=noise(tt,0.03);const g=gainNode(0);envelope(g,tt,0.001,0.6,0.025);n.connect(filt('highpass',2500)).connect(g).connect(out);}
+  const o=osc('sawtooth',120,t,0.5);const og=gainNode(0);envelope(og,t,0.01,0.08,0.45);o.connect(filt('bandpass',900,2)).connect(og).connect(out);}
+function zap(){const t=now();const o=osc('sawtooth',100,t,0.6);const am=osc('square',33,t,0.6);const ag=gainNode(0.6);const g=gainNode(0);am.connect(ag).connect(g.gain);envelope(g,t,0.005,0.8,0.55);o.connect(filt('lowpass',3000)).connect(g).connect(spot(0,1));
+  const n=noise(t,0.5);const ng=gainNode(0);envelope(ng,t,0.002,0.6,0.45);n.connect(filt('highpass',1500)).connect(ng).connect(spot(0,1));}
+function deepSong(pan,vol){const t=now();const out=spot(pan,vol,0.5);
+  if(!play('moan',{pan,vol:vol*1.3,rate:0.33+Math.random()*0.08,muffle:0.6})){}
+  const o=osc('sine',70,t,4.5);o.frequency.linearRampToValueAtTime(140,t+1.5);o.frequency.linearRampToValueAtTime(85,t+4);const lfo=osc('sine',4,t,4.5);const lg=gainNode(5);lfo.connect(lg).connect(o.frequency);
+  const g=gainNode(0);g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.5,t+1);g.gain.linearRampToValueAtTime(0.0001,t+4.3);o.connect(filt('lowpass',400)).connect(g).connect(out);}
+function ping(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);[1318.5,1760].forEach((f,i)=>{const tt=t+i*0.18;const o=osc('sine',f,tt,0.9);const g=gainNode(0);envelope(g,tt,0.004,0.35,0.8);o.connect(g).connect(out);});}
+function achSound(){const t=now();[523.3,659.3,784,1046.5].forEach((f,i)=>{const tt=t+i*0.11;const o=osc('triangle',f,tt,0.8);const g=gainNode(0);envelope(g,tt,0.01,0.22,0.7);o.connect(g).connect(spot(0,1));});}
+function ticktock(){const t=now();const n=noise(t,0.02);const g=gainNode(0);envelope(g,t,0.001,0.25,0.015);n.connect(filt('bandpass',3000,4)).connect(g).connect(spot(V3(0.6,0.3,-0.5),1,0.3));}
 function noclip(){const t=now();const n=noise(t,2.4);const f=filt('lowpass',8000,6);f.frequency.setValueAtTime(9000,t);f.frequency.exponentialRampToValueAtTime(90,t+2.2);const g=gainNode(0);envelope(g,t,0.1,0.8,2.1);n.connect(f).connect(g).connect(spot(0,1));
   const o=osc('sine',500,t,2.2);o.frequency.exponentialRampToValueAtTime(35,t+2.1);const og=gainNode(0);envelope(og,t,0.05,0.4,2.0);o.connect(og).connect(spot(0,1));}
 function caughtSound(){const t=now();const ws=A.ctx.createWaveShaper();const c=new Float32Array(256);for(let i=0;i<256;i++){const x=i/128-1;c[i]=Math.tanh(x*6);}ws.curve=c;
@@ -779,12 +902,14 @@ function play(name,{pan=0,vol=1,muffle=0,rate=1,dest,delay=0}={}){if(!A.ctx)retu
 function monSound(m,pan,vol,muffle){const T=MT[m.type];
   if(m.type==='moths')return sfx(flutter,pan,vol,muffle);
   if(m.type==='face')return sfx(hum,pan,vol*0.8);
+  if(m.type==='deep')return sfx(deepSong,typeof pan==='object'?V3(pan.x,-0.7,pan.z):pan,vol);
+  if(m.type==='marcus')return;
   if(m.type==='party'&&Math.random()<0.4)sfx(Math.random()<0.5?partyHorn:squeak,pan,vol,muffle);
   if(!T.sfx||!play(pick(T.sfx),{pan,vol:vol*1.2,muffle,rate:0.88+Math.random()*0.2}))sfx(synthGrowl,pan,vol,muffle);}
 function heart(fast){if(!play(fast?'heartfast':'heartslow',{vol:0.9}))sfx(heartbeat);}
 
 /* ---------- music tracks ---------- */
-const TR={}, TRACKS=['menu','music0','music1','music2','music3','music5','music6','chase','drone'];
+const TR={}, TRACKS=['menu','music0','music1','music2','music3','music5','music6','music7','music8','chase','drone'];
 function track(name){if(TR[name])return TR[name];const el=new Audio('audio/'+name+'.mp3');el.loop=true;el.preload='auto';const g=gainNode(0);try{A.ctx.createMediaElementSource(el).connect(g);}catch(e){}g.connect(A.music);TR[name]={el,g,want:0};return TR[name];}
 function fadeTrack(name,v,sec=2){if(!A.ctx)return;if(name==='musicbox'){musicBox(v>0);return;}const tr=track(name);tr.want=v;tr.g.gain.cancelScheduledValues(now());tr.g.gain.setTargetAtTime(v,now(),sec/3);
   if(v>0&&tr.el.paused){const pr=tr.el.play();if(pr&&pr.catch)pr.catch(()=>{});}
@@ -793,7 +918,7 @@ function unlockTracks(){TRACKS.forEach(n=>{const tr=track(n);const pr=tr.el.play
 let chaseLevel=-1;
 function onlyMusic(list,sec=2.5){TRACKS.forEach(n=>{const v=list[n]||0;if(v||(TR[n]&&TR[n].want))fadeTrack(n,v,sec);});musicBox(!!list.musicbox);}
 function menuMusic(){onlyMusic({menu:0.7},2);}
-function levelMusic(){if(!A.ctx)return;const lv=L();const m={drone:lv.calm?0:0.25};m[lv.music]=lv.music==='musicbox'?1:0.6;if(lv.run)m.chase=0.5;onlyMusic(m,3);chaseLevel=-1;setChase(99);}
+function levelMusic(){if(!A.ctx)return;const lv=L();const m={drone:lv.calm?0:0.25};m[lv.music]=lv.music==='musicbox'?1:lv.secret?0.3:0.6;if(lv.run)m.chase=0.5;onlyMusic(m,3);chaseLevel=-1;setChase(99);}
 function stopAllMusic(sec=1){onlyMusic({},sec);chaseLevel=0;}
 function setChase(d){if(!A.ctx||G.blackout>0||L().calm||L().run)return;const v=d<=2?0.9:d<=4?0.4:0;if(v===chaseLevel)return;chaseLevel=v;fadeTrack('chase',v,v>0?1.2:4);if(L().music!=='musicbox')fadeTrack(L().music,v>0.5?0.12:0.6,2);}
 // a creepy, slightly broken music box (Happy Birthday is in the public domain)
@@ -851,11 +976,16 @@ function ambience(){
     const hiss=longNoise();const hg=gainNode(vol/4);hiss.connect(filt('highpass',5000)).connect(hg).connect(A.amb);
     loopTimer(()=>{const tt=now();G.flash=performance.now();hm.gain.setValueAtTime(vol,tt);hm.gain.linearRampToValueAtTime(0.004,tt+0.03);hm.gain.setValueAtTime(0.004,tt+0.09);hm.gain.linearRampToValueAtTime(vol,tt+0.12);hm.gain.linearRampToValueAtTime(0.004,tt+0.2);hm.gain.linearRampToValueAtTime(vol,tt+0.26);},4000,11000);};
   const rumble=(f,vol)=>{const r=longNoise();const rg=gainNode(vol);r.connect(filt('lowpass',f,1)).connect(rg).connect(A.amb);};
-  const drip=(min,max,pan=0.8)=>loopTimer(()=>{const tt=now();const o=osc('sine',1400+rand(600),tt,0.15);o.frequency.exponentialRampToValueAtTime(380,tt+0.08);const g=gainNode(0);envelope(g,tt,0.002,0.25,0.1);o.connect(g).connect(spot(Math.random()*2*pan-pan,0.6,0.2));},min,max);
-  if(type==='hum')lampHum(120,0.05);
-  if(type==='drip'){lampHum(100,0.03);rumble(140,0.05);drip(1500,5000);}
+  const drip=(min,max)=>loopTimer(()=>{const tt=now();const o=osc('sine',1400+rand(600),tt,0.15);o.frequency.exponentialRampToValueAtTime(380,tt+0.08);const g=gainNode(0);envelope(g,tt,0.002,0.25,0.1);o.connect(g).connect(spot(rndPos(Math.random()*0.8),0.6,0.2));},min,max);
+  const vents=()=>loopTimer(()=>{const pos=rndPos(0.9);const tt=now();for(let i=0;i<6;i++){const t2=tt+i*0.18+Math.random()*0.08;const n=noise(t2,0.06);const g=gainNode(0);envelope(g,t2,0.003,0.3,0.05);n.connect(filt('bandpass',1800,3)).connect(g).connect(spot(pos,0.5,0.5));}},20000,45000);
+  if(type==='hum'){lampHum(120,0.05);vents();}
+  if(type==='electric'){lampHum(60,0.07);loopTimer(()=>sfx(crackle,rndPos(Math.random()),0.35),1500,5000);vents();}
+  if(type==='ocean'){const w=longNoise();const wg=gainNode(0.07);w.connect(filt('lowpass',500,0.7)).connect(wg).connect(A.amb);const lfo=longOsc('sine',0.12);const lg=gainNode(0.05);lfo.connect(lg).connect(wg.gain);
+    loopTimer(()=>sfx(deepSong,V3(Math.random()*2-1,-0.9,Math.random()*2-1),0.25),9000,20000);}
+  if(type==='last'){loopTimer(ticktock,1000,1001);}
+  if(type==='drip'){lampHum(100,0.03);rumble(140,0.05);drip(1500,5000);vents();}
   if(type==='pipes'){const st=longNoise();const sg=gainNode(0.02);st.connect(filt('bandpass',3500,0.8)).connect(sg).connect(A.amb);const lfo=longOsc('sine',0.13);const lg=gainNode(0.015);lfo.connect(lg).connect(sg.gain);rumble(90,0.07);
-    loopTimer(()=>{const tt=now();const out=spot(Math.random()*1.8-0.9,0.5,0.4);[310,467,781,1043].forEach(f=>{const o=osc('sine',f*(0.95+Math.random()*0.1),tt,1.6);const g=gainNode(0);envelope(g,tt,0.003,0.18,1.5);o.connect(g).connect(out);});},3500,9000);}
+    loopTimer(()=>{const tt=now();const out=spot(rndPos(0.8),0.5,0.4);[310,467,781,1043].forEach(f=>{const o=osc('sine',f*(0.95+Math.random()*0.1),tt,1.6);const g=gainNode(0);envelope(g,tt,0.003,0.18,1.5);o.connect(g).connect(out);});},3500,9000);}
   if(type==='pool'){lampHum(240,0.012);const w=longNoise();const wg=gainNode(0.05);w.connect(filt('lowpass',380,0.7)).connect(wg).connect(A.amb);const lfo=longOsc('sine',0.18);const lg=gainNode(0.035);lfo.connect(lg).connect(wg.gain);drip(2500,7000,0.9);
     loopTimer(()=>play('bubbles',{pan:Math.random()*1.6-0.8,vol:0.35,muffle:0.4}),7000,16000);}
   if(type==='party'){lampHum(120,0.025);loopTimer(()=>sfx(Math.random()<0.5?partyHorn:squeak,Math.random()*2-1,0.25,0.6),6000,14000);loopTimer(()=>play(pick(['giggle','laughter']),{pan:Math.random()*2-1,vol:0.18,muffle:0.7}),12000,25000);}
@@ -883,14 +1013,28 @@ function say(text,{log=true,extras}={}){
   G.lastText=full; G.quietUntil=performance.now()+full.length*62/S.rate;
   if(log){const p=document.createElement('p');p.textContent=full;logEl.appendChild(p);while(logEl.children.length>40)logEl.firstChild.remove();logEl.scrollTop=logEl.scrollHeight;}
   live.textContent=''; setTimeout(()=>{live.textContent=full;},40);
+  const tok=G.sayTok=(G.sayTok||0)+1;
   if(S.narr&&'speechSynthesis' in window){
     speechSynthesis.cancel(); speakingText=full.toLowerCase(); speaking=true;
-    const parts=(text.match(/[^.!?]+[.!?]*/g)||[text]).map(p=>utter(p.trim()));
-    ex.forEach(e=>{if(e.label)parts.push(utter(e.label));(e.text.match(/[^.!?]+[.!?]*/g)||[e.text]).forEach(p=>parts.push(utter(p.trim(),e.opts||{})));});
-    const last=parts[parts.length-1]; last.onend=last.onerror=()=>{speaking=false;lastSpeakEnd=performance.now();};
-    parts.forEach(u=>speechSynthesis.speak(u));
-  }
+    const segs=[]; let grp=(text.match(/[^.!?]+[.!?]*/g)||[text]).map(p=>utter(p.trim()));
+    ex.forEach(e=>{if(e.label)grp.push(utter(e.label));const clip=voClip(e);
+      if(clip){segs.push(grp);grp=[];segs.push({clip,pos:e.pos});}
+      else (e.text.match(/[^.!?]+[.!?]*/g)||[e.text]).forEach(p=>grp.push(utter(p.trim(),e.opts||{})));});
+    segs.push(grp);
+    const runSeg=i=>{if(tok!==G.sayTok)return; if(i>=segs.length){speaking=false;lastSpeakEnd=performance.now();return;}
+      const sg=segs[i];
+      if(Array.isArray(sg)){if(!sg.length)return runSeg(i+1);let done=false;const fin=()=>{if(done)return;done=true;runSeg(i+1);};
+        const lu=sg[sg.length-1];lu.onend=lu.onerror=fin;sg.forEach(u=>speechSynthesis.speak(u));
+        if(i<segs.length-1)setTimeout(fin,sg.reduce((a,u)=>a+u.text.length,0)*90/S.rate+1500);}
+      else{speaking=true;const d=playClip(sg.clip,sg.pos);setTimeout(()=>runSeg(i+1),d*1000+250);}};
+    runSeg(0);
+  }else{let at=full.length*55;ex.forEach(e=>{const b=voClip(e);if(!b)return;setTimeout(()=>{if(tok===G.sayTok)playClip(b,e.pos);},at);at+=b.duration*1000+300;});}
 }
+const VO={};
+function loadVoices(){fetch('audio/voice/manifest.json').then(r=>r.ok?r.json():null).then(m=>{if(!m)return;Object.keys(m).forEach(l=>(m[l]||[]).forEach(id=>{
+  fetch('audio/voice/'+l+'/'+id+'.mp3').then(r=>r.arrayBuffer()).then(b=>new Promise((res,rej)=>A.ctx.decodeAudioData(b,res,rej))).then(buf=>{VO[l+'/'+id]=buf;}).catch(()=>{});}));}).catch(()=>{});}
+const voClip=e=>e&&e.vid&&VO[LANG+'/'+e.vid];
+function playClip(buf,pos){if(!A.ctx)return 0;const src=A.ctx.createBufferSource();src.buffer=buf;src.connect(spot(pos===undefined?0:pos,1.1,0));src.start();return buf.duration;}
 function narrateMenu(text){if(S.narr)say(text,{log:false});}
 
 /* ============================== voice input ============================== */
@@ -932,6 +1076,10 @@ function parseEn(s){
   if(has(/ (help|commands|what can i say) /))return{c:'help'};
   if(has(/ (repeat|say again|say that again|pardon|what did you say) /))return{c:'repeat'};
   if(has(/ (tape|recording|cassette) /))return{c:'tape'};
+  if(has(/ (endless|infinite|endless mode) /))return{c:'endless'};
+  if(has(/ (achievements|achievement|trophies|trophy) /))return{c:'ach'};
+  if(has(/ (find mark|find my mark|find the mark|where is my mark|where s my mark|go to mark|back to mark|back to my mark) /))return{c:'findmark'};
+  if(has(/ (mark|marker|drop mark|drop a mark|leave a mark|leave mark|set mark) /))return{c:'mark'};
   if(has(/ (continue|checkpoint|load game) /))return{c:'continue'};
   if(has(/ (try again|restart|new game|play again) /))return{c:'retry'};
   if(has(/ (english|ingles) /))return{c:'lang',n:'en'};
@@ -986,6 +1134,10 @@ function parsePt(s){
   if(has(/ (ajuda|comandos|o que posso dizer|o que eu posso dizer) /))return{c:'help'};
   if(has(/ (repetir|repete|repita|o que voce disse) /))return{c:'repeat'};
   if(has(/ (fita|gravacao|cassete) /))return{c:'tape'};
+  if(has(/ (infinito|modo infinito|sem fim) /))return{c:'endless'};
+  if(has(/ (conquistas|conquista|trofeus|trofeu) /))return{c:'ach'};
+  if(has(/ (achar marca|achar a marca|acha a marca|onde esta a marca|onde esta minha marca|onde ta a marca|cade a marca|cade minha marca|voltar para a marca|voltar pra marca) /))return{c:'findmark'};
+  if(has(/ (marcar|marca|deixar marca|deixar uma marca|deixa uma marca|marcador) /))return{c:'mark'};
   if(has(/ (tentar de novo|tentar novamente|tenta de novo|reiniciar|recomecar|novo jogo|jogar de novo|jogar novamente) /))return{c:'retry'};
   if(has(/ (continuar|continua|checkpoint|carregar) /))return{c:'continue'};
   if(has(/ (ingles|english) /))return{c:'lang',n:'en'};
@@ -1027,7 +1179,7 @@ function parsePt(s){
 }
 
 /* ============================== screens ============================== */
-const SCREENS=['splash','menu','pause','setup','settings','howto','news','credits','end','game'];
+const SCREENS=['splash','menu','pause','ach','setup','settings','howto','news','credits','end','game'];
 let screen='splash';
 function show(id,announce){
   SCREENS.forEach(s=>$('#'+s).hidden=(s!==id)); screen=id; syncChoices();
@@ -1048,7 +1200,7 @@ function openMenu(){
 function showMain(prefix=''){
   $('#mContinue').hidden=!lsGet('br_save',null);
   menuMusic();
-  const opts=['play',$('#mContinue').hidden?null:'continue','settings','how to play','what is new','credits'].filter(Boolean).map(o=>t(o));
+  const opts=['play',$('#mContinue').hidden?null:'continue','endless mode','settings','how to play','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
   show('menu',prefix+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
 }
 function quitToMain(){
@@ -1079,6 +1231,11 @@ function applySetting(k,v,quiet){
 }
 
 /* ============================== game setup ============================== */
+function genSet(frac){
+  const set=new Set(); if(!frac)return set; const total=G.w*G.h; let guard=0;
+  while(set.size<total*frac&&guard++<500){const sx=rand(G.w),sy=rand(G.h);for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const x=sx+dx,y=sy+dy;if(x>=0&&y>=0&&x<G.w&&y<G.h&&Math.abs(dx)+Math.abs(dy)<=1+rand(2))set.add(key(x,y));}}
+  return set;
+}
 function genDark(frac){
   G.dark=new Set(); if(!frac)return; const total=G.w*G.h;
   if(frac>=1){for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)G.dark.add(key(x,y));return;}
@@ -1093,6 +1250,8 @@ function newLevel(){
   for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>bd){bd=dist[y][x];best=[x,y];}
   G.exit=best; const exD=bfs(best[0],best[1]);
   genDark(lv.dark); if(lv.dark<1)G.dark.delete(key(...best));
+  G.wet=genSet(lv.water||0); G.wet.delete(key(G.x,G.y)); G.wet.delete(key(...best));
+  G.haz=new Set(); if(lv.hazards){const hc=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=2&&dist[y][x]+exD[y][x]>bd&&!(x===best[0]&&y===best[1]))hc.push([x,y]);for(let i=0;i<Math.round(G.w*G.h*lv.hazards)&&hc.length;i++){const c=hc.splice(rand(hc.length),1)[0];G.haz.add(key(...c));}}
   const cells=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(!(x===G.x&&y===G.y)&&!(x===best[0]&&y===best[1]))cells.push([x,y]);
   G.items=new Map(); const free=()=>cells.filter(([x,y])=>!G.items.has(key(x,y)));
   const place=(type,filter)=>{let c=free().filter(filter||(()=>true));if(!c.length)c=free();if(c.length){const p=pick(c);G.items.set(key(...p),type);}};
@@ -1104,27 +1263,30 @@ function newLevel(){
   if(it.tape&&!G.tapes.has(G.level))place('tape',([x,y])=>dist[y][x]>=3);
   ['water','fire','battery','energy'].forEach(ty=>{for(let i=0;i<(it[ty]||0);i++)place(ty,([x,y])=>dist[y][x]>=2);});
   G.mons=lv.mons.map(type=>{let c;
-    if(type==='chaser'){c=cells.filter(([x,y])=>dist[y][x]===3);c.sort((a,b)=>exD[b[1]][b[0]]-exD[a[1]][a[0]]);c=c.slice(0,2);}
+    if(type==='marcus')return {type,x:best[0],y:best[1],cool:0};
+    if(type==='deep'){c=cells.filter(([x,y])=>isWater(x,y)&&dist[y][x]>=4);if(!c.length){const w=[...G.wet].map(k=>k.split(',').map(Number));c=w.length?w:cells;}}
+    else if(type==='chaser'){c=cells.filter(([x,y])=>dist[y][x]===3);c.sort((a,b)=>exD[b[1]][b[0]]-exD[a[1]][a[0]]);c=c.slice(0,2);}
     else if(type==='face')c=cells.filter(([x,y])=>dist[y][x]>=2);
     else c=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));
     if(!c.length)c=cells; const p=pick(c); return {type,x:p[0],y:p[1],cool:3+rand(4)};});
   G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
+  G.wasWet=false; G.mark=null; G.markSought=false; G.caughtLevel=false;
   G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
   updateHUD(); ambience(); levelMusic(); if(A.ctx)A.amb.gain.setTargetAtTime(0.7,now(),0.1);
 }
-function saveCheckpoint(){lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff});}
-function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.lastTape=s.lastTape??-1;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
+function saveCheckpoint(){if(G.mode==='endless')return;lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff,drank:!!G.drank});}
+function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.lastTape=s.lastTape??-1;G.drank=!!s.drank;G.mode='story';G.edef=null;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
 function enterLevel(prefix=''){
   initAudio(); newLevel(); saveCheckpoint(); show('game');
   say((prefix?prefix+' ':'')+LX('intro')+' '+pathsText());
 }
 function newGame(){
-  G.level=0;G.inv=freshInv();G.sanity=100;G.steps=0;G.deaths=0;G.tapes=new Set();G.lastTape=-1;G.startTime=Date.now();G.sneak=false;setSneakUI();
+  G.mode='story';G.edef=null;G.drank=false;G.level=0;G.inv=freshInv();G.sanity=100;G.steps=0;G.deaths=0;G.tapes=new Set();G.lastTape=-1;G.startTime=Date.now();G.sneak=false;setSneakUI();
   const ctl=(S.voice&&!SR)?' Voice commands are not available in this browser, so use the buttons or keyboard.':S.voice?' Voice commands are on. Say help to hear them, or pause to stop.':' You are playing with buttons and keyboard.';
   enterLevel(t('Difficulty: {d}.{ctl}',{d:DL(),ctl:t(ctl)}));
 }
 function continueGame(){if(!loadCheckpoint())return say(t('There is no saved checkpoint.'));G.startTime=Date.now();G.sneak=false;setSneakUI();enterLevel(t('Checkpoint loaded.'));}
-function retryLevel(){const s=lsGet('br_save',null);if(s&&s.level===G.level){G.inv={...freshInv(),...s.inv};G.tapes=new Set(s.tapes);}G.sanity=100;G.sneak=false;setSneakUI();enterLevel(t('You try again.'));}
+function retryLevel(){if(G.mode==='endless')return startEndless();const s=lsGet('br_save',null);if(s&&s.level===G.level){G.inv={...freshInv(),...s.inv};G.tapes=new Set(s.tapes);}G.sanity=100;G.sneak=false;setSneakUI();enterLevel(t('You try again.'));}
 function resume(){if(G.state!=='paused')return;G.state='play';show('game');ambience();levelMusic();say(t('Resumed. {name}. {paths}',{name:LX('name'),paths:pathsText()}));}
 
 /* ============================== game logic ============================== */
@@ -1140,27 +1302,29 @@ function relDirWords(tx,ty){
   if(Math.abs(fw)>=2*Math.abs(rt))w=fw>=0?'ahead of you':'behind you';
   else if(Math.abs(rt)>=2*Math.abs(fw))w=rt>0?'to your right':'to your left';
   else w=(fw>0?'ahead':'behind')+' and to the '+(rt>0?'right':'left');
-  return {w:t(w),pan:rt/len,behind:fw<0};
+  return {w:t(w),pan:V3(rt/len,0,-fw/len),behind:fw<0};
 }
 function routeWords(s){const r=rel(s);return r===0?t('straight ahead'):r===2?t('back the way you came'):t('through the opening {dir}',{dir:RELN(r)});}
 function updateHUD(){
   const I=G.inv; const bits=[[t('Level'),LX('short')],[t('Sanity'),Math.round(G.sanity)+'%'],[t('Water'),I.water],[t('Firecrackers'),I.fire],[t('Sprints'),I.energy]];
   if(I.flashlight)bits.push([t('Light'),t(I.light?'on':'off')+' '+Math.round(I.battery)+'%']);
+  if(G.mode==='endless')bits.unshift([t('Depth'),G.depth]);
   if(I.radio)bits.push([t('Radio'),t('yes')]); if(L().locked)bits.push([t('Keycard'),t(I.keycard?'yes':'no')]);
-  bits.push([t('Tapes'),G.tapes.size+'/6'],[t('Facing'),DIRN(G.f)]); if(G.sneak)bits.push(['',t('sneaking')]);
+  bits.push([t('Tapes'),G.tapes.size+'/'+NTAPES],[t('Facing'),DIRN(G.f)]); if(G.sneak)bits.push(['',t('sneaking')]);
   $('#hud').innerHTML=bits.map(([k,v])=>`<span>${k?k+': ':''}<b>${v}</b></span>`).join('');
   const fill=$('#sanityFill'); fill.style.width=G.sanity+'%'; fill.style.background=G.sanity>50?'var(--ok)':G.sanity>25?'#f2c94b':'var(--danger)';
 }
 function drain(mult=1){let d=DF().drain*mult;if(G.sneak)d*=1.4;if(isDark(G.x,G.y)&&!G.inv.light)d*=1.5;if(L().calm)d*=0.4;G.sanity=Math.max(0,G.sanity-d);
   if(G.inv.light){G.inv.battery=Math.max(0,G.inv.battery-2);if(G.inv.battery<=0){G.inv.light=false;G.extras.push({text:t('Your flashlight flickers and dies.')});sfx(clickSound,false);}}}
 function nearestHostile(dist){let best=null,bd=Infinity;for(const m of G.mons){if(!MT[m.type].hostile&&m.type!=='moths')continue;const d=dist[m.y][m.x];if(d<bd){bd=d;best=m;}}return best?{m:best,d:bd}:null;}
-function moveMon(m,d){if(d>=0){m.x+=DX[d];m.y+=DY[d];}}
+function moveMon(m,d){if(d<0)return;const nx=m.x+DX[d],ny=m.y+DY[d];if(m.type==='deep'&&!isWater(nx,ny))return;m.x=nx;m.y=ny;}
 function wander(m){const ds=[0,1,2,3].filter(k=>isOpen(m.x,m.y,k));if(ds.length)moveMon(m,pick(ds));}
 function monstersTurn(){
   const dist=bfs(G.x,G.y); const Df=DF(); let nd=null;
   if(G.noise){nd=bfs(G.noise.x,G.noise.y);G.noise.turns--;}
   for(const m of G.mons){const T=MT[m.type];const d=dist[m.y][m.x];
-    if(T.npc){if(Math.random()<0.3)wander(m);continue;}
+    if(T.npc){if(m.type!=='marcus'&&Math.random()<0.3)wander(m);continue;}
+    if(m.type==='deep'){if(isWater(G.x,G.y)){const wd=bfs(G.x,G.y,G.wet);if(wd[m.y][m.x]<=T.sense+DF().sense&&Math.random()<T.chase*Df.chase){moveMon(m,stepToward(wd,m.x,m.y));continue;}}if(Math.random()<0.5)wander(m);continue;}
     if(nd&&T.hostile&&m.type!=='chaser'&&nd[m.y][m.x]<=8&&nd[m.y][m.x]>0){if(Math.random()<0.85)moveMon(m,stepToward(nd,m.x,m.y));continue;}
     let sense=T.sense+Df.sense; if(G.sneak)sense=Math.min(sense,2); if(G.sprinted)sense+=3;
     let hunting=d<=sense;
@@ -1174,11 +1338,13 @@ function monstersTurn(){
 function caughtBy(m){
   jumpscare(); G.hurt=performance.now(); const hit=DF().hit; G.sanity=Math.max(0,G.sanity-hit);
   const dist=bfs(G.x,G.y);
+  G.caughtLevel=true;
   if(m.type==='chaser'){const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]===4)c.push([x,y]);const p=c.length?pick(c):[G.exit[0],G.exit[1]];m.x=p[0];m.y=p[1];
     return t('It catches you! Huge hands slam you into the wall. You tear free and keep running. You lose {n} sanity.',{n:hit});}
-  const far=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=6)far.push([x,y]);const p=far.length?pick(far):[G.exit[0],G.exit[1]];m.x=p[0];m.y=p[1];
+  G.caughtLevel=true;
+  const far=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=6&&(m.type!=='deep'||isWater(x,y)))far.push([x,y]);const p=far.length?pick(far):[G.exit[0],G.exit[1]];m.x=p[0];m.y=p[1];
   const how={howler:'The Howler was waiting for you in the dark. It grabs you, its face inches from yours, screaming!',smiler:'A Smiler opens its grin right in front of you. Hundreds of teeth!',hound:'A Hound slams into you, snapping and snarling!',
-    skin:'The Skin-Stealer grabs you. It has a face. It is wearing your face!',party:'A Partygoer hugs you. It will not let go. Hello, friend!'}[m.type];
+    skin:'The Skin-Stealer grabs you. It has a face. It is wearing your face!',party:'A Partygoer hugs you. It will not let go. Hello, friend!',deep:'The water explodes. Something huge drags you under, then lets you go. You crawl out, coughing.'}[m.type];
   return t('{how} You tear free and run blindly. You lose {n} sanity.',{how:how?t(how):t('{Name} grabs you!',{Name:cap(MN(m))}),n:hit});
 }
 function checkCaught(parts){for(const m of G.mons){if(m.x===G.x&&m.y===G.y&&MT[m.type].hostile){parts.push(caughtBy(m));return true;}}return false;}
@@ -1186,6 +1352,7 @@ function mothBite(parts){const dist=bfs(G.x,G.y);for(const m of G.mons){if(m.typ
 function monsterCues(force){
   const dist=bfs(G.x,G.y); const txt=[]; let nearest=null,nd=99;
   for(const m of G.mons){const T=MT[m.type];const d=dist[m.y][m.x];const {w,pan}=relDirWords(m.x,m.y);
+    if(m.type==='marcus'){if(d<=2)txt.push(t('Marcus is very close now, {w}. You can hear him breathing.',{w}));continue;}
     if(T.npc){if(d<=1)txt.push(d===0?t('A Faceling stands right here, humming. It has no face. Say talk to speak to it.'):t('A Faceling stands {w}, humming softly. Say talk to speak to it.',{w}));if(d<=4)setTimeout(()=>monSound(m,pan,clamp(1-d*0.2,0.15,1),0),300);continue;}
     if(m.type==='moths'){if(d<=1){if(force)txt.push(t('Deathmoths are crawling all over you.'));}
       else if(d<=5){monSound(m,pan,clamp(1-d*0.15,0.2,1),d*0.1);if(d<=3||force||!G.mothTold){txt.push(t(G.inv.light?'You hear {sound} {w}. Your light is drawing them in.':'You hear {sound} {w}.',{sound:MS(m),w}));G.mothTold=true;}}continue;}
@@ -1214,7 +1381,7 @@ function skinLure(){
   if(m.cool>0||d<2||d>9)return; m.cool=5+rand(4);
   const {w,pan}=relDirWords(m.x,m.y);
   play('breath2',{pan,vol:0.4,muffle:0.5});
-  G.extras.push({label:t('Somewhere {w}, a voice calls out:',{w}),text:pick(LURES[LANG]),opts:{v:voice2,pitch:1.25,rate:0.95}});
+  const li=rand(LURES[LANG].length);G.extras.push({label:t('Somewhere {w}, a voice calls out:',{w}),text:LURES[LANG][li],opts:{v:voice2,pitch:1.25,rate:0.95},vid:'lure'+(li+1),pos:pan});
 }
 function hallucinate(){
   if(G.sanity>=35||Math.random()>0.18||L().calm)return;
@@ -1251,7 +1418,7 @@ function pickupItems(parts){
   if(ty==='flashlight'){I.flashlight=true;I.battery=Math.max(I.battery,80);parts.push(t('You find a flashlight! Say light to switch it on or off. It scares Smilers, but batteries run out.'));}
   if(ty==='radio'){I.radio=true;parts.push(t('You find a walkie-talkie. Its static gets stronger near the exit. Say radio to check it.'));}
   if(ty==='keycard'){I.keycard=true;sfx(chirp,0,0.6,0);parts.push(t('You find a keycard! Now the exit door will open.'));}
-  if(ty==='tape'){G.tapes.add(G.level);G.lastTape=G.level;sfx(tapeClick);parts.push(t('You find a cassette tape and press play.'));G.extras.push({text:TAPES[LANG][G.level],opts:{v:voice2,pitch:0.8,rate:S.rate*0.9}});}
+  if(ty==='tape'){G.tapes.add(G.level);G.lastTape=G.level;sfx(tapeClick);parts.push(t('You find a cassette tape and press play.'));G.extras.push({text:TAPES[LANG][G.level],opts:{v:voice2,pitch:0.8,rate:S.rate*0.9},vid:'tape'+(G.level+1)});if(G.tapes.size>=NTAPES)unlock('archivist');}
 }
 function scareEvents(parts,caughtNow){
   const lv=L();
@@ -1268,13 +1435,14 @@ function scareEvents(parts,caughtNow){
   if(lv.lights&&G.steps>6&&G.sinceScare>10&&Math.random()<0.08){startBlackout();parts.push(t('The lights go out. All of them. The humming stops, and in the total darkness something takes a slow breath right behind you.'));return;}
   if(Math.random()<0.045){play(pick(['farscream','farscream2']),{pan:Math.random()*2-1,vol:0.35,muffle:0.65});parts.push(t('Somewhere far away, someone screams. Then silence.'));return;}
   if(d<=4&&d>1&&Math.random()<0.4){setTimeout(()=>sfx(footstep,0.45,0.5),950);if(!G.echoTold){G.echoTold=true;parts.push(t('Behind you, footsteps copy yours. When you stop, they stop.'));}}
-  if(G.sanity<70&&Math.random()<0.06){play('breath2',{vol:0.7,pan:Math.random()<0.5?-0.9:0.9});G.extras.push({label:S.narr?'':t('A voice whispers in your ear:'),text:pick(WHISPERS[LANG]),opts:{pitch:0.1,rate:0.6}});}
+  if(G.sanity<70&&Math.random()<0.06){play('breath2',{vol:0.7,pan:Math.random()<0.5?-0.9:0.9});const wi=rand(WHISPERS[LANG].length);G.extras.push({label:S.narr?'':t('A voice whispers in your ear:'),text:WHISPERS[LANG][wi],opts:{pitch:0.1,rate:0.6},vid:'whisper'+(wi+1),pos:V3(Math.random()<0.5?-1:1,0,0.2)});}
 }
 function startBlackout(){G.blackout=3+rand(3);G.sinceScare=0;if(!A.ctx)return;A.amb.gain.setTargetAtTime(0,now(),0.03);stopAllMusic(0.4);play('breath',{vol:1,muffle:0.1,delay:1.8});}
 function restoreLights(){G.flash=performance.now();if(!A.ctx)return;A.amb.gain.setTargetAtTime(0.7,now(),0.05);levelMusic();}
 function behindScare(){
   const near=nearestHostile(bfs(G.x,G.y)); if(!near||near.d>2||Math.random()>0.5||G.blackout>0||near.m.type==='moths')return '';
   jumpscare();G.sanity=Math.max(0,G.sanity-DF().scare);G.hurt=performance.now();
+  if(G.sanity>0)unlock('lookback');
   return t('You turn around, and it is right there, inches from your face, staring! You stumble back. You lose {n} sanity.',{n:DF().scare});
 }
 // one turn after the player arrives in a cell
@@ -1284,6 +1452,9 @@ function afterMove(quiet){
   const k=key(G.x,G.y); const firstVisit=!G.visited.has(k); G.visited.add(k);
   let caughtNow=checkCaught(parts);
   pickupItems(parts);
+  if(isHazard(G.x,G.y)){const n=Math.round(DF().hit*0.25);G.sanity=Math.max(0,G.sanity-n);G.hurt=performance.now();sfx(zap);parts.push(t('ZAP! You walk straight into a live wire. You lose {n} sanity.',{n}));unlock('shocked');}
+  const wetNow=isWater(G.x,G.y); if(wetNow&&!G.wasWet)parts.push(t('You step into cold, black water.')); else if(!wetNow&&G.wasWet)parts.push(t('You climb out of the water.')); G.wasWet=wetNow;
+  if(G.mark&&G.markSought&&G.x===G.mark.x&&G.y===G.mark.y){G.markSought=false;sfx(ping,V3(0,0,-0.3),0.6,0);parts.push(t('You are back at your mark.'));unlock('mapper');}
   if(G.x===G.exit[0]&&G.y===G.exit[1]){
     if(lv.locked&&!G.inv.keycard){sfx(denied);parts.push(t('A heavy elevator door with a card reader. It is locked. You need the keycard.'));}
     else{levelComplete(parts);return {stop:true};}
@@ -1298,7 +1469,7 @@ function afterMove(quiet){
   if(darkNow&&lv.dark<1&&!G.wasDark){parts.unshift(t('It is dark here.'));filler++;}
   G.wasDark=darkNow;
   const cue=G.blackout>0?'':monsterCues(false); if(cue)parts.push(cue);
-  skinLure(); scareEvents(parts,caughtNow); hallucinate();
+  skinLure(); scareEvents(parts,caughtNow); hallucinate(); marcusCall(); parts.push(hazardCue());
   if(G.sanity<=0){gameOver(parts);return {stop:true};}
   const exDist=bfs(G.exit[0],G.exit[1])[G.y][G.x];
   if(exDist<=3){const ex=exitCue(true);if(exDist===1)parts.push(t('The exit is very close. ')+ex);}
@@ -1359,7 +1530,7 @@ function drink(){
   if(G.state!=='play')return notPlaying();
   if(!G.inv.water)return say(t('You have no almond water. Bottles are hidden around the level.'));
   if(G.sanity>=100)return say(t('Your mind is already clear. Save it for later.'));
-  G.inv.water--; G.sanity=Math.min(100,G.sanity+30); sfx(drinkSound); updateHUD();
+  G.inv.water--; G.drank=true; G.sanity=Math.min(100,G.sanity+30); sfx(drinkSound); updateHUD();
   say(t('You drink almond water. It tastes sweet, like vanilla. Your head clears. Sanity is now {s} percent. {n} bottles left.',{s:Math.round(G.sanity),n:G.inv.water}));
 }
 function light(mode){
@@ -1378,7 +1549,7 @@ function throwCracker(r){
   if(!G.inv.fire)return say(t('You have no firecrackers.'));
   let x=G.x,y=G.y,n=0; const d=abs(r); while(n<4&&isOpen(x,y,d)){x+=DX[d];y+=DY[d];n++;}
   if(n===0)return say(t('There is a wall {dir}. Throw it down an open path. {paths}',{dir:RELN(r),paths:pathsText()}));
-  G.inv.fire--; G.noise={x,y,turns:3}; sfx(fuse);
+  G.inv.fire--; G.noise={x,y,turns:3}; sfx(fuse); if(bump('throws')>=10)unlock('boom');
   const {pan}=relDirWords(x,y); setTimeout(()=>sfx(bang,pan,clamp(1-n*0.15,0.3,1),n*0.1),900);
   G.steps++; drain(0.5); monstersTurn(); const parts=[]; checkCaught(parts); updateHUD();
   if(G.sanity<=0)return gameOver(parts);
@@ -1400,19 +1571,19 @@ function talk(){
   if(near)tips.push(t('Then it turns its blank face {w}. Something is there: {item}.',{w:relDirWords(near[1],near[2]).w,item:ITEMNAME[LANG][near[0]]}));
   const last=pick(['It hums a lullaby you almost remember.','It whispers without a mouth: do not stay too long.','It touches your shoulder. Your mind feels a little clearer.']);
   tips.push(t(last)); if(/clearer/.test(last))G.sanity=Math.min(100,G.sanity+8);
-  sfx(hum,0,0.6); updateHUD(); say(tips.join(' '));
+  sfx(hum,0,0.6); if(bump('talks')>=3)unlock('friend'); updateHUD(); say(tips.join(' '));
 }
 function radio(){
   if(G.state!=='play')return notPlaying();
   if(!G.inv.radio)return say(t('You do not have a walkie-talkie.'));
   const d=bfs(G.exit[0],G.exit[1])[G.y][G.x]; radioBurst(clamp(0.9-d*0.05,0.1,0.9));
   const strength=d<=3?'very strong. The exit must be close.':d<=7?'getting stronger.':d<=12?'weak.':'barely there. You are far from the exit.';
-  if(G.mons.some(m=>m.type==='skin')&&Math.random()<0.35)G.extras.push({label:t('A voice cuts through the static:'),text:pick(RADIOV[LANG]),opts:{v:voice2,pitch:0.9,rate:0.9}});
+  if(G.mons.some(m=>m.type==='skin')&&Math.random()<0.35){const ri=rand(RADIOV[LANG].length);G.extras.push({label:t('A voice cuts through the static:'),text:RADIOV[LANG][ri],opts:{v:voice2,pitch:0.9,rate:0.9},vid:'radio'+(ri+1)});}
   say(t('You turn on the walkie-talkie. The static is {s}',{s:t(strength)}));
 }
 function tape(){
   if(G.lastTape<0)return say(t('You have not found any tapes yet.'));
-  sfx(tapeClick); G.extras.push({text:TAPES[LANG][G.lastTape],opts:{v:voice2,pitch:0.8,rate:S.rate*0.9}}); say(t('You rewind the tape and press play.'));
+  sfx(tapeClick); G.extras.push({text:TAPES[LANG][G.lastTape],opts:{v:voice2,pitch:0.8,rate:S.rate*0.9},vid:'tape'+(G.lastTape+1)}); say(t('You rewind the tape and press play.'));
 }
 function hide(){
   if(G.state!=='play')return notPlaying();
@@ -1423,6 +1594,7 @@ function hide(){
   const m=near.m;
   if(m.type==='moths'){G.inv.light=false;updateHUD();wander(m);return say(t('You switch off your light and hold perfectly still. The fluttering drifts away. {paths}',{paths:pathsText()}));}
   if(Math.random()<0.7){moveMon(m,stepAway(dist,m.x,m.y));const {pan}=relDirWords(m.x,m.y);monSound(m,pan,0.6,0.3);updateHUD();setChase(bfs(G.x,G.y)[m.y][m.x]);
+    if(bump('hides')>=5)unlock('hider');
     return say(t('You press yourself against the wall and hold your breath. {Name} passes so close you can feel it. Then it moves away. {paths}',{Name:cap(MN(m)),paths:pathsText()}));}
   moveMon(m,stepToward(dist,m.x,m.y));
   if(m.x===G.x&&m.y===G.y){const c=caughtBy(m);updateHUD();if(G.sanity<=0)return gameOver([c]);return say(t('You hold your breath. It stops. It sniffs the air. It found you. {caught} {paths}',{caught:c,paths:pathsText()}));}
@@ -1433,10 +1605,10 @@ function status(){
   const I=G.inv; const b=[LX('name')+'.',t('Sanity {n} percent.',{n:Math.round(G.sanity)}),t('Almond water: {n}.',{n:I.water}),t('Firecrackers: {n}.',{n:I.fire}),t('Sprints: {n}.',{n:I.energy})];
   if(I.flashlight)b.push(t(I.light?'Flashlight on, battery {n} percent.':'Flashlight off, battery {n} percent.',{n:Math.round(I.battery)})); else if(I.battery)b.push(t('A battery, but no flashlight.'));
   if(I.radio)b.push(t('You have a walkie-talkie.')); if(L().locked)b.push(t(I.keycard?'You have the keycard.':'You need the keycard.'));
-  b.push(t('Tapes found: {n} of 6.',{n:G.tapes.size})); if(G.sneak)b.push(t('You are sneaking.')); b.push(t('Facing {d}. Difficulty: {diff}.',{d:DIRN(G.f),diff:DL()}));
+  if(G.mode==='endless')b.unshift(t('Endless mode, depth {n}.',{n:G.depth})); else b.push(t('Tapes found: {n} of {total}.',{n:G.tapes.size,total:NTAPES})); if(G.sneak)b.push(t('You are sneaking.')); b.push(t('Facing {d}. Difficulty: {diff}.',{d:DIRN(G.f),diff:DL()}));
   say(b.join(' '));
 }
-function help(){say(t('Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Talk to Facelings. Radio to check the static. Tape to replay a tape. Also status, repeat, faster, slower, and pause.'));}
+function help(){say(t('Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Talk to Facelings. Radio to check the static. Tape to replay a tape. Mark to leave a mark, and find mark to hear the way back. Also status, repeat, faster, slower, and pause.'));}
 function notPlaying(){
   if(G.state==='dead')say(t('You lost your mind. Say try again, or menu.'));
   else if(G.state==='paused')say(t('The game is paused. Say resume.'));
@@ -1444,23 +1616,143 @@ function notPlaying(){
   else say(t('Say play to start a new game.'));
 }
 function elapsedText(){const s=Math.round((Date.now()-G.startTime)/1000);return t('{m} minutes and {s} seconds',{m:Math.floor(s/60),s:s%60});}
+function finishStats(extra){
+  const stats=[[t('Difficulty'),DL()],[t('Time'),elapsedText()],[t('Steps'),G.steps],[t('Times you lost your mind'),G.deaths],[t('Tapes found'),t('{n} of {total}',{n:G.tapes.size,total:NTAPES})]];
+  return extra?[...extra,...stats]:stats;
+}
+function showEnd(title,stats,spoken,pre=[]){
+  $('#endTitle').textContent=title;
+  $('#statsList').innerHTML=stats.map(([k,v])=>`<li>${k}: <b>${v}</b></li>`).join('');
+  G.extras=[...pre,...G.extras,{text:stats.map(([k,v])=>t('{k}: {v}.',{k,v})).join(' ')+' '+t('Say play again, or main menu.')}];
+  say(spoken);
+  setTimeout(()=>{if(G.state==='won'||G.state==='over')show('end');},400);
+}
+function escapeAchievements(){
+  unlock('escape'); if(S.diff==='nightmare')unlock('nightmare'); if(!G.drank)unlock('thirst');
+  if(Date.now()-G.startTime<20*60000)unlock('speed');
+}
 function levelComplete(parts){
-  sfx(noclip); G.state='transition'; G.blackout=0; G.inv.keycard=false; updateHUD();
+  sfx(noclip); const lv=L(); G.state='transition'; G.blackout=0; G.inv.keycard=false; updateHUD();
+  if(!G.caughtLevel&&!lv.calm)unlock('untouchable');
   const exitText=LX('exitText');
-  if(G.level===LEVELS.length-1){
-    G.state='won'; clearAmb(); stopAllMusic(3); setTimeout(()=>sfx(winSound),1500); lsDel('br_save');
-    const stats=[[t('Difficulty'),DL()],[t('Time'),elapsedText()],[t('Steps'),G.steps],[t('Times you lost your mind'),G.deaths],[t('Tapes found'),t('{n} of 6',{n:G.tapes.size})]];
-    $('#statsList').innerHTML=stats.map(([k,v])=>`<li>${k}: <b>${v}</b></li>`).join('');
-    say([...parts,exitText,t('Warm sunlight. Birds. Real air. The humming has finally stopped. You escaped the Backrooms!'),stats.map(([k,v])=>t('{k}: {v}.',{k,v})).join(' '),t('Say play again, or main menu.')].join(' '));
-    setTimeout(()=>{if(G.state==='won')show('end');},400); return;
+  if(G.mode==='endless'){
+    G.depth++; const best=lsGet('br_best',0); if(G.depth>best)lsSet('br_best',G.depth);
+    if(G.depth>=10)unlock('deep10'); if(G.depth>=25)unlock('deep25');
+    say([...parts,exitText,t('You feel yourself falling deeper.')].filter(Boolean).join(' '));
+    setTimeout(()=>{if(G.state!=='transition')return;G.sanity=Math.min(100,G.sanity+20);G.sneak=false;setSneakUI();G.edef=endlessDef(G.depth);G.level=G.edef.base;
+      initAudio();newLevel();show('game');say(t('Depth {n}.',{n:G.depth})+' '+LX('intro')+' '+pathsText());},4500);
+    return;
+  }
+  if(G.level===0)unlock('first'); if(lv.locked)unlock('party'); if(lv.water)unlock('swim');
+  if(lv.secret){
+    G.state='won'; clearAmb(); stopAllMusic(4); setTimeout(()=>sfx(winSound),2500); lsDel('br_save'); unlock('marcus'); escapeAchievements();
+    showEnd(t('SECRET ENDING'),finishStats(),[...parts,t('You find him sitting against the wall, holding a tape recorder. He looks up at you.')].join(' '),
+      [{label:'Marcus:',text:MARCUS_FOUND[LANG],opts:{v:voice2,pitch:0.85,rate:S.rate*0.9},vid:'marcusFound'},
+       {text:t('He takes your hand. Together you walk toward a door that was never there before. Daylight. Real daylight. Behind you, the hum stops, for good. Secret ending: you brought Marcus home.')}]);
+    return;
+  }
+  if(lv.run){
+    if(G.tapes.size>=NTAPES){
+      say([...parts,exitText,t('Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.')].join(' '));
+      setTimeout(()=>{if(G.state!=='transition')return;G.level=LEVELS.length-1;G.sanity=100;G.sneak=false;setSneakUI();enterLevel('');},6500);
+      return;
+    }
+    G.state='won'; clearAmb(); stopAllMusic(3); setTimeout(()=>sfx(winSound),1500); lsDel('br_save'); escapeAchievements();
+    const hint=t('You found {n} of {total} tapes. Some say that with all of them, the daylight is not the real ending.',{n:G.tapes.size,total:NTAPES});
+    showEnd(t('YOU ESCAPED'),finishStats(),[...parts,exitText,t('Warm sunlight. Birds. Real air. The humming has finally stopped. You escaped the Backrooms!'),hint].join(' '));
+    return;
   }
   say([...parts,exitText,t('You feel yourself falling through reality.')].join(' '));
   setTimeout(()=>{if(G.state!=='transition')return;G.level++;G.sanity=Math.min(100,G.sanity+25);G.sneak=false;setSneakUI();enterLevel(t('Checkpoint saved.'));},4500);
 }
 function gameOver(parts){
-  G.state='dead'; G.deaths++; jumpscare(); clearAmb(); stopAllMusic(0.5);
+  G.deaths++; jumpscare(); clearAmb(); stopAllMusic(0.5);
+  if(G.mode==='endless'){
+    G.state='over'; const best=Math.max(lsGet('br_best',0),G.depth); lsSet('br_best',best);
+    showEnd(t('THE BACKROOMS WIN'),[[t('Depth reached'),G.depth],[t('Best depth'),best],[t('Time'),elapsedText()],[t('Steps'),G.steps]],[...parts,t('Your sanity hits zero. The Backrooms swallow you at depth {n}.',{n:G.depth})].join(' '));
+    return;
+  }
+  G.state='dead';
   const s=lsGet('br_save',null); if(s){s.deaths=G.deaths;lsSet('br_save',s);}
   say([...parts,t('Your sanity hits zero. The hum fills your head until there is nothing else. You become part of the Backrooms. Say try again to restart {name} from the checkpoint, or say menu.',{name:LX('name')})].join(' '));
+}
+// ---------- markers ----------
+function dropMark(){
+  if(G.state!=='play')return notPlaying();
+  G.mark={x:G.x,y:G.y}; G.markSought=false; sfx(ping,V3(0,0,-0.3),0.7,0);
+  say(t('You scratch a mark into the wall. Say find mark to hear your way back to it.'));
+}
+function findMark(){
+  if(G.state!=='play')return notPlaying();
+  if(!G.mark)return say(t('You have not left a mark on this level. Say mark to leave one.'));
+  if(G.x===G.mark.x&&G.y===G.mark.y)return say(t('You are standing at your mark.'));
+  const dist=bfs(G.mark.x,G.mark.y); const d=dist[G.y][G.x]; const st=stepToward(dist,G.x,G.y); const {pan}=relDirWords(G.mark.x,G.mark.y);
+  sfx(ping,pan,clamp(1-d*0.06,0.25,1),clamp(d*0.05,0,0.7)); G.markSought=true;
+  say(t('Your mark is {route}, about {n} steps away.',{route:routeWords(st),n:d}));
+}
+function hazardCue(){
+  if(!G.haz||!G.haz.size)return '';
+  const dirs=[0,3,1].filter(r=>{const d=abs(r);return isOpen(G.x,G.y,d)&&isHazard(G.x+DX[d],G.y+DY[d]);});
+  if(!dirs.length)return '';
+  dirs.forEach(r=>{const d=abs(r);const {pan}=relDirWords(G.x+DX[d],G.y+DY[d]);sfx(crackle,V3(pan.x,0.5,pan.z),0.8);});
+  return t('Sparks crackle {dirs}.',{dirs:dirs.map(r=>RELSHORT(r)).join(t(' and '))});
+}
+function marcusCall(){
+  const m=G.mons.find(m=>m.type==='marcus'); if(!m||G.steps%2)return;
+  const {w,pan}=relDirWords(m.x,m.y); const i=rand(MARCUS[LANG].length);
+  G.extras.push({label:t('Somewhere {w}, a tired voice calls:',{w}),text:MARCUS[LANG][i],opts:{v:voice2,pitch:0.85,rate:0.9},vid:'marcus'+(i+1),pos:pan});
+}
+// ---------- endless mode ----------
+function endlessDef(depth){
+  const pool=LEVELS.map((l,i)=>i).filter(i=>!LEVELS[i].run&&!LEVELS[i].secret);
+  const base=pick(pool), b=LEVELS[base]; const sz=Math.min(6+Math.ceil(depth/2),14);
+  const def={...b,base,w:sz,h:Math.max(5,sz-1),mons:[...b.mons],items:{...b.items}};
+  delete def.items.tape; delete def.items.flashlight; delete def.items.radio;
+  for(let i=0;i<Math.floor(depth/4);i++)def.mons.push(pick(['howler','hound','smiler','party']));
+  def.pt={...b.pt}; return def;
+}
+function startEndless(){
+  G.mode='endless'; G.depth=1; G.inv=freshInv(); G.inv.flashlight=true; G.inv.battery=60; G.inv.radio=true;
+  G.sanity=100; G.steps=0; G.deaths=0; G.tapes=new Set(); G.lastTape=-1; G.drank=false; G.startTime=Date.now(); G.sneak=false; setSneakUI();
+  G.edef=endlessDef(1); G.level=G.edef.base; initAudio(); newLevel(); show('game');
+  say(t('Endless mode. The Backrooms go on forever. How deep can you go? Your best is depth {b}.',{b:lsGet('br_best',0)})+' '+t('Depth {n}.',{n:1})+' '+LX('intro')+' '+pathsText());
+}
+// ---------- achievements ----------
+const ACH=[
+ {id:'first',en:['First Steps','Escape Level 0.'],pt:['Primeiros Passos','Escape do Nível 0.']},
+ {id:'untouchable',en:['Untouchable','Finish a level without being caught.'],pt:['Intocável','Termine um nível sem ser pego.']},
+ {id:'shocked',en:['Live Wire','Walk into a live wire at the Electrical Station.'],pt:['Fio Desencapado','Leve um choque na Estação Elétrica.']},
+ {id:'party',en:['Party Pooper','Escape Level Fun.'],pt:['Estraga-Festa','Escape do Nível Diversão.']},
+ {id:'swim',en:['Sea Legs','Escape Thalassophobia.'],pt:['Pernas de Marinheiro','Escape de Talassofobia.']},
+ {id:'escape',en:['Escapee','Escape the Backrooms.'],pt:['Fugitivo','Escape dos Backrooms.']},
+ {id:'nightmare',en:['Nightmare Survivor','Escape on Nightmare difficulty.'],pt:['Sobrevivente do Pesadelo','Escape na dificuldade Pesadelo.']},
+ {id:'thirst',en:['Dry Mouth','Escape without drinking any almond water.'],pt:['Boca Seca','Escape sem beber nenhuma água de amêndoa.']},
+ {id:'speed',en:['Speedrunner','Escape in under 20 minutes.'],pt:['Speedrunner','Escape em menos de 20 minutos.']},
+ {id:'archivist',en:['Archivist','Find all eight tapes.'],pt:['Arquivista','Encontre as oito fitas.']},
+ {id:'marcus',secret:true,en:['Not Alone','Bring Marcus home.'],pt:['Não Está Sozinho','Leve Marcus para casa.']},
+ {id:'hider',en:['Hold Your Breath','Hide from monsters 5 times.'],pt:['Prenda a Respiração','Esconda-se dos monstros 5 vezes.']},
+ {id:'boom',en:['Fireworks','Throw 10 firecrackers.'],pt:['Fogos de Artifício','Atire 10 bombinhas.']},
+ {id:'friend',en:['Faceless Friend','Talk to Facelings 3 times.'],pt:['Amigo Sem Rosto','Converse com os Sem-Rosto 3 vezes.']},
+ {id:'mapper',en:['Cartographer','Find your way back to a mark.'],pt:['Cartógrafo','Encontre o caminho de volta até uma marca.']},
+ {id:'lookback',en:['Do Not Look Back','Survive turning around into a monster.'],pt:['Não Olhe Para Trás','Sobreviva ao se virar de cara com um monstro.']},
+ {id:'deep10',en:['Going Deeper','Reach depth 10 in Endless mode.'],pt:['Cada Vez Mais Fundo','Chegue à profundidade 10 no modo infinito.']},
+ {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']}
+];
+const ACHV=lsGet('br_ach',{}); const STATS=lsGet('br_stats',{});
+function bump(k){STATS[k]=(STATS[k]||0)+1;lsSet('br_stats',STATS);return STATS[k];}
+function unlock(id){
+  if(ACHV[id])return; const a=ACH.find(a=>a.id===id); if(!a)return;
+  ACHV[id]=Date.now(); lsSet('br_ach',ACHV); sfx(achSound);
+  G.extras.push({text:t('Achievement unlocked: {name}.',{name:a[LANG][0]})});
+}
+function renderAch(){
+  const ul=$('#achList'); ul.innerHTML=''; let n=0; const got=[];
+  ACH.forEach(a=>{const has=!!ACHV[a.id]; if(has){n++;got.push(a[LANG][0]);}
+    const li=document.createElement('li'); const hide=a.secret&&!has;
+    li.textContent=(has?'✓ ':'')+(hide?t('Secret achievement'):a[LANG][0])+': '+(hide?'???':a[LANG][1])+(has?'':' '+t('(locked)'));
+    ul.appendChild(li);});
+  $('#achCount').textContent=t('{n} of {total} unlocked.',{n,total:ACH.length});
+  return t('Achievements. {n} of {total} unlocked.',{n,total:ACH.length})+(got.length?' '+got.join(', ')+'.':'')+' '+t('Say back to return.');
 }
 
 // it hunts you while you stand still
@@ -1498,8 +1790,11 @@ function run(c,n,r){
     if(c==='credits')return show('credits',t('Credits. Music by Kevin MacLeod. Sound effects from OpenGameArt, credited on this page. Say back to return.'));
     if(c==='howto')return show('howto',t('How to play. Say back to return.'));
     if(c==='news')return show('news',t('What is new. Version {v}. Say back to return.',{v:VERSION}));
-    if(c==='help')return narrateMenu(t(screen==='menu'?'Say play, continue, settings, how to play, what is new, or credits.':screen==='pause'?'Say resume, restart level, settings, how to play, or quit to main menu.':'Say back to return to the menu.'));
+    if(c==='help')return narrateMenu(t(screen==='menu'?'Say play, continue, endless mode, settings, how to play, achievements, what is new, or credits.':screen==='pause'?'Say resume, restart level, settings, how to play, or quit to main menu.':'Say back to return to the menu.'));
     if(c==='diff')return applySetting('diff',n);
+    if(c==='endless')return startEndless();
+    if(c==='ach')return show('ach',renderAch());
+    if((c==='retry'||c==='play')&&screen==='end'&&G.mode==='endless')return startEndless();
     if(c==='continue')return continueGame();
     if(c==='retry'){if(G.state==='dead'||G.state==='paused')return retryLevel();return screen==='setup'?newGame():openSetup();}
     if(c==='play'){if(screen==='setup')return newGame();if(G.state==='dead')return retryLevel();return openSetup();}
@@ -1513,12 +1808,14 @@ function run(c,n,r){
     case 'turnleft':return turn(3); case 'turnright':return turn(1); case 'turnaround':return turn(2);
     case 'sprint':return sprint(r||0); case 'throw':return throwCracker(r||0);
     case 'sneak':return sneak(true); case 'unsneak':return sneak(false);
+    case 'mark':return dropMark(); case 'findmark':return findMark();
     case 'light':return light(n); case 'talk':return talk(); case 'radio':return radio(); case 'tape':return tape();
     case 'hide':return hide(); case 'listen':return listen(); case 'look':return look(); case 'drink':return drink(); case 'status':return status();
     case 'help':return help(); case 'menu':case 'quit':return openMenu();
     case 'play':case 'retry':case 'resume':case 'continue':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'diff':return say(t('You can change difficulty from the settings.'));
-    case 'settings':case 'credits':case 'howto':case 'news':openMenu();return run(c);
+    case 'settings':case 'credits':case 'howto':case 'news':case 'ach':openMenu();return run(c);
+    case 'endless':return say(t('You are already in the Backrooms. Say pause to stop.'));
   }
 }
 function enter(narr){
@@ -1536,9 +1833,9 @@ function poly(pts,fill){cx.beginPath();cx.moveTo(pts[0][0],pts[0][1]);for(let i=
 function drawMon(m,b){const w=(b.r-b.l),cxm=W/2,tm=performance.now();
   if(m.type==='moths'){cx.fillStyle='#c9c2a0';for(let i=0;i<40;i++){const a=i*2.4+tm/300,r=(i%7)*w*0.04;cx.fillRect(cxm+Math.cos(a)*r*2,b.t+(b.b-b.t)*0.4+Math.sin(a*1.3)*r,3,2);}return;}
   const ew=w*0.3,eh=(b.b-b.t)*(m.type==='chaser'?0.98:0.85),top=b.b-eh;
-  cx.fillStyle=m.type==='face'?'#ddd6c4':m.type==='party'?'#e8c43a':'rgba(5,5,5,0.92)';
+  cx.fillStyle=m.type==='face'?'#ddd6c4':m.type==='marcus'?'#8c836f':m.type==='party'?'#e8c43a':'rgba(5,5,5,0.92)';
   cx.beginPath();cx.ellipse(cxm,top+eh*0.55,ew/2*(m.type==='chaser'?1.7:1),eh/2,0,0,7);cx.fill();
-  if(m.type==='face')return;
+  if(m.type==='face'||m.type==='marcus')return;
   if(m.type==='party'){cx.strokeStyle='#000';cx.lineWidth=Math.max(2,ew*0.05);cx.beginPath();cx.arc(cxm-ew*0.15,top+eh*0.3,ew*0.03,0,7);cx.stroke();cx.beginPath();cx.arc(cxm+ew*0.15,top+eh*0.3,ew*0.03,0,7);cx.stroke();cx.beginPath();cx.arc(cxm,top+eh*0.36,ew*0.2,0.15*Math.PI,0.85*Math.PI);cx.stroke();return;}
   cx.fillStyle=m.type==='skin'?'#e9d7c0':'#fff';cx.beginPath();cx.arc(cxm-ew*0.18,top+eh*0.3,ew*0.06,0,7);cx.arc(cxm+ew*0.18,top+eh*0.3,ew*0.06,0,7);cx.fill();
   if(m.type==='smiler'){cx.strokeStyle='#fff';cx.lineWidth=Math.max(2,ew*0.04);cx.beginPath();cx.arc(cxm,top+eh*0.38,ew*0.25,0.15*Math.PI,0.85*Math.PI);cx.stroke();}}
@@ -1569,6 +1866,8 @@ function draw(){
     else{cx.fillStyle=hsl(lv.wall,sh*0.55);cx.fillRect(b.r,b.t,a.r-b.r,b.b-b.t);poly([[a.r,a.t],[b.r,b.t],[a.r,b.t]],hsl(lv.ceil,sh*0.9));poly([[a.r,a.b],[b.r,b.b],[a.r,b.b]],hsl(lv.floor,sh*0.9));}
     if(lv.lights&&!isDark(cxl,cyl)){const mx=(a.l+a.r)/2,lw2=(b.r-b.l)*0.35,ty=(a.t*0.35+b.t*0.65),th=(b.t-a.t)*0.25;cx.fillStyle=lv.run?`rgba(255,40,30,${0.8*sh})`:`rgba(255,252,220,${0.85*sh})`;cx.fillRect(mx-lw2/2,ty,lw2,Math.max(2,th));}
     if(lv.amb==='pipes'){cx.strokeStyle=hsl([20,35,35],sh);cx.lineWidth=Math.max(2,14*F[d]);cx.beginPath();cx.moveTo(a.l,a.t+(b.t-a.t)*0.5+H*0.03*F[d]);cx.lineTo(b.l,b.t+H*0.03*F[d+1]);cx.stroke();cx.beginPath();cx.moveTo(a.r,a.t+(b.t-a.t)*0.5+H*0.06*F[d]);cx.lineTo(b.r,b.t+H*0.06*F[d+1]);cx.stroke();}
+    if(isWater(cxl,cyl)){const wv=0.6+0.1*Math.sin(tm/500+d);poly([[a.l,a.b],[a.r,a.b],[b.r,b.b],[b.l,b.b]],`rgba(15,45,70,${wv*Math.min(1,sh+0.25)})`);}
+    if(isHazard(cxl,cyl)&&d>0&&Math.random()<0.6){cx.fillStyle='#fff6a0';for(let k=0;k<6;k++)cx.fillRect(b.l+Math.random()*(b.r-b.l),b.t+Math.random()*(b.b-b.t)*0.35,3,3);}
     if(lv.amb==='pool'&&d>0){cx.fillStyle=`rgba(120,200,230,${0.35*sh})`;cx.fillRect(b.l+(b.r-b.l)*0.15,b.b-(b.b-b.t)*0.12,(b.r-b.l)*0.7,(b.b-b.t)*0.1);}
     if(lv.amb==='party'&&d>0){['#e64b5d','#4bb3e6','#e6d34b'].forEach((c,j)=>{cx.fillStyle=c;cx.globalAlpha=Math.min(1,sh);cx.beginPath();cx.ellipse(b.l+(b.r-b.l)*(0.2+j*0.3),b.t+(b.b-b.t)*0.25+Math.sin(tm/700+j)*4,(b.r-b.l)*0.05,(b.r-b.l)*0.065,0,0,7);cx.fill();cx.globalAlpha=1;});}
     if(cxl===G.exit[0]&&cyl===G.exit[1]&&d>0&&lk>0.1){const dw=(b.r-b.l)*0.28,dh=(b.b-b.t)*0.7,dx=(W-dw)/2,dy=b.b-dh;cx.fillStyle=lv.locked?'#888':'#6b4423';cx.fillRect(dx,dy,dw,dh);cx.fillStyle=`rgba(255,40,40,${(0.6+0.4*Math.sin(tm/200))})`;cx.fillRect(dx+dw*0.15,dy-dh*0.18,dw*0.7,dh*0.12);}
@@ -1609,6 +1908,8 @@ $('#mContinue').addEventListener('click',continueGame);
 $('#mSettings').addEventListener('click',()=>run('settings'));
 $('#mHowto').addEventListener('click',()=>run('howto'));
 $('#mNews').addEventListener('click',()=>run('news'));
+$('#mEndless').addEventListener('click',startEndless);
+$('#mAch').addEventListener('click',()=>run('ach'));
 $('#mCredits').addEventListener('click',()=>run('credits'));
 $('#startGame').addEventListener('click',newGame);
 $$('.backBtn').forEach(b=>b.addEventListener('click',openMenu));
@@ -1616,7 +1917,7 @@ $$('.choice').forEach(b=>b.addEventListener('click',()=>applySetting(b.dataset.s
 $('#fasterBtn').addEventListener('click',()=>run('faster'));
 $('#slowerBtn').addEventListener('click',()=>run('slower'));
 $('#resetSave').addEventListener('click',()=>{lsDel('br_save');say(t('Saved checkpoint deleted.'),{log:false});});
-$('#endAgain').addEventListener('click',openSetup);
+$('#endAgain').addEventListener('click',()=>G.mode==='endless'?startEndless():openSetup());
 $('#endMenu').addEventListener('click',()=>{G.state='menu';showMain();});
 $$('[data-cmd]').forEach(b=>b.addEventListener('click',()=>{let c=b.dataset.cmd;if(c==='sneak'&&G.sneak)c='unsneak';run(c,c==='light'?'toggle':1,0);}));
 $('#micBtn').addEventListener('click',()=>applySetting('voice',S.mic?'0':'1'));
@@ -1630,7 +1931,7 @@ document.addEventListener('keydown',e=>{
   else if(k==='ArrowLeft')c=e.shiftKey?'turnleft':'left'; else if(k==='ArrowRight')c=e.shiftKey?'turnright':'right';
   else if(k.toLowerCase()==='m'){e.preventDefault();$('#micBtn').click();return;}
   else if(k==='Enter'&&G.state==='dead')c='retry';
-  else{const map={l:'listen',k:'look',d:'drink',b:'hide',f:'light',t:'throw',n:G.sneak?'unsneak':'sneak',g:'talk',o:'radio',p:'tape',s:'status',r:'repeat',h:'help'};c=map[k.toLowerCase()]||null;if(c==='light')n='toggle';}
+  else{const map={x:'mark',c:'findmark',l:'listen',k:'look',d:'drink',b:'hide',f:'light',t:'throw',n:G.sneak?'unsneak':'sneak',g:'talk',o:'radio',p:'tape',s:'status',r:'repeat',h:'help'};c=map[k.toLowerCase()]||null;if(c==='light')n='toggle';}
   if(c){e.preventDefault();run(c,n,0);}
 });
 live.setAttribute('aria-live',S.narr?'off':'assertive');
