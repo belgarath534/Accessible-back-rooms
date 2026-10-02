@@ -32,7 +32,7 @@ button:focus-visible,[tabindex]:focus-visible{outline:4px solid var(--accent);ou
 button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-size:1.15rem;padding:18px 16px}
 button[aria-pressed="true"]{background:#3a3410;border-color:var(--accent)}
 button.choice[aria-pressed="true"]::before{content:"✓ ";color:var(--accent)}
-.screen[hidden]{display:none!important}
+[hidden],.screen[hidden]{display:none!important}
 .stack{display:grid;gap:12px;grid-template-columns:1fr;max-width:540px;margin:16px 0}
 .row{display:flex;flex-wrap:wrap;gap:8px;max-width:540px}
 .row button{flex:1 1 140px;min-height:48px}
@@ -340,6 +340,10 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="game" class="screen" hidden aria-label="Game">
     <div id="viewWrap" tabindex="0" role="application" aria-roledescription="game">
       <canvas id="view" width="960" height="540" aria-hidden="true"></canvas>
+    </div>
+    <div id="deadBar" class="stack" hidden>
+      <button id="dRetry" class="primary"><span data-l="en">Try again</span><span data-l="pt">Tentar de novo</span></button>
+      <button id="dMenu"><span data-l="en">Main menu</span><span data-l="pt">Menu principal</span></button>
     </div>
     <div id="hud" aria-hidden="true"></div>
     <div id="sanityBar" aria-hidden="true"><div id="sanityFill"></div></div>
@@ -1204,7 +1208,7 @@ function showMain(prefix=''){
   show('menu',prefix+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
 }
 function quitToMain(){
-  G.state='menu'; clearAmb(); G.sneak=false; setSneakUI();
+  $('#deadBar').hidden=true; G.state='menu'; clearAmb(); G.sneak=false; setSneakUI();
   showMain(t('You escape the Backrooms, for now. Your progress is saved from the start of the level. '));
 }
 function openSetup(){
@@ -1243,6 +1247,7 @@ function genDark(frac){
   G.dark.delete(key(G.x,G.y));
 }
 function newLevel(){
+  $('#deadBar').hidden=true;
   const lv=L(); G.w=lv.w;G.h=lv.h; G.maze=genMaze(lv.w,lv.h,lv.loops);
   if(lv.run){G.x=0;G.y=rand(G.h);}else{G.x=rand(G.w);G.y=rand(G.h);}
   G.f=pick([0,1,2,3].filter(d=>isOpen(G.x,G.y,d)));
@@ -1675,6 +1680,7 @@ function gameOver(parts){
     return;
   }
   G.state='dead';
+  $('#deadBar').hidden=false; setTimeout(()=>{if(G.state==='dead')$('#dRetry').focus();},Math.max(0,(G.holdSpeech||0)-performance.now())+300);
   const s=lsGet('br_save',null); if(s){s.deaths=G.deaths;lsSet('br_save',s);}
   say([...parts,t('Your sanity hits zero. The hum fills your head until there is nothing else. You become part of the Backrooms. Say try again to restart {name} from the checkpoint, or say menu.',{name:LX('name')})].join(' '));
 }
@@ -1905,6 +1911,8 @@ $('#pRestart').addEventListener('click',retryLevel);
 $('#pSettings').addEventListener('click',()=>run('settings'));
 $('#pHowto').addEventListener('click',()=>run('howto'));
 $('#pQuit').addEventListener('click',quitToMain);
+$('#dRetry').addEventListener('click',retryLevel);
+$('#dMenu').addEventListener('click',quitToMain);
 $('#mPlay').addEventListener('click',openSetup);
 $('#mContinue').addEventListener('click',continueGame);
 $('#mSettings').addEventListener('click',()=>run('settings'));
