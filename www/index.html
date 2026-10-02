@@ -1274,8 +1274,10 @@ function newLevel(){
   G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
   updateHUD(); ambience(); levelMusic(); if(A.ctx)A.amb.gain.setTargetAtTime(0.7,now(),0.1);
 }
-function saveCheckpoint(){if(G.mode==='endless')return;lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff,drank:!!G.drank});}
-function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.lastTape=s.lastTape??-1;G.drank=!!s.drank;G.mode='story';G.edef=null;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
+function saveCheckpoint(){if(G.mode==='endless')return;lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff,drank:!!G.drank,v:4});}
+function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;
+  if(!s.v){const M=[0,1,2,4,5,6,8];s.level=M[s.level]??s.level;s.tapes=(s.tapes||[]).map(i=>M[i]??i);if(s.lastTape>=0)s.lastTape=M[s.lastTape]??s.lastTape;}// saves from 0.3 had seven levels
+  G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.lastTape=s.lastTape??-1;G.drank=!!s.drank;G.mode='story';G.edef=null;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
 function enterLevel(prefix=''){
   initAudio(); newLevel(); saveCheckpoint(); show('game');
   say((prefix?prefix+' ':'')+LX('intro')+' '+pathsText());
