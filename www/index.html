@@ -239,6 +239,12 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.5.1: louder firecrackers</h2>
+      <ul>
+        <li>Firecrackers bang harder, and the noise lasts longer, so monsters chase it from farther away.</li>
+        <li>You hear the monster rush toward the bang, so you know it worked.</li>
+        <li>If there is a wall ahead, the firecracker goes down an open path instead.</li>
+      </ul>
       <h2>Version 0.5: the hide and seek update</h2>
       <ul>
         <li>A tutorial that teaches every command, one at a time. It plays the first time you start a new game, and it is in the main menu.</li>
@@ -279,6 +285,12 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.5.1: bombinhas mais fortes</h2>
+      <ul>
+        <li>As bombinhas estouram mais alto e o barulho dura mais, então os monstros vêm de mais longe.</li>
+        <li>Você ouve o monstro correr até o estouro, então sabe que funcionou.</li>
+        <li>Se houver uma parede à frente, a bombinha vai por um caminho aberto.</li>
+      </ul>
       <h2>Versão 0.5: a atualização do esconde-esconde</h2>
       <ul>
         <li>Um tutorial que ensina cada comando, um de cada vez. Ele aparece na primeira vez que você começa um jogo novo, e fica no menu principal.</li>
@@ -406,7 +418,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
 <script>
 "use strict";
-const VERSION='0.5';
+const VERSION='0.5.1';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -546,6 +558,7 @@ const PT={
  ' Something hisses and scrambles away from the light.':' Algo sibila e foge da luz.',' Somewhere in the dark, wings start to flutter.':' Em algum lugar no escuro, asas começam a bater.',
  'Flashlight on. Battery {n} percent.{extra}':'Lanterna ligada. Pilha em {n} por cento.{extra}','Flashlight off.':'Lanterna desligada.',
  'You have no firecrackers.':'Você não tem bombinhas.',
+ 'Something rushes toward the bang.':'Algo corre na direção do estouro.',
  'There is a wall {dir}. Throw it down an open path. {paths}':'Tem uma parede {dir}. Atire por um caminho aberto. {paths}',
  'down the hall ahead':'pelo corredor à frente',
  'You light a firecracker and throw it {dir}. It bangs {n} rooms away. Anything nearby will go to the noise. {caught} {paths}':'Você acende uma bombinha e atira {dir}. Ela estoura a {n} salas. Qualquer coisa por perto vai atrás do barulho. {caught} {paths}',
@@ -621,7 +634,7 @@ const PT={
  '{n} of {total} unlocked.':'{n} de {total} desbloqueadas.','Achievements. {n} of {total} unlocked.':'Conquistas. {n} de {total} desbloqueadas.','Say back to return.':'Diga voltar para sair.',
  'Endless mode, depth {n}.':'Modo infinito, profundidade {n}.','Tapes found: {n} of {total}.':'Fitas encontradas: {n} de {total}.'
 };
-function t(s,v){let r=(LANG==='pt'&&PT[s]!==undefined)?PT[s]:s;if(v)r=r.replace(/\{(\w+)\}/g,(m,k)=>v[k]!==undefined?v[k]:m);return r;}
+function t(s,v){let r=(LANG==='pt'&&PT[s]!==undefined)?PT[s]:s;if(v)r=r.replace(/\{(\w+)\}/g,(m,k)=>v[k]!==undefined?v[k]:m).replace(/\b1 rooms\b/g,'1 room').replace(/umas 1 salas/g,'uma sala').replace(/\b1 salas\b/g,'1 sala');return r;}
 const DIRN=i=>t(['north','east','south','west'][i]);
 const RELN=i=>t(['ahead','to your right','behind you','to your left'][i]);
 const RELSHORT=i=>t(['ahead','right','back','left'][i]);
@@ -1414,7 +1427,7 @@ function monstersTurn(){
     if(m.type==='watcher'&&G.watchFreeze>0)continue;
     if(m.type==='clump'&&G.steps%2)continue;
     if(m.type==='deep'){if(isWater(G.x,G.y)){const wd=bfs(G.x,G.y,G.wet);if(wd[m.y][m.x]<=T.sense+DF().sense&&Math.random()<T.chase*Df.chase){moveMon(m,stepToward(wd,m.x,m.y));continue;}}if(Math.random()<0.5)wander(m);continue;}
-    if(nd&&T.hostile&&m.type!=='chaser'&&nd[m.y][m.x]<=8&&nd[m.y][m.x]>0){if(Math.random()<0.85)moveMon(m,stepToward(nd,m.x,m.y));continue;}
+    if(nd&&T.hostile&&m.type!=='chaser'&&nd[m.y][m.x]<=10&&nd[m.y][m.x]>0){if(Math.random()<0.95)moveMon(m,stepToward(nd,m.x,m.y));continue;}
     let sense=T.sense+Df.sense; if(G.sneak)sense=Math.min(sense,2); if(G.sprinted)sense+=3;
     let hunting=d<=sense;
     if(m.type==='smiler'){if(G.inv.light&&d<=3){moveMon(m,stepAway(dist,m.x,m.y));continue;} hunting=hunting&&isDark(G.x,G.y)&&!G.inv.light;}
@@ -1643,13 +1656,16 @@ function light(mode){
 function throwCracker(r){
   if(G.state!=='play')return notPlaying();
   if(!G.inv.fire)return say(t('You have no firecrackers.'));
+  if(r===0&&!isOpen(G.x,G.y,abs(0))){const o=[1,3,2].find(k=>isOpen(G.x,G.y,abs(k)));if(o!==undefined)r=o;}
   let x=G.x,y=G.y,n=0; const d=abs(r); while(n<4&&isOpen(x,y,d)){x+=DX[d];y+=DY[d];n++;}
   if(n===0)return say(t('There is a wall {dir}. Throw it down an open path. {paths}',{dir:RELN(r),paths:pathsText()}));
-  G.inv.fire--; G.noise={x,y,turns:3}; sfx(fuse); if(bump('throws')>=10)unlock('boom');
-  const {pan}=relDirWords(x,y); setTimeout(()=>sfx(bang,pan,clamp(1-n*0.15,0.3,1),n*0.1),900);
+  G.inv.fire--; G.noise={x,y,turns:5}; sfx(fuse); if(bump('throws')>=10)unlock('boom');
+  const {pan}=relDirWords(x,y); setTimeout(()=>{sfx(bang,pan,clamp(1-n*0.15,0.3,1),n*0.1);play('impact',{pan,vol:clamp(0.5-n*0.08,0.15,0.5),rate:1.5,muffle:n*0.1});},900);
+  const nd0=bfs(x,y); const lured=G.mons.filter(m=>MT[m.type].hostile&&m.type!=='chaser'&&nd0[m.y][m.x]<=10);
+  if(lured.length){const m=lured[0];setTimeout(()=>{if(G.state==='play'){const w=relDirWords(m.x,m.y);sfx(monSound,m,w.pan,0.6,0.3);}},2200);}
   G.steps++; drain(0.5); monstersTurn(); const parts=[]; checkCaught(parts); updateHUD();
   if(G.sanity<=0)return gameOver(parts);
-  say(t('You light a firecracker and throw it {dir}. It bangs {n} rooms away. Anything nearby will go to the noise. {caught} {paths}',{dir:r===0?t('down the hall ahead'):RELN(r),n,caught:parts.join(' '),paths:pathsText()}));
+  say(t('You light a firecracker and throw it {dir}. It bangs {n} rooms away. Anything nearby will go to the noise. {caught} {paths}',{dir:r===0?t('down the hall ahead'):RELN(r),n,caught:(lured.length?t('Something rushes toward the bang.')+' ':'')+parts.join(' '),paths:pathsText()}));
 }
 function sneak(on){
   if(G.state!=='play')return notPlaying();
