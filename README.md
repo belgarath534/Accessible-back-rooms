@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.4**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.5**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.5**: tutorial, hiding spots, Level 4 (the Abandoned Office) with the Clump, Level 9 (the Suburbs) with the Window Watchers, retry buttons, four new achievements.
 - **0.4**: 3D sound, endless mode, two new levels (Electrical Station, Thalassophobia), eight tapes and a secret ending, markers, achievements.
 - **0.3**: main and pause menus, settings, seven levels, new monsters and items, difficulty modes, checkpoints, Portuguese language.
 - **0.2**: recorded sounds and music, jump scares, blackouts, choice of voice or buttons.
