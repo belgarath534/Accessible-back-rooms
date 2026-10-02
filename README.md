@@ -4,6 +4,14 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
+Current version: **0.3**. Available in English and Brazilian Portuguese, including voice commands.
+
+## Versions
+
+- **0.3**: main and pause menus, settings, seven levels, new monsters and items, difficulty modes, checkpoints, Portuguese language.
+- **0.2**: recorded sounds and music, jump scares, blackouts, choice of voice or buttons.
+- **0.1**: first version, three levels, voice commands, spoken narration and screen reader support.
+
 ## Project layout
 
 - `www/index.html` – the whole game (HTML, CSS and JavaScript in one file)
