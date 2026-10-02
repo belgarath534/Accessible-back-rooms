@@ -1,0 +1,1248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Accessible Backrooms</title>
+<meta name="description" content="An accessible, voice-controlled audio horror game set in the Backrooms. Play with your voice, a screen reader, a keyboard or touch.">
+<style>
+:root{
+  --bg:#0d0c07; --panel:#1b1909; --text:#f6efc8; --muted:#cfc69a; --accent:#f2d64b; --accent-ink:#1a1600;
+  --danger:#ff7b6b; --ok:#9be38f; --border:#5d5528;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font:18px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--accent)}
+.wrap{max-width:900px;margin:0 auto;padding:16px;padding-top:max(16px,env(safe-area-inset-top))}
+h1{font-size:1.7rem;margin:.2em 0 .1em;color:var(--accent);letter-spacing:.02em}
+h2{font-size:1.25rem;margin:1em 0 .4em}
+p{margin:.4em 0}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+button{font:inherit;font-weight:650;color:var(--text);background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:14px 10px;min-height:56px;cursor:pointer;touch-action:manipulation}
+button:hover{border-color:var(--accent)}
+button:focus-visible,[tabindex]:focus-visible{outline:4px solid var(--accent);outline-offset:3px}
+button.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-size:1.15rem;padding:18px 16px}
+button[aria-pressed="true"]{background:#3a3410;border-color:var(--accent)}
+button.choice[aria-pressed="true"]::before{content:"✓ ";color:var(--accent)}
+.screen[hidden]{display:none!important}
+.stack{display:grid;gap:12px;grid-template-columns:1fr;max-width:540px;margin:16px 0}
+.title{font-size:clamp(2.2rem,9vw,4.4rem);line-height:1;margin:.3em 0 .1em;color:var(--accent);text-shadow:0 0 18px rgba(242,214,75,.35);font-weight:900;letter-spacing:.04em}
+.subtitle{color:var(--muted);margin-bottom:1em}
+#splash,#menu{min-height:70vh}
+.menuBg{position:relative;border-radius:16px;padding:22px;background:radial-gradient(ellipse at 50% 0%,#3d3611 0%,#14130a 60%,#0d0c07 100%);border:2px solid var(--border);overflow:hidden}
+.menuBg::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(90deg,rgba(255,240,150,.035) 0 2px,transparent 2px 46px)}
+.menuBg > *{position:relative;z-index:1}
+.setRow{display:grid;grid-template-columns:1fr;gap:6px;margin:12px 0;max-width:540px}
+.setRow .lab{font-weight:700}
+.setRow .opts{display:flex;flex-wrap:wrap;gap:8px}
+.setRow .opts button{flex:1 1 140px;min-height:52px}
+#viewWrap{position:relative;border:2px solid var(--border);border-radius:12px;overflow:hidden;background:#000}
+#viewWrap:focus-visible{outline:4px solid var(--accent);outline-offset:3px}
+canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
+#hud{display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 0;font-weight:650;font-size:.95rem}
+#hud span b{color:var(--accent)}
+#sanityBar{height:10px;background:#333;border-radius:6px;overflow:hidden;margin-top:4px}
+#sanityFill{height:100%;background:var(--ok);width:100%;transition:width .3s}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
+@media (min-width:640px){.acts{grid-template-columns:repeat(5,1fr)}}
+.acts button{min-height:52px;padding:10px 6px}
+#heard{color:var(--muted);min-height:1.5em;font-size:.95rem}
+#log{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:10px 14px;max-height:240px;overflow:auto}
+#log p{margin:.3em 0}
+#log p:last-child{color:var(--accent)}
+.credits p{margin:.6em 0}
+.stats{font-size:1.15rem}
+.stats li{margin:.3em 0}
+[tabindex="-1"]:focus{outline:none}
+@media (prefers-reduced-motion:reduce){#sanityFill{transition:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ SPLASH ============ -->
+  <section id="splash" class="screen" aria-labelledby="splashTitle">
+    <div class="menuBg">
+      <h1 id="splashTitle" class="title">ACCESSIBLE<br>BACKROOMS</h1>
+      <p class="subtitle">An audio horror game you can play with your voice.</p>
+      <p><b>Warning:</b> loud sudden sounds. Play with headphones, in the dark, if you dare.</p>
+      <div class="stack">
+        <button id="enterNarrated" class="primary" autofocus>Enter, with spoken narration</button>
+        <button id="enterSR" class="primary">Enter, I use a screen reader</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MAIN MENU ============ -->
+  <section id="menu" class="screen" hidden aria-labelledby="menuTitle">
+    <div class="menuBg">
+      <h1 id="menuTitle" class="title" tabindex="-1">ACCESSIBLE<br>BACKROOMS</h1>
+      <p class="subtitle">Main menu</p>
+      <div class="stack">
+        <button id="mPlay" class="primary">Play</button>
+        <button id="mContinue" hidden>Continue from checkpoint</button>
+        <button id="mSettings">Settings</button>
+        <button id="mHowto">How to play</button>
+        <button id="mCredits">Credits</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PAUSE MENU ============ -->
+  <section id="pause" class="screen" hidden aria-labelledby="pauseTitle">
+    <div class="menuBg">
+      <h1 id="pauseTitle" class="title" tabindex="-1">PAUSED</h1>
+      <p class="subtitle" id="pauseWhere"></p>
+      <div class="stack">
+        <button id="pResume" class="primary">Resume</button>
+        <button id="pRestart">Restart level</button>
+        <button id="pSettings">Settings</button>
+        <button id="pHowto">How to play</button>
+        <button id="pQuit">Quit to main menu</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLAY SETUP ============ -->
+  <section id="setup" class="screen" hidden aria-labelledby="setupTitle">
+    <h1 id="setupTitle" tabindex="-1">New game</h1>
+    <h2 id="ctlHead">Step 1: choose your controls</h2>
+    <div class="stack" role="group" aria-labelledby="ctlHead">
+      <button class="choice" data-set="voice" data-val="1">Use voice commands</button>
+      <button class="choice" data-set="voice" data-val="0">Use buttons and keyboard only</button>
+    </div>
+    <h2 id="diffHead">Step 2: choose difficulty</h2>
+    <div class="stack" role="group" aria-labelledby="diffHead">
+      <button class="choice" data-set="diff" data-val="easy">Easy: more supplies, slower monsters</button>
+      <button class="choice" data-set="diff" data-val="normal">Normal</button>
+      <button class="choice" data-set="diff" data-val="nightmare">Nightmare: you will not survive</button>
+    </div>
+    <h2>Step 3</h2>
+    <div class="stack">
+      <button id="startGame" class="primary">Start game</button>
+      <button class="backBtn">Back to main menu</button>
+    </div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section id="settings" class="screen" hidden aria-labelledby="setTitle">
+    <h1 id="setTitle" tabindex="-1">Settings</h1>
+    <div class="setRow" role="group" aria-labelledby="sl1"><span class="lab" id="sl1">Controls</span><div class="opts">
+      <button class="choice" data-set="voice" data-val="1">Voice commands</button><button class="choice" data-set="voice" data-val="0">Buttons only</button></div></div>
+    <div class="setRow" role="group" aria-labelledby="sl2"><span class="lab" id="sl2">Narration</span><div class="opts">
+      <button class="choice" data-set="narr" data-val="1">Spoken narration</button><button class="choice" data-set="narr" data-val="0">Screen reader</button></div></div>
+    <div class="setRow" role="group" aria-labelledby="sl3"><span class="lab" id="sl3">Speech speed: <span id="rateVal">1.1</span></span><div class="opts">
+      <button id="slowerBtn">Slower</button><button id="fasterBtn">Faster</button></div></div>
+    <div class="setRow" role="group" aria-labelledby="sl4"><span class="lab" id="sl4">Music volume</span><div class="opts">
+      <button class="choice" data-set="music" data-val="0">Off</button><button class="choice" data-set="music" data-val="0.4">Low</button><button class="choice" data-set="music" data-val="0.7">Medium</button><button class="choice" data-set="music" data-val="1">High</button></div></div>
+    <div class="setRow" role="group" aria-labelledby="sl5"><span class="lab" id="sl5">Sound effects volume</span><div class="opts">
+      <button class="choice" data-set="fx" data-val="0.5">Low</button><button class="choice" data-set="fx" data-val="0.75">Medium</button><button class="choice" data-set="fx" data-val="1">High</button></div></div>
+    <div class="setRow" role="group" aria-labelledby="sl6"><span class="lab" id="sl6">Jump scares</span><div class="opts">
+      <button class="choice" data-set="scares" data-val="1">On</button><button class="choice" data-set="scares" data-val="0">Off</button></div></div>
+    <div class="setRow" role="group" aria-labelledby="sl7"><span class="lab" id="sl7">Difficulty</span><div class="opts">
+      <button class="choice" data-set="diff" data-val="easy">Easy</button><button class="choice" data-set="diff" data-val="normal">Normal</button><button class="choice" data-set="diff" data-val="nightmare">Nightmare</button></div></div>
+    <div class="stack">
+      <button id="resetSave">Delete saved checkpoint</button>
+      <button class="backBtn primary">Back</button>
+    </div>
+  </section>
+
+  <!-- ============ HOW TO PLAY ============ -->
+  <section id="howto" class="screen" hidden aria-labelledby="howTitle">
+    <h1 id="howTitle" tabindex="-1">How to play</h1>
+    <p>You have noclipped out of reality into the Backrooms. Find the exit on each of seven levels before your sanity runs out. Every step costs a little sanity. Monsters cost a lot. Your progress is saved at the start of every level.</p>
+    <p>Everything is spoken and played as sound. Headphones help: sounds come from the left or right to show where things are.</p>
+    <h2>Moving</h2>
+    <ul>
+      <li><b>Forward</b>, <b>left</b>, <b>right</b>, <b>back</b>: walk. Add a number, like “forward three”, to keep walking.</li>
+      <li><b>Turn left</b>, <b>turn right</b>, <b>turn around</b>: turn in place.</li>
+      <li><b>Sprint</b> (or “sprint left”): run two rooms at once. Needs energy bars, and it is loud.</li>
+      <li><b>Sneak</b>: move quietly so monsters only notice you up close. Say <b>walk normally</b> to stop.</li>
+    </ul>
+    <h2>Surviving</h2>
+    <ul>
+      <li><b>Listen</b>: hear which way the exit is.</li>
+      <li><b>Look</b>: describe where you are.</li>
+      <li><b>Hide</b>: hold your breath and hope it walks past.</li>
+      <li><b>Drink</b>: almond water restores sanity.</li>
+      <li><b>Light</b>: flashlight on or off. Smilers hate light. Deathmoths love it. Batteries run out.</li>
+      <li><b>Throw</b> (or “throw left”): throw a firecracker. Monsters chase the bang.</li>
+      <li><b>Talk</b>: speak to a Faceling when one is next to you.</li>
+      <li><b>Radio</b>: the walkie-talkie's static gets stronger near the exit.</li>
+      <li><b>Tape</b>: replay the last tape you found.</li>
+      <li><b>Status</b>, <b>repeat</b>, <b>help</b>. <b>Pause</b> opens the pause menu, where you can resume, restart the level, or <b>quit to main menu</b>.</li>
+    </ul>
+    <h2>Keyboard</h2>
+    <p>Arrows walk. Shift plus left or right arrow turns. Shift plus up arrow sprints. L listen, K look, B hide, D drink, F flashlight, T throw, N sneak, G talk, O radio, P tape, S status, R repeat, H help, M microphone, Escape pauses and resumes.</p>
+    <div class="stack"><button class="backBtn primary">Back</button></div>
+  </section>
+
+  <!-- ============ CREDITS ============ -->
+  <section id="credits" class="screen credits" hidden aria-labelledby="credTitle">
+    <h1 id="credTitle" tabindex="-1">Credits</h1>
+    <p><b>Accessible Backrooms</b>, designed and built with Claude Code. Inspired by the Backrooms, a shared internet legend, and the community wiki that grew around it.</p>
+    <h2>Music</h2>
+    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four” and “Echoes of Time v2”. Licensed under <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
+    <h2>Sound effects</h2>
+    <p>“Female Screams” by congusbongus, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+    <p>“Long deep impact” by ROHHSA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+    <p>“Horror Cinema 2” and “Horror Cinema 4” by Cadere Sounds, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.</p>
+    <p>Public domain (CC0): “Monster Snarls” by darsycho; “80 CC0 creature SFX” by rubberduck; “Ghost breath”, “Ghost monster voice” and “4 atmospheric ghostly loops” by qubodup; “Heartbeat sounds” by bart; “16 monster growls” by starninjas; “Horror scream” by Vinrax; “Evil screech”, “Group giggling” and “Evil cackle laugh” by Nocturnal_Vanguard; “Do you remember laughter” by Supergeek; “Frequency static” by bretbernhoft; “Bubble sound effects” by BMacZero.</p>
+    <p>All sound effects found on <a href="https://opengameart.org">OpenGameArt.org</a>. Other sounds and the music box are generated live in your browser.</p>
+    <div class="stack"><button class="backBtn primary">Back</button></div>
+  </section>
+
+  <!-- ============ END / STATS ============ -->
+  <section id="end" class="screen" hidden aria-labelledby="endTitle">
+    <h1 id="endTitle" class="title" tabindex="-1">YOU ESCAPED</h1>
+    <ul class="stats" id="statsList"></ul>
+    <div class="stack">
+      <button id="endAgain" class="primary">Play again</button>
+      <button id="endMenu">Main menu</button>
+    </div>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section id="game" class="screen" hidden aria-label="Game">
+    <div id="viewWrap" tabindex="0" role="application" aria-roledescription="game" aria-label="Backrooms view. Arrow keys walk, Shift arrow turns, L listen, K look, B hide, D drink, F flashlight, T throw, S status, R repeat, H help, Escape menu.">
+      <canvas id="view" width="960" height="540" aria-hidden="true"></canvas>
+    </div>
+    <div id="hud" aria-hidden="true"></div>
+    <div id="sanityBar" aria-hidden="true"><div id="sanityFill"></div></div>
+    <h2 class="sr-only">Movement</h2>
+    <div class="pad">
+      <button data-cmd="left">Go left</button>
+      <button data-cmd="forward">Go forward</button>
+      <button data-cmd="right">Go right</button>
+      <button data-cmd="turnleft">Turn left</button>
+      <button data-cmd="back">Go back</button>
+      <button data-cmd="turnright">Turn right</button>
+    </div>
+    <h2 class="sr-only">Actions</h2>
+    <div class="acts">
+      <button data-cmd="listen">Listen</button>
+      <button data-cmd="look">Look</button>
+      <button data-cmd="hide">Hide</button>
+      <button data-cmd="drink">Drink</button>
+      <button data-cmd="light">Flashlight</button>
+      <button data-cmd="throw">Throw firecracker</button>
+      <button data-cmd="sprint">Sprint forward</button>
+      <button data-cmd="sneak" id="sneakBtn" aria-pressed="false">Sneak</button>
+      <button data-cmd="talk">Talk</button>
+      <button data-cmd="radio">Radio</button>
+      <button data-cmd="tape">Replay tape</button>
+      <button data-cmd="status">Status</button>
+      <button data-cmd="repeat">Repeat</button>
+      <button data-cmd="help">Help</button>
+      <button data-cmd="menu">Menu</button>
+    </div>
+    <p><button id="micBtn" aria-pressed="false">Voice commands</button></p>
+    <p id="heard" aria-hidden="true"></p>
+    <h2>Story so far</h2>
+    <div id="log" aria-hidden="true"></div>
+  </section>
+
+  <div id="live" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
+</div>
+
+<script>
+"use strict";
+/* ============================== helpers ============================== */
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const rand=n=>Math.floor(Math.random()*n);
+const pick=a=>a[rand(a.length)];
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const cap=s=>s[0].toUpperCase()+s.slice(1);
+const DX=[0,1,0,-1], DY=[-1,0,1,0];
+const DIRN=['north','east','south','west'];
+const RELN=['ahead','to your right','behind you','to your left'];
+const RELSHORT=['ahead','right','back','left'];
+const lsGet=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+const lsDel=k=>{try{localStorage.removeItem(k);}catch(e){}};
+
+/* ============================== settings ============================== */
+const S={ voice:lsGet('br_voice',true), narr:lsGet('br_narr',true), rate:lsGet('br_rate',1.1), music:lsGet('br_musicv',0.7),
+  fx:lsGet('br_fx',1), scares:lsGet('br_scares',true), diff:lsGet('br_diff','normal'), mic:false };
+const DIFFS={
+  easy:{label:'Easy',drain:0.5,hit:18,scare:5,water:2,chase:0.7,idle:15000,sense:-1,moth:3},
+  normal:{label:'Normal',drain:0.8,hit:25,scare:10,water:0,chase:1,idle:10000,sense:0,moth:5},
+  nightmare:{label:'Nightmare',drain:1.3,hit:38,scare:15,water:-1,chase:1.25,idle:6500,sense:1,moth:8}};
+const DF=()=>DIFFS[S.diff]||DIFFS.normal;
+
+/* ============================== monsters ============================== */
+const MT={
+  howler:{name:'the Howler',sound:'a long, wet howl',sfx:['howl','moan','growl1'],sense:5,chase:0.45,hostile:true},
+  smiler:{name:'a Smiler',sound:'a quiet, giggling whisper',sfx:['ghost1','ghost2','ghost3','weird'],sense:5,chase:0.6,hostile:true},
+  hound:{name:'a Hound',sound:'a low, rumbling growl',sfx:['hound','hound2','growl2','growl3','growl4'],sense:6,chase:0.68,hostile:true},
+  skin:{name:'the Skin-Stealer',sound:'footsteps that sound almost human',sfx:['breath2','breath'],sense:6,chase:0.45,hostile:true},
+  party:{name:'a Partygoer',sound:'giggling and a party horn',sfx:['giggle','cackle','laughter'],sense:6,chase:0.72,hostile:true},
+  moths:{name:'a swarm of Deathmoths',sound:'the flutter of hundreds of wings',sfx:null,sense:7,chase:0.8,hostile:false},
+  face:{name:'a Faceling',sound:'soft, tuneless humming',sfx:null,sense:0,chase:0,hostile:false,npc:true},
+  chaser:{name:'something enormous',sound:'thundering footsteps',sfx:['growl4','attack','attack2'],sense:99,chase:0.72,hostile:true}
+};
+const LURES=['Hey! Over here! I found the exit!','Help me! Please, I am stuck!','It is okay. It is safe this way.','Wait for me! Do not leave me here!','Is someone there? Come closer, I cannot see.'];
+
+/* ============================== levels ============================== */
+const LEVELS=[
+ { name:'Level 0, The Lobby', short:'0', w:7,h:7, loops:0.16, mons:['howler'], dark:0, lights:true,
+   items:{water:3,fire:1,tape:1},
+   wall:[50,55,58], floor:[42,35,30], ceil:[52,45,74], amb:'hum', music:'music0', step:'carpet',
+   exitWhat:'the exit sign buzzing',
+   intro:'Level 0, The Lobby. You have noclipped out of reality. Damp yellow wallpaper, moist old carpet, and the endless buzz of fluorescent lights. Somewhere in this maze is a door with a glowing exit sign. Say listen at any time to hear which way it is. You are not alone in here.',
+   exitText:'A battered wooden door with a buzzing red exit sign above it. You push it open and fall through the floor.',
+   flavor:['The wallpaper is peeling here, damp at the seams.','The carpet squelches under your feet.','A light above you flickers, then steadies.','An empty room. Exactly like the last one.','You smell old, wet carpet.','The buzzing seems louder in this room.','There is a single office chair facing the wall.','Someone scratched tally marks into the wallpaper. Hundreds of them.']},
+ { name:'Level 1, The Habitable Zone', short:'1', w:9,h:9, loops:0.16, mons:['smiler','smiler'], dark:0.45, lights:true,
+   items:{water:3,fire:1,battery:2,tape:1,flashlight:1},
+   wall:[40,6,46], floor:[30,5,26], ceil:[40,4,38], amb:'drip', music:'music1', step:'concrete',
+   exitWhat:'a radio playing on the stairwell',
+   intro:'Level 1, The Habitable Zone. Cold concrete, puddles, and failing lights. Half of this level is in darkness, and Smilers hunt in the dark. There is a flashlight somewhere close by. Find it, and say light to switch it on. Then find the stairwell going down.',
+   exitText:'A metal stairwell, leading down into warm, dark tunnels. You take the stairs.',
+   flavor:['Water drips from a crack in the ceiling.','A puddle reflects the flickering lights.','Stacks of empty crates line the wall.','A concrete pillar stands in the middle of the room.','You hear a distant machine hum to life, then stop.','An old payphone hangs on the wall. The cord is cut.','Rusted shelving, empty except for dust.']},
+ { name:'Level 2, Pipe Dreams', short:'2', w:10,h:10, loops:0.14, mons:['hound','skin'], dark:0.2, lights:false,
+   items:{water:3,fire:2,battery:1,energy:1,tape:1,radio:1},
+   wall:[18,30,30], floor:[15,20,16], ceil:[20,25,20], amb:'pipes', music:'music2', step:'metal',
+   exitWhat:'a hiss of cold, fresh air',
+   intro:'Level 2, Pipe Dreams. Narrow tunnels lined with hot, hissing pipes. Hounds hunt here. And something else: something that copies voices. If someone calls out to you, do not trust it. Listen for the real exit. A walkie-talkie is somewhere on this level.',
+   exitText:'A rusty hatch with cold air blowing through it. You squeeze inside and slide down, down, into water.',
+   flavor:['A pipe hisses steam right beside your head.','The floor is slick with oil.','Pipes clank and groan somewhere above you.','It is so hot here your shirt sticks to you.','A valve wheel turns slowly on its own.','Someone has written TURN BACK on the pipe in marker.','The tunnel narrows. You squeeze through sideways.']},
+ { name:'Level 37, The Poolrooms', short:'37', w:9,h:9, loops:0.25, mons:['face','face'], dark:0, lights:true, calm:true,
+   items:{water:2,battery:1,energy:1,tape:1},
+   wall:[190,30,82], floor:[195,45,70], ceil:[190,20,90], amb:'pool', music:'music3', step:'tile',
+   exitWhat:'water gurgling down a drain',
+   intro:'Level 37, The Poolrooms. You surface in warm water and climb out onto white tiles. Endless pools, soft light, the gentle lapping of water. It is peaceful here. Too peaceful. Faceless people wander these halls. They will not hurt you. Say talk when one is near. Find the drain that leads down.',
+   exitText:'A huge drain at the bottom of a shallow pool. The water pulls at your ankles, then swallows you.',
+   flavor:['The water is perfectly still. You cannot see the bottom.','Every sound echoes forever here.','White tiles, white tiles, white tiles.','A slide leads up into the ceiling. Nothing comes down.','You hear someone swimming in the next room. Then they stop.','The water is warm, like a bath. You want to lie down in it.']},
+ { name:'Level Fun', short:'Fun', w:10,h:10, loops:0.16, mons:['party','party'], dark:0, lights:true, locked:true,
+   items:{water:3,fire:2,energy:1,tape:1,keycard:1},
+   wall:[320,45,60], floor:[280,25,40], ceil:[50,60,80], amb:'party', music:'musicbox', step:'carpet',
+   exitWhat:'an elevator chime',
+   intro:'Level Fun. Balloons. Streamers. A cake that has gone grey. A music box plays happy birthday, slightly wrong. The Partygoers are here, and they want you to join the party. The exit door is locked: find the keycard first. Do not let them hug you.',
+   exitText:'You swipe the keycard. The elevator doors slide open. Behind you, someone whispers: party is over. The doors close and the lights go out.',
+   flavor:['A banner on the wall says: HAPPY BIRTHDAY =)','Deflated balloons cover the floor.','There are paper plates set out for a hundred guests.','A party hat sits on the floor. It is wet.','Someone wrote on the wall in frosting: STAY =)','Confetti falls from nowhere.']},
+ { name:'Level 6, Lights Out', short:'6', w:10,h:10, loops:0.16, mons:['skin','moths'], dark:1, lights:false,
+   items:{water:3,fire:1,battery:2,energy:1,tape:1},
+   wall:[40,10,40], floor:[30,10,30], ceil:[30,10,30], amb:'void', music:'music5', step:'concrete',
+   exitWhat:'a faint wind',
+   intro:'Level 6, Lights Out. Total darkness. Your eyes are useless here, so trust your ears. Your flashlight attracts Deathmoths, but without it you are alone with whatever is breathing in the dark. The voice-copier followed you. Do not trust anything that calls your way.',
+   exitText:'Your hand finds a door handle in the dark. You open it, and hear an alarm start to scream.',
+   flavor:['You cannot see your own hand.','Something crunches under your foot.','The air is cold and still.','You hear dripping, very far away.','Your fingertips trace a word scratched into the wall: RUN.']},
+ { name:'Level Run For Your Life', short:'!', w:12,h:5, loops:0.06, mons:['chaser'], dark:0, lights:true, run:true,
+   items:{water:2,energy:3},
+   wall:[0,60,45], floor:[0,40,25], ceil:[0,50,40], amb:'alarm', music:'music6', step:'concrete',
+   exitWhat:'daylight and birdsong',
+   intro:'Level Run For Your Life. An alarm is blaring. The hallway stretches ahead, and behind you, something enormous wakes up. Do not stop. Do not hide. Run! Say sprint to move two rooms at once.',
+   exitText:'A red door. Daylight leaks around its edges. You throw it open.',
+   flavor:['Red lights spin on the ceiling.','The floor shakes with every step behind you.','You hear it hit a wall, and keep coming.','Papers fly past you down the hall.']}
+];
+const TAPES=[
+ 'Tape one. My name is Marcus. I do not know what day it is. The lights never turn off. I counted the rooms. Four thousand and twelve. Then I found my own tally marks on the wall.',
+ 'Tape two. There is water here, and people. Or there were. Someone left a note that says: do not stand in the dark. I did not understand it until I saw the teeth.',
+ 'Tape three. It is so hot. I heard my sister calling me from the pipes. My sister died nine years ago. I did not follow the voice. Do not follow the voice.',
+ 'Tape four. The pools are beautiful. Nothing hurts you here. I could stay. I think that is the trap. The longer you stay, the less you want to leave.',
+ 'Tape five. Balloons. Cake. Everyone is smiling. They said, hello friend, come to the party. If you hear this, do not go to the party. Find the keycard. Run.',
+ 'Tape six. I cannot see anything anymore. My batteries are dead. Something keeps telling me it found the exit. It sounds just like me now. If you hear me calling you... it is not me.'
+];
+const ITEMNAME={water:'a bottle of almond water',fire:'a firecracker',battery:'a battery',energy:'an energy bar',tape:'a cassette tape',flashlight:'a flashlight',radio:'a walkie-talkie',keycard:'a keycard'};
+
+/* ============================== state ============================== */
+const G={ level:0, maze:null, w:0,h:0, x:0,y:0, f:0, exit:null, mons:[], items:new Map(), dark:new Set(),
+  inv:null, sanity:100, steps:0, deaths:0, tapes:new Set(), lastTape:-1, startTime:0, state:'menu', sneak:false,
+  visited:new Set(), lastText:'', entBand:99, blackout:0, sinceScare:0, extras:[], noise:null, sprinted:false };
+function freshInv(){return {water:0,fire:1,battery:0,energy:0,flashlight:false,light:false,radio:false,keycard:false};}
+
+/* ============================== maze ============================== */
+function carve(g,x,y,d){const nx=x+DX[d],ny=y+DY[d];if(ny<0||ny>=g.length||nx<0||nx>=g[0].length)return;g[y][x]&=~(1<<d);g[ny][nx]&=~(1<<((d+2)%4));}
+function genMaze(w,h,loops){
+  const g=[...Array(h)].map(()=>Array(w).fill(15)), vis=[...Array(h)].map(()=>Array(w).fill(false));
+  const st=[[rand(w),rand(h)]]; vis[st[0][1]][st[0][0]]=true;
+  while(st.length){const [x,y]=st[st.length-1];const ns=[];
+    for(let d=0;d<4;d++){const nx=x+DX[d],ny=y+DY[d];if(nx>=0&&ny>=0&&nx<w&&ny<h&&!vis[ny][nx])ns.push(d);}
+    if(!ns.length){st.pop();continue;} const d=pick(ns);carve(g,x,y,d);vis[y+DY[d]][x+DX[d]]=true;st.push([x+DX[d],y+DY[d]]);}
+  for(let i=0;i<Math.floor(w*h*loops);i++)carve(g,rand(w),rand(h),rand(4));
+  if(loops>0.1)for(let r=0;r<Math.floor(w*h/22);r++){const x=rand(w-1),y=rand(h-1);carve(g,x,y,1);carve(g,x,y,2);carve(g,x+1,y,2);carve(g,x,y+1,1);}
+  return g;
+}
+const isOpen=(x,y,d)=>!(G.maze[y][x]&(1<<d));
+const key=(x,y)=>x+','+y;
+function bfs(sx,sy){
+  const dist=[...Array(G.h)].map(()=>Array(G.w).fill(Infinity)); dist[sy][sx]=0; const q=[[sx,sy]];
+  for(let qi=0;qi<q.length;qi++){const [x,y]=q[qi];for(let d=0;d<4;d++){if(!isOpen(x,y,d))continue;const nx=x+DX[d],ny=y+DY[d];if(dist[ny][nx]>dist[y][x]+1){dist[ny][nx]=dist[y][x]+1;q.push([nx,ny]);}}}
+  return dist;
+}
+function stepToward(dist,x,y){let best=-1,bd=dist[y][x];for(const d of [0,1,2,3].sort(()=>Math.random()-.5)){if(!isOpen(x,y,d))continue;const v=dist[y+DY[d]][x+DX[d]];if(v<bd){bd=v;best=d;}}return best;}
+function stepAway(dist,x,y){let best=-1,bd=dist[y][x];for(const d of [0,1,2,3].sort(()=>Math.random()-.5)){if(!isOpen(x,y,d))continue;const v=dist[y+DY[d]][x+DX[d]];if(v>bd){bd=v;best=d;}}return best;}
+const rel=d=>(d-G.f+4)%4, abs=r=>(G.f+r)%4;
+const isDark=(x,y)=>G.dark.has(key(x,y));
+const L=()=>LEVELS[G.level];
+
+/* ============================== audio ============================== */
+const A={ctx:null,ambNodes:[],timers:[],buf:{}};
+function initAudio(){
+  if(A.ctx){if(A.ctx.state==='suspended')A.ctx.resume();return;}
+  const C=window.AudioContext||window.webkitAudioContext; if(!C)return;
+  const ctx=new C(); A.ctx=ctx;
+  A.master=ctx.createGain(); A.master.gain.value=0.9;
+  const comp=ctx.createDynamicsCompressor(); A.master.connect(comp).connect(ctx.destination);
+  A.rev=ctx.createConvolver(); A.rev.buffer=impulse(3.2,2.4);
+  A.revOut=ctx.createGain(); A.revOut.gain.value=0.4; A.rev.connect(A.revOut).connect(A.master);
+  A.fx=ctx.createGain(); A.fx.gain.value=S.fx; A.fx.connect(A.master);
+  A.sfx=ctx.createGain(); A.sfx.gain.value=0.9; A.sfx.connect(A.fx); A.sfx.connect(A.rev);
+  A.music=ctx.createGain(); A.music.gain.value=S.music; A.music.connect(A.master); A.music.connect(A.rev);
+  A.amb=ctx.createGain(); A.amb.gain.value=0.7; A.amb.connect(A.fx);
+  A.noise=(()=>{const b=ctx.createBuffer(1,ctx.sampleRate*2,ctx.sampleRate);const d=b.getChannelData(0);for(let i=0;i<d.length;i++)d[i]=Math.random()*2-1;return b;})();
+  loadAssets(); unlockTracks();
+}
+function impulse(sec,decay){const c=A.ctx,len=c.sampleRate*sec,b=c.createBuffer(2,len,c.sampleRate);for(let ch=0;ch<2;ch++){const d=b.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,decay);}return b;}
+const now=()=>A.ctx.currentTime;
+function gainNode(v=1){const g=A.ctx.createGain();g.gain.value=v;return g;}
+function envelope(g,t,a,peak,d){g.gain.cancelScheduledValues(t);g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(Math.max(peak,0.0002),t+a);g.gain.exponentialRampToValueAtTime(0.0001,t+a+d);}
+function noise(t,dur){const s=A.ctx.createBufferSource();s.buffer=A.noise;s.loop=true;s.start(t,Math.random()*1.5);s.stop(t+dur+0.05);return s;}
+function osc(type,f,t,dur){const o=A.ctx.createOscillator();o.type=type;o.frequency.setValueAtTime(f,t);o.start(t);o.stop(t+dur+0.05);return o;}
+function filt(type,f,q=1){const b=A.ctx.createBiquadFilter();b.type=type;b.frequency.value=f;b.Q.value=q;return b;}
+function spot(pan=0,vol=1,muffle=0,dest){
+  const g=gainNode(vol); const lp=filt('lowpass',clamp(9000-muffle*8200,500,9000),0.7);
+  let p; if(A.ctx.createStereoPanner){p=A.ctx.createStereoPanner();p.pan.value=clamp(pan,-1,1);}else p=gainNode(1);
+  g.connect(lp).connect(p).connect(dest||A.sfx); return g;
+}
+function sfx(fn,...args){if(!A.ctx)return;try{fn(...args);}catch(e){}}
+
+/* ---------- synthesized sounds ---------- */
+function footstep(vol=1,muffle=0){const t=now(),st=L().step;for(let i=0;i<2;i++){const tt=t+i*0.27;const out=spot(i?0.15:-0.15,(st==='carpet'?0.55:0.45)*vol*(G.sneak?0.35:1),muffle);
+  const n=noise(tt,0.12);const f=st==='carpet'?filt('lowpass',420,0.8):st==='tile'?filt('bandpass',3200,2):st==='metal'?filt('bandpass',2400,2):filt('bandpass',1300,1.2);
+  const g=gainNode(0);envelope(g,tt,0.005,1,st==='carpet'?0.12:0.08);n.connect(f).connect(g).connect(out);
+  if(st==='metal'){const o=osc('sine',880+rand(80),tt,0.25);const og=gainNode(0);envelope(og,tt,0.002,0.12,0.22);o.connect(og).connect(out);}
+  if(st==='tile'){const o=osc('sine',300+rand(60),tt,0.2);o.frequency.exponentialRampToValueAtTime(120,tt+0.15);const og=gainNode(0);envelope(og,tt,0.002,0.15,0.15);o.connect(filt('lowpass',800)).connect(og).connect(out);}}}
+function bump(){const t=now();const o=osc('sine',90,t,0.35);o.frequency.exponentialRampToValueAtTime(38,t+0.3);const g=gainNode(0);envelope(g,t,0.005,0.9,0.3);o.connect(g).connect(spot(0,1));
+  const n=noise(t,0.1);const ng=gainNode(0);envelope(ng,t,0.002,0.5,0.08);n.connect(filt('lowpass',300)).connect(ng).connect(spot(0,1));}
+function turnSound(dir){const t=now();const n=noise(t,0.25);const f=filt('bandpass',900,0.8);f.frequency.setValueAtTime(600,t);f.frequency.linearRampToValueAtTime(1400,t+0.2);const g=gainNode(0);envelope(g,t,0.04,0.25,0.18);n.connect(f).connect(g).connect(spot(dir*0.6,1));}
+function pickup(){const t=now();[660,880,1320].forEach((f,i)=>{const o=osc('sine',f,t+i*0.1,0.5);const g=gainNode(0);envelope(g,t+i*0.1,0.01,0.3,0.4);o.connect(g).connect(spot(0,1));});}
+function drinkSound(){const t=now();for(let i=0;i<3;i++){const tt=t+i*0.32;const o=osc('sine',230,tt,0.2);o.frequency.exponentialRampToValueAtTime(110,tt+0.15);const g=gainNode(0);envelope(g,tt,0.01,0.6,0.15);o.connect(filt('lowpass',600)).connect(g).connect(spot(0,1));}
+  const t2=t+1.1;[523,659,784].forEach((f,i)=>{const o=osc('triangle',f,t2+i*0.08,0.8);const g=gainNode(0);envelope(g,t2+i*0.08,0.02,0.18,0.7);o.connect(g).connect(spot(0,1));});}
+function clickSound(on){const t=now();const o=osc('square',on?2400:1600,t,0.03);const g=gainNode(0);envelope(g,t,0.001,0.3,0.03);o.connect(g).connect(spot(0,1));if(on){const h=osc('sine',8000,t+0.03,0.5);const hg=gainNode(0);envelope(hg,t+0.03,0.05,0.02,0.4);h.connect(hg).connect(spot(0,1));}}
+function bang(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const n=noise(t,0.6);const g=gainNode(0);envelope(g,t,0.002,1,0.5);n.connect(filt('lowpass',3000)).connect(g).connect(out);
+  const o=osc('sine',120,t,0.4);o.frequency.exponentialRampToValueAtTime(40,t+0.3);const og=gainNode(0);envelope(og,t,0.002,0.9,0.35);o.connect(og).connect(out);
+  for(let i=0;i<10;i++){const tt=t+0.15+Math.random()*0.7;const c=noise(tt,0.03);const cg=gainNode(0);envelope(cg,tt,0.001,0.4,0.02);c.connect(filt('highpass',2000)).connect(cg).connect(out);}}
+function fuse(){const t=now();const n=noise(t,0.8);const g=gainNode(0);envelope(g,t,0.02,0.15,0.75);n.connect(filt('bandpass',5000,2)).connect(g).connect(spot(0,1));}
+function flutter(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const n=noise(t,1.4);const g=gainNode(0);const am=osc('square',28+rand(10),t,1.4);const ag=gainNode(0.5);am.connect(ag).connect(g.gain);
+  g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.5,t+0.3);g.gain.linearRampToValueAtTime(0.0001,t+1.35);n.connect(filt('bandpass',900,1.5)).connect(g).connect(out);}
+function hum(pan,vol){const t=now();const out=spot(pan,vol,0.3);const o=osc('triangle',196,t,2.2);const lfo=osc('sine',5,t,2.2);const lg=gainNode(4);lfo.connect(lg).connect(o.frequency);
+  [0,0.6,1.1].forEach((d,i)=>o.frequency.setValueAtTime([196,220,175][i],t+d));const g=gainNode(0);envelope(g,t,0.3,0.12,1.8);o.connect(filt('lowpass',900)).connect(g).connect(out);}
+function partyHorn(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const o=osc('sawtooth',300,t,0.6);o.frequency.linearRampToValueAtTime(420,t+0.1);o.frequency.linearRampToValueAtTime(360,t+0.5);const g=gainNode(0);envelope(g,t,0.02,0.18,0.5);o.connect(filt('bandpass',1200,2)).connect(g).connect(out);}
+function squeak(pan,vol){const t=now();const o=osc('sine',900,t,0.4);o.frequency.linearRampToValueAtTime(1500,t+0.15);o.frequency.linearRampToValueAtTime(700,t+0.35);const g=gainNode(0);envelope(g,t,0.01,0.15,0.35);o.connect(g).connect(spot(pan,vol,0.3));}
+function denied(){const t=now();[0,0.18].forEach(d=>{const o=osc('square',180,t+d,0.14);const g=gainNode(0);envelope(g,t+d,0.005,0.25,0.12);o.connect(filt('lowpass',1200)).connect(g).connect(spot(0,1));});}
+function chirp(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);[0,0.12,0.24].forEach(d=>{const o=osc('sine',2600,t+d,0.06);const g=gainNode(0);envelope(g,t+d,0.002,0.25,0.05);o.connect(g).connect(out);});}
+function tapeClick(){const t=now();[0,0.08].forEach(d=>{const n=noise(t+d,0.02);const g=gainNode(0);envelope(g,t+d,0.001,0.6,0.02);n.connect(filt('bandpass',2500,1)).connect(g).connect(spot(0,1));});
+  const h=noise(t+0.1,9);const hg=gainNode(0);hg.gain.setValueAtTime(0.0001,t+0.1);hg.gain.linearRampToValueAtTime(0.025,t+0.4);hg.gain.setValueAtTime(0.025,t+8.5);hg.gain.linearRampToValueAtTime(0.0001,t+9);h.connect(filt('highpass',3000)).connect(hg).connect(A.sfx);}
+function radioBurst(vol){if(!play('static',{vol:vol,rate:0.9+Math.random()*0.2})){const t=now();const n=noise(t,0.6);const g=gainNode(0);envelope(g,t,0.01,vol*0.3,0.55);n.connect(filt('bandpass',2000,0.7)).connect(g).connect(spot(0,1));}}
+function synthGrowl(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const o=osc('sawtooth',58,t,1.4);const am=osc('sine',23,t,1.4);const amg=gainNode(0.5);const g=gainNode(0);
+  am.connect(amg).connect(g.gain);envelope(g,t,0.15,0.7,1.2);o.connect(filt('lowpass',380,3)).connect(g).connect(out);}
+function beacon(pan,vol,muffle){const t=now(),lv=G.level;const out=spot(pan,vol,muffle);
+  if(lv===0){const o=osc('square',120,t,1.2);const g=gainNode(0);for(let i=0;i<5;i++){const tt=t+i*0.22;g.gain.setValueAtTime(0.0001,tt);g.gain.exponentialRampToValueAtTime(0.25,tt+0.02);g.gain.setValueAtTime(0.25,tt+0.14);g.gain.exponentialRampToValueAtTime(0.0001,tt+0.18);}o.connect(filt('bandpass',1800,1.5)).connect(g).connect(out);}
+  else if(lv===1){[392,523,659,587,523].forEach((f,i)=>{const tt=t+i*0.22;const o=osc('square',f,tt,0.3);const g=gainNode(0);envelope(g,tt,0.01,0.25,0.22);o.connect(filt('bandpass',1500,2)).connect(g).connect(out);});}
+  else if(lv===2||lv===5){const n=noise(t,1.5);const g=gainNode(0);envelope(g,t,0.4,0.4,1);n.connect(filt('bandpass',lv===2?700:400,0.8)).connect(g).connect(out);}
+  else if(lv===3){if(!play('bubbles',{pan,vol,muffle})){const n=noise(t,1);const g=gainNode(0);envelope(g,t,0.1,0.4,0.8);n.connect(filt('lowpass',500)).connect(g).connect(out);}}
+  else if(lv===4){[1318.5,1046.5].forEach((f,i)=>{const tt=t+i*0.35;const o=osc('sine',f,tt,1.2);const g=gainNode(0);envelope(g,tt,0.005,0.3,1.1);o.connect(g).connect(out);});}
+  else{[1568,1976,2349,2637].forEach((f,i)=>{const tt=t+i*0.13+Math.random()*0.05;const o=osc('sine',f,tt,1.5);const g=gainNode(0);envelope(g,tt,0.005,0.22,1.3);o.connect(g).connect(out);});}}
+function noclip(){const t=now();const n=noise(t,2.4);const f=filt('lowpass',8000,6);f.frequency.setValueAtTime(9000,t);f.frequency.exponentialRampToValueAtTime(90,t+2.2);const g=gainNode(0);envelope(g,t,0.1,0.8,2.1);n.connect(f).connect(g).connect(spot(0,1));
+  const o=osc('sine',500,t,2.2);o.frequency.exponentialRampToValueAtTime(35,t+2.1);const og=gainNode(0);envelope(og,t,0.05,0.4,2.0);o.connect(og).connect(spot(0,1));}
+function caughtSound(){const t=now();const ws=A.ctx.createWaveShaper();const c=new Float32Array(256);for(let i=0;i<256;i++){const x=i/128-1;c[i]=Math.tanh(x*6);}ws.curve=c;
+  const o=osc('sawtooth',110,t,1);o.frequency.exponentialRampToValueAtTime(45,t+0.9);const n=noise(t,0.9);const g=gainNode(0);envelope(g,t,0.01,0.7,0.85);
+  o.connect(ws);n.connect(ws);ws.connect(filt('lowpass',2500)).connect(g).connect(spot(0,1));}
+function heartbeat(){const t=now();[0,0.22].forEach((d,i)=>{const o=osc('sine',62,t+d,0.2);o.frequency.exponentialRampToValueAtTime(40,t+d+0.15);const g=gainNode(0);envelope(g,t+d,0.01,i?0.5:0.8,0.16);o.connect(g).connect(spot(0,1));});}
+function winSound(){const t=now();[261.6,329.6,392,523.3,659.3].forEach((f,i)=>{const o=osc('triangle',f,t+i*0.25,4);const g=gainNode(0);envelope(g,t+i*0.25,0.4,0.2,3.5);o.connect(g).connect(A.music);});}
+
+/* ---------- recorded sounds (see credits) ---------- */
+const SFXF=['attack','attack2','scream','scream2','farscream','farscream2','growl1','growl2','growl3','growl4','howl','moan','ghost1','ghost2','ghost3','breath','breath2','heartfast','heartslow','weird','hound','hound2','impact','bigscream','screech','sting','riser','giggle','cackle','laughter','static','bubbles'];
+function loadAssets(){SFXF.forEach(n=>{fetch('audio/'+n+'.mp3').then(r=>r.arrayBuffer()).then(b=>new Promise((res,rej)=>A.ctx.decodeAudioData(b,res,rej))).then(buf=>{A.buf[n]=buf;}).catch(()=>{});});}
+function play(name,{pan=0,vol=1,muffle=0,rate=1,dest,delay=0}={}){if(!A.ctx)return false;const b=A.buf[name];if(!b)return false;const src=A.ctx.createBufferSource();src.buffer=b;src.playbackRate.value=rate;src.connect(spot(pan,vol,muffle,dest));src.start(now()+delay);return true;}
+function monSound(m,pan,vol,muffle){const T=MT[m.type];
+  if(m.type==='moths')return sfx(flutter,pan,vol,muffle);
+  if(m.type==='face')return sfx(hum,pan,vol*0.8);
+  if(m.type==='party'&&Math.random()<0.4)sfx(Math.random()<0.5?partyHorn:squeak,pan,vol,muffle);
+  if(!T.sfx||!play(pick(T.sfx),{pan,vol:vol*1.2,muffle,rate:0.88+Math.random()*0.2}))sfx(synthGrowl,pan,vol,muffle);}
+function heart(fast){if(!play(fast?'heartfast':'heartslow',{vol:0.9}))sfx(heartbeat);}
+
+/* ---------- music tracks ---------- */
+const TR={}, TRACKS=['menu','music0','music1','music2','music3','music5','music6','chase','drone'];
+function track(name){if(TR[name])return TR[name];const el=new Audio('audio/'+name+'.mp3');el.loop=true;el.preload='auto';const g=gainNode(0);try{A.ctx.createMediaElementSource(el).connect(g);}catch(e){}g.connect(A.music);TR[name]={el,g,want:0};return TR[name];}
+function fadeTrack(name,v,sec=2){if(!A.ctx)return;if(name==='musicbox'){musicBox(v>0);return;}const tr=track(name);tr.want=v;tr.g.gain.cancelScheduledValues(now());tr.g.gain.setTargetAtTime(v,now(),sec/3);
+  if(v>0&&tr.el.paused){const pr=tr.el.play();if(pr&&pr.catch)pr.catch(()=>{});}
+  clearTimeout(tr.to);if(v===0)tr.to=setTimeout(()=>{if(tr.want===0)tr.el.pause();},sec*1000+800);}
+function unlockTracks(){TRACKS.forEach(n=>{const tr=track(n);const pr=tr.el.play();if(pr&&pr.then)pr.then(()=>{if(tr.want===0)tr.el.pause();}).catch(()=>{});});}
+let chaseLevel=-1;
+function onlyMusic(list,sec=2.5){TRACKS.forEach(n=>{const v=list[n]||0;if(v||(TR[n]&&TR[n].want))fadeTrack(n,v,sec);});musicBox(!!list.musicbox);}
+function menuMusic(){onlyMusic({menu:0.7},2);}
+function levelMusic(){if(!A.ctx)return;const lv=L();const m={drone:lv.calm?0:0.25};m[lv.music]=lv.music==='musicbox'?1:0.6;if(lv.run)m.chase=0.5;onlyMusic(m,3);chaseLevel=-1;setChase(99);}
+function stopAllMusic(sec=1){onlyMusic({},sec);chaseLevel=0;}
+function setChase(d){if(!A.ctx||G.blackout>0||L().calm||L().run)return;const v=d<=2?0.9:d<=4?0.4:0;if(v===chaseLevel)return;chaseLevel=v;fadeTrack('chase',v,v>0?1.2:4);if(L().music!=='musicbox')fadeTrack(L().music,v>0.5?0.12:0.6,2);}
+// a creepy, slightly broken music box (Happy Birthday is in the public domain)
+const MB={on:false,timer:null};
+const MB_NOTES=[[392,.75],[392,.25],[440,1],[392,1],[523.3,1],[493.9,2],[392,.75],[392,.25],[440,1],[392,1],[587.3,1],[523.3,2],[392,.75],[392,.25],[784,1],[659.3,1],[523.3,1],[493.9,1],[440,2],[698.5,.75],[698.5,.25],[659.3,1],[523.3,1],[587.3,1],[523.3,3]];
+function musicBox(on){if(!A.ctx)return;if(on===MB.on)return;MB.on=on;clearTimeout(MB.timer);if(!on)return;
+  let i=0;const step=()=>{if(!MB.on)return;const [f,beats]=MB_NOTES[i%MB_NOTES.length];const t=now();const beat=60/(58+rand(6));
+    const fr=f*0.84*(Math.random()<0.08?(G.sanity<40?1.04:1.012):1)*(1+(Math.random()-0.5)*0.01);
+    [1,2.01,3.98].forEach((m,k)=>{const o=osc(k?'sine':'triangle',fr*m,t,2.5);const g=gainNode(0);envelope(g,t,0.003,[0.14,0.05,0.02][k],2.2);o.connect(g).connect(A.music);});
+    i++;MB.timer=setTimeout(step,beats*beat*1000+(i%MB_NOTES.length===0?2500:0));};
+  step();}
+
+/* ---------- jump scare ---------- */
+function jumpscare(){
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(!A.ctx){G.holdSpeech=performance.now()+600;return;}
+  if(performance.now()-(G.lastJump||0)<4000){G.holdSpeech=Math.max(G.holdSpeech||0,performance.now()+600);return;}
+  G.lastJump=performance.now();
+  const t=now();A.master.gain.cancelScheduledValues(t);
+  if(!S.scares||!(A.buf.impact||A.buf.attack)){G.holdSpeech=performance.now()+900;A.master.gain.setValueAtTime(0.9,t);sfx(caughtSound);return;}
+  // 1. everything goes silent
+  A.master.gain.setValueAtTime(Math.max(A.master.gain.value,0.0002),t);A.master.gain.exponentialRampToValueAtTime(0.0002,t+0.04);
+  const comp=A.ctx.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=4;comp.knee.value=6;comp.attack.value=0.002;
+  const out=gainNode(1.35*Math.max(0.5,S.fx));comp.connect(out).connect(A.ctx.destination);
+  const D=(name,{vol=1,rate=1,pan=0,offset=0,dur,at=now()}={})=>{const b=A.buf[name];if(!b)return null;const src=A.ctx.createBufferSource();src.buffer=b;src.playbackRate.value=rate;const g=gainNode(vol);let pn=g;if(A.ctx.createStereoPanner){pn=A.ctx.createStereoPanner();pn.pan.value=pan;g.connect(pn);}src.connect(g);pn.connect(comp);src.start(at,offset,dur);return src;};
+  // 2. the build-up: three variants so you never know which is coming
+  const v=rand(3); let pre;
+  if(v===0){pre=900+rand(1100);}
+  else if(v===1){pre=1500;const side=Math.random()<0.5?-0.95:0.95;D('breath2',{vol:1.1,pan:side});D('breath',{vol:0.7,pan:side,offset:0.4,dur:0.8,at:now()+0.5});}
+  else{pre=3000;const r=D('riser',{vol:0.9});if(r)r.stop(now()+2.55);}
+  G.holdSpeech=performance.now()+pre+3600;
+  // 3. the hit
+  setTimeout(()=>{
+    const t2=now();G.scareAt=performance.now();
+    D('impact',{vol:1.1,at:t2});D('sting',{vol:0.75,at:t2});
+    D('bigscream',{vol:1,rate:0.78,at:t2+0.02});
+    D('screech',{vol:0.65,rate:0.93,pan:-0.85,at:t2});D('screech',{vol:0.65,rate:1.07,pan:0.85,at:t2+0.03});
+    D(pick(['attack','attack2']),{vol:1,at:t2+0.05});
+    const nb=noise(t2,0.3);const ng=gainNode(0);envelope(ng,t2,0.003,0.9,0.28);nb.connect(filt('highpass',150)).connect(ng).connect(comp);
+    for(let k=0;k<6;k++){const tt=t2+0.12+k*0.16;[1046.5,1108.7,1480,1568].forEach(f=>{const o=osc('sawtooth',f*(1+(Math.random()-0.5)*0.01),tt,0.2);const og=gainNode(0);envelope(og,tt,0.004,0.07,0.14);o.connect(filt('bandpass',2600,0.8)).connect(og).connect(comp);});}
+    try{if(navigator.vibrate)navigator.vibrate([600,80,300,80,900]);}catch(e){}
+    A.master.gain.cancelScheduledValues(t2);A.master.gain.setValueAtTime(0.0002,t2);A.master.gain.setValueAtTime(0.0002,t2+2.2);A.master.gain.exponentialRampToValueAtTime(0.9,t2+5);
+  },pre);
+}
+
+/* ---------- ambience ---------- */
+function clearAmb(){A.ambNodes.forEach(n=>{try{n.stop();}catch(e){}try{n.disconnect();}catch(e){}});A.ambNodes=[];A.timers.forEach(clearTimeout);A.timers=[];}
+function loopTimer(fn,min,max){const go=()=>{if(G.state==='play')fn();A.timers.push(setTimeout(go,min+Math.random()*(max-min)));};A.timers.push(setTimeout(go,min+Math.random()*(max-min)));}
+function ambience(){
+  if(!A.ctx)return; clearAmb(); const t=now(),ctx=A.ctx,type=L().amb;
+  const keep=n=>{A.ambNodes.push(n);return n;};
+  const longNoise=()=>{const s=keep(ctx.createBufferSource());s.buffer=A.noise;s.loop=true;s.start(t);return s;};
+  const longOsc=(tp,f)=>{const o=keep(ctx.createOscillator());o.type=tp;o.frequency.value=f;o.start(t);return o;};
+  const lampHum=(f,vol)=>{const hm=gainNode(vol);hm.connect(A.amb);const lp=filt('lowpass',f*9,1);lp.connect(hm);const o1=longOsc('sawtooth',f);const o2=longOsc('square',f*2);const g2=gainNode(0.25);o1.connect(lp);o2.connect(g2).connect(lp);
+    const hiss=longNoise();const hg=gainNode(vol/4);hiss.connect(filt('highpass',5000)).connect(hg).connect(A.amb);
+    loopTimer(()=>{const tt=now();G.flash=performance.now();hm.gain.setValueAtTime(vol,tt);hm.gain.linearRampToValueAtTime(0.004,tt+0.03);hm.gain.setValueAtTime(0.004,tt+0.09);hm.gain.linearRampToValueAtTime(vol,tt+0.12);hm.gain.linearRampToValueAtTime(0.004,tt+0.2);hm.gain.linearRampToValueAtTime(vol,tt+0.26);},4000,11000);};
+  const rumble=(f,vol)=>{const r=longNoise();const rg=gainNode(vol);r.connect(filt('lowpass',f,1)).connect(rg).connect(A.amb);};
+  const drip=(min,max,pan=0.8)=>loopTimer(()=>{const tt=now();const o=osc('sine',1400+rand(600),tt,0.15);o.frequency.exponentialRampToValueAtTime(380,tt+0.08);const g=gainNode(0);envelope(g,tt,0.002,0.25,0.1);o.connect(g).connect(spot(Math.random()*2*pan-pan,0.6,0.2));},min,max);
+  if(type==='hum')lampHum(120,0.05);
+  if(type==='drip'){lampHum(100,0.03);rumble(140,0.05);drip(1500,5000);}
+  if(type==='pipes'){const st=longNoise();const sg=gainNode(0.02);st.connect(filt('bandpass',3500,0.8)).connect(sg).connect(A.amb);const lfo=longOsc('sine',0.13);const lg=gainNode(0.015);lfo.connect(lg).connect(sg.gain);rumble(90,0.07);
+    loopTimer(()=>{const tt=now();const out=spot(Math.random()*1.8-0.9,0.5,0.4);[310,467,781,1043].forEach(f=>{const o=osc('sine',f*(0.95+Math.random()*0.1),tt,1.6);const g=gainNode(0);envelope(g,tt,0.003,0.18,1.5);o.connect(g).connect(out);});},3500,9000);}
+  if(type==='pool'){lampHum(240,0.012);const w=longNoise();const wg=gainNode(0.05);w.connect(filt('lowpass',380,0.7)).connect(wg).connect(A.amb);const lfo=longOsc('sine',0.18);const lg=gainNode(0.035);lfo.connect(lg).connect(wg.gain);drip(2500,7000,0.9);
+    loopTimer(()=>play('bubbles',{pan:Math.random()*1.6-0.8,vol:0.35,muffle:0.4}),7000,16000);}
+  if(type==='party'){lampHum(120,0.025);loopTimer(()=>sfx(Math.random()<0.5?partyHorn:squeak,Math.random()*2-1,0.25,0.6),6000,14000);loopTimer(()=>play(pick(['giggle','laughter']),{pan:Math.random()*2-1,vol:0.18,muffle:0.7}),12000,25000);}
+  if(type==='void'){rumble(60,0.06);loopTimer(()=>heart(false),9000,20000);}
+  if(type==='alarm'){rumble(80,0.08);const o=longOsc('sawtooth',440);const lfo=longOsc('square',0.9);const lg=gainNode(110);lfo.connect(lg).connect(o.frequency);const g=gainNode(0.018);o.connect(filt('bandpass',900,1)).connect(g).connect(A.amb);}
+}
+
+/* ============================== speech output ============================== */
+const live=$('#live'), logEl=$('#log');
+let voice=null, voice2=null, speakingText='', speaking=false, lastSpeakEnd=0;
+function pickVoice(){const vs=speechSynthesis.getVoices();const en=vs.filter(v=>/^en/i.test(v.lang));
+  voice=en.find(v=>/en(-|_)US/i.test(v.lang)&&/natural|google|samantha|aria|jenny/i.test(v.name))||en[0]||null;
+  voice2=en.find(v=>v!==voice&&/female|zira|karen|moira|tessa|fiona|victoria|google uk/i.test(v.name))||en.find(v=>v!==voice)||voice;}
+if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
+function utter(text,{pitch=1,rate=S.rate,v=voice,vol=1}={}){const u=new SpeechSynthesisUtterance(text);u.rate=rate;u.pitch=pitch;u.volume=vol;if(v)u.voice=v;u.lang='en-US';return u;}
+function say(text,{log=true,extras}={}){
+  const ex=extras||G.extras; G.extras=[];
+  const hold=(G.holdSpeech||0)-performance.now(); if(hold>0){setTimeout(()=>say(text,{log,extras:ex}),hold+30);return;}
+  const full=text+(ex.length?' '+ex.map(e=>e.label?e.label+' '+e.text:e.text).join(' '):'');
+  G.lastText=full; G.quietUntil=performance.now()+full.length*62/S.rate;
+  if(log){const p=document.createElement('p');p.textContent=full;logEl.appendChild(p);while(logEl.children.length>40)logEl.firstChild.remove();logEl.scrollTop=logEl.scrollHeight;}
+  live.textContent=''; setTimeout(()=>{live.textContent=full;},40);
+  if(S.narr&&'speechSynthesis' in window){
+    speechSynthesis.cancel(); speakingText=full.toLowerCase(); speaking=true;
+    const parts=(text.match(/[^.!?]+[.!?]*/g)||[text]).map(p=>utter(p.trim()));
+    ex.forEach(e=>{if(e.label)parts.push(utter(e.label));(e.text.match(/[^.!?]+[.!?]*/g)||[e.text]).forEach(p=>parts.push(utter(p.trim(),e.opts||{})));});
+    const last=parts[parts.length-1]; last.onend=last.onerror=()=>{speaking=false;lastSpeakEnd=performance.now();};
+    parts.forEach(u=>speechSynthesis.speak(u));
+  }
+}
+function narrateMenu(text){if(S.narr)say(text,{log:false});}
+
+/* ============================== voice input ============================== */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition; let rec=null;
+function setMic(on,silent){
+  if(!SR){if(on&&!silent)say('Voice commands are not supported in this browser. Try Chrome, Edge or Safari, or use the buttons and keyboard.');return;}
+  S.mic=on; setMicUI();
+  if(on){ if(!rec){rec=new SR();rec.lang='en-US';rec.continuous=true;rec.interimResults=false;rec.maxAlternatives=3;
+      rec.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++){if(!e.results[i].isFinal)continue;heardSpeech([...e.results[i]].map(a=>a.transcript.trim().toLowerCase()));}};
+      rec.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){S.mic=false;setMicUI();say('Microphone permission was denied, so voice commands are off. You can still use the buttons or keyboard.');}};
+      rec.onend=()=>{if(S.mic)setTimeout(()=>{try{rec.start();}catch(e){}},250);};
+    } try{rec.start();}catch(e){}
+  } else if(rec){try{rec.stop();}catch(e){}}
+}
+function setMicUI(){$('#micBtn').setAttribute('aria-pressed',String(S.mic));$('#micBtn').textContent=S.mic?'Voice commands: on':'Voice commands: off';}
+function heardSpeech(alts){
+  const busy=speaking||('speechSynthesis' in window&&speechSynthesis.speaking)||performance.now()-lastSpeakEnd<350;
+  for(const t of alts){const cmd=parse(t);if(!cmd)continue;
+    if(busy){const words=t.split(/\s+/).length;if(words>3)continue;if(words>1&&speakingText.includes(t))continue;}
+    $('#heard').textContent='Heard: “'+t+'”'; run(cmd.c,cmd.n,cmd.r); return;}
+  if(!busy)$('#heard').textContent='Heard: “'+alts[0]+'” (not a command)';
+}
+const NUMW={two:2,three:3,four:4,five:5,six:6,seven:7,eight:8};
+function parse(t){
+  t=' '+t.replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ')+' ';
+  const has=re=>re.test(t);
+  let n=1; const m=t.match(/ (\d+|two|three|four|five|six|seven|eight)( times| steps)? /); if(m)n=clamp(parseInt(m[1])||NUMW[m[1]]||1,1,8);
+  const dirOf=()=>has(/ (left|lift|lest) /)?3:has(/ (right|write|rite|ride|bright) /)?1:has(/ (back|backward|backwards|behind) /)?2:0;
+  if(has(/ (stop listening|microphone off|mic off|voice off|buttons only|use buttons) /))return{c:'micoff'};
+  if(has(/ (quit|quit game|exit game|main menu|title screen|leave game) /))return{c:'quit'};
+  if(has(/ (menu|pause) /))return{c:'menu'};
+  if(has(/ (resume|unpause) /))return{c:'resume'};
+  if(has(/ (settings|options) /))return{c:'settings'};
+  if(has(/ (credits) /))return{c:'credits'};
+  if(has(/ (how to play|instructions|tutorial) /))return{c:'howto'};
+  if(has(/ (help|commands|what can i say) /))return{c:'help'};
+  if(has(/ (repeat|say again|say that again|pardon|what did you say) /))return{c:'repeat'};
+  if(has(/ (tape|recording|cassette) /))return{c:'tape'};
+  if(has(/ (continue|checkpoint|load game) /))return{c:'continue'};
+  if(has(/ (try again|restart|new game|play again) /))return{c:'retry'};
+  if(has(/ (play|start|begin|enter) /))return{c:'play'};
+  if(has(/ (voice commands|use voice|voice on) /))return{c:'voiceon'};
+  if(has(/ (easy) /))return{c:'diff',n:'easy'};
+  if(has(/ (nightmare|hard mode|hardest) /))return{c:'diff',n:'nightmare'};
+  if(has(/ (normal|medium) /))return{c:'diff',n:'normal'};
+  if(has(/ (faster|speed up|speak faster) /))return{c:'faster'};
+  if(has(/ (slower|slow down|speak slower) /))return{c:'slower'};
+  if(has(/ music (off|stop) | (stop|mute) music | no music /))return{c:'musicoff'};
+  if(has(/ music on | (play|start) music /))return{c:'musicon'};
+  if(has(/ (scares off|jump scares off|no jump scares) /))return{c:'scaresoff'};
+  if(has(/ (scares on|jump scares on) /))return{c:'scareson'};
+  if(has(/ (stop sneaking|walk normally|walk normal|stand up) /))return{c:'unsneak'};
+  if(has(/ (sneak|sneaking|tiptoe|creep) /))return{c:'sneak'};
+  if(has(/ (light|flashlight|torch|lamp) /))return{c:'light',n:has(/ off /)?'off':has(/ on /)?'on':'toggle'};
+  if(has(/ (throw|firecracker|fire cracker|toss) /))return{c:'throw',r:dirOf()};
+  if(has(/ (sprint|run|dash|charge|rush) /))return{c:'sprint',r:dirOf()};
+  if(has(/ (talk|speak|hello|ask|chat) /))return{c:'talk'};
+  if(has(/ (radio|walkie|walkie talkie|static) /))return{c:'radio'};
+  if(has(/ (listen|hint|which way|where is the exit|find the exit|clue|guide me) /))return{c:'listen'};
+  if(has(/ (drink|water|almond|heal) /))return{c:'drink'};
+  if(has(/ (status|sanity|health|inventory|items|how am i|what do i have) /))return{c:'status'};
+  if(has(/ (hide|hold my breath|hold breath|crouch|stay still|be quiet|wait) /))return{c:'hide'};
+  if(has(/ turn /)||has(/ face /)){
+    if(has(/ around | back /))return{c:'turnaround'};
+    if(has(/ (left|lift|lest) /))return{c:'turnleft'};
+    if(has(/ (right|write|rite|ride|bright) /))return{c:'turnright'};
+  }
+  if(has(/ (look|describe|where am i|surroundings|what do i see|examine) /))return{c:'look'};
+  if(has(/ (left|lift|lest) /))return{c:'left',n};
+  if(has(/ (right|write|rite|ride|bright|alright) /))return{c:'right',n};
+  if(has(/ (back|backward|backwards|behind|reverse|bach) /))return{c:'back',n};
+  if(has(/ (forward|forwards|foreword|ahead|a head|straight|go|walk|move|step|onward|up) /))return{c:'forward',n};
+  return null;
+}
+
+/* ============================== screens ============================== */
+const SCREENS=['splash','menu','pause','setup','settings','howto','credits','end','game'];
+let screen='splash';
+function show(id,announce){
+  SCREENS.forEach(s=>$('#'+s).hidden=(s!==id)); screen=id; syncChoices();
+  const h=$('#'+id+' [tabindex="-1"]'); const first=$('#'+id+' button:not([hidden])');
+  setTimeout(()=>{(id==='game'?$('#viewWrap'):(h||first)).focus();},30);
+  if(announce)narrateMenu(announce);
+}
+// in a game: pause menu. Otherwise: main menu.
+function openMenu(){
+  if(G.state==='transition')return;
+  if(G.state==='play'){G.state='paused';clearAmb();menuMusic();}
+  if(G.state==='paused'){
+    $('#pauseWhere').textContent=L().name+' · Sanity '+Math.round(G.sanity)+'%';
+    return show('pause','Paused. Say or choose: resume, restart level, settings, how to play, or quit to main menu.');
+  }
+  showMain();
+}
+function showMain(prefix=''){
+  $('#mContinue').hidden=!lsGet('br_save',null);
+  menuMusic();
+  const opts=['play',$('#mContinue').hidden?null:'continue','settings','how to play','credits'].filter(Boolean);
+  show('menu',prefix+'Main menu. Say or choose: '+opts.join(', ')+'.');
+}
+function quitToMain(){
+  G.state='menu'; clearAmb(); G.sneak=false; setSneakUI();
+  showMain('You escape the Backrooms, for now. Your progress is saved from the start of the level. ');
+}
+function openSetup(){
+  if(G.state==='paused'||G.state==='won'||G.state==='dead')G.state='menu';
+  show('setup','New game. Step one: say voice commands, or buttons only. Step two: say easy, normal, or nightmare. Then say start. Right now: '+(S.voice?'voice commands':'buttons only')+', '+DF().label+'.');
+}
+function syncChoices(){
+  $$('.choice').forEach(b=>{const k=b.dataset.set,v=b.dataset.val;let cur;
+    if(k==='voice')cur=S.voice?'1':'0'; else if(k==='narr')cur=S.narr?'1':'0'; else if(k==='scares')cur=S.scares?'1':'0';
+    else if(k==='music')cur=String(S.music); else if(k==='fx')cur=String(S.fx); else if(k==='diff')cur=S.diff;
+    b.setAttribute('aria-pressed',String(cur===v));});
+  $('#rateVal').textContent=S.rate;
+}
+function applySetting(k,v,quiet){
+  let msg='';
+  if(k==='voice'){S.voice=v==='1';lsSet('br_voice',S.voice);setMic(S.voice,true);msg=S.voice?(SR?'Voice commands on.':'Voice commands are not supported in this browser.'):'Buttons only. Microphone off.';}
+  if(k==='narr'){S.narr=v==='1';lsSet('br_narr',S.narr);live.setAttribute('aria-live',S.narr?'off':'assertive');if(!S.narr&&'speechSynthesis' in window)speechSynthesis.cancel();msg=S.narr?'Spoken narration on.':'Screen reader mode. Narration off.';}
+  if(k==='music'){S.music=+v;lsSet('br_musicv',S.music);if(A.ctx)A.music.gain.setTargetAtTime(S.music,now(),0.2);msg='Music volume '+({0:'off',0.4:'low',0.7:'medium',1:'high'}[S.music])+'.';}
+  if(k==='fx'){S.fx=+v;lsSet('br_fx',S.fx);if(A.ctx)A.fx.gain.setTargetAtTime(S.fx,now(),0.1);msg='Sound effects '+({0.5:'low',0.75:'medium',1:'high'}[S.fx])+'.';sfx(pickup);}
+  if(k==='scares'){S.scares=v==='1';lsSet('br_scares',S.scares);msg='Jump scares '+(S.scares?'on. Good luck.':'off.');}
+  if(k==='diff'){S.diff=v;lsSet('br_diff',v);msg='Difficulty: '+DF().label+'.';}
+  syncChoices(); if(!quiet)say(msg,{log:false});
+}
+
+/* ============================== game setup ============================== */
+function genDark(frac){
+  G.dark=new Set(); if(!frac)return; const total=G.w*G.h;
+  if(frac>=1){for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)G.dark.add(key(x,y));return;}
+  let guard=0;while(G.dark.size<total*frac&&guard++<500){const sx=rand(G.w),sy=rand(G.h);for(let dy=-1;dy<=1;dy++)for(let dx=-1;dx<=1;dx++){const x=sx+dx,y=sy+dy;if(x>=0&&y>=0&&x<G.w&&y<G.h&&Math.abs(dx)+Math.abs(dy)<=1+rand(2))G.dark.add(key(x,y));}}
+  G.dark.delete(key(G.x,G.y));
+}
+function newLevel(){
+  const lv=L(); G.w=lv.w;G.h=lv.h; G.maze=genMaze(lv.w,lv.h,lv.loops);
+  if(lv.run){G.x=0;G.y=rand(G.h);}else{G.x=rand(G.w);G.y=rand(G.h);}
+  G.f=pick([0,1,2,3].filter(d=>isOpen(G.x,G.y,d)));
+  const dist=bfs(G.x,G.y); let best=[0,0],bd=-1;
+  for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>bd){bd=dist[y][x];best=[x,y];}
+  G.exit=best; const exD=bfs(best[0],best[1]);
+  genDark(lv.dark); if(lv.dark<1)G.dark.delete(key(...best));
+  const cells=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(!(x===G.x&&y===G.y)&&!(x===best[0]&&y===best[1]))cells.push([x,y]);
+  G.items=new Map(); const free=()=>cells.filter(([x,y])=>!G.items.has(key(x,y)));
+  const place=(type,filter)=>{let c=free().filter(filter||(()=>true));if(!c.length)c=free();if(c.length){const p=pick(c);G.items.set(key(...p),type);}};
+  const it={...lv.items}; if(it.water)it.water=Math.max(1,it.water+DF().water);
+  const onPath=([x,y],slack)=>dist[y][x]+exD[y][x]<=bd+slack;
+  if(it.flashlight&&!G.inv.flashlight)place('flashlight',c=>dist[c[1]][c[0]]>=1&&dist[c[1]][c[0]]<=2&&onPath(c,0));
+  if(it.radio&&!G.inv.radio)place('radio',c=>dist[c[1]][c[0]]>=3&&dist[c[1]][c[0]]<=bd*0.6&&onPath(c,2));
+  if(it.keycard)place('keycard',([x,y])=>exD[y][x]>=bd*0.5&&dist[y][x]>=3);
+  if(it.tape&&!G.tapes.has(G.level))place('tape',([x,y])=>dist[y][x]>=3);
+  ['water','fire','battery','energy'].forEach(t=>{for(let i=0;i<(it[t]||0);i++)place(t,([x,y])=>dist[y][x]>=2);});
+  G.mons=lv.mons.map(type=>{let c;
+    if(type==='chaser'){c=cells.filter(([x,y])=>dist[y][x]===3);c.sort((a,b)=>exD[b[1]][b[0]]-exD[a[1]][a[0]]);c=c.slice(0,2);}
+    else if(type==='face')c=cells.filter(([x,y])=>dist[y][x]>=2);
+    else c=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));
+    if(!c.length)c=cells; const p=pick(c); return {type,x:p[0],y:p[1],cool:3+rand(4)};});
+  G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
+  G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
+  updateHUD(); ambience(); levelMusic(); if(A.ctx)A.amb.gain.setTargetAtTime(0.7,now(),0.1);
+}
+function saveCheckpoint(){lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff});}
+function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.lastTape=s.lastTape??-1;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
+function enterLevel(prefix=''){
+  initAudio(); newLevel(); saveCheckpoint(); show('game');
+  say((prefix?prefix+' ':'')+L().intro+' '+pathsText());
+}
+function newGame(){
+  G.level=0;G.inv=freshInv();G.sanity=100;G.steps=0;G.deaths=0;G.tapes=new Set();G.lastTape=-1;G.startTime=Date.now();G.sneak=false;setSneakUI();
+  const ctl=(S.voice&&!SR)?' Voice commands are not available in this browser, so use the buttons or keyboard.':S.voice?' Voice commands are on. Say help to hear them, or menu to pause.':' You are playing with buttons and keyboard.';
+  enterLevel('Difficulty: '+DF().label+'.'+ctl);
+}
+function continueGame(){if(!loadCheckpoint())return say('There is no saved checkpoint.');G.startTime=Date.now();G.sneak=false;setSneakUI();enterLevel('Checkpoint loaded.');}
+function retryLevel(){const s=lsGet('br_save',null);if(s&&s.level===G.level){G.inv={...freshInv(),...s.inv};G.tapes=new Set(s.tapes);}G.sanity=100;G.sneak=false;setSneakUI();enterLevel('You try again.');}
+function resume(){if(G.state!=='paused')return;G.state='play';show('game');ambience();levelMusic();say('Resumed. '+L().name+'. '+pathsText());}
+
+/* ============================== game logic ============================== */
+function pathsText(){
+  const op=[0,3,1].filter(r=>isOpen(G.x,G.y,abs(r)));
+  if(!op.length)return 'Dead end. The only way is back.';
+  const names=op.map(r=>RELSHORT[r]);
+  return 'Paths: '+(names.length===1?names[0]:names.slice(0,-1).join(', ')+' and '+names[names.length-1])+'.';
+}
+function relDirWords(tx,ty){
+  const vx=tx-G.x,vy=ty-G.y,f=G.f,r=(G.f+1)%4;
+  const fw=vx*DX[f]+vy*DY[f], rt=vx*DX[r]+vy*DY[r]; const len=Math.hypot(fw,rt)||1; let w;
+  if(Math.abs(fw)>=2*Math.abs(rt))w=fw>=0?'ahead of you':'behind you';
+  else if(Math.abs(rt)>=2*Math.abs(fw))w=rt>0?'to your right':'to your left';
+  else w=(fw>0?'ahead':'behind')+' and to the '+(rt>0?'right':'left');
+  return {w,pan:rt/len,behind:fw<0};
+}
+function updateHUD(){
+  const I=G.inv; const bits=[['Level',L().short],['Sanity',Math.round(G.sanity)+'%'],['Water',I.water],['Firecrackers',I.fire],['Sprints',I.energy]];
+  if(I.flashlight)bits.push(['Light',(I.light?'on ':'off ')+Math.round(I.battery)+'%']);
+  if(I.radio)bits.push(['Radio','yes']); if(L().locked)bits.push(['Keycard',I.keycard?'yes':'no']);
+  bits.push(['Tapes',G.tapes.size+'/6'],['Facing',DIRN[G.f]]); if(G.sneak)bits.push(['','sneaking']);
+  $('#hud').innerHTML=bits.map(([k,v])=>`<span>${k?k+': ':''}<b>${v}</b></span>`).join('');
+  const fill=$('#sanityFill'); fill.style.width=G.sanity+'%'; fill.style.background=G.sanity>50?'var(--ok)':G.sanity>25?'#f2c94b':'var(--danger)';
+}
+function drain(mult=1){let d=DF().drain*mult;if(G.sneak)d*=1.4;if(isDark(G.x,G.y)&&!G.inv.light)d*=1.5;if(L().calm)d*=0.4;G.sanity=Math.max(0,G.sanity-d);
+  if(G.inv.light){G.inv.battery=Math.max(0,G.inv.battery-2);if(G.inv.battery<=0){G.inv.light=false;G.extras.push({text:'Your flashlight flickers and dies.'});sfx(clickSound,false);}}}
+function nearestHostile(dist){let best=null,bd=Infinity;for(const m of G.mons){if(!MT[m.type].hostile&&m.type!=='moths')continue;const d=dist[m.y][m.x];if(d<bd){bd=d;best=m;}}return best?{m:best,d:bd}:null;}
+function moveMon(m,d){if(d>=0){m.x+=DX[d];m.y+=DY[d];}}
+function wander(m){const ds=[0,1,2,3].filter(k=>isOpen(m.x,m.y,k));if(ds.length)moveMon(m,pick(ds));}
+function monstersTurn(){
+  const dist=bfs(G.x,G.y); const Df=DF(); let nd=null;
+  if(G.noise){nd=bfs(G.noise.x,G.noise.y);G.noise.turns--;}
+  for(const m of G.mons){const T=MT[m.type];const d=dist[m.y][m.x];
+    if(T.npc){if(Math.random()<0.3)wander(m);continue;}
+    if(nd&&T.hostile&&m.type!=='chaser'&&nd[m.y][m.x]<=8&&nd[m.y][m.x]>0){if(Math.random()<0.85)moveMon(m,stepToward(nd,m.x,m.y));continue;}
+    let sense=T.sense+Df.sense; if(G.sneak)sense=Math.min(sense,2); if(G.sprinted)sense+=3;
+    let hunting=d<=sense;
+    if(m.type==='smiler'){if(G.inv.light&&d<=3){moveMon(m,stepAway(dist,m.x,m.y));continue;} hunting=hunting&&isDark(G.x,G.y)&&!G.inv.light;}
+    if(m.type==='moths')hunting=G.inv.light&&d<=sense;
+    if(hunting){if(Math.random()<T.chase*Df.chase){moveMon(m,stepToward(dist,m.x,m.y));if(m.type==='hound'&&d>3&&Math.random()<0.3)moveMon(m,stepToward(bfs(G.x,G.y),m.x,m.y));}}
+    else if(Math.random()<0.5)wander(m);
+  }
+  if(G.noise&&G.noise.turns<=0)G.noise=null;
+}
+function caughtBy(m){
+  const T=MT[m.type]; jumpscare(); G.hurt=performance.now(); G.sanity=Math.max(0,G.sanity-DF().hit);
+  const dist=bfs(G.x,G.y);
+  if(m.type==='chaser'){const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]===4)c.push([x,y]);const p=c.length?pick(c):[G.exit[0],G.exit[1]];m.x=p[0];m.y=p[1];
+    return 'It catches you! Huge hands slam you into the wall. You tear free and keep running. You lose '+DF().hit+' sanity.';}
+  const far=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=6)far.push([x,y]);const p=far.length?pick(far):[G.exit[0],G.exit[1]];m.x=p[0];m.y=p[1];
+  const how={howler:'The Howler was waiting for you in the dark. It grabs you, its face inches from yours, screaming!',smiler:'A Smiler opens its grin right in front of you. Hundreds of teeth!',hound:'A Hound slams into you, snapping and snarling!',
+    skin:'The Skin-Stealer grabs you. It has a face. It is wearing your face!',party:'A Partygoer hugs you. It will not let go. Hello, friend!'}[m.type]||cap(T.name)+' grabs you!';
+  return how+' You tear free and run blindly. You lose '+DF().hit+' sanity.';
+}
+function checkCaught(parts){for(const m of G.mons){if(m.x===G.x&&m.y===G.y&&MT[m.type].hostile){parts.push(caughtBy(m));return true;}}return false;}
+function mothBite(parts){const dist=bfs(G.x,G.y);for(const m of G.mons){if(m.type==='moths'&&dist[m.y][m.x]<=1&&(G.inv.light||Math.random()<0.4)){for(let k=0;k<3;k++)moveMon(m,stepAway(dist,m.x,m.y));G.sanity=Math.max(0,G.sanity-DF().moth);G.hurt=performance.now();monSound(m,0,1,0);parts.push('Deathmoths swarm over you, biting! You lose '+DF().moth+' sanity.'+(G.inv.light?' Turn off your light!':''));}}}
+function monsterCues(force){
+  const dist=bfs(G.x,G.y); const txt=[]; let nearest=null,nd=99;
+  for(const m of G.mons){const T=MT[m.type];const d=dist[m.y][m.x];const {w,pan}=relDirWords(m.x,m.y);
+    if(T.npc){if(d<=1)txt.push(d===0?'A Faceling stands right here, humming. It has no face. Say talk to speak to it.':'A Faceling stands '+w+', humming softly. Say talk to speak to it.');if(d<=4)setTimeout(()=>monSound(m,pan,clamp(1-d*0.2,0.15,1),0),300);continue;}
+    if(m.type==='moths'){if(d<=1){if(force)txt.push('Deathmoths are crawling all over you.');}
+      else if(d<=5){monSound(m,pan,clamp(1-d*0.15,0.2,1),d*0.1);if(d<=3||force||!G.mothTold){txt.push('You hear '+T.sound+' '+w+(G.inv.light?'. Your light is drawing them in.':'.'));G.mothTold=true;}}continue;}
+    if(d<nd){nd=d;nearest=m;}
+  }
+  if(nearest){const m=nearest,T=MT[m.type],d=nd;const {w,pan,behind}=relDirWords(m.x,m.y);const sense=T.sense+DF().sense;
+    if(!force&&d>1&&d<=3&&m.type!=='chaser'&&Math.random()<0.35){if(A.ctx){fadeTrack('chase',0,0.4);if(L().music!=='musicbox')fadeTrack(L().music,0.04,0.4);chaseLevel=-2;}G.entBand=2;setTimeout(()=>heart(false),900);txt.push('Everything has gone very quiet.');}
+    else{
+      if(d<=sense+1&&(d<=3||Math.random()<0.7)&&m.type!=='skin')monSound(m,pan,clamp(1.15-d*0.17,0.12,1),clamp((d-1)*0.14+(behind?0.2:0),0,0.9));
+      if(m.type==='skin'&&d<=2)play('breath2',{pan,vol:0.6});
+      setChase(d);
+      const band=d<=1?1:d<=3?2:d<=sense?3:4;
+      if(m.type==='chaser')txt.push(d<=1?'It is right behind you! RUN!':d<=2?'It is close behind you, '+w+'. The floor shakes.':'You hear '+T.sound+' '+w+', about '+d+' rooms away.');
+      else if(band<=2||band!==G.entBand||force){
+        if(m.type==='skin')txt.push(band===1?'Someone is standing right next to you, '+w+', breathing like a person.':band===2?'You hear footsteps '+w+'. They stop when you stop.':band===3?'Somewhere '+w+', '+T.sound+'.':force?'You cannot hear anything moving.':'');
+        else txt.push(band===1?'Danger! '+cap(T.name)+' is right next to you, '+w+'. Run!':band===2?'You hear '+T.sound+' close by, '+w+'.':band===3?'Somewhere '+w+', you hear '+T.sound+'.':force?'You cannot hear '+T.name+' right now.':'');
+      }
+      if(band<=2)setTimeout(()=>heart(band===1),900);
+      G.entBand=band;
+    }
+  }
+  return txt.filter(Boolean).join(' ');
+}
+function skinLure(){
+  const m=G.mons.find(m=>m.type==='skin'); if(!m)return; m.cool--; const d=bfs(G.x,G.y)[m.y][m.x];
+  if(m.cool>0||d<2||d>9)return; m.cool=5+rand(4);
+  const {w,pan}=relDirWords(m.x,m.y);
+  play('breath2',{pan,vol:0.4,muffle:0.5});
+  G.extras.push({label:'Somewhere '+w+', a voice calls out:',text:pick(LURES),opts:{v:voice2,pitch:1.25,rate:0.95}});
+}
+function hallucinate(){
+  if(G.sanity>=35||Math.random()>0.18||L().calm)return;
+  const pan=Math.random()*2-1;
+  if(Math.random()<0.5)play(pick(['howl','growl2','giggle','ghost2','hound']),{pan,vol:0.35,muffle:0.5});else sfx(beacon,pan,0.3,0.5);
+}
+function exitCue(auto){
+  const dist=bfs(G.exit[0],G.exit[1]); const d=dist[G.y][G.x]; const s=stepToward(dist,G.x,G.y);
+  const {pan,behind}=relDirWords(G.exit[0],G.exit[1]);
+  if(!auto||d<=3)sfx(beacon,pan,clamp(1.1-d*0.07,0.15,1),clamp(d*0.06+(behind?0.2:0),0,0.85));
+  if(s<0)return '';
+  const r=rel(s); const route=r===0?'straight ahead':r===2?'back the way you came':'through the opening '+RELN[r];
+  return 'You hear '+L().exitWhat+'. The way to it leads '+route+', about '+d+(d===1?' step':' steps')+' away.';
+}
+function keycardCue(){
+  let kc=null;G.items.forEach((t,k)=>{if(t==='keycard')kc=k.split(',').map(Number);}); if(!kc)return exitCue(false);
+  const dist=bfs(kc[0],kc[1]); const d=dist[G.y][G.x]; const s=stepToward(dist,G.x,G.y); const {pan}=relDirWords(kc[0],kc[1]);
+  sfx(chirp,pan,clamp(1-d*0.07,0.2,1),clamp(d*0.05,0,0.8)); if(s<0)return '';
+  const r=rel(s); return 'The exit is locked, so find the keycard first. A faint electronic chirp leads '+(r===0?'straight ahead':r===2?'back the way you came':'through the opening '+RELN[r])+', about '+d+' steps away.';
+}
+function lowSanity(){
+  let t='';
+  if(G.sanity<=30&&!G.warned30){G.warned30=true;t='Your hands are shaking. Your sanity is getting low. Drink almond water if you have any.';}
+  if(G.sanity<=15&&!G.warned15){G.warned15=true;t='The walls seem to breathe. You are close to losing your mind.';}
+  if(G.sanity>30)G.warned30=false; if(G.sanity>15)G.warned15=false;
+  return t;
+}
+function pickupItems(parts){
+  const k=key(G.x,G.y); const t=G.items.get(k); if(!t)return; const I=G.inv;
+  G.items.delete(k); sfx(pickup);
+  if(t==='water'){I.water++;parts.push('You find a bottle of almond water. You have '+I.water+'.');}
+  if(t==='fire'){I.fire++;parts.push('You find a firecracker. You have '+I.fire+'. Say throw to use it.');}
+  if(t==='battery'){I.battery=Math.min(100,I.battery+50);parts.push(I.flashlight?'You find a battery. Flashlight charge: '+Math.round(I.battery)+' percent.':'You find a battery. It might be useful for a flashlight.');}
+  if(t==='energy'){I.energy+=3;parts.push('You find an energy bar and eat it. You can sprint '+I.energy+' times. Say sprint to run.');}
+  if(t==='flashlight'){I.flashlight=true;I.battery=Math.max(I.battery,80);parts.push('You find a flashlight! Say light to switch it on or off. It scares Smilers, but batteries run out.');}
+  if(t==='radio'){I.radio=true;parts.push('You find a walkie-talkie. Its static gets stronger near the exit. Say radio to check it.');}
+  if(t==='keycard'){I.keycard=true;sfx(chirp,0,0.6,0);parts.push('You find a keycard! Now the exit door will open.');}
+  if(t==='tape'){G.tapes.add(G.level);G.lastTape=G.level;sfx(tapeClick);parts.push('You find a cassette tape and press play.');G.extras.push({text:TAPES[G.level],opts:{v:voice2,pitch:0.8,rate:S.rate*0.9}});}
+}
+function scareEvents(parts,caughtNow){
+  const lv=L();
+  if(G.blackout>0){
+    G.blackout--; if(Math.random()<0.6)play(pick(['breath','breath2','weird']),{pan:Math.random()*1.6-0.8,vol:0.8,muffle:0.2});
+    if(G.blackout===0){restoreLights();
+      if(Math.random()<0.5){jumpscare();G.sanity=Math.max(0,G.sanity-DF().scare);G.hurt=performance.now();parts.push('The lights stutter back on, and something is standing right in front of you, its face pressed against yours! The light flickers, and it is gone. You lose '+DF().scare+' sanity.');}
+      else parts.push('The lights buzz back on. The room is empty. You are almost sure it is empty.');
+    }else parts.push(pick(['It is pitch black.','Something brushes past your arm in the dark.','You hear breathing that is not yours.','In the dark, something laughs very softly.','A wet sound, very close. Then nothing.']));
+    return;
+  }
+  if(caughtNow||lv.calm||lv.run)return;
+  G.sinceScare++; const near=nearestHostile(bfs(G.x,G.y)); const d=near?near.d:99;
+  if(lv.lights&&G.steps>6&&G.sinceScare>10&&Math.random()<0.08){startBlackout();parts.push('The lights go out. All of them. The humming stops, and in the total darkness something takes a slow breath right behind you.');return;}
+  if(Math.random()<0.045){play(pick(['farscream','farscream2']),{pan:Math.random()*2-1,vol:0.35,muffle:0.65});parts.push('Somewhere far away, someone screams. Then silence.');return;}
+  if(d<=4&&d>1&&Math.random()<0.4){setTimeout(()=>sfx(footstep,0.45,0.5),950);if(!G.echoTold){G.echoTold=true;parts.push('Behind you, footsteps copy yours. When you stop, they stop.');}}
+  if(G.sanity<70&&Math.random()<0.06){play('breath2',{vol:0.7,pan:Math.random()<0.5?-0.9:0.9});G.extras.push({label:S.narr?'':'A voice whispers in your ear:',text:pick(['turn around','you can not leave','it sees you','stay with us','behind you','wrong way','you were never here']),opts:{pitch:0.1,rate:0.6}});}
+}
+function startBlackout(){G.blackout=3+rand(3);G.sinceScare=0;if(!A.ctx)return;A.amb.gain.setTargetAtTime(0,now(),0.03);stopAllMusic(0.4);play('breath',{vol:1,muffle:0.1,delay:1.8});}
+function restoreLights(){G.flash=performance.now();if(!A.ctx)return;A.amb.gain.setTargetAtTime(0.7,now(),0.05);levelMusic();}
+function behindScare(){
+  const near=nearestHostile(bfs(G.x,G.y)); if(!near||near.d>2||Math.random()>0.5||G.blackout>0||near.m.type==='moths')return '';
+  jumpscare();G.sanity=Math.max(0,G.sanity-DF().scare);G.hurt=performance.now();
+  return 'You turn around, and it is right there, inches from your face, staring! You stumble back. You lose '+DF().scare+' sanity.';
+}
+// one turn after the player arrives in a cell
+function afterMove(quiet){
+  const lv=L(); const parts=[];
+  G.steps++; drain();
+  const k=key(G.x,G.y); const firstVisit=!G.visited.has(k); G.visited.add(k);
+  let caughtNow=checkCaught(parts);
+  pickupItems(parts);
+  if(G.x===G.exit[0]&&G.y===G.exit[1]){
+    if(lv.locked&&!G.inv.keycard){sfx(denied);parts.push('A heavy elevator door with a card reader. It is locked. You need the keycard.');}
+    else{levelComplete(parts);return {stop:true};}
+  }
+  monstersTurn();
+  if(!caughtNow)caughtNow=checkCaught(parts);
+  mothBite(parts);
+  if(G.sanity<=0){gameOver(parts);return {stop:true};}
+  if(firstVisit&&Math.random()<0.28&&!quiet&&G.blackout===0)parts.unshift(pick(lv.flavor));
+  const darkNow=isDark(G.x,G.y)&&!G.inv.light;
+  if(darkNow&&lv.dark<1&&!G.wasDark)parts.unshift('It is dark here.');
+  G.wasDark=darkNow;
+  const cue=G.blackout>0?'':monsterCues(false); if(cue)parts.push(cue);
+  skinLure(); scareEvents(parts,caughtNow); hallucinate();
+  if(G.sanity<=0){gameOver(parts);return {stop:true};}
+  const exDist=bfs(G.exit[0],G.exit[1])[G.y][G.x];
+  if(exDist<=3){const ex=exitCue(true);if(exDist===1)parts.push('The exit is very close. '+ex);}
+  if(G.inv.radio&&G.steps%2===0)setTimeout(()=>radioBurst(clamp(0.6-exDist*0.04,0.05,0.6)),700);
+  parts.push(lowSanity());
+  const stop=parts.some(p=>p&&/You find|Danger|close by|grabs you|exit is very close|lights|scream|quiet|right behind|Faceling|swarm|locked/.test(p))||G.extras.length>0;
+  return {parts,stop};
+}
+function move(r,n=1){
+  if(G.state!=='play')return notPlaying();
+  let out=[],moved=0,lastParts=[];
+  const pre=r===2?behindScare():'';
+  for(let i=0;i<n;i++){
+    const d=i===0?abs(r):G.f;
+    if(!isOpen(G.x,G.y,d)){if(i===0){sfx(bump);say((pre?pre+' ':'')+'A wall blocks your way '+RELN[r]+'. '+pathsText());return;}out.push('You reach a wall.');break;}
+    if(i===0)G.f=d;
+    G.x+=DX[G.f];G.y+=DY[G.f];moved++;
+    setTimeout(()=>sfx(footstep),i*550);
+    const res=afterMove(n>1);if(res.stop&&!res.parts)return;lastParts=res.parts;
+    if(res.stop)break;
+    if(n>1&&i<n-1&&[1,3].some(rr=>isOpen(G.x,G.y,abs(rr)))){out.push('You stop at an opening.');break;}
+  }
+  updateHUD();
+  const verb=['Forward','Right','Back','Left'][r]+(moved>1?', '+moved+' steps':'')+'.';
+  say([verb,pre,...lastParts.filter(Boolean),...out,pathsText()].filter(Boolean).join(' '));
+}
+function sprint(r){
+  if(G.state!=='play')return notPlaying();
+  if(G.inv.energy<=0)return say('You are too tired to sprint. Find energy bars. '+pathsText());
+  const d0=abs(r); if(!isOpen(G.x,G.y,d0)){sfx(bump);return say('A wall blocks your way '+RELN[r]+'. '+pathsText());}
+  G.inv.energy--; G.sprinted=true; G.f=d0; let moved=0; const early=[];
+  for(let i=0;i<2;i++){if(!isOpen(G.x,G.y,G.f))break;G.x+=DX[G.f];G.y+=DY[G.f];moved++;setTimeout(()=>sfx(footstep,1.4),i*280);
+    if(i===0){G.visited.add(key(G.x,G.y));if(checkCaught(early))break;if(G.items.has(key(G.x,G.y))||(G.x===G.exit[0]&&G.y===G.exit[1]))break;}}
+  const res=afterMove(true); G.sprinted=false; if(res.stop&&!res.parts)return;
+  updateHUD();
+  say(['You sprint '+(r===0?'forward':RELSHORT[r])+(moved>1?', two rooms!':'!'),...early,...res.parts.filter(Boolean),pathsText()].filter(Boolean).join(' '));
+}
+function turn(delta){
+  if(G.state!=='play')return notPlaying();
+  G.f=(G.f+delta+4)%4; sfx(turnSound,delta===1?1:delta===3?-1:0); updateHUD();
+  const pre=delta===2?behindScare():'';
+  say(pre?pre+' '+pathsText():'You turn '+(delta===2?'around':delta===1?'right':'left')+'. Facing '+DIRN[G.f]+'. '+pathsText());
+}
+function look(){
+  if(G.state!=='play')return notPlaying();
+  const dark=isDark(G.x,G.y)&&!G.inv.light;
+  say(L().name+'. '+(dark?'It is too dark to see. You feel along the walls.':pick(L().flavor))+' You are facing '+DIRN[G.f]+'. '+pathsText()+' '+monsterCues(true));
+}
+function listen(){
+  if(G.state!=='play')return notPlaying();
+  if(G.sanity<25&&Math.random()<0.3)return say('You try to listen, but the sounds come from everywhere at once. You cannot focus.');
+  const ex=(L().locked&&!G.inv.keycard)?keycardCue():exitCue(false);
+  say('You hold still and listen. '+ex+' '+monsterCues(true));
+}
+function drink(){
+  if(G.state!=='play')return notPlaying();
+  if(!G.inv.water)return say('You have no almond water. Bottles are hidden around the level.');
+  if(G.sanity>=100)return say('Your mind is already clear. Save it for later.');
+  G.inv.water--; G.sanity=Math.min(100,G.sanity+30); sfx(drinkSound); updateHUD();
+  say('You drink almond water. It tastes sweet, like vanilla. Your head clears. Sanity is now '+Math.round(G.sanity)+' percent. '+G.inv.water+' bottles left.');
+}
+function light(mode){
+  if(G.state!=='play')return notPlaying(); const I=G.inv;
+  if(!I.flashlight)return say('You do not have a flashlight yet.');
+  const want=mode==='on'?true:mode==='off'?false:!I.light;
+  if(want&&I.battery<=0)return say('The flashlight is dead. You need a battery.');
+  I.light=want; sfx(clickSound,want); updateHUD(); G.wasDark=false;
+  let extra='';
+  if(want){const dist=bfs(G.x,G.y);if(G.mons.some(m=>m.type==='smiler'&&dist[m.y][m.x]<=3))extra=' Something hisses and scrambles away from the light.';
+    if(G.mons.some(m=>m.type==='moths'))extra+=' Somewhere in the dark, wings start to flutter.';}
+  say('Flashlight '+(want?'on. Battery '+Math.round(I.battery)+' percent.':'off.')+extra);
+}
+function throwCracker(r){
+  if(G.state!=='play')return notPlaying();
+  if(!G.inv.fire)return say('You have no firecrackers.');
+  let x=G.x,y=G.y,n=0; const d=abs(r); while(n<4&&isOpen(x,y,d)){x+=DX[d];y+=DY[d];n++;}
+  if(n===0)return say('There is a wall '+RELN[r]+'. Throw it down an open path. '+pathsText());
+  G.inv.fire--; G.noise={x,y,turns:3}; sfx(fuse);
+  const {pan}=relDirWords(x,y); setTimeout(()=>sfx(bang,pan,clamp(1-n*0.15,0.3,1),n*0.1),900);
+  G.steps++; drain(0.5); monstersTurn(); const parts=[]; checkCaught(parts); updateHUD();
+  if(G.sanity<=0)return gameOver(parts);
+  say('You light a firecracker and throw it '+(r===0?'down the hall ahead':RELN[r])+'. It bangs '+n+(n===1?' room':' rooms')+' away. Anything nearby will go to the noise. '+parts.join(' ')+' '+pathsText());
+}
+function sneak(on){
+  if(G.state!=='play')return notPlaying();
+  G.sneak=on===undefined?!G.sneak:on; setSneakUI(); updateHUD();
+  say(G.sneak?'You crouch low and move quietly. Monsters only notice you up close, but sneaking wears on your nerves.':'You stand up and walk normally.');
+}
+function setSneakUI(){$('#sneakBtn').setAttribute('aria-pressed',String(!!G.sneak));}
+function talk(){
+  if(G.state!=='play')return notPlaying();
+  const dist=bfs(G.x,G.y); const f=G.mons.find(m=>m.type==='face'&&dist[m.y][m.x]<=1);
+  if(!f)return say(L().calm?'There is no one close enough to talk to.':'There is no one to talk to. You hope.');
+  const tips=[]; const ed=bfs(G.exit[0],G.exit[1]); const s=stepToward(ed,G.x,G.y);
+  if(s>=0)tips.push('The Faceling slowly lifts an arm and points '+['straight ahead','to your right','behind you','to your left'][rel(s)]+', toward the way out. '+ed[G.y][G.x]+' rooms.');
+  let near=null,nd=99; G.items.forEach((t,k)=>{const [x,y]=k.split(',').map(Number);if(dist[y][x]<nd){nd=dist[y][x];near=[t,x,y];}});
+  if(near)tips.push('Then it turns its blank face '+relDirWords(near[1],near[2]).w+'. Something is there: '+ITEMNAME[near[0]]+'.');
+  const last=pick(['It hums a lullaby you almost remember.','It whispers without a mouth: do not stay too long.','It touches your shoulder. Your mind feels a little clearer.']);
+  tips.push(last); if(/clearer/.test(last))G.sanity=Math.min(100,G.sanity+8);
+  sfx(hum,0,0.6); updateHUD(); say(tips.join(' '));
+}
+function radio(){
+  if(G.state!=='play')return notPlaying();
+  if(!G.inv.radio)return say('You do not have a walkie-talkie.');
+  const d=bfs(G.exit[0],G.exit[1])[G.y][G.x]; radioBurst(clamp(0.9-d*0.05,0.1,0.9));
+  const strength=d<=3?'very strong. The exit must be close.':d<=7?'getting stronger.':d<=12?'weak.':'barely there. You are far from the exit.';
+  if(G.mons.some(m=>m.type==='skin')&&Math.random()<0.35)G.extras.push({label:'A voice cuts through the static:',text:pick(['Is anyone out there?','Come find me.','I can hear you breathing.']),opts:{v:voice2,pitch:0.9,rate:0.9}});
+  say('You turn on the walkie-talkie. The static is '+strength);
+}
+function tape(){
+  if(G.lastTape<0)return say('You have not found any tapes yet.');
+  sfx(tapeClick); G.extras.push({text:TAPES[G.lastTape],opts:{v:voice2,pitch:0.8,rate:S.rate*0.9}}); say('You rewind the tape and press play.');
+}
+function hide(){
+  if(G.state!=='play')return notPlaying();
+  if(L().run)return say('There is nowhere to hide! Run!');
+  play('breath',{vol:0.5,muffle:0.4}); G.steps++; drain();
+  const dist=bfs(G.x,G.y); const near=nearestHostile(dist);
+  if(!near||near.d>4){updateHUD();return say('You crouch in a corner and hold your breath. Nothing comes. Only the hum. '+pathsText());}
+  const m=near.m;
+  if(m.type==='moths'){G.inv.light=false;updateHUD();wander(m);return say('You switch off your light and hold perfectly still. The fluttering drifts away. '+pathsText());}
+  if(Math.random()<0.7){moveMon(m,stepAway(dist,m.x,m.y));const {pan}=relDirWords(m.x,m.y);monSound(m,pan,0.6,0.3);updateHUD();setChase(bfs(G.x,G.y)[m.y][m.x]);
+    return say('You press yourself against the wall and hold your breath. '+cap(MT[m.type].name)+' passes so close you can feel it. Then it moves away. '+pathsText());}
+  moveMon(m,stepToward(dist,m.x,m.y));
+  if(m.x===G.x&&m.y===G.y){const t=caughtBy(m);updateHUD();if(G.sanity<=0)return gameOver([t]);return say('You hold your breath. It stops. It sniffs the air. It found you. '+t+' '+pathsText());}
+  updateHUD(); say('You hold your breath, but it keeps coming. '+monsterCues(true)+' '+pathsText());
+}
+function status(){
+  if(!G.inv)return say('The game has not started.');
+  const I=G.inv; const b=[L().name+'.','Sanity '+Math.round(G.sanity)+' percent.','Almond water: '+I.water+'.','Firecrackers: '+I.fire+'.','Sprints: '+I.energy+'.'];
+  if(I.flashlight)b.push('Flashlight '+(I.light?'on':'off')+', battery '+Math.round(I.battery)+' percent.'); else if(I.battery)b.push('A battery, but no flashlight.');
+  if(I.radio)b.push('You have a walkie-talkie.'); if(L().locked)b.push(I.keycard?'You have the keycard.':'You need the keycard.');
+  b.push('Tapes found: '+G.tapes.size+' of 6.'); if(G.sneak)b.push('You are sneaking.'); b.push('Facing '+DIRN[G.f]+'. Difficulty: '+DF().label+'.');
+  say(b.join(' '));
+}
+function help(){say('Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Talk to Facelings. Radio to check the static. Tape to replay a tape. Also status, repeat, faster, slower, and menu to pause.');}
+function notPlaying(){
+  if(G.state==='dead')say('You lost your mind. Say try again, or menu.');
+  else if(G.state==='paused')say('The game is paused. Say resume.');
+  else if(G.state==='transition')return;
+  else say('Say play to start a new game.');
+}
+function elapsedText(){const s=Math.round((Date.now()-G.startTime)/1000);return Math.floor(s/60)+' minutes and '+(s%60)+' seconds';}
+function levelComplete(parts){
+  const lv=L(); sfx(noclip); G.state='transition'; G.blackout=0; G.inv.keycard=false; updateHUD();
+  if(G.level===LEVELS.length-1){
+    G.state='won'; clearAmb(); stopAllMusic(3); setTimeout(()=>sfx(winSound),1500); lsDel('br_save');
+    const stats=[['Difficulty',DF().label],['Time',elapsedText()],['Steps',G.steps],['Times you lost your mind',G.deaths],['Tapes found',G.tapes.size+' of 6']];
+    $('#statsList').innerHTML=stats.map(([k,v])=>`<li>${k}: <b>${v}</b></li>`).join('');
+    say([...parts,lv.exitText,'Warm sunlight. Birds. Real air. The humming has finally stopped. You escaped the Backrooms!',stats.map(([k,v])=>k+': '+v+'.').join(' '),'Say play again, or main menu.'].join(' '));
+    setTimeout(()=>{if(G.state==='won')show('end');},400); return;
+  }
+  say([...parts,lv.exitText,'You feel yourself falling through reality.'].join(' '));
+  setTimeout(()=>{if(G.state!=='transition')return;G.level++;G.sanity=Math.min(100,G.sanity+25);G.sneak=false;setSneakUI();enterLevel('Checkpoint saved.');},4500);
+}
+function gameOver(parts){
+  G.state='dead'; G.deaths++; jumpscare(); clearAmb(); stopAllMusic(0.5);
+  const s=lsGet('br_save',null); if(s){s.deaths=G.deaths;lsSet('br_save',s);}
+  say([...parts,'Your sanity hits zero. The hum fills your head until there is nothing else. You become part of the Backrooms. Say try again to restart '+L().name+' from the checkpoint, or say menu.'].join(' '));
+}
+
+// it hunts you while you stand still
+setInterval(()=>{
+  if(G.state!=='play'||!A.ctx||L().calm)return;
+  const idle=L().run?3500:DF().idle;
+  if(performance.now()-Math.max(G.lastAct||0,G.quietUntil||0,G.holdSpeech||0)<idle)return;
+  G.lastAct=performance.now();
+  const dist=bfs(G.x,G.y); const near=nearestHostile(dist); if(!near)return;
+  const m=near.m; if(m.type==='moths'&&!G.inv.light)return;
+  if(near.d>MT[m.type].sense+DF().sense+1){if(Math.random()<0.35){const {pan}=relDirWords(m.x,m.y);monSound(m,pan,0.18,0.8);}return;}
+  moveMon(m,stepToward(dist,m.x,m.y));
+  const parts=[]; if(checkCaught(parts)){updateHUD();if(G.sanity<=0)return gameOver(parts);return say('You waited too long. '+parts.join(' ')+' '+pathsText());}
+  mothBite(parts); updateHUD(); if(G.sanity<=0)return gameOver(parts);
+  const txt=monsterCues(false); if(txt||parts.length)say((L().run?'Move! ':'You stand still, and it comes closer. ')+parts.join(' ')+' '+txt);
+},1000);
+
+/* ============================== command router ============================== */
+function run(c,n,r){
+  G.lastAct=performance.now();
+  if(c==='repeat')return say(G.lastText||'Nothing to repeat yet.',{log:false});
+  if(c==='faster'||c==='slower'){S.rate=clamp(+(S.rate+(c==='faster'?0.2:-0.2)).toFixed(1),0.6,2.4);lsSet('br_rate',S.rate);syncChoices();return say('Speech rate '+S.rate+'.',{log:false});}
+  if(c==='musicoff')return applySetting('music','0'); if(c==='musicon')return applySetting('music','0.7');
+  if(c==='scaresoff')return applySetting('scares','0'); if(c==='scareson')return applySetting('scares','1');
+  if(c==='micoff'){applySetting('voice','0',true);return say('Voice commands off. Use the buttons, or press M to turn them back on.');}
+  if(c==='voiceon')return applySetting('voice','1');
+  if(screen==='splash')return;
+  if(screen!=='game'||G.state!=='play'){
+    if(c==='quit')return (G.state==='paused'||G.state==='dead')?quitToMain():showMain();
+    if(screen==='pause'&&(c==='back'||c==='continue'))return resume();
+    if(c==='menu'||(c==='back'&&screen!=='game'))return screen==='menu'?narrateMenu('You are in the main menu. Say play, continue, settings, how to play, or credits.'):openMenu();
+    if(c==='resume')return G.state==='paused'?resume():narrateMenu('There is nothing to resume.');
+    if(c==='settings')return show('settings','Settings. Use the buttons, or say things like music off, faster, slower, jump scares off, easy, normal or nightmare. Say back when done.');
+    if(c==='credits')return show('credits','Credits. Music by Kevin MacLeod. Sound effects from OpenGameArt, credited on this page. Say back to return.');
+    if(c==='howto')return show('howto','How to play. Say back to return.');
+    if(c==='help')return narrateMenu(screen==='menu'?'Say play, continue, settings, how to play, or credits.':screen==='pause'?'Say resume, restart level, settings, how to play, or quit to main menu.':'Say back to return to the menu.');
+    if(c==='diff')return applySetting('diff',n);
+    if(c==='continue')return continueGame();
+    if(c==='retry'){if(G.state==='dead'||G.state==='paused')return retryLevel();return screen==='setup'?newGame():openSetup();}
+    if(c==='play'){if(screen==='setup')return newGame();if(G.state==='dead')return retryLevel();return openSetup();}
+    if(c==='tape')return tape();
+    if(c==='status')return status();
+    if(G.state==='dead')return notPlaying();
+    return;
+  }
+  switch(c){
+    case 'forward':return move(0,n); case 'right':return move(1,n); case 'back':return move(2,n); case 'left':return move(3,n);
+    case 'turnleft':return turn(3); case 'turnright':return turn(1); case 'turnaround':return turn(2);
+    case 'sprint':return sprint(r||0); case 'throw':return throwCracker(r||0);
+    case 'sneak':return sneak(true); case 'unsneak':return sneak(false);
+    case 'light':return light(n); case 'talk':return talk(); case 'radio':return radio(); case 'tape':return tape();
+    case 'hide':return hide(); case 'listen':return listen(); case 'look':return look(); case 'drink':return drink(); case 'status':return status();
+    case 'help':return help(); case 'menu':case 'quit':return openMenu();
+    case 'play':case 'retry':case 'resume':case 'continue':return say('You are already in the Backrooms. Say menu to pause.');
+    case 'diff':return say('You can change difficulty from the settings in the menu.');
+    case 'settings':case 'credits':case 'howto':openMenu();return run(c);
+  }
+}
+function enter(narr){
+  applySetting('narr',narr?'1':'0',true); initAudio(); if(S.voice)setMic(true,true);
+  G.state='menu'; openMenu();
+}
+
+/* ============================== rendering ============================== */
+const cv=$('#view'),cx=cv.getContext('2d'); const W=cv.width,H=cv.height;
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const F=[1,0.62,0.38,0.235,0.145,0.09];
+const hsl=(c,k)=>`hsl(${c[0]},${c[1]}%,${Math.max(0,c[2]*k)}%)`;
+function rect(k){const w=W*F[k],h=H*F[k];return{l:(W-w)/2,r:(W+w)/2,t:(H-h)/2,b:(H+h)/2};}
+function poly(pts,fill){cx.beginPath();cx.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)cx.lineTo(pts[i][0],pts[i][1]);cx.closePath();cx.fillStyle=fill;cx.fill();}
+function drawMon(m,b){const w=(b.r-b.l),cxm=W/2,t=performance.now();
+  if(m.type==='moths'){cx.fillStyle='#c9c2a0';for(let i=0;i<40;i++){const a=i*2.4+t/300,r=(i%7)*w*0.04;cx.fillRect(cxm+Math.cos(a)*r*2,b.t+(b.b-b.t)*0.4+Math.sin(a*1.3)*r,3,2);}return;}
+  const ew=w*0.3,eh=(b.b-b.t)*(m.type==='chaser'?0.98:0.85),top=b.b-eh;
+  cx.fillStyle=m.type==='face'?'#ddd6c4':m.type==='party'?'#e8c43a':'rgba(5,5,5,0.92)';
+  cx.beginPath();cx.ellipse(cxm,top+eh*0.55,ew/2*(m.type==='chaser'?1.7:1),eh/2,0,0,7);cx.fill();
+  if(m.type==='face')return;
+  if(m.type==='party'){cx.strokeStyle='#000';cx.lineWidth=Math.max(2,ew*0.05);cx.beginPath();cx.arc(cxm-ew*0.15,top+eh*0.3,ew*0.03,0,7);cx.stroke();cx.beginPath();cx.arc(cxm+ew*0.15,top+eh*0.3,ew*0.03,0,7);cx.stroke();cx.beginPath();cx.arc(cxm,top+eh*0.36,ew*0.2,0.15*Math.PI,0.85*Math.PI);cx.stroke();return;}
+  cx.fillStyle=m.type==='skin'?'#e9d7c0':'#fff';cx.beginPath();cx.arc(cxm-ew*0.18,top+eh*0.3,ew*0.06,0,7);cx.arc(cxm+ew*0.18,top+eh*0.3,ew*0.06,0,7);cx.fill();
+  if(m.type==='smiler'){cx.strokeStyle='#fff';cx.lineWidth=Math.max(2,ew*0.04);cx.beginPath();cx.arc(cxm,top+eh*0.38,ew*0.25,0.15*Math.PI,0.85*Math.PI);cx.stroke();}}
+function draw(){
+  requestAnimationFrame(draw);
+  if(screen!=='game'||!G.maze)return;
+  cx.fillStyle='#000';cx.fillRect(0,0,W,H);
+  const t=performance.now();
+  if(S.scares&&t-(G.scareAt||0)<1600){drawFace((t-G.scareAt)/1600);return;}
+  if(G.state==='won'){const g=cx.createRadialGradient(W/2,H/2,10,W/2,H/2,W*0.7);g.addColorStop(0,'#fffbe6');g.addColorStop(1,'#d9b968');cx.fillStyle=g;cx.fillRect(0,0,W,H);cx.fillStyle='#3a2d00';cx.font='bold 56px system-ui';cx.textAlign='center';cx.fillText('YOU ESCAPED',W/2,H/2+18);return;}
+  const lv=L();
+  if(G.blackout>0&&G.state==='play'){const near=nearestHostile(bfs(G.x,G.y));if(near&&near.d<=2){const a=0.25+0.2*Math.sin(t/400);cx.fillStyle=`rgba(255,255,255,${a})`;cx.beginPath();cx.arc(W/2-28,H/2-10,4,0,7);cx.arc(W/2+28,H/2-10,4,0,7);cx.fill();}return;}
+  let flick=1; if(!reduceMotion&&t-(G.flash||0)<300)flick=0.45+0.4*Math.random();
+  if(G.sanity<30&&!reduceMotion)flick*=0.85+0.15*Math.sin(t/180);
+  if(lv.run&&!reduceMotion)flick*=0.75+0.25*Math.abs(Math.sin(t/300));
+  const lightK=(x,y,d)=>isDark(x,y)?(G.inv.light?Math.max(0.15,0.85-d*0.22):0.08):1;
+  let x=G.x,y=G.y; const cells=[];
+  for(let depth=0;depth<5;depth++){cells.push([x,y,depth]);if(!isOpen(x,y,G.f))break;x+=DX[G.f];y+=DY[G.f];}
+  for(let k=0;k<5;k++){const c=cells[Math.min(k,cells.length-1)];const lk=lightK(c[0],c[1],k);const a=rect(k),b=rect(k+1),sh=(1-k*0.2)*flick*lk;
+    poly([[a.l,a.t],[a.r,a.t],[b.r,b.t],[b.l,b.t]],hsl(lv.ceil,sh));poly([[a.l,a.b],[a.r,a.b],[b.r,b.b],[b.l,b.b]],hsl(lv.floor,sh));}
+  const last=cells[cells.length-1]; const far=rect(Math.min(last[2]+1,5));
+  if(!isOpen(last[0],last[1],G.f)){cx.fillStyle=hsl(lv.wall,(0.92-(last[2]+1)*0.17)*flick*lightK(last[0],last[1],last[2]));cx.fillRect(far.l,far.t,far.r-far.l,far.b-far.t);}
+  for(let i=cells.length-1;i>=0;i--){const [cxl,cyl,d]=cells[i];const a=rect(d),b=rect(d+1);const lk=lightK(cxl,cyl,d);const sh=(1-d*0.17)*flick*lk;
+    const lw=(G.f+3)%4,rw=(G.f+1)%4;
+    if(!isOpen(cxl,cyl,lw))poly([[a.l,a.t],[b.l,b.t],[b.l,b.b],[a.l,a.b]],hsl(lv.wall,sh*0.8));
+    else{cx.fillStyle=hsl(lv.wall,sh*0.55);cx.fillRect(a.l,b.t,b.l-a.l,b.b-b.t);poly([[a.l,a.t],[b.l,b.t],[a.l,b.t]],hsl(lv.ceil,sh*0.9));poly([[a.l,a.b],[b.l,b.b],[a.l,b.b]],hsl(lv.floor,sh*0.9));}
+    if(!isOpen(cxl,cyl,rw))poly([[a.r,a.t],[b.r,b.t],[b.r,b.b],[a.r,a.b]],hsl(lv.wall,sh*0.8));
+    else{cx.fillStyle=hsl(lv.wall,sh*0.55);cx.fillRect(b.r,b.t,a.r-b.r,b.b-b.t);poly([[a.r,a.t],[b.r,b.t],[a.r,b.t]],hsl(lv.ceil,sh*0.9));poly([[a.r,a.b],[b.r,b.b],[a.r,b.b]],hsl(lv.floor,sh*0.9));}
+    if(lv.lights&&!isDark(cxl,cyl)){const mx=(a.l+a.r)/2,lw2=(b.r-b.l)*0.35,ty=(a.t*0.35+b.t*0.65),th=(b.t-a.t)*0.25;cx.fillStyle=lv.run?`rgba(255,40,30,${0.8*sh})`:`rgba(255,252,220,${0.85*sh})`;cx.fillRect(mx-lw2/2,ty,lw2,Math.max(2,th));}
+    if(lv.amb==='pipes'){cx.strokeStyle=hsl([20,35,35],sh);cx.lineWidth=Math.max(2,14*F[d]);cx.beginPath();cx.moveTo(a.l,a.t+(b.t-a.t)*0.5+H*0.03*F[d]);cx.lineTo(b.l,b.t+H*0.03*F[d+1]);cx.stroke();cx.beginPath();cx.moveTo(a.r,a.t+(b.t-a.t)*0.5+H*0.06*F[d]);cx.lineTo(b.r,b.t+H*0.06*F[d+1]);cx.stroke();}
+    if(lv.amb==='pool'&&d>0){cx.fillStyle=`rgba(120,200,230,${0.35*sh})`;cx.fillRect(b.l+(b.r-b.l)*0.15,b.b-(b.b-b.t)*0.12,(b.r-b.l)*0.7,(b.b-b.t)*0.1);}
+    if(lv.amb==='party'&&d>0){['#e64b5d','#4bb3e6','#e6d34b'].forEach((c,j)=>{cx.fillStyle=c;cx.globalAlpha=Math.min(1,sh);cx.beginPath();cx.ellipse(b.l+(b.r-b.l)*(0.2+j*0.3),b.t+(b.b-b.t)*0.25+Math.sin(t/700+j)*4,(b.r-b.l)*0.05,(b.r-b.l)*0.065,0,0,7);cx.fill();cx.globalAlpha=1;});}
+    if(cxl===G.exit[0]&&cyl===G.exit[1]&&d>0&&lk>0.1){const dw=(b.r-b.l)*0.28,dh=(b.b-b.t)*0.7,dx=(W-dw)/2,dy=b.b-dh;cx.fillStyle=lv.locked?'#888':'#6b4423';cx.fillRect(dx,dy,dw,dh);cx.fillStyle=`rgba(255,40,40,${(0.6+0.4*Math.sin(t/200))})`;cx.fillRect(dx+dw*0.15,dy-dh*0.18,dw*0.7,dh*0.12);}
+    if(d>0)for(const m of G.mons){if(m.x===cxl&&m.y===cyl&&(lk>0.1||m.type==='face'))drawMon(m,b);}
+  }
+  if(G.inv.light){const g=cx.createRadialGradient(W/2,H*0.55,20,W/2,H*0.55,W*0.45);g.addColorStop(0,'rgba(255,240,200,0.12)');g.addColorStop(1,'rgba(0,0,0,0)');cx.fillStyle=g;cx.fillRect(0,0,W,H);}
+  const vg=cx.createRadialGradient(W/2,H/2,H*0.2,W/2,H/2,W*0.65);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,`rgba(0,0,0,${0.55+(100-G.sanity)/250})`);cx.fillStyle=vg;cx.fillRect(0,0,W,H);
+  const hd=t-(G.hurt||0); if(hd<700){cx.fillStyle=`rgba(160,0,0,${0.55*(1-hd/700)})`;cx.fillRect(0,0,W,H);}
+  if(G.state==='dead'){cx.fillStyle='rgba(0,0,0,0.75)';cx.fillRect(0,0,W,H);cx.fillStyle='#ff7b6b';cx.font='bold 48px system-ui';cx.textAlign='center';cx.fillText('YOU LOST YOUR MIND',W/2,H/2+16);}
+  cx.fillStyle='rgba(0,0,0,0.5)';cx.fillRect(W-120,12,108,40);cx.fillStyle='#f2d64b';cx.font='bold 22px system-ui';cx.textAlign='center';cx.fillText(DIRN[G.f].toUpperCase(),W-66,40);
+}
+function drawFace(p){
+  cx.fillStyle='#000';cx.fillRect(0,0,W,H);cx.save();
+  const sh=(!reduceMotion&&p<0.35)?(Math.random()-0.5)*30:0;
+  cx.translate(W/2+sh,H/2+30+sh);const sc=1.05+p*0.4;cx.scale(sc,sc);
+  const g=cx.createRadialGradient(0,-30,20,0,0,260);g.addColorStop(0,'#e3dccb');g.addColorStop(0.55,'#857b66');g.addColorStop(1,'#000');
+  cx.fillStyle=g;cx.beginPath();cx.ellipse(0,0,190,250,0,0,7);cx.fill();
+  cx.fillStyle='#000';[-75,75].forEach(x=>{cx.beginPath();cx.ellipse(x,-60,50,40,x<0?0.25:-0.25,0,7);cx.fill();});
+  cx.fillStyle='#ff2a14';cx.shadowColor='#ff2a14';cx.shadowBlur=18;[-68,82].forEach(x=>{cx.beginPath();cx.arc(x,-56,7,0,7);cx.fill();});cx.shadowBlur=0;
+  cx.strokeStyle='rgba(20,0,0,0.6)';cx.lineWidth=3;[-60,70].forEach(x=>{cx.beginPath();cx.moveTo(x,-20);cx.lineTo(x+(x<0?-6:6),60);cx.stroke();});
+  cx.fillStyle='#000';cx.beginPath();cx.moveTo(-160,40);cx.quadraticCurveTo(0,240,160,40);cx.quadraticCurveTo(0,120,-160,40);cx.fill();
+  cx.fillStyle='#ece6d6';for(let i=-7;i<=7;i++){const x=i*21,y=40+40*(1-(x/160)**2);cx.beginPath();cx.moveTo(x-9,y-2);cx.lineTo(x+9,y-2);cx.lineTo(x,y+24+(i%2?6:0));cx.fill();}
+  cx.restore();cx.fillStyle=`rgba(110,0,0,${0.35*(1-p)})`;cx.fillRect(0,0,W,H);
+  for(let i=0;i<1400;i++){cx.fillStyle=`rgba(0,0,0,${Math.random()*0.5})`;cx.fillRect(Math.random()*W,Math.random()*H,3,3);}
+}
+draw();
+
+/* ============================== wiring ============================== */
+$('#enterNarrated').addEventListener('click',()=>enter(true));
+$('#enterSR').addEventListener('click',()=>enter(false));
+$('#pResume').addEventListener('click',resume);
+$('#pRestart').addEventListener('click',retryLevel);
+$('#pSettings').addEventListener('click',()=>run('settings'));
+$('#pHowto').addEventListener('click',()=>run('howto'));
+$('#pQuit').addEventListener('click',quitToMain);
+$('#mPlay').addEventListener('click',openSetup);
+$('#mContinue').addEventListener('click',continueGame);
+$('#mSettings').addEventListener('click',()=>run('settings'));
+$('#mHowto').addEventListener('click',()=>run('howto'));
+$('#mCredits').addEventListener('click',()=>run('credits'));
+$('#startGame').addEventListener('click',newGame);
+$$('.backBtn').forEach(b=>b.addEventListener('click',openMenu));
+$$('.choice').forEach(b=>b.addEventListener('click',()=>applySetting(b.dataset.set,b.dataset.val)));
+$('#fasterBtn').addEventListener('click',()=>run('faster'));
+$('#slowerBtn').addEventListener('click',()=>run('slower'));
+$('#resetSave').addEventListener('click',()=>{lsDel('br_save');say('Saved checkpoint deleted.',{log:false});});
+$('#endAgain').addEventListener('click',openSetup);
+$('#endMenu').addEventListener('click',()=>{G.state='menu';showMain();});
+$$('[data-cmd]').forEach(b=>b.addEventListener('click',()=>{let c=b.dataset.cmd;if(c==='sneak'&&G.sneak)c='unsneak';run(c,c==='light'?'toggle':1,0);}));
+$('#micBtn').addEventListener('click',()=>applySetting('voice',S.mic?'0':'1'));
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey||e.metaKey||e.altKey)return;
+  if(e.key==='Escape'){e.preventDefault();if(screen==='game')run('menu');else if(screen==='pause')resume();else if(screen!=='splash'&&screen!=='menu')openMenu();return;}
+  if(screen!=='game')return;
+  if(e.target.tagName==='BUTTON'&&(e.key==='Enter'||e.key===' '))return;
+  const k=e.key; let c=null,n=1;
+  if(k==='ArrowUp')c=e.shiftKey?'sprint':'forward'; else if(k==='ArrowDown')c='back';
+  else if(k==='ArrowLeft')c=e.shiftKey?'turnleft':'left'; else if(k==='ArrowRight')c=e.shiftKey?'turnright':'right';
+  else if(k.toLowerCase()==='m'){e.preventDefault();$('#micBtn').click();return;}
+  else if(k==='Enter'&&G.state==='dead')c='retry';
+  else{const map={l:'listen',k:'look',d:'drink',b:'hide',f:'light',t:'throw',n:G.sneak?'unsneak':'sneak',g:'talk',o:'radio',p:'tape',s:'status',r:'repeat',h:'help'};c=map[k.toLowerCase()]||null;if(c==='light')n='toggle';}
+  if(c){e.preventDefault();run(c,n,0);}
+});
+live.setAttribute('aria-live',S.narr?'off':'assertive');
+setMicUI(); syncChoices();
+</script>
+</body>
+</html>
