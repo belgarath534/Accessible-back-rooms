@@ -1,0 +1,18 @@
+{
+  "name": "accessible-backrooms",
+  "version": "0.7.0",
+  "private": true,
+  "description": "Accessible Backrooms: a voice-controlled audio horror game",
+  "scripts": {
+    "sync": "npx cap sync ios"
+  },
+  "dependencies": {
+    "@capacitor-community/speech-recognition": "^7.0.1",
+    "@capacitor/cli": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/haptics": "^7.0.0",
+    "@capacitor/ios": "^7.0.0",
+    "@capacitor/keyboard": "^7.0.0",
+    "@capacitor/status-bar": "^7.0.0"
+  }
+}

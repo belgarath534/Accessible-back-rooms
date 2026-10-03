@@ -244,6 +244,12 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.6.2: getting ready for iPhone</h2>
+      <ul>
+        <li>Voice commands and vibration now work inside the iPhone app.</li>
+        <li>Your phone vibrates on jump scares, live wires, walls and heartbeats.</li>
+        <li>Fixed: the sound of walking into a wall never played.</li>
+      </ul>
       <h2>Version 0.6.1: new menu music</h2>
       <ul>
         <li>The main menu now plays The Dread, picked by the players. No more buzzing lights or screams on the menu.</li>
@@ -306,6 +312,12 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.6.2: preparando para o iPhone</h2>
+      <ul>
+        <li>Os comandos de voz e a vibração agora funcionam dentro do app de iPhone.</li>
+        <li>O celular vibra nos sustos, nos fios desencapados, nas paredes e nas batidas do coração.</li>
+        <li>Corrigido: o som de bater numa parede nunca tocava.</li>
+      </ul>
       <h2>Versão 0.6.1: nova música no menu</h2>
       <ul>
         <li>O menu principal agora toca The Dread, escolhida pelos jogadores. Sem mais lâmpadas zumbindo ou gritos no menu.</li>
@@ -466,7 +478,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
 <script>
 "use strict";
-const VERSION='0.6.1';
+const VERSION='0.6.2';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -709,6 +721,7 @@ function applyLang(){
   $$('.ver').forEach(e=>e.textContent=VERSION);
   setMicUI(); if(G.inv&&G.maze)updateHUD(); pickVoice();
   if(rec){const was=S.mic;try{rec.abort();}catch(e){}rec=null;if(was)setTimeout(()=>setMic(true,true),300);}
+  if(NSR&&S.mic){NS.gen++;NS.running=false;try{NSR.stop();}catch(e){}setTimeout(()=>{if(S.mic)nativeListen();},400);}
 }
 
 /* ============================== settings ============================== */
@@ -1114,7 +1127,7 @@ function monSound(m,pan,vol,muffle){const T=MT[m.type];
   if(m.type==='clump'){sfx(squelch,pan,vol,muffle);play('ghost2',{pan,vol:vol*0.6,muffle,rate:0.55});return;}
   if(m.type==='party'&&Math.random()<0.4)sfx(Math.random()<0.5?partyHorn:squeak,pan,vol,muffle);
   if(!T.sfx||!play(pick(T.sfx),{pan,vol:vol*1.2,muffle,rate:0.88+Math.random()*0.2}))sfx(synthGrowl,pan,vol,muffle);}
-function heart(fast){if(!play(fast?'heartfast':'heartslow',{vol:0.9}))sfx(heartbeat);}
+function heart(fast){tap(fast?'HEAVY':'MEDIUM');if(!play(fast?'heartfast':'heartslow',{vol:0.9}))sfx(heartbeat);}
 
 /* ---------- music tracks ---------- */
 const TR={}, TRACKS=['menu','music0','music1','music2','music3','music5','music6','music7','music8','music9','music10','music11','music12','chase','drone'];
@@ -1180,7 +1193,7 @@ function jumpscare(){
     D(pick(['attack','attack2']),{vol:1,at:t2+0.05});
     const nb=noise(t2,0.3);const ng=gainNode(0);envelope(ng,t2,0.003,0.9,0.28);nb.connect(filt('highpass',150)).connect(ng).connect(comp);
     for(let k=0;k<6;k++){const tt=t2+0.12+k*0.16;[1046.5,1108.7,1480,1568].forEach(f=>{const o=osc('sawtooth',f*(1+(Math.random()-0.5)*0.01),tt,0.2);const og=gainNode(0);envelope(og,tt,0.004,0.07,0.14);o.connect(filt('bandpass',2600,0.8)).connect(og).connect(comp);});}
-    try{if(navigator.vibrate)navigator.vibrate([600,80,300,80,900]);}catch(e){}
+    buzz([600,80,300,80,900]);
     A.master.gain.cancelScheduledValues(t2);A.master.gain.setValueAtTime(0.0002,t2);A.master.gain.setValueAtTime(0.0002,t2+2.2);A.master.gain.exponentialRampToValueAtTime(0.9,t2+5);
   },pre);
 }
@@ -1276,8 +1289,28 @@ function playClip(buf,pos){if(!A.ctx)return 0;const src=A.ctx.createBufferSource
 function narrateMenu(text){if(S.narr)say(text,{log:false});}
 
 /* ============================== voice input ============================== */
-const SR=window.SpeechRecognition||window.webkitSpeechRecognition; let rec=null;
+// inside the iPhone app (Capacitor), speech recognition and vibration come from native plugins
+const CAP=window.Capacitor, NATIVE=!!(CAP&&CAP.isNativePlatform&&CAP.isNativePlatform());
+const NSR=NATIVE&&CAP.Plugins&&CAP.Plugins.SpeechRecognition, HAP=NATIVE&&CAP.Plugins&&CAP.Plugins.Haptics;
+const SR=NSR?true:(window.SpeechRecognition||window.webkitSpeechRecognition); let rec=null;
+const NS={running:false,perm:false,gen:0};
+async function nativeListen(){
+  if(!S.mic||NS.running)return; NS.running=true; const gen=NS.gen;
+  try{
+    if(!NS.perm){let p=await NSR.checkPermissions();if(p.speechRecognition!=='granted')p=await NSR.requestPermissions();
+      if(p.speechRecognition!=='granted'){NS.running=false;S.mic=false;setMicUI();say(t('Microphone permission was denied, so voice commands are off. You can still use the buttons or keyboard.'));return;}NS.perm=true;}
+    const r=await NSR.start({language:LANG==='pt'?'pt-BR':'en-US',maxResults:3,partialResults:false,popup:false});
+    NS.running=false; if(gen!==NS.gen)return;
+    const alts=((r&&r.matches)||[]).map(a=>String(a).trim().toLowerCase()).filter(Boolean); if(alts.length)heardSpeech(alts);
+    if(S.mic)setTimeout(nativeListen,150);
+  }catch(e){NS.running=false;try{await NSR.stop();}catch(e2){} if(S.mic&&gen===NS.gen)setTimeout(nativeListen,900);}
+}
+function buzz(pattern){try{
+  if(HAP){let at=0;pattern.forEach((ms,i)=>{if(i%2===0)for(let k=0;k<ms;k+=110)setTimeout(()=>HAP.impact({style:'HEAVY'}).catch(()=>{}),at+k);at+=ms;});return;}
+  if(navigator.vibrate)navigator.vibrate(pattern);}catch(e){}}
+function tap(style){try{if(HAP)HAP.impact({style:style||'LIGHT'}).catch(()=>{});else if(navigator.vibrate)navigator.vibrate(style==='HEAVY'?60:25);}catch(e){}}
 function setMic(on,silent){
+  if(NSR){S.mic=on;setMicUI();NS.gen++;if(on){NS.running=false;nativeListen();}else{try{NSR.stop();}catch(e){}}return;}
   if(!SR){if(on&&!silent)say(t('Voice commands are not supported in this browser. Try Chrome, Edge or Safari, or use the buttons and keyboard.'));return;}
   S.mic=on; setMicUI();
   if(on){ if(!rec){rec=new SR();rec.lang=LANG==='pt'?'pt-BR':'en-US';rec.continuous=true;rec.interimResults=false;rec.maxAlternatives=3;
@@ -1742,7 +1775,7 @@ function afterMove(quiet){
   const k=key(G.x,G.y); const firstVisit=!G.visited.has(k); G.visited.add(k);
   let caughtNow=checkCaught(parts);
   pickupItems(parts);
-  if(isHazard(G.x,G.y)){const n=Math.round(DF().hit*0.25);G.sanity=Math.max(0,G.sanity-n);G.hurt=performance.now();sfx(zap);parts.push(t('ZAP! You walk straight into a live wire. You lose {n} sanity.',{n}));unlock('shocked');}
+  if(isHazard(G.x,G.y)){const n=Math.round(DF().hit*0.25);G.sanity=Math.max(0,G.sanity-n);G.hurt=performance.now();sfx(zap);buzz([200,60,200]);parts.push(t('ZAP! You walk straight into a live wire. You lose {n} sanity.',{n}));unlock('shocked');}
   const wetNow=isWater(G.x,G.y); if(wetNow&&!G.wasWet)parts.push(t('You step into cold, black water.')); else if(!wetNow&&G.wasWet)parts.push(t('You climb out of the water.')); G.wasWet=wetNow;
   if(G.watchFreeze>0)G.watchFreeze--;
   if(G.spots&&G.spots.has(k)&&!L().run)parts.push(t('There is {spot} here. Say hide to get inside.',{spot:spotName(k)}));
@@ -1775,7 +1808,7 @@ function move(r,n=1){
   const pre=r===2?behindScare():'';
   for(let i=0;i<n;i++){
     const d=i===0?abs(r):G.f;
-    if(!isOpen(G.x,G.y,d)){if(i===0){sfx(bump);say((pre?pre+' ':'')+t('A wall blocks your way {dir}. {paths}',{dir:RELN(r),paths:pathsText()}));return;}out.push(t('You reach a wall.'));break;}
+    if(!isOpen(G.x,G.y,d)){if(i===0){sfx(bump);tap();say((pre?pre+' ':'')+t('A wall blocks your way {dir}. {paths}',{dir:RELN(r),paths:pathsText()}));return;}out.push(t('You reach a wall.'));break;}
     if(i===0)G.f=d;
     G.x+=DX[G.f];G.y+=DY[G.f];moved++;
     setTimeout(()=>sfx(footstep),i*550);
@@ -1792,7 +1825,7 @@ function sprint(r){
   if(G.state!=='play')return notPlaying();
   exitHide();
   if(G.inv.energy<=0)return say(t('You are too tired to sprint. Find energy bars. {paths}',{paths:pathsText()}));
-  const d0=abs(r); if(!isOpen(G.x,G.y,d0)){sfx(bump);return say(t('A wall blocks your way {dir}. {paths}',{dir:RELN(r),paths:pathsText()}));}
+  const d0=abs(r); if(!isOpen(G.x,G.y,d0)){sfx(bump);tap();return say(t('A wall blocks your way {dir}. {paths}',{dir:RELN(r),paths:pathsText()}));}
   G.inv.energy--; G.sprinted=true; G.f=d0; let moved=0; const early=[];
   for(let i=0;i<2;i++){if(!isOpen(G.x,G.y,G.f))break;G.x+=DX[G.f];G.y+=DY[G.f];moved++;setTimeout(()=>sfx(footstep,1.4),i*280);
     if(i===0){G.visited.add(key(G.x,G.y));if(checkCaught(early))break;if(G.items.has(key(G.x,G.y))||(G.x===G.exit[0]&&G.y===G.exit[1]))break;}}
@@ -1844,7 +1877,7 @@ function throwCracker(r){
   if(r===0&&!isOpen(G.x,G.y,abs(0))){const o=[1,3,2].find(k=>isOpen(G.x,G.y,abs(k)));if(o!==undefined)r=o;}
   let x=G.x,y=G.y,n=0; const d=abs(r); while(n<4&&isOpen(x,y,d)){x+=DX[d];y+=DY[d];n++;}
   if(n===0)return say(t('There is a wall {dir}. Throw it down an open path. {paths}',{dir:RELN(r),paths:pathsText()}));
-  G.inv.fire--; G.noise={x,y,turns:5}; sfx(fuse); if(bump('throws')>=10)unlock('boom');
+  G.inv.fire--; G.noise={x,y,turns:5}; sfx(fuse); if(bumpStat('throws')>=10)unlock('boom');
   const {pan}=relDirWords(x,y); setTimeout(()=>{sfx(bang,pan,clamp(1-n*0.15,0.3,1),n*0.1);play('impact',{pan,vol:clamp(0.5-n*0.08,0.15,0.5),rate:1.5,muffle:n*0.1});},900);
   const nd0=bfs(x,y); const lured=G.mons.filter(m=>MT[m.type].hostile&&m.type!=='chaser'&&nd0[m.y][m.x]<=10);
   if(lured.length){const m=lured[0];setTimeout(()=>{if(G.state==='play'){const w=relDirWords(m.x,m.y);sfx(monSound,m,w.pan,0.6,0.3);}},2200);}
@@ -1868,7 +1901,7 @@ function talk(){
   if(near)tips.push(t('Then it turns its blank face {w}. Something is there: {item}.',{w:relDirWords(near[1],near[2]).w,item:ITEMNAME[LANG][near[0]]}));
   const last=pick(['It hums a lullaby you almost remember.','It whispers without a mouth: do not stay too long.','It touches your shoulder. Your mind feels a little clearer.']);
   tips.push(t(last)); if(/clearer/.test(last))G.sanity=Math.min(100,G.sanity+8);
-  sfx(hum,0,0.6); if(bump('talks')>=3)unlock('friend'); updateHUD(); say(tips.join(' '));
+  sfx(hum,0,0.6); if(bumpStat('talks')>=3)unlock('friend'); updateHUD(); say(tips.join(' '));
 }
 function radio(){
   if(G.state!=='play')return notPlaying();
@@ -1893,7 +1926,7 @@ function hide(){
   const m=near.m;
   if(m.type==='moths'){G.inv.light=false;updateHUD();wander(m);return say(t('You switch off your light and hold perfectly still. The fluttering drifts away. {paths}',{paths:pathsText()}));}
   if(Math.random()<0.7){moveMon(m,stepAway(dist,m.x,m.y));const {pan}=relDirWords(m.x,m.y);monSound(m,pan,0.6,0.3);updateHUD();setChase(bfs(G.x,G.y)[m.y][m.x]);
-    if(bump('hides')>=5)unlock('hider');
+    if(bumpStat('hides')>=5)unlock('hider');
     return say(t('You press yourself against the wall and hold your breath. {Name} passes so close you can feel it. Then it moves away. {paths}',{Name:cap(MN(m)),paths:pathsText()}));}
   moveMon(m,stepToward(dist,m.x,m.y));
   if(m.x===G.x&&m.y===G.y){const c=caughtBy(m);updateHUD();if(G.sanity<=0)return gameOver([c]);return say(t('You hold your breath. It stops. It sniffs the air. It found you. {caught} {paths}',{caught:c,paths:pathsText()}));}
@@ -2113,7 +2146,7 @@ const ACH=[
  {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']}
 ];
 const ACHV=lsGet('br_ach',{}); const STATS=lsGet('br_stats',{});
-function bump(k){STATS[k]=(STATS[k]||0)+1;lsSet('br_stats',STATS);return STATS[k];}
+function bumpStat(k){STATS[k]=(STATS[k]||0)+1;lsSet('br_stats',STATS);return STATS[k];}
 function unlock(id){
   if(ACHV[id])return; const a=ACH.find(a=>a.id===id); if(!a)return;
   ACHV[id]=Date.now(); lsSet('br_ach',ACHV); sfx(achSound);

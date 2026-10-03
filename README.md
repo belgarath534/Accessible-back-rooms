@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.6.1**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.6.2**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.6.2**: iPhone app ready: native voice commands and vibration through Capacitor plugins, sound plays with the silent switch on; fixed the wall bump sound.
 - **0.6.1**: new menu music ("The Dread", picked by players), no buzzing or screams on the menu, new Frontrooms music ("Unnatural Situation").
 - **0.6**: the story grows to 15 levels with a real ending (the Endless City, the Silent Library, the Carnival, the Frontrooms), four new monsters, 3D graphics (three.js, switchable to classic), level select, tapes kept between runs, new menu music, three new achievements.
 - **0.5.1**: stronger firecrackers (longer lure, you hear monsters rush to the bang, auto-aims down an open path).
@@ -60,3 +61,12 @@ Inspired by the Backrooms, a shared internet legend, and the community wiki that
 The game plays recorded voice lines when they exist, and falls back to the device's text-to-speech when they do not. Put MP3 files in `www/audio/voice/en/` and `www/audio/voice/pt/` and list them in `www/audio/voice/manifest.json`, for example `{"en":["tape1","tape2"],"pt":["tape1"]}`.
 
 Line ids: `tape1` to `tape8`, `lure1` to `lure5` (Skin-Stealer), `radio1` to `radio3`, `whisper1` to `whisper5`, `marcus1` to `marcus4` and `marcusFound`.
+
+## iPhone app (Capacitor)
+
+The `ios/` folder is a Capacitor 7 project (app ID `com.accessible.backrooms`, change it in `capacitor.config.json` and Xcode if you want a different one).
+
+- Voice commands use `@capacitor-community/speech-recognition`, vibration uses `@capacitor/haptics`. In a normal browser the game uses the Web Speech API instead.
+- `Info.plist` has the microphone and speech recognition permission texts.
+- `AppDelegate.swift` sets the audio session to playback, so sound works with the silent switch on and mixes with VoiceOver.
+- `codemagic.yaml` builds an unsigned IPA, the same way as Dungeon Descent. After changing `www/`, run `npx cap sync ios`.

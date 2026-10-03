@@ -1,0 +1,39 @@
+workflows:
+  accessible-backrooms-ios:
+    name: Accessible Backrooms iOS
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      node: v20.14.0
+      xcode: latest
+      cocoapods: default
+    scripts:
+      - name: Install dependencies
+        script: |
+          npm install --legacy-peer-deps
+      - name: Capacitor sync
+        script: |
+          npx cap sync ios
+      - name: Build unsigned .app
+        script: |
+          xcodebuild \
+            -workspace ios/App/App.xcworkspace \
+            -scheme App \
+            -configuration Debug \
+            -sdk iphoneos \
+            -derivedDataPath "$CM_BUILD_DIR/DerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            DEVELOPMENT_TEAM="" \
+            clean build
+      - name: Package unsigned IPA
+        script: |
+          set -e
+          APP_PATH=$(find "$CM_BUILD_DIR/DerivedData/Build/Products" -maxdepth 2 -name "*.app" | head -1)
+          mkdir -p build/ios/ipa/Payload
+          cp -r "$APP_PATH" build/ios/ipa/Payload/
+          cd build/ios/ipa
+          zip -r App.ipa Payload
+    artifacts:
+      - build/ios/ipa/*.ipa

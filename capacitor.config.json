@@ -1,0 +1,9 @@
+{
+  "appId": "com.accessible.backrooms",
+  "appName": "Accessible Backrooms",
+  "webDir": "www",
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#000000"
+  }
+}
