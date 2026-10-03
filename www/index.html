@@ -249,6 +249,8 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.10.1: sound fix</h2>
+      <ul><li>Fixed: on iPhone, turning on voice commands could stop all the music and sound. The sound now comes back by itself, and the microphone restarts more gently.</li></ul>
       <h2>Version 0.10: new items</h2>
       <ul>
         <li>Royal Rations: say eat to get sanity back and one more sprint.</li>
@@ -354,6 +356,8 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.10.1: correção de som</h2>
+      <ul><li>Corrigido: no iPhone, ligar os comandos de voz podia parar toda a música e o som. Agora o som volta sozinho, e o microfone reinicia com mais calma.</li></ul>
       <h2>Versão 0.10: itens novos</h2>
       <ul>
         <li>Rações Reais: diga comer para recuperar sanidade e ganhar mais uma corrida.</li>
@@ -563,7 +567,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
 <script>
 "use strict";
-const VERSION='0.10';
+const VERSION='0.10.1';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -1134,7 +1138,7 @@ const A={ctx:null,ambNodes:[],timers:[],buf:{}};
 function initAudio(){
   if(A.ctx){if(A.ctx.state==='suspended')A.ctx.resume();return;}
   const C=window.AudioContext||window.webkitAudioContext; if(!C)return;
-  const ctx=new C(); A.ctx=ctx;
+  const ctx=new C(); A.ctx=ctx; ctx.onstatechange=()=>{if(ctx.state!=='running')setTimeout(audioWake,500);};
   A.master=ctx.createGain(); A.master.gain.value=0.9;
   const comp=ctx.createDynamicsCompressor(); A.master.connect(comp).connect(ctx.destination);
   A.rev=ctx.createConvolver(); A.rev.buffer=impulse(3.2,2.4);
@@ -1266,6 +1270,13 @@ function track(name){if(TR[name])return TR[name];const el=new Audio('audio/'+nam
 function fadeTrack(name,v,sec=2){if(!A.ctx)return;if(name==='musicbox'){musicBox(v>0);return;}if(name==='calliope'){calliope(v>0);return;}const tr=track(name);tr.want=v;tr.g.gain.cancelScheduledValues(now());tr.g.gain.setTargetAtTime(v,now(),sec/3);
   if(v>0&&tr.el.paused){const pr=tr.el.play();if(pr&&pr.catch)pr.catch(()=>{});}
   clearTimeout(tr.to);if(v===0)tr.to=setTimeout(()=>{if(tr.want===0)tr.el.pause();},sec*1000+800);}
+// iPhone pauses web audio when the microphone or a call takes over. Bring it back.
+function audioWake(){if(!A.ctx)return;try{if(A.ctx.state!=='running'&&A.ctx.state!=='closed')A.ctx.resume().catch(()=>{});}catch(e){}
+  Object.values(TR).forEach(tr=>{if(tr.want>0&&tr.el.paused){const pr=tr.el.play();if(pr&&pr.catch)pr.catch(()=>{});}});
+  if(A.master&&A.master.gain.value<0.01&&performance.now()-(G.lastJump||0)>6000){A.master.gain.cancelScheduledValues(now());A.master.gain.setValueAtTime(0.9,now());}}
+setInterval(audioWake,2000);
+['pointerdown','keydown','touchend'].forEach(ev=>document.addEventListener(ev,audioWake,{passive:true,capture:true}));
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(audioWake,300);});
 function unlockTracks(){TRACKS.forEach(n=>{const tr=track(n);const pr=tr.el.play();if(pr&&pr.then)pr.then(()=>{if(tr.want===0)tr.el.pause();}).catch(()=>{});});}
 let chaseLevel=-1;
 function onlyMusic(list,sec=2.5){TRACKS.forEach(n=>{const v=list[n]||0;if(v||(TR[n]&&TR[n].want))fadeTrack(n,v,sec);});musicBox(!!list.musicbox);calliope(!!list.calliope);}
@@ -1448,8 +1459,10 @@ function setMic(on,silent){
       const me=rec;
       rec.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++){if(!e.results[i].isFinal)continue;heardSpeech([...e.results[i]].map(a=>a.transcript.trim().toLowerCase()));}};
       rec.onerror=e=>{if(e.error==='not-allowed'||e.error==='service-not-allowed'){S.mic=false;setMicUI();say(t('Microphone permission was denied, so voice commands are off. You can still use the buttons or keyboard.'));}};
-      rec.onend=()=>{if(S.mic&&rec===me)setTimeout(()=>{try{me.start();}catch(e){}},250);};
-    } try{rec.start();}catch(e){}
+      rec.onstart=()=>{me.t0=performance.now();};
+      rec.onend=()=>{if(!(S.mic&&rec===me))return;const short=performance.now()-(me.t0||0)<2500;me.wait=short?Math.min(4000,(me.wait||250)*2):250;
+        setTimeout(()=>{if(S.mic&&rec===me){try{me.start();}catch(e){}}audioWake();},me.wait);};
+    } try{rec.start();}catch(e){} setTimeout(audioWake,600); setTimeout(audioWake,2000);
   } else if(rec){try{rec.stop();}catch(e){}}
 }
 function setMicUI(){const b=$('#micBtn');b.setAttribute('aria-pressed',String(S.mic));b.textContent=t(S.mic?'Voice commands: on':'Voice commands: off');}
