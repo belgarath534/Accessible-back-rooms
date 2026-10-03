@@ -110,6 +110,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
         <button id="mSettings"><span data-l="en">Settings</span><span data-l="pt">Configurações</span></button>
         <button id="mTut"><span data-l="en">Tutorial</span><span data-l="pt">Tutorial</span></button>
         <button id="mHowto"><span data-l="en">How to play</span><span data-l="pt">Como jogar</span></button>
+        <button id="mJournal"><span data-l="en">Journal</span><span data-l="pt">Diário</span></button>
         <button id="mAch"><span data-l="en">Achievements</span><span data-l="pt">Conquistas</span></button>
         <button id="mNews"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></button>
         <button id="mCredits"><span data-l="en">Credits</span><span data-l="pt">Créditos</span></button>
@@ -262,6 +263,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.12: you are not alone</h2>
+      <ul>
+        <li>Survivors: from Level 2 on, you may meet another lost person. Talk to them, and they give you supplies and tell you the way out.</li>
+        <li>But some of them are not people. A fake survivor repeats its words, and if you listen closely, it does not breathe. Talk to one of those, and it attacks.</li>
+        <li>Journal: every story level hides a handwritten note from someone who was lost before you. Collect all fifteen. Read them any time from the Journal in the main menu.</li>
+        <li>Two new achievements.</li>
+      </ul>
       <h2>Version 0.11: play your way</h2>
       <ul>
         <li>Narrator voice volume in Settings, and the music now gets quieter while the narrator speaks, so you never miss a word. You can turn that off.</li>
@@ -379,6 +387,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.12: você não está sozinho</h2>
+      <ul>
+        <li>Sobreviventes: a partir do Nível 2, você pode encontrar outra pessoa perdida. Converse, e ela te dá suprimentos e diz o caminho da saída.</li>
+        <li>Mas alguns não são pessoas. Um sobrevivente falso repete as palavras, e se você escutar com atenção, ele não respira. Converse com um desses, e ele ataca.</li>
+        <li>Diário: cada nível da história esconde um bilhete escrito por alguém que se perdeu antes de você. Colecione os quinze. Leia quando quiser pelo Diário no menu principal.</li>
+        <li>Duas novas conquistas.</li>
+      </ul>
       <h2>Versão 0.11: jogue do seu jeito</h2>
       <ul>
         <li>Volume da voz do narrador nas Configurações, e a música agora fica mais baixa enquanto o narrador fala, para você não perder nenhuma palavra. Dá para desligar.</li>
@@ -524,6 +539,14 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       <button id="wBack" class="primary"><span data-l="en">Back to settings</span><span data-l="pt">Voltar às configurações</span></button></div>
   </section>
 
+  <!-- ============ JOURNAL ============ -->
+  <section id="journal" class="screen" hidden aria-labelledby="jTitle">
+    <h1 id="jTitle" tabindex="-1"><span data-l="en">Journal</span><span data-l="pt">Diário</span></h1>
+    <p id="jCount"></p>
+    <ol id="jList" class="stats"></ol>
+    <div class="stack"><button class="backBtn primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
+  </section>
+
   <!-- ============ LEVEL SELECT ============ -->
   <section id="levels" class="screen" hidden aria-labelledby="lvTitle">
     <h1 id="lvTitle" tabindex="-1"><span data-l="en">Level select</span><span data-l="pt">Escolher nível</span></h1>
@@ -618,7 +641,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.11';
+const VERSION='0.12';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -769,6 +792,21 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'Somewhere {w}, a voice calls:':'Em algum lugar {w}, uma voz chama:',
+ '{n} is standing {w}. Say talk to speak with them.':'{n} está {w}. Diga falar para conversar.',
+ 'right here':'bem aqui',
+ 'Close by, someone is standing very still. You listen hard, and you hear no breathing at all.':'Bem perto, alguém está parado, imóvel. Você escuta com atenção, e não ouve respiração nenhuma.',
+ 'Close by, you hear someone breathing fast and scared. A heartbeat. Human.':'Bem perto, você ouve alguém respirando rápido, com medo. Um coração batendo. Humano.',
+ '{n} smiles at you. The smile keeps going, wider and wider. It was never human. The Skin-Stealer grabs you! You tear free and run. You lose {h} sanity.':'{n} sorri para você. O sorriso continua, cada vez maior. Nunca foi humano. O Ladrão de Pele agarra você! Você se solta e corre. Você perde {h} de sanidade.',
+ '{n} grabs your hand. They are shaking, and warm. Real. They give you {item}.':'{n} segura a sua mão. Está tremendo, e quente. De verdade. Ele te dá {item}.',
+ 'They whisper: the way out is {route}. I am too scared to go. You go.':'Sussurra: a saída fica {route}. Eu estou com medo demais para ir. Vai você.',
+ '{n} whispers: be careful. Not every voice down here is a person.':'{n} sussurra: cuidado. Nem toda voz aqui embaixo é uma pessoa.',
+ '{n} whispers: go. Do not wait for me.':'{n} sussurra: vai. Não espera por mim.',
+ 'You find a handwritten note. It goes into your journal. {n} of {total} notes.':'Você encontra um bilhete escrito à mão. Ele vai para o seu diário. {n} de {total} bilhetes.',
+ '{n} of {total} notes found.':'{n} de {total} bilhetes encontrados.',
+ 'Read aloud':'Ler em voz alta',
+ 'Journal. {n} of {total} notes found. Each note has a read aloud button. Say back to return.':'Diário. {n} de {total} bilhetes encontrados. Cada bilhete tem um botão de ler em voz alta. Diga voltar para sair.',
+ 'journal':'diário',
  'The music will get quieter while the narrator speaks.':'A música vai ficar mais baixa enquanto o narrador fala.',
  'Hardcore. One life. No second chances.':'Hardcore. Uma vida. Sem segunda chance.',
  'Narrator volume {v}.':'Volume do narrador: {v}.',
@@ -961,6 +999,7 @@ const MT={
   librarian:{name:'the Librarian',sound:'a long, quiet shush',pt:{name:'a Bibliotecária',sound:'um shhh longo e baixo'},sfx:null,sense:9,chase:0.62,hostile:true},
   jester:{name:'the Jester',sound:'jingling bells and a soft giggle',pt:{name:'o Bobo da Corte',sound:'guizos tilintando e uma risadinha baixa'},sfx:['cackle','giggle'],sense:6,chase:0.5,hostile:true},
   mimic:{name:'the Mimic',sound:'a familiar voice humming in another room',pt:{name:'o Imitador',sound:'uma voz conhecida cantarolando em outro cômodo'},sfx:['breath2','breath'],sense:6,chase:0.55,hostile:true,copier:true},
+  survivor:{name:'a survivor',sound:'someone breathing fast and scared',pt:{name:'um sobrevivente',sound:'alguém respirando rápido e com medo'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   marcus:{name:'Marcus',sound:'a tired voice',pt:{name:'Marcus',sound:'uma voz cansada'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   chaser:{name:'something enormous',sound:'thundering footsteps',pt:{name:'algo enorme',sound:'passos estrondosos'},sfx:['growl4','attack','attack2'],sense:99,chase:0.72,hostile:true}
 };
@@ -970,6 +1009,11 @@ const LURES={en:['Hey! Over here! I found the exit!','Help me! Please, I am stuc
   pt:['Ei! Aqui! Achei a saída!','Me ajuda! Por favor, estou preso!','Está tudo bem. Por aqui é seguro.','Espera por mim! Não me deixa aqui!','Tem alguém aí? Chega mais perto, eu não consigo ver.']};
 const FAMILY={en:['Sweetheart, dinner is ready. Come to the kitchen.','It is me. It is Mom. Come here, let me see you.','Why are you hiding? We have been so worried.','Come give me a hug. You are home now.','Your room is just down here. Follow my voice.'],
   pt:['Querido, o jantar está pronto. Venha para a cozinha.','Sou eu. É a mamãe. Vem aqui, deixa eu te ver.','Por que você está se escondendo? A gente ficou tão preocupado.','Vem me dar um abraço. Você está em casa agora.','Seu quarto é logo aqui. Siga a minha voz.']};
+const SURV_NAMES=['Dana','Theo','Rosa','Kenji','Priya','Malik','Ines','Jonah'];
+const SURV_HELLO={en:['Hey! Is someone there? My name is {n}. I am human, I promise. Come closer, slowly.','Please, over here. I am {n}. I have been lost for weeks. I will not hurt you.','Who is that? Are you real? I am {n}. Come here, I have supplies.'],
+  pt:['Ei! Tem alguém aí? Meu nome é {n}. Eu sou humano, eu prometo. Chega mais perto, devagar.','Por favor, aqui. Eu sou {n}. Estou perdido há semanas. Eu não vou machucar você.','Quem está aí? Você é de verdade? Eu sou {n}. Vem aqui, eu tenho suprimentos.']};
+// the fake one copies a voice, but not perfectly: it repeats words
+const fakeify=s2=>s2.replace(/(\b\w{3,}\b)([.,!?])/g,(m,w,p)=>Math.random()<0.6?w+' '+w.toLowerCase()+p:m);
 const WHISPERS={en:['turn around','it sees you','stay with us','behind you','you were never here'],pt:['vire-se','ele vê você','fique com a gente','atrás de você','você nunca esteve aqui']};
 const MARCUS={en:['Hello? Is someone there?','Over here. Please, follow my voice.','It is really me this time. I promise.','I can hear your footsteps. Keep going.'],pt:['Olá? Tem alguém aí?','Aqui. Por favor, siga a minha voz.','Desta vez sou eu de verdade. Eu prometo.','Consigo ouvir seus passos. Continue.']};
 const MARCUS_FOUND={en:'You found me. You actually found me. I thought I would be here forever. Come on. Let us go home.',pt:'Você me encontrou. Você me encontrou mesmo. Achei que ficaria aqui para sempre. Vamos. Vamos para casa.'};
@@ -1172,8 +1216,41 @@ const TAPES={en:[
  'Fita cinco. Não consigo ver mais nada. Minhas pilhas acabaram. Algo fica me dizendo que encontrou a saída. Agora soa igualzinho a mim. Se você me ouvir chamando... não sou eu.',
  'Fita seis. A água não acaba nunca. Algo enorme se move debaixo dela, e canta. Eu coloquei os pés na água uma vez. Só uma vez. Não faça isso.']};
 const NTAPES=8;
-const ITEMNAME={en:{water:'a bottle of almond water',fire:'a firecracker',battery:'a battery',energy:'an energy bar',tape:'a cassette tape',flashlight:'a flashlight',radio:'a walkie-talkie',keycard:'a keycard',ration:'a Royal Ration',flare:'a flare',trap:'a bear trap',decoy:'a wind-up music box'},
-  pt:{water:'uma garrafa de água de amêndoa',fire:'uma bombinha',battery:'uma pilha',energy:'uma barra de energia',tape:'uma fita cassete',flashlight:'uma lanterna',radio:'um walkie-talkie',keycard:'um cartão de acesso',ration:'uma Ração Real',flare:'um sinalizador',trap:'uma armadilha de urso',decoy:'uma caixinha de música de corda'}};
+const NOTES={en:[
+ 'A note written on a napkin: Day three. The hum never stops. If you hear something running, stand still. They hear footsteps better than voices. Dana.',
+ 'A note taped to a pillar: The Smilers hate light. I had a flashlight and batteries. Now I have neither. Save your batteries. Theo.',
+ 'Words scratched into a pipe: My brother called me from the tunnels. My brother is at home, safe. I hope. Rosa.',
+ 'A note in a fuse box: Low hum, middle hum, high hum. Always in that order. I learned the hard way. Kenji.',
+ 'A sticky note: The Clump is slow. Go around it, never through it. And do not answer the phones. Priya.',
+ 'A note made of raised dots you can feel: In the dark, count your steps and drop marks. The moths only come for light. Dana.',
+ 'A wet note in a bottle: Stay dry when it sings. I did not. I am writing this from somewhere very deep.',
+ 'A note on a fridge: They only move when you are not listening. So listen. Always listen. Theo.',
+ 'A note on a bus stop: If a Wretch screams, hide. Everything comes. Everything. Kenji.',
+ 'A note pinned to a towel: I stayed here for a month. It felt like a day. Leave while you still want to. Rosa.',
+ 'A party invitation, filled in by hand: You are invited! Time: forever. Place: here. Reply: you already did.',
+ 'Words on a prize ticket: The Jester gets bored when you stand still. Then it comes closer. Priya.',
+ 'A library card. Borrowed by: Marcus. Due date: never. On the back: the tapes are real. Find all eight.',
+ 'A torn page, the writing shaky: run run run run run.',
+ 'A note on your own bedroom door, in your own handwriting: Do not trust the voice in the kitchen. Nobody is cooking.'],
+ pt:[
+ 'Um bilhete escrito num guardanapo: Dia três. O zumbido nunca para. Se ouvir algo correndo, fique parado. Eles ouvem passos melhor do que vozes. Dana.',
+ 'Um bilhete colado num pilar: Os Sorridentes odeiam luz. Eu tinha uma lanterna e pilhas. Agora não tenho nenhum dos dois. Economize suas pilhas. Theo.',
+ 'Palavras riscadas num cano: Meu irmão me chamou dos túneis. Meu irmão está em casa, a salvo. Eu espero. Rosa.',
+ 'Um bilhete numa caixa de fusíveis: Zumbido grave, médio, agudo. Sempre nessa ordem. Aprendi do jeito difícil. Kenji.',
+ 'Um post-it: O Amontoado é lento. Dê a volta, nunca passe por ele. E não atenda os telefones. Priya.',
+ 'Um bilhete feito de pontinhos em relevo que dá para sentir: No escuro, conte seus passos e deixe marcas. As mariposas só vêm atrás de luz. Dana.',
+ 'Um bilhete molhado numa garrafa: Fique no seco quando ele cantar. Eu não fiquei. Estou escrevendo isto de um lugar muito fundo.',
+ 'Um bilhete numa geladeira: Eles só se mexem quando você não está escutando. Então escute. Sempre escute. Theo.',
+ 'Um bilhete num ponto de ônibus: Se um Miserável gritar, esconda-se. Tudo vem. Tudo. Kenji.',
+ 'Um bilhete preso numa toalha: Fiquei aqui um mês. Pareceu um dia. Vá embora enquanto ainda quer ir. Rosa.',
+ 'Um convite de festa, preenchido à mão: Você está convidado! Hora: para sempre. Lugar: aqui. Resposta: você já deu.',
+ 'Palavras num bilhete de prêmio: O Bobo da Corte fica entediado quando você fica parado. Aí ele chega mais perto. Priya.',
+ 'Uma ficha de biblioteca. Emprestado por: Marcus. Devolução: nunca. No verso: as fitas são de verdade. Encontre as oito.',
+ 'Uma página rasgada, com letra tremida: corra corra corra corra corra.',
+ 'Um bilhete na porta do seu próprio quarto, com a sua própria letra: Não confie na voz da cozinha. Ninguém está cozinhando.']};
+const NNOTES=15;
+const ITEMNAME={en:{water:'a bottle of almond water',fire:'a firecracker',battery:'a battery',energy:'an energy bar',tape:'a cassette tape',flashlight:'a flashlight',radio:'a walkie-talkie',keycard:'a keycard',note:'a handwritten note',ration:'a Royal Ration',flare:'a flare',trap:'a bear trap',decoy:'a wind-up music box'},
+  pt:{water:'uma garrafa de água de amêndoa',fire:'uma bombinha',battery:'uma pilha',energy:'uma barra de energia',tape:'uma fita cassete',flashlight:'uma lanterna',radio:'um walkie-talkie',keycard:'um cartão de acesso',note:'um bilhete escrito à mão',ration:'uma Ração Real',flare:'um sinalizador',trap:'uma armadilha de urso',decoy:'uma caixinha de música de corda'}};
 const LX=k=>{const lv=L();return LANG==='pt'&&lv.pt[k]!==undefined?lv.pt[k]:lv[k];};
 
 /* ============================== state ============================== */
@@ -1582,6 +1659,7 @@ function parseEn(s){
   if(has(/ (stop listening|microphone off|mic off|voice off|buttons only|use buttons) /))return{c:'micoff'};
   if(has(/ (3d|3 d|three d) (graphics|view|on) |^ (3d|3 d|three d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classic|2d|2 d|two d)( graphics| view)? /))return{c:'gfx',n:'classic'};
+  if(has(/ (journal|notes|my notes|diary) /))return{c:'journal'};
   if(has(/ (new game plus|new game \+|game plus|ng plus) /))return{c:'ngp'};
   if(has(/ (custom words|custom voice words|my words|voice words) /))return{c:'words'};
   if(has(/ (hardcore|one life) /))return{c:'hardset',n:'1'};
@@ -1658,6 +1736,7 @@ function parsePt(s){
   if(has(/ (parar de ouvir|desligar microfone|desliga o microfone|microfone desligado|so botoes|usar botoes|voz desligada|desligar voz) /))return{c:'micoff'};
   if(has(/ (3d|3 d|tres d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classico|graficos classicos|2d|2 d) /))return{c:'gfx',n:'classic'};
+  if(has(/ (diario|bilhetes|meus bilhetes|anotacoes) /))return{c:'journal'};
   if(has(/ (novo jogo mais|novo jogo \+|jogo mais) /))return{c:'ngp'};
   if(has(/ (palavras personalizadas|minhas palavras|palavras de voz) /))return{c:'words'};
   if(has(/ (hardcore|uma vida) /))return{c:'hardset',n:'1'};
@@ -1727,7 +1806,7 @@ function parsePt(s){
 }
 
 /* ============================== screens ============================== */
-const SCREENS=['splash','menu','pause','ach','levels','words','setup','settings','howto','news','credits','end','game'];
+const SCREENS=['splash','menu','pause','ach','levels','words','journal','setup','settings','howto','news','credits','end','game'];
 let screen='splash';
 function show(id,announce){
   if(id!=='game'&&G.state==='transition'){G.state='menu';clearAmb();}// leaving during a fall cancels it
@@ -1749,7 +1828,7 @@ function openMenu(){
 function showMain(prefix=''){
   $('#mContinue').hidden=!lsGet('br_save',null); $('#mLevels').hidden=chaptersOpen().length<2; $('#mExtra').hidden=!extrasOpen(); $('#mNgp').hidden=!extrasOpen();
   menuMusic();
-  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','endless mode','tutorial','settings','how to play','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
+  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','endless mode','tutorial','settings','how to play','journal','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
   show('menu',prefix+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
 }
 function quitToMain(){
@@ -1815,6 +1894,7 @@ function newLevel(){
   if(it.radio&&!G.inv.radio)place('radio',c=>dist[c[1]][c[0]]>=3&&dist[c[1]][c[0]]<=bd*0.6&&onPath(c,2));
   if(it.keycard)place('keycard',([x,y])=>exD[y][x]>=bd*0.5&&dist[y][x]>=3);
   if(it.tape&&!G.tapes.has(lv.tape))place('tape',([x,y])=>dist[y][x]>=3);
+  if(G.mode==='story'&&!lv.secret&&G.level<NNOTES&&!lsGet('br_notes',[]).includes(G.level))place('note',([x,y])=>dist[y][x]>=2);
   ['water','fire','battery','energy'].forEach(ty=>{for(let i=0;i<(it[ty]||0);i++)place(ty,([x,y])=>dist[y][x]>=2);});
   // the newer items turn up everywhere: food is common, tools are rarer, flares like the dark
   if(!lv.secret&&G.mode!=='tutorial'){const lvn=G.mode==='story'?G.level:9;
@@ -1823,6 +1903,9 @@ function newLevel(){
     if(lvn>=3&&!lv.calm)place('trap',([x,y])=>dist[y][x]>=2);
     if(lvn>=4&&!lv.calm&&Math.random()<0.7)place('decoy',([x,y])=>dist[y][x]>=3);}
   G.flare=null; G.traps=new Set();
+  // sometimes another lost person is here. Sometimes it only sounds like one.
+  const lvn2=G.mode==='story'?G.level:12; const survOk=!lv.calm&&!lv.run&&!lv.secret&&!lv.final&&G.mode!=='tutorial'&&G.mode!=='endless';
+  G.survOn=survOk&&lvn2>=2&&Math.random()<(G.mode==='story'?0.5:0.35);
   G.puz=null; if(lv.puzzle){const pc=cells.filter(([x,y])=>dist[y][x]>=3&&exD[y][x]>=2);const pts=[];
     for(let i=0;i<3&&pc.length;i++){let best=0,bs=-1;pc.forEach((c,j)=>{const sc=pts.length?Math.min(...pts.map(q=>Math.abs(q[0]-c[0])+Math.abs(q[1]-c[1]))):Math.random()*5;if(sc>bs){bs=sc;best=j;}});pts.push(pc.splice(best,1)[0]);}
     const tones=[0,1,2].sort(()=>Math.random()-.5); G.puz={kind:lv.puzzle,cells:pts.map((c,i)=>({x:c[0],y:c[1],tone:tones[i],on:false})),next:0,done:pts.length<3};}
@@ -1830,9 +1913,10 @@ function newLevel(){
     if(type==='marcus')return {type,x:best[0],y:best[1],cool:0};
     if(type==='deep'){c=cells.filter(([x,y])=>isWater(x,y)&&dist[y][x]>=4);if(!c.length){const w=[...G.wet].map(k=>k.split(',').map(Number));c=w.length?w:cells;}}
     else if(type==='chaser'){c=cells.filter(([x,y])=>dist[y][x]===3);c.sort((a,b)=>exD[b[1]][b[0]]-exD[a[1]][a[0]]);c=c.slice(0,2);}
-    else if(type==='face')c=cells.filter(([x,y])=>dist[y][x]>=2);
+    else if(type==='face'||type==='survivor')c=cells.filter(([x,y])=>dist[y][x]>=3);
     else c=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));
     if(!c.length)c=cells; const p=pick(c); return {type,x:p[0],y:p[1],cool:3+rand(4)};});
+  if(G.survOn){const c=cells.filter(([x,y])=>dist[y][x]>=3&&dist[y][x]<=bd-1);const p=pick(c.length?c:cells);G.mons.push({type:'survivor',x:p[0],y:p[1],name:pick(SURV_NAMES),fake:Math.random()<(lvn2>=8?0.45:0.3),greeted:false,helped:false});}
   if(G.mode==='story'&&G.ngp&&!lv.calm&&!lv.secret&&!lv.run){const far=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));for(let i=0;i<Math.min(3,G.ngp);i++){const p=pick(far.length?far:cells);G.mons.push({type:['hound','howler','wretch'][i%3],x:p[0],y:p[1],cool:4});}}
   G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
   G.wasWet=false; G.mark=null; G.markSought=false; G.caughtLevel=false; G.inHide=false; G.hideNear=false; G.watchFreeze=0;
@@ -1976,6 +2060,12 @@ function monsterCues(force){
     if(m.type==='watcher'){if(G.watchFreeze>0){if(d<=6){glassTapNear(m);txt.push(t('You hear fingernails tapping on glass {w}. It cannot move while you listen.',{w}));}}
       else if(d<=2)txt.push(t('You feel someone staring at you, {w}.',{w}));if(d<=2)setTimeout(()=>heart(d<=1),900);continue;}
     if(m.type==='marcus'){if(d<=2)txt.push(t('Marcus is very close now, {w}. You can hear him breathing.',{w}));continue;}
+    if(m.type==='survivor'){
+      if(!m.greeted&&d<=4){m.greeted=true;const h=SURV_HELLO[LANG][rand(3)].replace('{n}',m.name);G.extras.push({label:t('Somewhere {w}, a voice calls:',{w}),text:m.fake?fakeify(h):h,opts:{v:voice2,pitch:m.fake?0.92:1.05,rate:0.95},pos:pan});}
+      if(d<=1)txt.push(t('{n} is standing {w}. Say talk to speak with them.',{n:m.name,w:d===0?t('right here'):w}));
+      if(force&&d<=3)txt.push(m.fake?t('Close by, someone is standing very still. You listen hard, and you hear no breathing at all.'):t('Close by, you hear someone breathing fast and scared. A heartbeat. Human.'));
+      if(d<=3&&!m.fake&&Math.random()<0.5)setTimeout(()=>play('breath',{pan,vol:0.25,muffle:0.4,rate:1.15}),300);
+      continue;}
     if(T.npc){if(d<=1)txt.push(d===0?t('A Faceling stands right here, humming. It has no face. Say talk to speak to it.'):t('A Faceling stands {w}, humming softly. Say talk to speak to it.',{w}));if(d<=4)setTimeout(()=>monSound(m,pan,clamp(1-d*0.2,0.15,1),0),300);continue;}
     if(m.type==='moths'){if(d<=1){if(force)txt.push(t('Deathmoths are crawling all over you.'));}
       else if(d<=5){monSound(m,pan,clamp(1-d*0.15,0.2,1),d*0.1);if(d<=3||force||!G.mothTold){txt.push(t(G.inv.light?'You hear {sound} {w}. Your light is drawing them in.':'You hear {sound} {w}.',{sound:MS(m),w}));G.mothTold=true;}}continue;}
@@ -2068,6 +2158,8 @@ function lowSanity(){
 function pickupItems(parts){
   const k=key(G.x,G.y); const ty=G.items.get(k); if(!ty)return; const I=G.inv;
   G.items.delete(k); sfx(pickup);
+  if(ty==='note'){const ni=G.level;const got=lsGet('br_notes',[]);if(!got.includes(ni)){got.push(ni);lsSet('br_notes',got);}sfx(tapeClick);
+    parts.push(t('You find a handwritten note. It goes into your journal. {n} of {total} notes.',{n:got.length,total:NNOTES}));G.extras.push({text:NOTES[LANG][ni],opts:{v:voice2,pitch:0.95,rate:S.rate*0.92}});if(got.length>=NNOTES)unlock('journal');}
   if(ty==='ration'){I.ration=(I.ration||0)+1;parts.push(t('You find a Royal Ration, a sealed tin of food. You have {n}. Say eat to get your strength back.',{n:I.ration}));}
   if(ty==='flare'){I.flare=(I.flare||0)+1;parts.push(t('You find a road flare. You have {n}. Say flare to light it: it lights up the dark and drives Smilers away for a while.',{n:I.flare}));}
   if(ty==='trap'){I.trap=(I.trap||0)+1;parts.push(t('You find a rusty bear trap. You have {n}. Say set trap to leave it where you stand. The next monster to step there gets stuck.',{n:I.trap}));}
@@ -2264,9 +2356,25 @@ function sneak(on){
   say(t(G.sneak?'You crouch low and move quietly. Monsters only notice you up close, but sneaking wears on your nerves.':'You stand up and walk normally.'));
 }
 function setSneakUI(){$('#sneakBtn').setAttribute('aria-pressed',String(!!G.sneak));}
+function talkSurvivor(m){
+  if(m.fake){
+    m.type='skin';m.fake=false;jumpscare();G.hurt=performance.now();const hit=DF().hit;G.sanity=Math.max(0,G.sanity-hit);G.caughtLevel=true;
+    const far=[];const dd=bfs(G.x,G.y);for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dd[y][x]>=6)far.push([x,y]);const p=far.length?pick(far):G.exit;
+    const msg=t('{n} smiles at you. The smile keeps going, wider and wider. It was never human. The Skin-Stealer grabs you! You tear free and run. You lose {h} sanity.',{n:m.name,h:hit});m.x=p[0];m.y=p[1];
+    updateHUD(); if(G.sanity<=0)return gameOver([msg]); return say(msg+' '+pathsText());}
+  const parts=[];
+  if(!m.helped){m.helped=true;const gift=pick(['water','ration','flare','battery','fire']);const I=G.inv;
+    if(gift==='battery')I.battery=Math.min(100,I.battery+50);else I[gift]=(I[gift]||0)+1;sfx(pickup);
+    parts.push(t('{n} grabs your hand. They are shaking, and warm. Real. They give you {item}.',{n:m.name,item:ITEMNAME[LANG][gift]}));
+    G.sanity=Math.min(100,G.sanity+10);
+    const ed=bfs(G.exit[0],G.exit[1]);const s2=stepToward(ed,G.x,G.y);if(s2>=0)parts.push(t('They whisper: the way out is {route}. I am too scared to go. You go.',{route:routeWords(s2)}));
+    if(bumpStat('survivors')>=3)unlock('company');}
+  else parts.push(pick([t('{n} whispers: be careful. Not every voice down here is a person.',{n:m.name}),t('{n} whispers: go. Do not wait for me.',{n:m.name})]));
+  updateHUD(); say(parts.join(' '));
+}
 function talk(){
   if(G.state!=='play')return notPlaying();
-  const dist=bfs(G.x,G.y); const f=G.mons.find(m=>m.type==='face'&&dist[m.y][m.x]<=1);
+  const dist=bfs(G.x,G.y); const sv=G.mons.find(m=>m.type==='survivor'&&dist[m.y][m.x]<=1); if(sv)return talkSurvivor(sv); const f=G.mons.find(m=>m.type==='face'&&dist[m.y][m.x]<=1);
   if(!f)return say(t(L().calm?'There is no one close enough to talk to.':'There is no one to talk to. You hope.'));
   const tips=[]; const ed=bfs(G.exit[0],G.exit[1]); const s=stepToward(ed,G.x,G.y);
   if(s>=0)tips.push(t('The Faceling slowly lifts an arm and points {dir}, toward the way out. {n} rooms.',{dir:[t('straight ahead'),RELN(1),RELN(2),RELN(3)][rel(s)],n:ed[G.y][G.x]}));
@@ -2562,6 +2670,8 @@ const ACH=[
  {id:'trapper',en:['Trapper','Catch a monster in a bear trap.'],pt:['Caçador','Pegue um monstro numa armadilha de urso.']},
  {id:'ironwill',en:['Iron Will','Finish the story in Hardcore mode.'],pt:['Vontade de Ferro','Termine a história no modo Hardcore.']},
  {id:'ngplus',en:['Again and Again','Finish New Game Plus.'],pt:['De Novo e de Novo','Termine o Novo Jogo Mais.']},
+ {id:'company',en:['Good Company','Help three real survivors.'],pt:['Boa Companhia','Ajude três sobreviventes de verdade.']},
+ {id:'journal',en:['Collector','Find all fifteen journal notes.'],pt:['Colecionador','Encontre as quinze anotações do diário.']},
  {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']}
 ];
 const ACHV=lsGet('br_ach',{}); const STATS=lsGet('br_stats',{});
@@ -2570,6 +2680,13 @@ function unlock(id){
   if(ACHV[id])return; const a=ACH.find(a=>a.id===id); if(!a)return;
   ACHV[id]=Date.now(); lsSet('br_ach',ACHV); sfx(achSound);
   G.extras.push({text:t('Achievement unlocked: {name}.',{name:a[LANG][0]})});
+}
+function openJournal(){
+  const got=lsGet('br_notes',[]).slice().sort((a,b)=>a-b); const ol=$('#jList'); ol.innerHTML='';
+  $('#jCount').textContent=t('{n} of {total} notes found.',{n:got.length,total:NNOTES});
+  got.forEach(i=>{const li=document.createElement('li');const lv=LEVELS[i];li.textContent=(LANG==='pt'?lv.pt.name:lv.name)+': '+NOTES[LANG][i]+' ';
+    const b=document.createElement('button');b.textContent=t('Read aloud');b.addEventListener('click',()=>say(NOTES[LANG][i],{log:false}));li.appendChild(b);ol.appendChild(li);});
+  show('journal',t('Journal. {n} of {total} notes found. Each note has a read aloud button. Say back to return.',{n:got.length,total:NNOTES}));
 }
 function renderAch(){
   const ul=$('#achList'); ul.innerHTML=''; let n=0; const got=[];
@@ -2626,6 +2743,7 @@ function run(c,n,r){
     if(c==='endless')return startEndless();
     if(c==='tutorial')return startTutorial(false);
     if(c==='ach')return show('ach',renderAch());
+    if(c==='journal')return openJournal();
     if(c==='extra')return startExtra();
     if(c==='ngp')return newGamePlus();
     if(c==='words')return openWords();
@@ -2654,7 +2772,7 @@ function run(c,n,r){
     case 'help':return help(); case 'menu':case 'quit':return openMenu();
     case 'play':case 'retry':case 'resume':case 'continue':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'diff':return say(t('You can change difficulty from the settings.'));
-    case 'settings':case 'credits':case 'howto':case 'news':case 'ach':openMenu();return run(c);
+    case 'settings':case 'credits':case 'howto':case 'news':case 'ach':case 'journal':openMenu();return run(c);
     case 'levels':case 'chapter':case 'extra':case 'ngp':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'endless':return say(t('You are already in the Backrooms. Say pause to stop.'));
   }
@@ -2678,9 +2796,9 @@ function drawMon(m,b){const w=(b.r-b.l),cxm=W/2,tm=performance.now();
   if(m.type==='watcher'){cx.fillStyle='rgba(235,235,230,0.85)';cx.beginPath();cx.ellipse(cxm,b.t+(b.b-b.t)*0.35,(b.r-b.l)*0.09,(b.b-b.t)*0.14,0,0,7);cx.fill();cx.fillStyle='#000';cx.beginPath();cx.arc(cxm-(b.r-b.l)*0.03,b.t+(b.b-b.t)*0.32,3,0,7);cx.arc(cxm+(b.r-b.l)*0.03,b.t+(b.b-b.t)*0.32,3,0,7);cx.fill();return;}
   if(m.type==='librarian'){cx.fillStyle='rgba(40,38,36,0.95)';cx.beginPath();cx.ellipse(cxm,top+eh*0.5,ew*0.32,eh*0.6,0,0,7);cx.fill();cx.fillStyle='#bdb6a8';cx.beginPath();cx.ellipse(cxm,top+eh*0.12,ew*0.16,eh*0.12,0,0,7);cx.fill();return;}
   if(m.type==='jester'){cx.fillStyle='#6d1a4f';cx.beginPath();cx.ellipse(cxm,top+eh*0.6,ew/2,eh*0.42,0,0,7);cx.fill();cx.fillStyle='#f2efe6';cx.beginPath();cx.arc(cxm,top+eh*0.22,ew*0.22,0,7);cx.fill();cx.strokeStyle='#c4182b';cx.lineWidth=Math.max(2,ew*0.04);cx.beginPath();cx.arc(cxm,top+eh*0.24,ew*0.13,0.1*Math.PI,0.9*Math.PI);cx.stroke();cx.fillStyle='#e6c13a';[-1,1].forEach(k=>{cx.beginPath();cx.arc(cxm+k*ew*0.3,top+eh*0.02,ew*0.05,0,7);cx.fill();});return;}
-  cx.fillStyle=m.type==='face'?'#ddd6c4':m.type==='marcus'?'#8c836f':m.type==='party'?'#e8c43a':'rgba(5,5,5,0.92)';
+  cx.fillStyle=m.type==='face'?'#ddd6c4':m.type==='marcus'||m.type==='survivor'?'#8c836f':m.type==='party'?'#e8c43a':'rgba(5,5,5,0.92)';
   cx.beginPath();cx.ellipse(cxm,top+eh*0.55,ew/2*(m.type==='chaser'?1.7:1),eh/2,0,0,7);cx.fill();
-  if(m.type==='face'||m.type==='marcus')return;
+  if(m.type==='face'||m.type==='marcus'||m.type==='survivor')return;
   if(m.type==='party'){cx.strokeStyle='#000';cx.lineWidth=Math.max(2,ew*0.05);cx.beginPath();cx.arc(cxm-ew*0.15,top+eh*0.3,ew*0.03,0,7);cx.stroke();cx.beginPath();cx.arc(cxm+ew*0.15,top+eh*0.3,ew*0.03,0,7);cx.stroke();cx.beginPath();cx.arc(cxm,top+eh*0.36,ew*0.2,0.15*Math.PI,0.85*Math.PI);cx.stroke();return;}
   cx.fillStyle=MT[m.type].copier?'#e9d7c0':'#fff';cx.beginPath();cx.arc(cxm-ew*0.18,top+eh*0.3,ew*0.06,0,7);cx.arc(cxm+ew*0.18,top+eh*0.3,ew*0.06,0,7);cx.fill();
   if(m.type==='smiler'){cx.strokeStyle='#fff';cx.lineWidth=Math.max(2,ew*0.04);cx.beginPath();cx.arc(cxm,top+eh*0.38,ew*0.25,0.15*Math.PI,0.85*Math.PI);cx.stroke();}}
@@ -2764,6 +2882,7 @@ $('#mTut').addEventListener('click',()=>startTutorial(false));
 $('#mNews').addEventListener('click',()=>run('news'));
 $('#mEndless').addEventListener('click',startEndless);
 $('#mAch').addEventListener('click',()=>run('ach'));
+$('#mJournal').addEventListener('click',()=>run('journal'));
 $('#mLevels').addEventListener('click',()=>run('levels'));
 $('#openWords').addEventListener('click',openWords);
 $('#wSay').addEventListener('click',teachWord);
