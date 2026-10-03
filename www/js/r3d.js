@@ -5,7 +5,7 @@ const T=window.THREE;
 const hasGL=(()=>{try{const c=document.createElement('canvas');return !!(T&&(c.getContext('webgl')||c.getContext('experimental-webgl')));}catch(e){return false;}})();
 const CS=4, WH=3.2, EYE=1.6;
 let ren=null, scene, cam, built=null, lastCell='', lastT=0;
-let amb, glow, flash, fill=[], monMeshes=new Map(), exitSign=null, water=null, sparks=null, curYaw=0, monTex={};
+let puzMeshes=[], amb, glow, flash, fill=[], monMeshes=new Map(), exitSign=null, water=null, sparks=null, curYaw=0, monTex={};
 const cv3=document.getElementById('view3d');
 
 const col=(c,k=1)=>`hsl(${Math.round(c[0])},${Math.round(c[1])}%,${Math.round(Math.max(0,Math.min(100,c[2]*k)))}%)`;
@@ -121,6 +121,10 @@ function build(){
   // hiding spots
   if(G.spots)G.spots.forEach((v,k)=>{const [x,y]=k.split(',').map(Number);const d=[0,1,2,3].find(d=>!isOpen(x,y,d));const b=new T.Mesh(new T.BoxGeometry(1.1,2.1,0.7),new T.MeshLambertMaterial({color:0x4d5560}));
     const o=d===undefined?0:CS/2-0.6;b.position.set(x*CS+(d===undefined?1:DX[d]*o),1.05,y*CS+(d===undefined?1:DY[d]*o));b.rotation.y=d===undefined?0:[0,-Math.PI/2,Math.PI,Math.PI/2][d];scene.add(b);});
+  // puzzle switches, levers or bells
+  puzMeshes=[]; if(G.puz)G.puz.cells.forEach(c=>{const d=[0,1,2,3].find(d=>!isOpen(c.x,c.y,d));const o=d===undefined?0:CS/2-0.25;
+    const m=new T.Mesh(new T.BoxGeometry(0.5,0.7,0.2),new T.MeshBasicMaterial({color:0x553322}));m.position.set(c.x*CS+(d===undefined?0:DX[d]*o),1.3,c.y*CS+(d===undefined?0:DY[d]*o));
+    m.rotation.y=d===undefined?0:[0,-Math.PI/2,Math.PI,Math.PI/2][d];m.userData.cell=c;scene.add(m);puzMeshes.push(m);});
   // water
   water=null; if(G.wet&&G.wet.size){const wmat=new T.MeshLambertMaterial({color:0x0b2a44,transparent:true,opacity:0.82,emissive:0x041422});const wi2=new T.InstancedMesh(new T.PlaneGeometry(CS,CS),wmat,G.wet.size);let i=0;
     G.wet.forEach(k=>{const [x,y]=k.split(',').map(Number);e.set(-Math.PI/2,0,0);q.setFromEuler(e);m4.compose(new T.Vector3(x*CS,0.12,y*CS),q,one);wi2.setMatrixAt(i++,m4);});scene.add(wi2);water=wmat;}
@@ -152,6 +156,7 @@ function frame(){
   scene.fog.density+=((dark?(G.inv.light?0.12:0.32):OUTDOOR[lv.amb]?0.09:0.075)-scene.fog.density)*k;
   flash.intensity=G.inv.light?3:0; flash.position.copy(cam.position); const fwd=new T.Vector3(-Math.sin(curYaw),-0.08,-Math.cos(curYaw)); flash.target.position.copy(cam.position).add(fwd);
   if(exitSign)exitSign.material.color.setHSL(lv.amb==='home'?0.13:0.0,1,0.4+0.15*Math.sin(now/200));
+  puzMeshes.forEach(m=>m.material.color.setHex(m.userData.cell.on?0x30ff60:(Math.sin(now/300+m.userData.cell.tone)>0?0xffb020:0x553322)));
   if(water)water.opacity=0.75+0.08*Math.sin(now/600);
   if(sparks)sparks.visible=Math.random()<0.55;
   // monsters

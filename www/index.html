@@ -199,6 +199,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
         <li><b>Drink</b>: almond water restores sanity.</li>
         <li><b>Light</b>: flashlight on or off. Smilers hate light. Deathmoths love it. Batteries run out.</li>
         <li><b>Throw</b> (or “throw left”): throw a firecracker. Monsters chase the bang.</li>
+        <li><b>Use</b>: flip a breaker, pull a lever or ring a bell on puzzle levels. Go from the lowest sound to the highest.</li>
         <li><b>Talk</b>: speak to a Faceling when one is next to you.</li>
         <li><b>Radio</b>: the walkie-talkie static gets stronger near the exit.</li>
         <li><b>Tape</b>: replay the last tape you found.</li>
@@ -228,6 +229,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
         <li><b>Beber</b>: água de amêndoa recupera sanidade.</li>
         <li><b>Lanterna</b>: ligar ou desligar. Os Sorridentes odeiam luz. As Mariposas da Morte adoram. As pilhas acabam.</li>
         <li><b>Bombinha</b> (ou “bombinha esquerda”): atirar uma bombinha. Os monstros vão atrás do estouro.</li>
+        <li><b>Usar</b>: acionar um disjuntor, puxar uma alavanca ou tocar um sino, nos níveis com quebra-cabeça. Use do som mais grave ao mais agudo.</li>
         <li><b>Falar</b>: conversar com um Sem-Rosto quando houver um do seu lado.</li>
         <li><b>Rádio</b>: a estática do walkie-talkie fica mais forte perto da saída.</li>
         <li><b>Fita</b>: ouvir de novo a última fita encontrada.</li>
@@ -246,6 +248,15 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.9: puzzles</h2>
+      <ul>
+        <li>Puzzles! In the Electrical Station, the Carnival and the Silent Library, the exit is sealed. Find three breakers, bells or levers, and use them from the lowest sound to the highest. Get the order wrong and an alarm calls every monster to you. Say use, or press the Use button.</li>
+        <li>Standing still is never safe anymore. If you wait, the nearest monster slowly comes for you, even from far away.</li>
+        <li>Sanity drains slower in the dark, while sneaking, and the flashlight battery lasts longer.</li>
+        <li>Fixed: going to the menu while falling to the next level could pull you back into the game.</li>
+        <li>Fixed: extra levels in the Poolrooms let monsters ignore you.</li>
+        <li>Fixed: saying use voice commands opened the help.</li>
+      </ul>
       <h2>Version 0.8: no more gaps, and the Backrooms keep going</h2>
       <ul>
         <li>The story levels are numbered 0 to 14 with no gaps. Every level tells you where you are, like Level 5 of 14.</li>
@@ -328,6 +339,15 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.9: quebra-cabeças</h2>
+      <ul>
+        <li>Quebra-cabeças! Na Estação Elétrica, no Carnaval e na Biblioteca Silenciosa, a saída está lacrada. Encontre três disjuntores, sinos ou alavancas, e use do som mais grave ao mais agudo. Se errar a ordem, um alarme chama todos os monstros até você. Diga usar, ou aperte o botão Usar.</li>
+        <li>Ficar parado nunca é seguro agora. Se você esperar, o monstro mais perto vem devagar atrás de você, mesmo de longe.</li>
+        <li>A sanidade cai mais devagar no escuro e agachado, e a pilha da lanterna dura mais.</li>
+        <li>Corrigido: ir ao menu durante a queda para o próximo nível podia puxar você de volta para o jogo.</li>
+        <li>Corrigido: nos níveis extras das Piscinas, os monstros ignoravam você.</li>
+        <li>Corrigido: dizer usar comandos de voz abria a ajuda.</li>
+      </ul>
       <h2>Versão 0.8: sem buracos, e os Backrooms continuam</h2>
       <ul>
         <li>Os níveis da história agora vão de 0 a 14, sem pular nenhum. Cada nível diz onde você está, por exemplo Nível 5 de 14.</li>
@@ -480,6 +500,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
     <h2 class="sr-only"><span data-l="en">Actions</span><span data-l="pt">Ações</span></h2>
     <div class="acts">
       <button data-cmd="listen"><span data-l="en">Listen</span><span data-l="pt">Escutar</span></button>
+      <button data-cmd="use"><span data-l="en">Use</span><span data-l="pt">Usar</span></button>
       <button data-cmd="look"><span data-l="en">Look</span><span data-l="pt">Olhar</span></button>
       <button data-cmd="hide"><span data-l="en">Hide</span><span data-l="pt">Esconder</span></button>
       <button data-cmd="drink"><span data-l="en">Drink</span><span data-l="pt">Beber</span></button>
@@ -508,7 +529,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
 <script>
 "use strict";
-const VERSION='0.8';
+const VERSION='0.9';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -659,6 +680,18 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'You already used this one.':'Você já usou este.',
+ 'There is {obj} here. It makes a {pitch} sound. Say use to {verb} it.':'Há {obj} aqui. Faz um som {pitch}. Diga usar para {verb}.',
+ 'The exit is sealed. {n} of 3 {objs} are done. Say listen to find the rest.':'A saída está lacrada. Você já usou {n} de 3 {objs}. Diga escutar para achar o resto.',
+ 'The exit is sealed. Somewhere on this level are three {objs}. Use them in order, from the lowest sound to the highest. If you get the order wrong, an alarm calls every monster to you.':'A saída está lacrada. Em algum lugar deste nível há três {objs}. Use na ordem, do som mais grave ao mais agudo. Se errar a ordem, um alarme chama todos os monstros até você.',
+ 'The exit is sealed. {n} of 3 {objs} are done.':'A saída está lacrada. Você já usou {n} de 3 {objs}.',
+ 'The exit is sealed. {n} of 3 {objs} are done. The nearest one you have not used is {route}, about {d} steps away.':'A saída está lacrada. Você já usou {n} de 3 {objs}. O mais perto que você ainda não usou fica {route}, a uns {d} passos.',
+ 'There is nothing here to use. {paths}':'Não há nada para usar aqui. {paths}',
+ 'You already used this one. {paths}':'Você já usou este. {paths}',
+ 'It clicks into place. Somewhere far away, a heavy lock clunks open. The exit is open now!':'Encaixa com um clique. Em algum lugar longe, uma tranca pesada se abre. A saída está aberta agora!',
+ 'It clicks into place. {n} of 3 done.':'Encaixa com um clique. Já foram {n} de 3.',
+ 'Wrong order! An alarm blares, and everything you did snaps back to the start. Every monster on this level heard that.':'Ordem errada! Um alarme dispara, e tudo o que você fez volta ao começo. Todos os monstros deste nível ouviram.',
+ '{n} of 3 {objs} done.':'Você já usou {n} de 3 {objs}.',
  'Level {n} of {total}, {title}.':'Nível {n} de {total}, {title}.',
  'extra levels':'níveis extras',
  'Extra levels unlock after you finish the story.':'Os níveis extras são liberados depois que você termina a história.',
@@ -697,7 +730,7 @@ const PT={
  'Flashlight on, battery {n} percent.':'Lanterna ligada, pilha em {n} por cento.','Flashlight off, battery {n} percent.':'Lanterna desligada, pilha em {n} por cento.',
  'A battery, but no flashlight.':'Uma pilha, mas nenhuma lanterna.','You have a walkie-talkie.':'Você tem um walkie-talkie.','You have the keycard.':'Você tem o cartão de acesso.','You need the keycard.':'Você precisa do cartão de acesso.',
  'Tapes found: {n} of 6.':'Fitas encontradas: {n} de 6.','You are sneaking.':'Você está agachado.','Facing {d}. Difficulty: {diff}.':'Virado para o {d}. Dificuldade: {diff}.',
- 'Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Talk to Facelings. Radio to check the static. Tape to replay a tape. Mark to leave a mark, and find mark to hear the way back. Also status, repeat, faster, slower, and pause.':'Diga frente, esquerda, direita ou trás para andar. Virar à esquerda, virar à direita ou meia volta. Correr para avançar duas salas. Agachar para andar em silêncio. Escutar para achar a saída. Olhar em volta. Esconder quando algo estiver perto. Beber água de amêndoa. Lanterna para a luz. Bombinha para atrair os monstros. Falar com os Sem-Rosto. Rádio para ouvir a estática. Fita para ouvir uma fita de novo. Marcar para deixar uma marca, e achar marca para ouvir o caminho de volta. Também: status, repetir, mais rápido, mais devagar e pausa.',
+ 'Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Use to flip a switch or pull a lever. Talk to Facelings. Radio to check the static. Tape to replay a tape. Mark to leave a mark, and find mark to hear the way back. Also status, repeat, faster, slower, and pause.':'Diga frente, esquerda, direita ou trás para andar. Virar à esquerda, virar à direita ou meia volta. Correr para avançar duas salas. Agachar para andar em silêncio. Escutar para achar a saída. Olhar em volta. Esconder quando algo estiver perto. Beber água de amêndoa. Lanterna para a luz. Bombinha para atrair os monstros. Usar para acionar um interruptor ou puxar uma alavanca. Falar com os Sem-Rosto. Rádio para ouvir a estática. Fita para ouvir uma fita de novo. Marcar para deixar uma marca, e achar marca para ouvir o caminho de volta. Também: status, repetir, mais rápido, mais devagar e pausa.',
  'You lost your mind. Say try again, or menu.':'Você enlouqueceu. Diga tentar de novo, ou menu.','The game is paused. Say resume.':'O jogo está pausado. Diga retomar.','Say play to start a new game.':'Diga jogar para começar um novo jogo.',
  '{m} minutes and {s} seconds':'{m} minutos e {s} segundos',
  'Difficulty':'Dificuldade','Time':'Tempo','Steps':'Passos','Times you lost your mind':'Vezes que você enlouqueceu','Tapes found':'Fitas encontradas','{n} of 6':'{n} de 6',
@@ -835,7 +868,7 @@ const LEVELS=[
    intro:'Nível 2, Sonhos de Canos. Túneis estreitos cheios de canos quentes chiando. Cães caçam aqui. E algo mais: algo que copia vozes. Se alguém chamar você, não confie. Escute a saída de verdade. Há um walkie-talkie em algum lugar deste nível.',
    exitText:'Uma escotilha enferrujada com ar frio soprando. Você se espreme para dentro e cai numa sala cheia de máquinas zumbindo.',
    flavor:['Um cano solta vapor bem ao lado da sua cabeça.','O chão está escorregadio de óleo.','Canos batem e rangem em algum lugar acima de você.','Está tão quente que sua camisa gruda no corpo.','Uma válvula gira devagar sozinha.','Alguém escreveu VOLTE no cano com caneta.','O túnel fica estreito. Você passa de lado.']}},
- { name:'Level 3, The Electrical Station', short:'3', tape:3, w:10,h:10, loops:0.14, mons:['hound','smiler'], dark:0.25, lights:true, hazards:0.09,
+ { name:'Level 3, The Electrical Station', short:'3', tape:3, w:10,h:10, loops:0.14, mons:['hound','smiler'], dark:0.25, lights:true, hazards:0.09, puzzle:'breaker',
    items:{water:3,fire:1,battery:2,energy:1,tape:1},
    wall:[40,15,30], floor:[35,10,20], ceil:[45,10,28], amb:'electric', music:'music7', step:'metal', beacon:'hum',
    exitWhat:'a maintenance door humming with power',
@@ -923,7 +956,7 @@ const LEVELS=[
    intro:'Nível 10, Diversão. Balões. Serpentinas. Um bolo que ficou cinza. Uma caixinha de música toca parabéns, um pouco errado. Os Festeiros estão aqui, e eles querem que você entre na festa. A porta de saída está trancada: encontre o cartão de acesso primeiro. Não deixe que eles abracem você.',
    exitText:'Você passa o cartão. As portas do elevador se abrem. Atrás de você, alguém sussurra: a festa acabou. As portas se fecham e as luzes se apagam.',
    flavor:['Uma faixa na parede diz: FELIZ ANIVERSÁRIO =)','Balões murchos cobrem o chão.','Há pratos de papel postos para cem convidados.','Um chapéu de festa está no chão. Está molhado.','Alguém escreveu na parede com glacê: FIQUE =)','Confete cai do nada.']}},
- { name:'Level 11, The Carnival', short:'11', w:12,h:10, loops:0.2, mons:['jester','party','party'], dark:0.4, lights:true, hides:3,
+ { name:'Level 11, The Carnival', short:'11', w:12,h:10, loops:0.2, mons:['jester','party','party'], dark:0.4, lights:true, hides:3, puzzle:'bell',
    items:{water:3,fire:2,battery:1,energy:2},
    wall:[345,45,30], floor:[30,25,18], ceil:[260,40,8], amb:'carnival', music:'calliope', step:'concrete', beacon:'striker',
    exitWhat:'the bell of the high striker game by the merry-go-round',
@@ -934,7 +967,7 @@ const LEVELS=[
    intro:'Nível 11, O Carnaval. Um parque de diversões abandonado sob um céu sem estrelas. Um órgão quebrado toca uma valsa que nunca acaba. Os brinquedos rangem no vento. Os Festeiros seguiram você até aqui, e trouxeram um amigo: o Bobo da Corte. Ele não anda. Ele só aparece, em algum lugar perto, rindo. Encontre o carrossel. Escute o sino do jogo de força ao lado dele.',
    exitText:'Você sobe no carrossel. Ele começa a girar, cada vez mais rápido, o órgão gritando, até o mundo se rasgar. Quando para, você está sentado numa velha poltrona de leitura, e tudo está completamente em silêncio.',
    flavor:['Uma roda-gigante gira devagar. Todos os assentos estão vazios, menos um.','Uma pipoqueira ainda está estourando pipoca. Não há ninguém.','Uma placa diz: GANHE UM PRÊMIO. A prateleira de prêmios está cheia de sapatos.','Seu reflexo no espelho da casa maluca acena para você. Você não acenou.','Algodão-doce, rosa e cinza de mofo, gruda no seu sapato.']}},
- { name:'Level 12, The Silent Library', short:'12', w:11,h:10, loops:0.2, mons:['librarian','smiler'], dark:0.5, lights:true, hides:4,
+ { name:'Level 12, The Silent Library', short:'12', w:11,h:10, loops:0.2, mons:['librarian','smiler'], dark:0.5, lights:true, hides:4, puzzle:'lever',
    items:{water:3,fire:3,battery:2,energy:1},
    wall:[25,40,25], floor:[0,40,22], ceil:[30,30,15], amb:'library', music:'music11', step:'carpet', beacon:'clock',
    exitWhat:'a grandfather clock chiming by the exit',
@@ -1387,6 +1420,7 @@ function parseEn(s){
   if(has(/ (skip|skip tutorial|skip it) /))return{c:'skip'};
   if(has(/ (tutorial|practice|training) /))return{c:'tutorial'};
   if(has(/ (how to play|instructions) /))return{c:'howto'};
+  if(has(/ (voice commands on|use voice commands|turn on voice commands) /))return{c:'voiceon'};
   if(has(/ (help|commands|what can i say) /))return{c:'help'};
   if(has(/ (repeat|say again|say that again|pardon|what did you say) /))return{c:'repeat'};
   if(has(/ (tape|recording|cassette) /))return{c:'tape'};
@@ -1411,6 +1445,7 @@ function parseEn(s){
   if(has(/ (scares off|jump scares off|no jump scares) /))return{c:'scaresoff'};
   if(has(/ (scares on|jump scares on) /))return{c:'scareson'};
   if(has(/ (sneak|sneaking|tiptoe|creep) /))return{c:'sneak'};
+  if(!has(/ use (voice|buttons|the buttons|voice commands) /)&&has(/ (use|use it|flip|flip it|pull|pull it|press|activate|ring|ring it|ring the bell|switch it on) /))return{c:'use'};
   if(has(/ (light|flashlight|torch|lamp) /))return{c:'light',n:has(/ off /)?'off':has(/ on /)?'on':'toggle'};
   if(has(/ (throw|firecracker|fire cracker|toss) /))return{c:'throw',r:dirOf()};
   if(has(/ (sprint|run|dash|charge|rush) /))return{c:'sprint',r:dirOf()};
@@ -1477,6 +1512,7 @@ function parsePt(s){
   if(has(/ (desligar sustos|sustos desligados|sem sustos) /))return{c:'scaresoff'};
   if(has(/ (ligar sustos|sustos ligados) /))return{c:'scareson'};
   if(has(/ (agachar|agacha|furtivo|esgueirar|em silencio|ponta dos pes) /))return{c:'sneak'};
+  if(!has(/ (usar|usa|use) (voz|botoes|os botoes|comandos) /)&&has(/ (usar|usa|use|puxar|puxa|puxe|acionar|aciona|apertar|aperta|ativar|ativa|tocar o sino|toca o sino|tocar sino) /))return{c:'use'};
   if(has(/ (lanterna|luz) /))return{c:'light',n:has(/ (desligar|desliga|apagar|apaga) /)?'off':has(/ (ligar|liga|acender|acende) /)?'on':'toggle'};
   if(has(/ (correr|corre|corra|disparar) /))return{c:'sprint',r:dirOf()};
   if(has(/ (falar|fala|conversar|conversa|ola|oi|perguntar) /))return{c:'talk'};
@@ -1503,6 +1539,7 @@ function parsePt(s){
 const SCREENS=['splash','menu','pause','ach','levels','setup','settings','howto','news','credits','end','game'];
 let screen='splash';
 function show(id,announce){
+  if(id!=='game'&&G.state==='transition'){G.state='menu';clearAmb();}// leaving during a fall cancels it
   SCREENS.forEach(s=>$('#'+s).hidden=(s!==id)); screen=id; syncChoices();
   const h=$('#'+id+' [tabindex="-1"]'); const first=$('#'+id+' button:not([hidden])');
   setTimeout(()=>{(id==='game'?$('#viewWrap'):(h||first)).focus();},30);
@@ -1585,6 +1622,9 @@ function newLevel(){
   if(it.keycard)place('keycard',([x,y])=>exD[y][x]>=bd*0.5&&dist[y][x]>=3);
   if(it.tape&&!G.tapes.has(lv.tape))place('tape',([x,y])=>dist[y][x]>=3);
   ['water','fire','battery','energy'].forEach(ty=>{for(let i=0;i<(it[ty]||0);i++)place(ty,([x,y])=>dist[y][x]>=2);});
+  G.puz=null; if(lv.puzzle){const pc=cells.filter(([x,y])=>dist[y][x]>=3&&exD[y][x]>=2);const pts=[];
+    for(let i=0;i<3&&pc.length;i++){let best=0,bs=-1;pc.forEach((c,j)=>{const sc=pts.length?Math.min(...pts.map(q=>Math.abs(q[0]-c[0])+Math.abs(q[1]-c[1]))):Math.random()*5;if(sc>bs){bs=sc;best=j;}});pts.push(pc.splice(best,1)[0]);}
+    const tones=[0,1,2].sort(()=>Math.random()-.5); G.puz={kind:lv.puzzle,cells:pts.map((c,i)=>({x:c[0],y:c[1],tone:tones[i],on:false})),next:0,done:pts.length<3};}
   G.mons=lv.mons.map(type=>{let c;
     if(type==='marcus')return {type,x:best[0],y:best[1],cool:0};
     if(type==='deep'){c=cells.filter(([x,y])=>isWater(x,y)&&dist[y][x]>=4);if(!c.length){const w=[...G.wet].map(k=>k.split(',').map(Number));c=w.length?w:cells;}}
@@ -1616,7 +1656,7 @@ function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;
   G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.tapes=allTapes();G.lastTape=s.lastTape??-1;G.drank=!!s.drank;G.full=!!s.full;G.mode='story';G.edef=null;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
 function enterLevel(prefix=''){
   initAudio(); newLevel(); saveCheckpoint(); show('game');
-  let intro=LX('intro'); const nm=LX('name');
+  let intro=introText(); const nm=LX('name');
   if(G.mode==='story'&&!L().secret&&intro.startsWith(nm+'.'))intro=t('Level {n} of {total}, {title}.',{n:G.level,total:storyLevels().length-1,title:nm.replace(/^[^,]*, /,'')})+intro.slice(nm.length+1);
   say((prefix?prefix+' ':'')+intro+' '+pathsText());
 }
@@ -1670,8 +1710,8 @@ function updateHUD(){
   $('#hud').innerHTML=bits.map(([k,v])=>`<span>${k?k+': ':''}<b>${v}</b></span>`).join('');
   const fill=$('#sanityFill'); fill.style.width=G.sanity+'%'; fill.style.background=G.sanity>50?'var(--ok)':G.sanity>25?'#f2c94b':'var(--danger)';
 }
-function drain(mult=1){let d=DF().drain*mult;if(G.sneak)d*=1.4;if(isDark(G.x,G.y)&&!G.inv.light)d*=1.5;if(L().calm)d*=0.4;G.sanity=Math.max(0,G.sanity-d);
-  if(G.inv.light){G.inv.battery=Math.max(0,G.inv.battery-2);if(G.inv.battery<=0){G.inv.light=false;G.extras.push({text:t('Your flashlight flickers and dies.')});sfx(clickSound,false);}}}
+function drain(mult=1){let d=DF().drain*mult;if(G.sneak)d*=1.2;if(isDark(G.x,G.y)&&!G.inv.light)d*=L().dark>=1?1.15:1.35;if(L().calm)d*=0.4;G.sanity=Math.max(0,G.sanity-d);
+  if(G.inv.light){G.inv.battery=Math.max(0,G.inv.battery-1.5);if(G.inv.battery<=0){G.inv.light=false;G.extras.push({text:t('Your flashlight flickers and dies.')});sfx(clickSound,false);}}}
 function nearestHostile(dist){let best=null,bd=Infinity;for(const m of G.mons){if(!MT[m.type].hostile&&m.type!=='moths')continue;const d=dist[m.y][m.x];if(d<bd){bd=d;best=m;}}return best?{m:best,d:bd}:null;}
 function moveMon(m,d){if(d<0)return;const nx=m.x+DX[d],ny=m.y+DY[d];if(m.type==='deep'&&!isWater(nx,ny))return;m.x=nx;m.y=ny;}
 function wander(m){const ds=[0,1,2,3].filter(k=>isOpen(m.x,m.y,k));if(ds.length)moveMon(m,pick(ds));}
@@ -1766,6 +1806,38 @@ function exitCue(auto){
   if(s<0)return '';
   return t(d===1?'You hear {what}. The way to it leads {route}, 1 step away.':'You hear {what}. The way to it leads {route}, about {n} steps away.',{what:LX('exitWhat'),route:routeWords(s),n:d});
 }
+const PUZN={breaker:{en:['a breaker switch','breaker switches','flip'],pt:['um disjuntor','disjuntores','acionar']},
+  lever:{en:['a lever hidden behind the books','levers','pull'],pt:['uma alavanca escondida atrás dos livros','alavancas','puxar']},
+  bell:{en:['a game bell','bells','ring'],pt:['um sino de jogo','sinos','tocar']}};
+const PUZ=()=>PUZN[G.puz.kind][LANG];
+const PITCH=()=>LANG==='pt'?['grave','médio','agudo']:['low','middle','high'];
+function puzAt(x,y){return G.puz&&G.puz.cells.find(c=>c.x===x&&c.y===y);}
+function puzTone(tone,pan,muffle){const t=now();const f=[220,330,494][tone];const out=spot(pan,0.9,muffle);
+  [1,2,3].forEach((m,k)=>{const o=osc(G.puz&&G.puz.kind==='breaker'?'sawtooth':'sine',f*m,t,1.6);const g=gainNode(0);envelope(g,t,0.01,[0.25,0.07,0.03][k],1.4);o.connect(filt('lowpass',2400)).connect(g).connect(out);});}
+function puzzleHint(){if(!G.puz)return '';return ' '+t('The exit is sealed. Somewhere on this level are three {objs}. Use them in order, from the lowest sound to the highest. If you get the order wrong, an alarm calls every monster to you.',{objs:PUZ()[1]});}
+function introText(){return LX('intro')+puzzleHint();}
+function puzzleCue(){
+  const left=G.puz.cells.filter(c=>!c.on); if(!left.length)return exitCue(false); let best=null,bd=Infinity;
+  for(const c of left){const d=bfs(c.x,c.y)[G.y][G.x];if(d<bd){bd=d;best=c;}}
+  const dist=bfs(best.x,best.y); const s=stepToward(dist,G.x,G.y); const {pan}=relDirWords(best.x,best.y); sfx(puzTone,best.tone,pan,clamp(bd*0.06,0,0.8));
+  if(s<0)return t('The exit is sealed. {n} of 3 {objs} are done.',{n:G.puz.next,objs:PUZ()[1]});
+  return t('The exit is sealed. {n} of 3 {objs} are done. The nearest one you have not used is {route}, about {d} steps away.',{n:G.puz.next,objs:PUZ()[1],route:routeWords(s),d:bd});
+}
+function usePuzzle(){
+  if(G.state!=='play')return notPlaying();
+  const c=puzAt(G.x,G.y); if(!c)return say(t('There is nothing here to use. {paths}',{paths:pathsText()}));
+  if(c.on)return say(t('You already used this one. {paths}',{paths:pathsText()}));
+  exitHide(); sfx(puzTone,c.tone,0,0); const parts=[];
+  if(c.tone===G.puz.next){c.on=true;G.puz.next++;sfx(clickSound,true);
+    if(G.puz.next>=3){G.puz.done=true;setTimeout(()=>{sfx(bang,G.exit?relDirWords(G.exit[0],G.exit[1]).pan:0,0.5,0.6);},700);parts.push(t('It clicks into place. Somewhere far away, a heavy lock clunks open. The exit is open now!'));if(bumpStat('puzzles')>=1)unlock('puzzle');}
+    else parts.push(t('It clicks into place. {n} of 3 done.',{n:G.puz.next}));}
+  else{G.puz.cells.forEach(q=>q.on=false);G.puz.next=0;G.noise={x:G.x,y:G.y,turns:5};G.alert=4;sfx(alarmBlare);
+    parts.push(t('Wrong order! An alarm blares, and everything you did snaps back to the start. Every monster on this level heard that.'));}
+  G.steps++; drain(0.5); monstersTurn(); checkCaught(parts); updateHUD();
+  if(G.sanity<=0)return gameOver(parts);
+  say([...parts,monsterCues(false),pathsText()].filter(Boolean).join(' '));
+}
+function alarmBlare(){const t=now();const o=osc('square',880,t,1.6);for(let i=0;i<8;i++)o.frequency.setValueAtTime(i%2?660:880,t+i*0.2);const g=gainNode(0);envelope(g,t,0.01,0.25,1.5);o.connect(filt('lowpass',2500)).connect(g).connect(spot(0,1));}
 function keycardCue(){
   let kc=null;G.items.forEach((ty,k)=>{if(ty==='keycard')kc=k.split(',').map(Number);}); if(!kc)return exitCue(false);
   const dist=bfs(kc[0],kc[1]); const d=dist[G.y][G.x]; const s=stepToward(dist,G.x,G.y); const {pan}=relDirWords(kc[0],kc[1]);
@@ -1828,8 +1900,10 @@ function afterMove(quiet){
   if(G.watchFreeze>0)G.watchFreeze--;
   if(G.spots&&G.spots.has(k)&&!L().run)parts.push(t('There is {spot} here. Say hide to get inside.',{spot:spotName(k)}));
   if(G.mark&&G.markSought&&G.x===G.mark.x&&G.y===G.mark.y){G.markSought=false;sfx(ping,V3(0,0,-0.3),0.6,0);parts.push(t('You are back at your mark.'));unlock('mapper');}
+  const pz=puzAt(G.x,G.y); if(pz){sfx(puzTone,pz.tone,0,0.5);parts.push(pz.on?t('You already used this one.'):t('There is {obj} here. It makes a {pitch} sound. Say use to {verb} it.',{obj:PUZ()[0],pitch:PITCH()[pz.tone],verb:PUZ()[2]}));}
   if(G.x===G.exit[0]&&G.y===G.exit[1]){
     if(lv.locked&&!G.inv.keycard){sfx(denied);parts.push(t('A heavy elevator door with a card reader. It is locked. You need the keycard.'));}
+    else if(G.puz&&!G.puz.done){sfx(denied);parts.push(t('The exit is sealed. {n} of 3 {objs} are done. Say listen to find the rest.',{n:G.puz.next,objs:PUZ()[1]}));}
     else{levelComplete(parts);return {stop:true};}
   }
   monstersTurn();
@@ -1897,7 +1971,7 @@ function look(){
 function listen(){
   if(G.state!=='play')return notPlaying();
   if(G.sanity<25&&Math.random()<0.3)return say(t('You try to listen, but the sounds come from everywhere at once. You cannot focus.'));
-  const ex=(L().locked&&!G.inv.keycard)?keycardCue():exitCue(false);
+  const ex=(L().locked&&!G.inv.keycard)?keycardCue():(G.puz&&!G.puz.done)?puzzleCue():exitCue(false);
   let fr=''; if(G.mons.some(m=>m.type==='watcher')){G.watchFreeze=3;fr=t('The watchers freeze while you listen.');}
   say(t('You hold still and listen. {ex} {mon}',{ex,mon:monsterCues(true)})+(fr?' '+fr:''));
 }
@@ -1982,14 +2056,14 @@ function hide(){
 }
 function status(){
   if(!G.inv)return say(t('The game has not started.'));
-  const I=G.inv; const b=[LX('name')+'.',t('Sanity {n} percent.',{n:Math.round(G.sanity)}),t('Almond water: {n}.',{n:I.water}),t('Firecrackers: {n}.',{n:I.fire}),t('Sprints: {n}.',{n:I.energy})];
+  const I=G.inv; const b=[LX('name')+'.',...(G.puz&&!G.puz.done?[t('{n} of 3 {objs} done.',{n:G.puz.next,objs:PUZ()[1]})]:[]),t('Sanity {n} percent.',{n:Math.round(G.sanity)}),t('Almond water: {n}.',{n:I.water}),t('Firecrackers: {n}.',{n:I.fire}),t('Sprints: {n}.',{n:I.energy})];
   if(I.flashlight)b.push(t(I.light?'Flashlight on, battery {n} percent.':'Flashlight off, battery {n} percent.',{n:Math.round(I.battery)})); else if(I.battery)b.push(t('A battery, but no flashlight.'));
   if(I.radio)b.push(t('You have a walkie-talkie.')); if(L().locked)b.push(t(I.keycard?'You have the keycard.':'You need the keycard.'));
   if(G.mode==='endless')b.unshift(t('Endless mode, depth {n}.',{n:G.depth}));
   else if(G.mode==='extra')b.unshift(t('Extra levels. Your deepest is Level {n}.',{n:lsGet('br_extra',FIRSTX)})); else b.push(t('Tapes found: {n} of {total}.',{n:G.tapes.size,total:NTAPES})); if(G.sneak)b.push(t('You are sneaking.')); b.push(t('Facing {d}. Difficulty: {diff}.',{d:DIRN(G.f),diff:DL()}));
   say(b.join(' '));
 }
-function help(){say(t('Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Talk to Facelings. Radio to check the static. Tape to replay a tape. Mark to leave a mark, and find mark to hear the way back. Also status, repeat, faster, slower, and pause.'));}
+function help(){say(t('Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Use to flip a switch or pull a lever. Talk to Facelings. Radio to check the static. Tape to replay a tape. Mark to leave a mark, and find mark to hear the way back. Also status, repeat, faster, slower, and pause.'));}
 function notPlaying(){
   if(G.state==='dead')say(t('You lost your mind. Say try again, or menu.'));
   else if(G.state==='paused')say(t('The game is paused. Say resume.'));
@@ -2020,7 +2094,7 @@ function levelComplete(parts){
     G.xn++; if(G.xn>lsGet('br_extra',FIRSTX))lsSet('br_extra',G.xn); if(G.xn>=20)unlock('extra20'); if(G.xn>=50)unlock('extra50');
     say([...parts,exitText,t('You feel yourself falling deeper.')].filter(Boolean).join(' '));
     setTimeout(()=>{if(G.state!=='transition')return;G.sanity=Math.min(100,G.sanity+25);G.sneak=false;setSneakUI();G.edef=extraDef(G.xn);G.level=G.edef.base??0;
-      initAudio();newLevel();show('game');say(LX('intro')+' '+pathsText());},4500);
+      initAudio();newLevel();show('game');say(introText()+' '+pathsText());},4500);
     return;
   }
   if(G.mode==='endless'){
@@ -2028,7 +2102,7 @@ function levelComplete(parts){
     if(G.depth>=10)unlock('deep10'); if(G.depth>=25)unlock('deep25');
     say([...parts,exitText,t('You feel yourself falling deeper.')].filter(Boolean).join(' '));
     setTimeout(()=>{if(G.state!=='transition')return;G.sanity=Math.min(100,G.sanity+20);G.sneak=false;setSneakUI();G.edef=endlessDef(G.depth);G.level=G.edef.base;
-      initAudio();newLevel();show('game');say(t('Depth {n}.',{n:G.depth})+' '+LX('intro')+' '+pathsText());},4500);
+      initAudio();newLevel();show('game');say(t('Depth {n}.',{n:G.depth})+' '+introText()+' '+pathsText());},4500);
     return;
   }
   if(G.level===0)unlock('first'); if(lv.locked)unlock('party'); if(lv.water)unlock('swim'); if(lv.amb==='office')unlock('office'); if(lv.amb==='suburbs')unlock('suburbs');
@@ -2157,7 +2231,7 @@ function endTutorial(skipped,done){
   const go=G.tutThenPlay; G.mode='story'; G.state='transition';
   if(skipped)say(t('Tutorial skipped.'));
   const wait=skipped?600:Math.max(4500,(G.quietUntil||0)-performance.now()+600);
-  setTimeout(()=>{if(G.mode!=='story')return;if(go)return newGame(true);G.state='menu';showMain();},wait);
+  setTimeout(()=>{if(G.mode!=='story'||G.state!=='transition')return;if(go)return newGame(true);G.state='menu';showMain();},wait);
 }
 // ---------- endless mode ----------
 function endlessDef(depth){
@@ -2166,6 +2240,7 @@ function endlessDef(depth){
   const def={...b,base,w:sz,h:Math.max(5,sz-1),mons:[...b.mons],items:{...b.items}};
   delete def.items.tape; delete def.items.flashlight; delete def.items.radio;
   for(let i=0;i<Math.floor(depth/4);i++)def.mons.push(pick(['howler','hound','smiler','party']));
+  if(def.mons.some(m=>MT[m].hostile))def.calm=false;
   def.pt={...b.pt}; return def;
 }
 // Extra levels: after the story, the numbers keep going. Handmade extra levels go in EXTRAS
@@ -2178,7 +2253,7 @@ function extraDef(n){
   const k=n-FIRSTX, sz=Math.min(9+Math.floor(k/2),16);
   const def={...b,base,w:sz,h:Math.max(7,sz-1),mons:[...b.mons],items:{...b.items},dark:Math.min(0.85,(b.dark||0)+0.03*k),final:false};
   delete def.items.tape; delete def.items.flashlight; delete def.items.radio;
-  const X=['howler','hound','smiler','party','wretch','clump'];for(let i=0;i<Math.min(4,1+Math.floor(k/4));i++)def.mons.push(X[(n+i)%X.length]);
+  const X=['howler','hound','smiler','party','wretch','clump'];for(let i=0;i<Math.min(4,1+Math.floor(k/4));i++)def.mons.push(X[(n+i)%X.length]); def.calm=false;
   const low=x=>x.replace(/^(The|O|A|Os|As) /,m=>m.toLowerCase()); const title=b.name.replace(/^[^,]*, /,''), tpt=b.pt.name.replace(/^[^,]*, /,'');
   def.name=`Level ${n}, ${title}`; def.short=String(n);
   def.intro=`Level ${n}. It looks like ${low(title)}, but deeper, darker, and something here has been waiting for you. `+b.intro.slice(b.intro.indexOf('. ')+2);
@@ -2192,13 +2267,13 @@ function startExtra(n){
   G.mode='extra'; G.xn=n; G.edef=extraDef(n); G.level=G.edef.base??0; G.inv=chapterInv(14); G.inv.water=Math.max(G.inv.water,2);
   G.sanity=100; G.steps=0; G.deaths=0; G.tapes=allTapes(); G.drank=false; G.full=false; G.startTime=Date.now(); G.sneak=false; setSneakUI();
   initAudio(); newLevel(); show('game');
-  say(t('Extra levels. The story is over, but the Backrooms keep going.')+' '+LX('intro')+' '+pathsText());
+  say(t('Extra levels. The story is over, but the Backrooms keep going.')+' '+introText()+' '+pathsText());
 }
 function startEndless(){
   G.mode='endless'; G.depth=1; G.inv=freshInv(); G.inv.flashlight=true; G.inv.battery=60; G.inv.radio=true;
   G.sanity=100; G.steps=0; G.deaths=0; G.tapes=new Set(); G.lastTape=-1; G.drank=false; G.startTime=Date.now(); G.sneak=false; setSneakUI();
   G.edef=endlessDef(1); G.level=G.edef.base; initAudio(); newLevel(); show('game');
-  say(t('Endless mode. The Backrooms go on forever. How deep can you go? Your best is depth {b}.',{b:lsGet('br_best',0)})+' '+t('Depth {n}.',{n:1})+' '+LX('intro')+' '+pathsText());
+  say(t('Endless mode. The Backrooms go on forever. How deep can you go? Your best is depth {b}.',{b:lsGet('br_best',0)})+' '+t('Depth {n}.',{n:1})+' '+introText()+' '+pathsText());
 }
 // ---------- achievements ----------
 const ACH=[
@@ -2228,6 +2303,7 @@ const ACH=[
  {id:'carnival',en:['Last Ride','Escape the Carnival.'],pt:['Última Volta','Escape do Carnaval.']},
  {id:'extra20',en:['Beyond the Story','Reach Level 20 in the extra levels.'],pt:['Além da História','Chegue ao Nível 20 nos níveis extras.']},
  {id:'extra50',en:['There Is No Bottom','Reach Level 50 in the extra levels.'],pt:['Não Tem Fundo','Chegue ao Nível 50 nos níveis extras.']},
+ {id:'puzzle',en:['Electrician','Solve a puzzle.'],pt:['Eletricista','Resolva um quebra-cabeça.']},
  {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']}
 ];
 const ACHV=lsGet('br_ach',{}); const STATS=lsGet('br_stats',{});
@@ -2254,10 +2330,11 @@ setInterval(()=>{
   const idle=L().run?3500:DF().idle;
   if(performance.now()-Math.max(G.lastAct||0,G.quietUntil||0,G.holdSpeech||0)<idle)return;
   G.lastAct=performance.now();
-  const dist=bfs(G.x,G.y); const near=nearestHostile(dist); if(!near)return;
-  const m=near.m; if(m.type==='moths'&&!G.inv.light)return; if(m.type==='watcher'&&G.watchFreeze>0)return; if(m.type==='librarian')return;
-  if(near.d>MT[m.type].sense+DF().sense+1){if(Math.random()<0.35){const {pan}=relDirWords(m.x,m.y);monSound(m,pan,0.18,0.8);}return;}
-  moveMon(m,stepToward(dist,m.x,m.y));
+  const dist=bfs(G.x,G.y);
+  // the nearest thing that can come for you does, even from far away: it stalks you while you wait
+  const hunters=G.mons.filter(m=>(MT[m.type].hostile||(m.type==='moths'&&G.inv.light))&&!(m.type==='watcher'&&G.watchFreeze>0)&&m.type!=='librarian'&&(m.type!=='deep'||isWater(G.x,G.y))).sort((a,b)=>dist[a.y][a.x]-dist[b.y][b.x]);
+  const m=hunters[0]; if(!m)return; const far=dist[m.y][m.x]>MT[m.type].sense+DF().sense+1;
+  moveMon(m,stepToward(dist,m.x,m.y)); if(far){if(Math.random()<0.5){const {pan}=relDirWords(m.x,m.y);monSound(m,pan,0.2,0.75);}if(dist[m.y][m.x]>MT[m.type].sense+DF().sense+2)return;}
   const parts=[]; if(checkCaught(parts)){updateHUD();if(G.sanity<=0)return gameOver(parts);return say(t('You waited too long. {caught} {paths}',{caught:parts.join(' '),paths:pathsText()}));}
   mothBite(parts); updateHUD(); if(G.sanity<=0)return gameOver(parts);
   const txt=monsterCues(false); if(txt||parts.length)say(t(L().run?'Move! ':'You stand still, and it comes closer. ')+parts.join(' ')+' '+txt);
@@ -2309,6 +2386,7 @@ function run(c,n,r){
     case 'sneak':return sneak(true); case 'unsneak':return sneak(false);
     case 'mark':return dropMark(); case 'findmark':return findMark();
     case 'light':return light(n); case 'talk':return talk(); case 'radio':return radio(); case 'tape':return tape();
+    case 'use':return usePuzzle();
     case 'hide':return hide(); case 'listen':return listen(); case 'look':return look(); case 'drink':return drink(); case 'status':return status();
     case 'help':return help(); case 'menu':case 'quit':return openMenu();
     case 'play':case 'retry':case 'resume':case 'continue':return say(t('You are already in the Backrooms. Say pause to stop.'));
