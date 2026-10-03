@@ -263,6 +263,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.13: locks, tunes and the Host</h2>
+      <ul>
+        <li>The Abandoned Office exit has a keypad. Find three numbers written on scraps of paper, then say code and the numbers, or press Enter code. A wrong code sets off an alarm.</li>
+        <li>The Poolrooms drain is shut by a singing valve. It plays a tune, and you repeat it: low, middle or high.</li>
+        <li>A boss: the Host lives in the Frontrooms. It always knows where you are and never stops coming. Flares scare it off, bear traps hold it, and music boxes lead it away. There are extra supplies in the house to help you.</li>
+        <li>New achievement: escape the Frontrooms without the Host ever catching you.</li>
+      </ul>
       <h2>Version 0.12: you are not alone</h2>
       <ul>
         <li>Survivors: from Level 2 on, you may meet another lost person. Talk to them, and they give you supplies and tell you the way out.</li>
@@ -387,6 +394,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.13: trancas, melodias e o Anfitrião</h2>
+      <ul>
+        <li>A saída do Escritório Abandonado tem um teclado. Encontre três números escritos em pedaços de papel, depois diga código e os números, ou aperte Digitar código. Um código errado dispara um alarme.</li>
+        <li>O ralo das Piscinas está fechado por uma válvula que canta. Ela toca uma melodia, e você repete: grave, médio ou agudo.</li>
+        <li>Um chefe: o Anfitrião mora nos Quartos da Frente. Ele sempre sabe onde você está e nunca para de vir. Sinalizadores o espantam, armadilhas o prendem, e caixinhas de música o levam para longe. Há suprimentos extras na casa para ajudar.</li>
+        <li>Nova conquista: escapar dos Quartos da Frente sem o Anfitrião pegar você.</li>
+      </ul>
       <h2>Versão 0.12: você não está sozinho</h2>
       <ul>
         <li>Sobreviventes: a partir do Nível 2, você pode encontrar outra pessoa perdida. Converse, e ela te dá suprimentos e diz o caminho da saída.</li>
@@ -607,6 +621,8 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <h2 class="sr-only"><span data-l="en">Actions</span><span data-l="pt">Ações</span></h2>
     <div class="acts">
       <button data-cmd="listen"><span data-l="en">Listen</span><span data-l="pt">Escutar</span></button>
+      <button data-cmd="code" id="codeBtn" hidden><span data-l="en">Enter code</span><span data-l="pt">Digitar código</span></button>
+      <span id="memBtns" hidden><button data-cmd="note" data-n="0"><span data-l="en">Low note</span><span data-l="pt">Nota grave</span></button><button data-cmd="note" data-n="1"><span data-l="en">Middle note</span><span data-l="pt">Nota média</span></button><button data-cmd="note" data-n="2"><span data-l="en">High note</span><span data-l="pt">Nota aguda</span></button></span>
       <button data-cmd="use"><span data-l="en">Use</span><span data-l="pt">Usar</span></button>
       <button data-cmd="look"><span data-l="en">Look</span><span data-l="pt">Olhar</span></button>
       <button data-cmd="hide"><span data-l="en">Hide</span><span data-l="pt">Esconder</span></button>
@@ -641,7 +657,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.12';
+const VERSION='0.13';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -792,6 +808,30 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'The Host screams at the flare and backs away from the light.':'O Anfitrião grita para o sinalizador e recua da luz.',
+ 'The Host wraps around you. It whispers in your mother’s voice, your best friend’s voice, your own voice. You tear free and run, and it lets you, for now. You lose {n} sanity.':'O Anfitrião envolve você. Ele sussurra com a voz da sua mãe, do seu melhor amigo, com a sua própria voz. Você se solta e corre, e ele deixa, por enquanto. Você perde {n} de sanidade.',
+ 'You find a scrap of paper with a number on it. It says: the {pos} number of the door code is {d}.':'Você encontra um pedaço de papel com um número. Diz: o {pos} número do código da porta é {d}.',
+ 'first':'primeiro',
+ 'second':'segundo',
+ 'third':'terceiro',
+ 'That is all three. The code is {c}. Go to the exit door and say code, then the numbers.':'São os três. O código é {c}. Vá até a porta de saída e diga código, depois os números.',
+ 'You have {n} of 3 numbers.':'Você tem {n} de 3 números.',
+ 'The exit door has a keypad. It needs a three-number code. Numbers are written on scraps of paper around this level. When you know them, say code and the numbers, like code 4 7 2, or press Enter code.':'A porta de saída tem um teclado. Precisa de um código de três números. Os números estão escritos em pedaços de papel por este nível. Quando souber, diga código e os números, por exemplo código 4 7 2, ou aperte Digitar código.',
+ 'There is no keypad here.':'Não há teclado aqui.',
+ 'You need to be at the exit door to use its keypad. {paths}':'Você precisa estar na porta de saída para usar o teclado. {paths}',
+ 'Type the three-number code':'Digite o código de três números',
+ 'The code has three numbers. Try again.':'O código tem três números. Tente de novo.',
+ 'Beep, beep, beep. A green light. The lock clicks open!':'Bip, bip, bip. Uma luz verde. A tranca se abre!',
+ 'Wrong code. The keypad screams an alarm, and something heard it.':'Código errado. O teclado dispara um alarme, e algo ouviu.',
+ 'The drain is shut by a valve with three pipes. When you touch it, it plays a tune of {n} notes. Repeat the tune: say low, middle or high, one note at a time. Say listen to hear it again.':'O ralo está fechado por uma válvula com três canos. Quando você toca nela, ela toca uma melodia de {n} notas. Repita a melodia: diga grave, médio ou agudo, uma nota de cada vez. Diga escutar para ouvir de novo.',
+ 'There is nothing here to play.':'Não há nada para tocar aqui.',
+ 'The pipes sing the whole tune back to you. The valve turns, and the drain opens!':'Os canos cantam a melodia inteira de volta. A válvula gira, e o ralo se abre!',
+ '{w}. Right. {n} of {total}.':'{w}. Certo. {n} de {total}.',
+ 'Wrong note. The pipes groan, and your head throbs. Start again from the first note. Say listen to hear the tune again.':'Nota errada. Os canos gemem, e sua cabeça lateja. Comece de novo pela primeira nota. Diga escutar para ouvir a melodia de novo.',
+ 'The exit needs a code. The nearest scrap of paper with a number rustles {route}, about {n} steps away.':'A saída precisa de um código. O pedaço de papel com número mais perto farfalha {route}, a uns {n} passos.',
+ 'The exit door here is locked with a keypad code. Find the three numbers written on scraps of paper.':'A porta de saída aqui está trancada com um código. Encontre os três números escritos em pedaços de papel.',
+ 'The drain that leads out is shut by a singing valve. You will have to repeat its tune.':'O ralo que leva para fora está fechado por uma válvula que canta. Você vai ter que repetir a melodia.',
+ 'Door code numbers found: {c}.':'Números do código da porta encontrados: {c}.',
  'Somewhere {w}, a voice calls:':'Em algum lugar {w}, uma voz chama:',
  '{n} is standing {w}. Say talk to speak with them.':'{n} está {w}. Diga falar para conversar.',
  'right here':'bem aqui',
@@ -999,6 +1039,7 @@ const MT={
   librarian:{name:'the Librarian',sound:'a long, quiet shush',pt:{name:'a Bibliotecária',sound:'um shhh longo e baixo'},sfx:null,sense:9,chase:0.62,hostile:true},
   jester:{name:'the Jester',sound:'jingling bells and a soft giggle',pt:{name:'o Bobo da Corte',sound:'guizos tilintando e uma risadinha baixa'},sfx:['cackle','giggle'],sense:6,chase:0.5,hostile:true},
   mimic:{name:'the Mimic',sound:'a familiar voice humming in another room',pt:{name:'o Imitador',sound:'uma voz conhecida cantarolando em outro cômodo'},sfx:['breath2','breath'],sense:6,chase:0.55,hostile:true,copier:true},
+  host:{name:'the Host',sound:'heavy, wet footsteps, and a voice that sounds like everyone you love',pt:{name:'o Anfitrião',sound:'passos pesados e molhados, e uma voz que soa como todo mundo que você ama'},sfx:['growl4','moan','attack2'],sense:99,chase:0.55,hostile:true,boss:true},
   survivor:{name:'a survivor',sound:'someone breathing fast and scared',pt:{name:'um sobrevivente',sound:'alguém respirando rápido e com medo'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   marcus:{name:'Marcus',sound:'a tired voice',pt:{name:'Marcus',sound:'uma voz cansada'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   chaser:{name:'something enormous',sound:'thundering footsteps',pt:{name:'algo enorme',sound:'passos estrondosos'},sfx:['growl4','attack','attack2'],sense:99,chase:0.72,hostile:true}
@@ -1065,7 +1106,7 @@ const LEVELS=[
    intro:'Nível 3, A Estação Elétrica. Corredores apertados cheios de máquinas zumbindo e fios soltando faíscas. Há fios desencapados por toda parte, então escute o estalo antes de dar um passo. Cães e Sorridentes caçam entre os geradores.',
    exitText:'Uma porta de manutenção, com faíscas dançando em volta do batente. Você empurra com o ombro e cai num escritório escuro e silencioso.',
    flavor:['Um transformador zumbe tão alto que você sente nos dentes.','O ar cheira a plástico queimado.','Cabos cobrem o chão como cipós.','Uma placa de aviso diz: PERIGO, ALTA TENSÃO.','Uma caixa de fusíveis está aberta. Todos os fusíveis queimaram.','As luzes pulsam no ritmo do zumbido.']}},
- { name:'Level 4, The Abandoned Office', short:'4', w:10,h:10, loops:0.2, mons:['clump','howler'], dark:0.15, lights:true, hides:4,
+ { name:'Level 4, The Abandoned Office', short:'4', w:10,h:10, loops:0.2, mons:['clump','howler'], dark:0.15, lights:true, hides:4, codelock:true,
    items:{water:3,fire:2,battery:1,energy:1},
    wall:[45,18,62], floor:[220,10,35], ceil:[45,10,80], amb:'office', music:'music13', step:'carpet', beacon:'phone',
    exitWhat:'a phone ringing on the exit desk',
@@ -1120,7 +1161,7 @@ const LEVELS=[
    intro:'Nível 8, A Cidade Sem Fim. O carro morre no meio de uma cidade vazia, à noite. Arranha-céus para todo lado, todas as janelas apagadas. Você ouve trânsito por toda parte, mas não há carros. Miseráveis vagam por estas ruas: pessoas que ficaram perdidas aqui tempo demais. Se um deles vir você, ele grita, e tudo por perto vem correndo. Encontre o metrô. Escute o sinal de pedestre tiquetaqueando ao lado da escada.',
    exitText:'Você desce a escada do metrô. Um trem espera de portas abertas, com as luzes piscando. Você entra, as portas se fecham, e o trem desce cada vez mais fundo, até que água morna invade as portas e puxa você para baixo.',
    flavor:['Um semáforo muda de vermelho para verde. Ninguém está esperando.','Jornais voam pela rua vazia. Todos têm a data de hoje.','Um alarme de carro dispara, depois para no meio de um bipe.','Você ouve um ônibus parar e abrir as portas. Não há ônibus.','Toda vitrine mostra seu reflexo, um segundo atrasado.','Um orelhão está tocando na esquina.']}},
- { name:'Level 9, The Poolrooms', short:'9', tape:4, w:9,h:9, loops:0.25, mons:['face','face'], dark:0, lights:true, calm:true,
+ { name:'Level 9, The Poolrooms', short:'9', tape:4, w:9,h:9, loops:0.25, mons:['face','face'], dark:0, lights:true, calm:true, memory:true,
    items:{water:2,battery:1,energy:1,tape:1},
    wall:[190,30,82], floor:[195,45,70], ceil:[190,20,90], amb:'pool', music:'music3', step:'tile', beacon:'bubbles',
    exitWhat:'water gurgling down a drain',
@@ -1175,15 +1216,15 @@ const LEVELS=[
    intro:'Nível 13, Corra Pela Sua Vida. Um alarme está tocando. O corredor se estende à frente, e atrás de você algo enorme acorda. Não pare. Não se esconda. Corra! Diga correr para avançar duas salas de uma vez.',
    exitText:'Uma porta vermelha. Luz do dia escapa pelas bordas. Você abre a porta com força.',
    flavor:['Luzes vermelhas giram no teto.','O chão treme a cada passo atrás de você.','Você ouve aquilo bater numa parede e continuar vindo.','Papéis voam por você no corredor.']}},
- { name:'Level 14, The Frontrooms', short:'14', w:11,h:9, loops:0.25, mons:['mimic','mimic'], dark:0.2, lights:true, hides:3, final:true,
+ { name:'Level 14, The Frontrooms', short:'14', w:12,h:10, loops:0.25, mons:['host','mimic'], dark:0.2, lights:true, hides:4, final:true, boss:true,
    items:{water:3,fire:2,battery:1,energy:1},
    wall:[40,35,62], floor:[30,30,35], ceil:[40,20,85], amb:'home', music:'music12', step:'carpet', beacon:'doorbell',
    exitWhat:'the doorbell ringing at your front door',
-   intro:'Level 14, The Frontrooms. You step through the red door into warm light and the smell of dinner. It is your house. Your carpet, your photos on the wall, the television murmuring in the living room. You made it. Except the hallway is too long, and there are too many doors. Someone in the kitchen is calling you in a voice you know. Do not answer it. Someone outside keeps ringing the doorbell. Find your front door.',
+   intro:'Level 14, The Frontrooms. You step through the red door into warm light and the smell of dinner. It is your house. Your carpet, your photos on the wall, the television murmuring in the living room. You made it. Except the hallway is too long, and there are too many doors. Someone in the kitchen is calling you in a voice you know. Do not answer it. Someone outside keeps ringing the doorbell. Find your front door. And be careful: something big lives in this house now. The Host. It always knows where you are, and it never stops coming. You cannot outrun it forever. Use your traps, your flares and your music boxes.',
    exitText:'',
    flavor:['A family photo hangs on the wall. Everyone in it is facing away.','The TV is playing a show you remember. The laugh track never stops.','Your bedroom door. And another one. And another one.','The kitchen clock ticks, but the hands do not move.','Dinner is on the table. It is still warm. There are plates for everyone, and one extra.'],
    pt:{name:'Nível 14, Os Quartos da Frente',short:'14',exitWhat:'a campainha tocando na sua porta da frente',
-   intro:'Nível 14, Os Quartos da Frente. Você atravessa a porta vermelha e entra numa luz quente, com cheiro de jantar. É a sua casa. Seu carpete, suas fotos na parede, a televisão murmurando na sala. Você conseguiu. Só que o corredor é comprido demais, e há portas demais. Alguém na cozinha está chamando você com uma voz que você conhece. Não responda. Alguém lá fora não para de tocar a campainha. Encontre a sua porta da frente.',
+   intro:'Nível 14, Os Quartos da Frente. Você atravessa a porta vermelha e entra numa luz quente, com cheiro de jantar. É a sua casa. Seu carpete, suas fotos na parede, a televisão murmurando na sala. Você conseguiu. Só que o corredor é comprido demais, e há portas demais. Alguém na cozinha está chamando você com uma voz que você conhece. Não responda. Alguém lá fora não para de tocar a campainha. Encontre a sua porta da frente. E cuidado: algo grande mora nesta casa agora. O Anfitrião. Ele sempre sabe onde você está, e nunca para de vir. Você não consegue fugir dele para sempre. Use suas armadilhas, seus sinalizadores e suas caixinhas de música.',
    exitText:'',
    flavor:['Uma foto de família está pendurada na parede. Todo mundo nela está de costas.','A TV está passando um programa que você lembra. As risadas de fundo nunca param.','A porta do seu quarto. E outra. E mais outra.','O relógio da cozinha faz tique-taque, mas os ponteiros não se mexem.','O jantar está na mesa. Ainda está quente. Há pratos para todos, e um a mais.']}},
  { name:'The Last Room', short:'?', w:6,h:6, loops:0.3, mons:['marcus'], dark:0, lights:true, calm:true, secret:true,
@@ -1701,6 +1742,9 @@ function parseEn(s){
   if(has(/ (scares on|jump scares on) /))return{c:'scareson'};
   if(has(/ (sneak|sneaking|tiptoe|creep) /))return{c:'sneak'};
   if(!has(/ use (voice|buttons|the buttons|voice commands) /)&&has(/ (use|use it|flip|flip it|pull|pull it|press|activate|ring|ring it|ring the bell|switch it on) /))return{c:'use'};
+  {const cm=tx.match(/ (code|enter code|the code is) ((?:\d|zero|one|two|three|four|five|six|seven|eight|nine| )+) /);if(cm){const NW={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9};const d=cm[2].trim().split(/\s+/).map(w=>/^\d+$/.test(w)?w:(NW[w]??'')).join('');return{c:'code',n:d};}
+   if(has(/ (enter code|code|keypad) /))return{c:'code'};}
+  if(typeof G!=='undefined'&&G.mem&&!G.mem.done){if(has(/ (low|lo|bottom) /))return{c:'note',n:0};if(has(/ (middle|mid|medium) /))return{c:'note',n:1};if(has(/ (high|hi|top) /))return{c:'note',n:2};}
   if(has(/ (flare|a flare|road flare) /))return{c:'flare'};
   if(has(/ (light|flashlight|torch|lamp) /))return{c:'light',n:has(/ off /)?'off':has(/ on /)?'on':'toggle'};
   if(has(/ (throw|firecracker|fire cracker|toss) /))return{c:'throw',r:dirOf()};
@@ -1777,6 +1821,9 @@ function parsePt(s){
   if(has(/ (desligar sustos|sustos desligados|sem sustos) /))return{c:'scaresoff'};
   if(has(/ (ligar sustos|sustos ligados) /))return{c:'scareson'};
   if(has(/ (agachar|agacha|furtivo|esgueirar|em silencio|ponta dos pes) /))return{c:'sneak'};
+  {const cm=tx.match(/ (codigo|o codigo e|digitar codigo) ((?:\d|zero|um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove| )+) /);if(cm){const NW={zero:0,um:1,uma:1,dois:2,duas:2,tres:3,quatro:4,cinco:5,seis:6,sete:7,oito:8,nove:9};const d=cm[2].trim().split(/\s+/).map(w=>/^\d+$/.test(w)?w:(NW[w]??'')).join('');return{c:'code',n:d};}
+   if(has(/ (codigo|digitar codigo|teclado) /))return{c:'code'};}
+  if(G.mem&&!G.mem.done){if(has(/ (grave|baixo) /))return{c:'note',n:0};if(has(/ (medio|meio) /))return{c:'note',n:1};if(has(/ (agudo|alto) /))return{c:'note',n:2};}
   if(!has(/ (usar|usa|use) (voz|botoes|os botoes|comandos) /)&&has(/ (usar|usa|use|puxar|puxa|puxe|acionar|aciona|apertar|aperta|ativar|ativa|tocar o sino|toca o sino|tocar sino) /))return{c:'use'};
   if(has(/ (lanterna|luz) /))return{c:'light',n:has(/ (desligar|desliga|apagar|apaga) /)?'off':has(/ (ligar|liga|acender|acende) /)?'on':'toggle'};
   if(has(/ (correr|corre|corra|disparar) /))return{c:'sprint',r:dirOf()};
@@ -1896,22 +1943,27 @@ function newLevel(){
   if(it.tape&&!G.tapes.has(lv.tape))place('tape',([x,y])=>dist[y][x]>=3);
   if(G.mode==='story'&&!lv.secret&&G.level<NNOTES&&!lsGet('br_notes',[]).includes(G.level))place('note',([x,y])=>dist[y][x]>=2);
   ['water','fire','battery','energy'].forEach(ty=>{for(let i=0;i<(it[ty]||0);i++)place(ty,([x,y])=>dist[y][x]>=2);});
+  if(lv.boss&&G.mode==='story'){['trap','trap','flare','flare','decoy','ration'].forEach(ty=>place(ty,([x,y])=>dist[y][x]>=1&&dist[y][x]<=bd*0.7));}
   // the newer items turn up everywhere: food is common, tools are rarer, flares like the dark
   if(!lv.secret&&G.mode!=='tutorial'){const lvn=G.mode==='story'?G.level:9;
     place('ration',([x,y])=>dist[y][x]>=3); if(lvn>=2&&Math.random()<0.6)place('ration',([x,y])=>dist[y][x]>=3);
     if(lv.dark>=0.3||Math.random()<0.4)place('flare',([x,y])=>dist[y][x]>=2);
     if(lvn>=3&&!lv.calm)place('trap',([x,y])=>dist[y][x]>=2);
     if(lvn>=4&&!lv.calm&&Math.random()<0.7)place('decoy',([x,y])=>dist[y][x]>=3);}
-  G.flare=null; G.traps=new Set();
+  G.flare=null; G.traps=new Set(); G.hostHit=false;
   // sometimes another lost person is here. Sometimes it only sounds like one.
   const lvn2=G.mode==='story'?G.level:12; const survOk=!lv.calm&&!lv.run&&!lv.secret&&!lv.final&&G.mode!=='tutorial'&&G.mode!=='endless';
   G.survOn=survOk&&lvn2>=2&&Math.random()<(G.mode==='story'?0.5:0.35);
+  G.code=null; if(lv.codelock&&G.mode!=='tutorial'){const digits=[1+rand(9),rand(10),rand(10)];G.code={digits,found:[false,false,false],done:false};
+    [0,1,2].forEach(i=>place('clue'+i,([x,y])=>dist[y][x]>=3&&exD[y][x]>=2));}
+  G.mem=null; if(lv.memory&&G.mode!=='tutorial'){G.mem={tune:[0,1,2,0,1,2].sort(()=>Math.random()-.5).slice(0,4),pos:0,done:false};}
   G.puz=null; if(lv.puzzle){const pc=cells.filter(([x,y])=>dist[y][x]>=3&&exD[y][x]>=2);const pts=[];
     for(let i=0;i<3&&pc.length;i++){let best=0,bs=-1;pc.forEach((c,j)=>{const sc=pts.length?Math.min(...pts.map(q=>Math.abs(q[0]-c[0])+Math.abs(q[1]-c[1]))):Math.random()*5;if(sc>bs){bs=sc;best=j;}});pts.push(pc.splice(best,1)[0]);}
     const tones=[0,1,2].sort(()=>Math.random()-.5); G.puz={kind:lv.puzzle,cells:pts.map((c,i)=>({x:c[0],y:c[1],tone:tones[i],on:false})),next:0,done:pts.length<3};}
   G.mons=lv.mons.map(type=>{let c;
     if(type==='marcus')return {type,x:best[0],y:best[1],cool:0};
     if(type==='deep'){c=cells.filter(([x,y])=>isWater(x,y)&&dist[y][x]>=4);if(!c.length){const w=[...G.wet].map(k=>k.split(',').map(Number));c=w.length?w:cells;}}
+    else if(type==='host'){c=cells.filter(([x,y])=>dist[y][x]>=6);}
     else if(type==='chaser'){c=cells.filter(([x,y])=>dist[y][x]===3);c.sort((a,b)=>exD[b[1]][b[0]]-exD[a[1]][a[0]]);c=c.slice(0,2);}
     else if(type==='face'||type==='survivor')c=cells.filter(([x,y])=>dist[y][x]>=3);
     else c=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));
@@ -2000,6 +2052,7 @@ function updateHUD(){
   if(G.mode==='endless')bits.unshift([t('Depth'),G.depth]);
   if(I.radio)bits.push([t('Radio'),t('yes')]); if(L().locked)bits.push([t('Keycard'),t(I.keycard?'yes':'no')]);
   bits.push([t('Tapes'),G.tapes.size+'/'+NTAPES],[t('Facing'),DIRN(G.f)]); if(G.sneak)bits.push(['',t('sneaking')]);
+  {const atEx=G.exit&&G.x===G.exit[0]&&G.y===G.exit[1];$('#codeBtn').hidden=!(G.code&&!G.code.done&&atEx);$('#memBtns').hidden=!(G.mem&&!G.mem.done&&atEx);}
   $('#hud').innerHTML=bits.map(([k,v])=>`<span>${k?k+': ':''}<b>${v}</b></span>`).join('');
   const fill=$('#sanityFill'); fill.style.width=G.sanity+'%'; fill.style.background=G.sanity>50?'var(--ok)':G.sanity>25?'#f2c94b':'var(--danger)';
 }
@@ -2030,6 +2083,8 @@ function monstersTurn(){
       if(c.length){const p=pick(c);m.x=p[0];m.y=p[1];const {w,pan}=relDirWords(m.x,m.y);play('cackle',{pan,vol:0.8,muffle:0.1});sfx(jingle,pan,0.7);G.extras.push({text:t('A burst of laughter, {w}. The Jester was not there a moment ago.',{w})});continue;}}}
     let hunting=d<=sense;
     if(m.type==='wretch'&&hunting&&!(m.shriek>0)){m.shriek=8;G.alert=4;const {w,pan}=relDirWords(m.x,m.y);play('screech',{pan,vol:0.9,muffle:0.1});play('scream2',{pan,vol:0.5,rate:0.8,muffle:0.3});G.extras.push({text:t('A Wretch spots you and shrieks, {w}! Everything nearby heard that.',{w})});}
+    if(m.type==='host'&&G.flare&&bfs(G.flare.x,G.flare.y)[m.y][m.x]<=2){moveMon(m,stepAway(bfs(G.flare.x,G.flare.y),m.x,m.y));if(!m.burnt){m.burnt=true;G.extras.push({text:t('The Host screams at the flare and backs away from the light.')});}continue;}
+    if(m.type==='host'&&!m.burnt)m.burnt=false;
     if(m.type==='smiler'&&G.flare&&bfs(G.flare.x,G.flare.y)[m.y][m.x]<=3){moveMon(m,stepAway(bfs(G.flare.x,G.flare.y),m.x,m.y));continue;}
     if(m.type==='smiler'){if(G.inv.light&&d<=3){moveMon(m,stepAway(dist,m.x,m.y));continue;} hunting=hunting&&isDark(G.x,G.y)&&!G.inv.light;}
     if(m.type==='moths')hunting=G.inv.light&&d<=sense;
@@ -2042,6 +2097,8 @@ function caughtBy(m){
   jumpscare(); G.hurt=performance.now(); const hit=DF().hit; G.sanity=Math.max(0,G.sanity-hit);
   const dist=bfs(G.x,G.y);
   G.caughtLevel=true;
+  if(m.type==='host'){const extra=Math.round(hit*0.5);G.sanity=Math.max(0,G.sanity-extra);G.hostHit=true;const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=7)c.push([x,y]);const p=c.length?pick(c):[G.exit[0],G.exit[1]];m.x=p[0];m.y=p[1];
+    return t('The Host wraps around you. It whispers in your mother’s voice, your best friend’s voice, your own voice. You tear free and run, and it lets you, for now. You lose {n} sanity.',{n:hit+extra});}
   if(m.type==='chaser'){const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]===4)c.push([x,y]);const p=c.length?pick(c):[G.exit[0],G.exit[1]];m.x=p[0];m.y=p[1];
     return t('It catches you! Huge hands slam you into the wall. You tear free and keep running. You lose {n} sanity.',{n:hit});}
   G.caughtLevel=true;
@@ -2119,13 +2176,40 @@ function puzAt(x,y){return G.puz&&G.puz.cells.find(c=>c.x===x&&c.y===y);}
 function puzTone(tone,pan,muffle){const t=now();const f=[220,330,494][tone];const out=spot(pan,0.9,muffle);
   [1,2,3].forEach((m,k)=>{const o=osc(G.puz&&G.puz.kind==='breaker'?'sawtooth':'sine',f*m,t,1.6);const g=gainNode(0);envelope(g,t,0.01,[0.25,0.07,0.03][k],1.4);o.connect(filt('lowpass',2400)).connect(g).connect(out);});}
 function puzzleHint(){if(!G.puz)return '';return ' '+t('The exit is sealed. Somewhere on this level are three {objs}. Use them in order, from the lowest sound to the highest. If you get the order wrong, an alarm calls every monster to you.',{objs:PUZ()[1]});}
-function introText(){return LX('intro')+puzzleHint();}
+function introText(){let x=LX('intro')+puzzleHint();
+  if(G.code)x+=' '+t('The exit door here is locked with a keypad code. Find the three numbers written on scraps of paper.');
+  if(G.mem)x+=' '+t('The drain that leads out is shut by a singing valve. You will have to repeat its tune.');
+  return x;}
 function puzzleCue(){
   const left=G.puz.cells.filter(c=>!c.on); if(!left.length)return exitCue(false); let best=null,bd=Infinity;
   for(const c of left){const d=bfs(c.x,c.y)[G.y][G.x];if(d<bd){bd=d;best=c;}}
   const dist=bfs(best.x,best.y); const s=stepToward(dist,G.x,G.y); const {pan}=relDirWords(best.x,best.y); sfx(puzTone,best.tone,pan,clamp(bd*0.06,0,0.8));
   if(s<0)return t('The exit is sealed. {n} of 3 {objs} are done.',{n:G.puz.next,objs:PUZ()[1]});
   return t('The exit is sealed. {n} of 3 {objs} are done. The nearest one you have not used is {route}, about {d} steps away.',{n:G.puz.next,objs:PUZ()[1],route:routeWords(s),d:bd});
+}
+function enterCode(v){
+  if(G.state!=='play')return notPlaying();
+  if(!G.code||G.code.done)return say(t('There is no keypad here.'));
+  if(G.x!==G.exit[0]||G.y!==G.exit[1])return say(t('You need to be at the exit door to use its keypad. {paths}',{paths:pathsText()}));
+  if(v===undefined){const typed=window.prompt?window.prompt(t('Type the three-number code')):null;if(typed===null)return;v=typed;}
+  const d=String(v).replace(/\D/g,'');
+  if(d.length!==3)return say(t('The code has three numbers. Try again.'));
+  [0,1,2].forEach(i=>setTimeout(()=>sfx(clickSound,true),i*180));
+  if(d===G.code.digits.join('')){G.code.done=true;setTimeout(()=>sfx(ping,0,0.8,0),700);bumpStat('puzzles');unlock('puzzle');const parts=[t('Beep, beep, beep. A green light. The lock clicks open!')];levelComplete(parts);return;}
+  G.noise={x:G.x,y:G.y,turns:5};G.alert=4;sfx(alarmBlare);const parts=[t('Wrong code. The keypad screams an alarm, and something heard it.')];
+  if(!itemTurn(parts))return; say([...parts,monsterCues(false),pathsText()].filter(Boolean).join(' '));
+}
+const MEMW=()=>LANG==='pt'?['grave','médio','agudo']:['low','middle','high'];
+function memIntro(){if(!G.mem)return '';G.mem.pos=0;G.mem.tune.forEach((n,i)=>setTimeout(()=>sfx(puzTone,n,0,0),1200+i*700));
+  return t('The drain is shut by a valve with three pipes. When you touch it, it plays a tune of {n} notes. Repeat the tune: say low, middle or high, one note at a time. Say listen to hear it again.',{n:G.mem.tune.length});}
+function memNote(n){
+  if(G.state!=='play')return notPlaying();
+  if(!G.mem||G.mem.done||G.x!==G.exit[0]||G.y!==G.exit[1])return say(t('There is nothing here to play.'));
+  sfx(puzTone,n,0,0);
+  if(G.mem.tune[G.mem.pos]===n){G.mem.pos++;if(G.mem.pos>=G.mem.tune.length){G.mem.done=true;bumpStat('puzzles');unlock('puzzle');setTimeout(()=>sfx(ping,0,0.8,0),600);return levelComplete([t('The pipes sing the whole tune back to you. The valve turns, and the drain opens!')]);}
+    return say(t('{w}. Right. {n} of {total}.',{w:MEMW()[n],n:G.mem.pos,total:G.mem.tune.length}),{log:false});}
+  G.mem.pos=0;G.sanity=Math.max(0,G.sanity-4);G.hurt=performance.now();updateHUD();sfx(denied);
+  say(t('Wrong note. The pipes groan, and your head throbs. Start again from the first note. Say listen to hear the tune again.'));
 }
 function usePuzzle(){
   if(G.state!=='play')return notPlaying();
@@ -2142,6 +2226,11 @@ function usePuzzle(){
   say([...parts,monsterCues(false),pathsText()].filter(Boolean).join(' '));
 }
 function alarmBlare(){const t=now();const o=osc('square',880,t,1.6);for(let i=0;i<8;i++)o.frequency.setValueAtTime(i%2?660:880,t+i*0.2);const g=gainNode(0);envelope(g,t,0.01,0.25,1.5);o.connect(filt('lowpass',2500)).connect(g).connect(spot(0,1));}
+function clueCue(){
+  let best=null,bd=Infinity;G.items.forEach((ty,k)=>{if(!/^clue/.test(ty))return;const [x,y]=k.split(',').map(Number);const d=bfs(x,y)[G.y][G.x];if(d<bd){bd=d;best=[x,y];}});
+  if(!best)return exitCue(false);const s2=stepToward(bfs(best[0],best[1]),G.x,G.y);const {pan}=relDirWords(best[0],best[1]);sfx(chirp,pan,clamp(1-bd*0.07,0.2,1),clamp(bd*0.05,0,0.8));
+  if(s2<0)return '';return t('The exit needs a code. The nearest scrap of paper with a number rustles {route}, about {n} steps away.',{route:routeWords(s2),n:bd});
+}
 function keycardCue(){
   let kc=null;G.items.forEach((ty,k)=>{if(ty==='keycard')kc=k.split(',').map(Number);}); if(!kc)return exitCue(false);
   const dist=bfs(kc[0],kc[1]); const d=dist[G.y][G.x]; const s=stepToward(dist,G.x,G.y); const {pan}=relDirWords(kc[0],kc[1]);
@@ -2158,6 +2247,9 @@ function lowSanity(){
 function pickupItems(parts){
   const k=key(G.x,G.y); const ty=G.items.get(k); if(!ty)return; const I=G.inv;
   G.items.delete(k); sfx(pickup);
+  if(/^clue\d$/.test(ty)&&G.code){const i=+ty[4];G.code.found[i]=true;sfx(tapeClick);
+    parts.push(t('You find a scrap of paper with a number on it. It says: the {pos} number of the door code is {d}.',{pos:[t('first'),t('second'),t('third')][i],d:G.code.digits[i]}));
+    const nf=G.code.found.filter(Boolean).length;parts.push(nf===3?t('That is all three. The code is {c}. Go to the exit door and say code, then the numbers.',{c:G.code.digits.join(' ')}):t('You have {n} of 3 numbers.',{n:nf}));}
   if(ty==='note'){const ni=G.level;const got=lsGet('br_notes',[]);if(!got.includes(ni)){got.push(ni);lsSet('br_notes',got);}sfx(tapeClick);
     parts.push(t('You find a handwritten note. It goes into your journal. {n} of {total} notes.',{n:got.length,total:NNOTES}));G.extras.push({text:NOTES[LANG][ni],opts:{v:voice2,pitch:0.95,rate:S.rate*0.92}});if(got.length>=NNOTES)unlock('journal');}
   if(ty==='ration'){I.ration=(I.ration||0)+1;parts.push(t('You find a Royal Ration, a sealed tin of food. You have {n}. Say eat to get your strength back.',{n:I.ration}));}
@@ -2213,6 +2305,8 @@ function afterMove(quiet){
   const pz=puzAt(G.x,G.y); if(pz){sfx(puzTone,pz.tone,0,0.5);parts.push(pz.on?t('You already used this one.'):t('There is {obj} here. It makes a {pitch} sound. Say use to {verb} it.',{obj:PUZ()[0],pitch:PITCH()[pz.tone],verb:PUZ()[2]}));}
   if(G.x===G.exit[0]&&G.y===G.exit[1]){
     if(lv.locked&&!G.inv.keycard){sfx(denied);parts.push(t('A heavy elevator door with a card reader. It is locked. You need the keycard.'));}
+    else if(G.code&&!G.code.done){sfx(denied);parts.push(t('The exit door has a keypad. It needs a three-number code. Numbers are written on scraps of paper around this level. When you know them, say code and the numbers, like code 4 7 2, or press Enter code.'));}
+    else if(G.mem&&!G.mem.done){parts.push(memIntro());}
     else if(G.puz&&!G.puz.done){sfx(denied);parts.push(t('The exit is sealed. {n} of 3 {objs} are done. Say listen to find the rest.',{n:G.puz.next,objs:PUZ()[1]}));}
     else{levelComplete(parts);return {stop:true};}
   }
@@ -2281,7 +2375,8 @@ function look(){
 function listen(){
   if(G.state!=='play')return notPlaying();
   if(G.sanity<25&&Math.random()<0.3)return say(t('You try to listen, but the sounds come from everywhere at once. You cannot focus.'));
-  const ex=(L().locked&&!G.inv.keycard)?keycardCue():(G.puz&&!G.puz.done)?puzzleCue():exitCue(false);
+  if(G.mem&&!G.mem.done&&G.x===G.exit[0]&&G.y===G.exit[1])return say(memIntro());
+  const ex=(L().locked&&!G.inv.keycard)?keycardCue():(G.puz&&!G.puz.done)?puzzleCue():(G.code&&!G.code.done&&G.code.found.includes(false))?clueCue():exitCue(false);
   let fr=''; if(G.mons.some(m=>m.type==='watcher')){G.watchFreeze=3;fr=t('The watchers freeze while you listen.');}
   say(t('You hold still and listen. {ex} {mon}',{ex,mon:monsterCues(true)})+(fr?' '+fr:''));
 }
@@ -2415,7 +2510,7 @@ function hide(){
 }
 function status(){
   if(!G.inv)return say(t('The game has not started.'));
-  const I=G.inv; const b=[LX('name')+'.',...(G.puz&&!G.puz.done?[t('{n} of 3 {objs} done.',{n:G.puz.next,objs:PUZ()[1]})]:[]),t('Sanity {n} percent.',{n:Math.round(G.sanity)}),t('Almond water: {n}.',{n:I.water}),t('Firecrackers: {n}.',{n:I.fire}),t('Sprints: {n}.',{n:I.energy}),...[['ration','Royal Rations: {n}.'],['flare','Flares: {n}.'],['trap','Bear traps: {n}.'],['decoy','Music boxes: {n}.']].filter(([k])=>I[k]).map(([k,s])=>t(s,{n:I[k]}))];
+  const I=G.inv; const b=[LX('name')+'.',...(G.puz&&!G.puz.done?[t('{n} of 3 {objs} done.',{n:G.puz.next,objs:PUZ()[1]})]:[]),...(G.code&&!G.code.done?[t('Door code numbers found: {c}.',{c:G.code.digits.map((d,i)=>G.code.found[i]?d:'?').join(' ')})]:[]),t('Sanity {n} percent.',{n:Math.round(G.sanity)}),t('Almond water: {n}.',{n:I.water}),t('Firecrackers: {n}.',{n:I.fire}),t('Sprints: {n}.',{n:I.energy}),...[['ration','Royal Rations: {n}.'],['flare','Flares: {n}.'],['trap','Bear traps: {n}.'],['decoy','Music boxes: {n}.']].filter(([k])=>I[k]).map(([k,s])=>t(s,{n:I[k]}))];
   if(I.flashlight)b.push(t(I.light?'Flashlight on, battery {n} percent.':'Flashlight off, battery {n} percent.',{n:Math.round(I.battery)})); else if(I.battery)b.push(t('A battery, but no flashlight.'));
   if(I.radio)b.push(t('You have a walkie-talkie.')); if(L().locked)b.push(t(I.keycard?'You have the keycard.':'You need the keycard.'));
   if(G.mode==='endless')b.unshift(t('Endless mode, depth {n}.',{n:G.depth}));
@@ -2481,7 +2576,7 @@ function levelComplete(parts){
     }
     G.state='won'; clearAmb(); stopAllMusic(3); setTimeout(()=>sfx(winSound),1500); lsDel('br_save'); escapeAchievements(); lsSet('br_beat',1);
     const hint=t('You found {n} of {total} tapes. Some say that with all of them, the daylight is not the real ending.',{n:G.tapes.size,total:NTAPES});
-    lsSet('br_ngpinv',{...G.inv,light:false,keycard:false}); if(G.hard)unlock('ironwill'); if(G.ngp){lsSet('br_ngp',Math.max(lsGet('br_ngp',0),G.ngp));unlock('ngplus');}
+    lsSet('br_ngpinv',{...G.inv,light:false,keycard:false}); if(G.hard)unlock('ironwill'); if(!G.hostHit)unlock('host'); if(G.ngp){lsSet('br_ngp',Math.max(lsGet('br_ngp',0),G.ngp));unlock('ngplus');}
     G.extras.push({text:t('New Game Plus is now open in the main menu, and you keep the items you are holding.')});
     G.extras.push({text:t('Extra levels are now open in the main menu. The story is over, but the Backrooms keep going.')});
     showEnd(t('YOU ESCAPED'),finishStats(),[...parts,t('You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!'),hint].join(' '));
@@ -2672,6 +2767,7 @@ const ACH=[
  {id:'ngplus',en:['Again and Again','Finish New Game Plus.'],pt:['De Novo e de Novo','Termine o Novo Jogo Mais.']},
  {id:'company',en:['Good Company','Help three real survivors.'],pt:['Boa Companhia','Ajude três sobreviventes de verdade.']},
  {id:'journal',en:['Collector','Find all fifteen journal notes.'],pt:['Colecionador','Encontre as quinze anotações do diário.']},
+ {id:'host',en:['Not Home Yet','Escape the Frontrooms without the Host ever catching you.'],pt:['Ainda Não Estou em Casa','Escape dos Quartos da Frente sem o Anfitrião pegar você.']},
  {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']}
 ];
 const ACHV=lsGet('br_ach',{}); const STATS=lsGet('br_stats',{});
@@ -2766,7 +2862,8 @@ function run(c,n,r){
     case 'sneak':return sneak(true); case 'unsneak':return sneak(false);
     case 'mark':return dropMark(); case 'findmark':return findMark();
     case 'light':return light(n); case 'talk':return talk(); case 'radio':return radio(); case 'tape':return tape();
-    case 'use':return usePuzzle();
+    case 'use':return (G.mem&&!G.mem.done&&G.x===G.exit[0]&&G.y===G.exit[1])?say(memIntro()):(G.code&&!G.code.done&&G.x===G.exit[0]&&G.y===G.exit[1])?enterCode():usePuzzle();
+    case 'code':return enterCode(n); case 'note':return memNote(n);
     case 'eat':return eat(); case 'flare':return useFlare(); case 'trap':return setTrap(); case 'decoy':return useDecoy();
     case 'hide':return hide(); case 'listen':return listen(); case 'look':return look(); case 'drink':return drink(); case 'status':return status();
     case 'help':return help(); case 'menu':case 'quit':return openMenu();
@@ -2900,7 +2997,7 @@ $('#slowerBtn').addEventListener('click',()=>run('slower'));
 $('#resetSave').addEventListener('click',()=>{lsDel('br_save');say(t('Saved checkpoint deleted.'),{log:false});});
 $('#endAgain').addEventListener('click',()=>G.mode==='endless'?startEndless():openSetup());
 $('#endMenu').addEventListener('click',()=>{G.state='menu';showMain();});
-$$('[data-cmd]').forEach(b=>b.addEventListener('click',()=>{let c=b.dataset.cmd;if(c==='sneak'&&G.sneak)c='unsneak';run(c,c==='light'?'toggle':1,0);}));
+$$('[data-cmd]').forEach(b=>b.addEventListener('click',()=>{let c=b.dataset.cmd;if(c==='sneak'&&G.sneak)c='unsneak';run(c,c==='light'?'toggle':c==='code'?undefined:b.dataset.n!==undefined?+b.dataset.n:1,0);}));
 $('#micBtn').addEventListener('click',()=>applySetting('voice',S.mic?'0':'1'));
 document.addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey||e.altKey)return;

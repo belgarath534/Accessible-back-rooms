@@ -76,7 +76,7 @@ function paintMon(type){
     if(type==='howler'){g.fillStyle='#000';g.beginPath();g.ellipse(W/2,H*0.17,7,12,0,0,7);g.fill();}}
   const tx=new T.CanvasTexture(c);monTex[type]=tx;return tx;}
 const MonCopier=t=>MT[t]&&MT[t].copier;
-const MSIZE={hound:[2.4,1.6],smiler:[1.8,2.4],chaser:[3.6,3.2],clump:[3.4,2.6],moths:[2.6,2.6],watcher:[1.6,2.4],deep:[3.2,2.2],librarian:[1.9,3.1]};
+const MSIZE={host:[2.9,3.3],hound:[2.4,1.6],smiler:[1.8,2.4],chaser:[3.6,3.2],clump:[3.4,2.6],moths:[2.6,2.6],watcher:[1.6,2.4],deep:[3.2,2.2],librarian:[1.9,3.1]};
 
 function dispose(o){o.traverse(n=>{if(n.geometry)n.geometry.dispose();if(n.material){(Array.isArray(n.material)?n.material:[n.material]).forEach(m=>{if(m.map&&!Object.values(monTex).includes(m.map))m.map.dispose();m.dispose();});}});}
 function init(){
