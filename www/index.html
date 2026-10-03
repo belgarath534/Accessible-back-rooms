@@ -64,6 +64,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 #heard{color:var(--muted);min-height:1.5em;font-size:.95rem}
 #log{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:10px 14px;max-height:240px;overflow:auto}
 #log{margin:0;padding-left:2em}
+select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px solid var(--border);background:var(--panel);color:inherit;width:100%;box-sizing:border-box;margin:.3em 0 1em}
 #log li{margin:.4em 0}
 #log li:first-child{color:var(--accent)}
 .credits p{margin:.6em 0}
@@ -102,6 +103,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       <div class="stack">
         <button id="mPlay" class="primary"><span data-l="en">Play</span><span data-l="pt">Jogar</span></button>
         <button id="mLevels" hidden><span data-l="en">Level select</span><span data-l="pt">Escolher nível</span></button>
+        <button id="mNgp" hidden><span data-l="en">New Game Plus</span><span data-l="pt">Novo Jogo Mais</span></button>
         <button id="mExtra" hidden><span data-l="en">Extra levels</span><span data-l="pt">Níveis extras</span></button>
         <button id="mEndless"><span data-l="en">Endless mode</span><span data-l="pt">Modo infinito</span></button>
         <button id="mContinue" hidden><span data-l="en">Continue from checkpoint</span><span data-l="pt">Continuar do checkpoint</span></button>
@@ -145,7 +147,12 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       <button class="choice" data-set="diff" data-val="normal">Normal</button>
       <button class="choice" data-set="diff" data-val="nightmare"><span data-l="en">Nightmare: you will not survive</span><span data-l="pt">Pesadelo: você não vai sobreviver</span></button>
     </div>
-    <h2><span data-l="en">Step 3</span><span data-l="pt">Passo 3</span></h2>
+    <h2 id="modeHead"><span data-l="en">Step 3: choose how many lives</span><span data-l="pt">Passo 3: escolha quantas vidas</span></h2>
+    <div class="stack" role="group" aria-labelledby="modeHead">
+      <button class="choice" data-set="hard" data-val="0"><span data-l="en">Normal: checkpoints at every level</span><span data-l="pt">Normal: checkpoint em cada nível</span></button>
+      <button class="choice" data-set="hard" data-val="1"><span data-l="en">Hardcore: one life. Lose your mind and you start over from Level 0</span><span data-l="pt">Hardcore: uma vida. Enlouqueça e você recomeça do Nível 0</span></button>
+    </div>
+    <h2><span data-l="en">Step 4</span><span data-l="pt">Passo 4</span></h2>
     <div class="stack">
       <button id="startGame" class="primary"><span data-l="en">Start game</span><span data-l="pt">Começar jogo</span></button>
       <button class="backBtn"><span data-l="en">Back to main menu</span><span data-l="pt">Voltar ao menu principal</span></button>
@@ -167,6 +174,12 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       <button class="choice" data-set="music" data-val="0"><span data-l="en">Off</span><span data-l="pt">Desligada</span></button><button class="choice" data-set="music" data-val="0.4"><span data-l="en">Low</span><span data-l="pt">Baixo</span></button><button class="choice" data-set="music" data-val="0.7"><span data-l="en">Medium</span><span data-l="pt">Médio</span></button><button class="choice" data-set="music" data-val="1"><span data-l="en">High</span><span data-l="pt">Alto</span></button></div></div>
     <div class="setRow" role="group" aria-labelledby="sl5"><span class="lab" id="sl5"><span data-l="en">Sound effects volume</span><span data-l="pt">Volume dos efeitos</span></span><div class="opts">
       <button class="choice" data-set="fx" data-val="0.5"><span data-l="en">Low</span><span data-l="pt">Baixo</span></button><button class="choice" data-set="fx" data-val="0.75"><span data-l="en">Medium</span><span data-l="pt">Médio</span></button><button class="choice" data-set="fx" data-val="1"><span data-l="en">High</span><span data-l="pt">Alto</span></button></div></div>
+    <div class="setRow" role="group" aria-labelledby="sl9"><span class="lab" id="sl9"><span data-l="en">Narrator voice volume</span><span data-l="pt">Volume da voz do narrador</span></span><div class="opts">
+      <button class="choice" data-set="vvol" data-val="0.6"><span data-l="en">Low</span><span data-l="pt">Baixo</span></button><button class="choice" data-set="vvol" data-val="0.8"><span data-l="en">Medium</span><span data-l="pt">Médio</span></button><button class="choice" data-set="vvol" data-val="1"><span data-l="en">High</span><span data-l="pt">Alto</span></button></div></div>
+    <div class="setRow" role="group" aria-labelledby="sl10"><span class="lab" id="sl10"><span data-l="en">Lower the music while the narrator speaks</span><span data-l="pt">Abaixar a música enquanto o narrador fala</span></span><div class="opts">
+      <button class="choice" data-set="duck" data-val="1"><span data-l="en">On</span><span data-l="pt">Ligado</span></button><button class="choice" data-set="duck" data-val="0"><span data-l="en">Off</span><span data-l="pt">Desligado</span></button></div></div>
+    <div class="setRow"><span class="lab"><span data-l="en">Voice commands</span><span data-l="pt">Comandos de voz</span></span><div class="opts">
+      <button id="openWords"><span data-l="en">Custom voice words</span><span data-l="pt">Palavras de voz personalizadas</span></button></div></div>
     <div class="setRow" role="group" aria-labelledby="sl6"><span class="lab" id="sl6"><span data-l="en">Jump scares</span><span data-l="pt">Sustos</span></span><div class="opts">
       <button class="choice" data-set="scares" data-val="1"><span data-l="en">On</span><span data-l="pt">Ligados</span></button><button class="choice" data-set="scares" data-val="0"><span data-l="en">Off</span><span data-l="pt">Desligados</span></button></div></div>
     <div class="setRow" role="group" aria-labelledby="sl8"><span class="lab" id="sl8"><span data-l="en">Graphics</span><span data-l="pt">Gráficos</span></span><div class="opts">
@@ -249,6 +262,14 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.11: play your way</h2>
+      <ul>
+        <li>Narrator voice volume in Settings, and the music now gets quieter while the narrator speaks, so you never miss a word. You can turn that off.</li>
+        <li>Custom voice words: in Settings, give any command your own word. Say it or type it.</li>
+        <li>Hardcore mode: one life. Lose your mind and the run is over. Choose it when you start a new game.</li>
+        <li>New Game Plus: after the ending, play the story again with the items you finished with, against more monsters that hunt harder.</li>
+        <li>Two new achievements.</li>
+      </ul>
       <h2>Version 0.10.2: sound fix for spoken narration</h2>
       <ul><li>Fixed: in Safari on iPhone, spoken narration could stop the music. The game now tells the iPhone it plays sound, and brings the music back right after the voice speaks.</li></ul>
       <h2>Version 0.10.1: sound fix</h2>
@@ -358,6 +379,14 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.11: jogue do seu jeito</h2>
+      <ul>
+        <li>Volume da voz do narrador nas Configurações, e a música agora fica mais baixa enquanto o narrador fala, para você não perder nenhuma palavra. Dá para desligar.</li>
+        <li>Palavras de voz personalizadas: nas Configurações, dê a qualquer comando a sua própria palavra. Diga ou digite.</li>
+        <li>Modo Hardcore: uma vida. Enlouqueça e a partida acaba. Escolha ao começar um novo jogo.</li>
+        <li>Novo Jogo Mais: depois do final, jogue a história de novo com os itens com que terminou, contra mais monstros que caçam com mais força.</li>
+        <li>Duas novas conquistas.</li>
+      </ul>
       <h2>Versão 0.10.2: correção de som com narração falada</h2>
       <ul><li>Corrigido: no Safari do iPhone, a narração falada podia parar a música. Agora o jogo avisa o iPhone que toca som, e traz a música de volta logo depois que a voz fala.</li></ul>
       <h2>Versão 0.10.1: correção de som</h2>
@@ -477,6 +506,24 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
     <div class="stack"><button class="backBtn primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
   </section>
 
+  <!-- ============ CUSTOM VOICE WORDS ============ -->
+  <section id="words" class="screen" hidden aria-labelledby="wordsTitle">
+    <h1 id="wordsTitle" tabindex="-1"><span data-l="en">Custom voice words</span><span data-l="pt">Palavras de voz personalizadas</span></h1>
+    <p><span data-l="en">If your phone does not catch a command well, give it your own word. Pick a command, then say your word, or type it.</span><span data-l="pt">Se o celular não entende bem um comando, dê a ele a sua própria palavra. Escolha um comando, depois diga a sua palavra, ou digite.</span></p>
+    <label for="wCmd"><span data-l="en">Command</span><span data-l="pt">Comando</span></label>
+    <select id="wCmd"></select>
+    <label for="wText"><span data-l="en">Your word (optional, you can also say it)</span><span data-l="pt">Sua palavra (opcional, você também pode dizer)</span></label>
+    <input id="wText" type="text" autocomplete="off" autocapitalize="none">
+    <div class="stack">
+      <button id="wSay" class="primary"><span data-l="en">Say my word now</span><span data-l="pt">Dizer minha palavra agora</span></button>
+      <button id="wSave"><span data-l="en">Save typed word</span><span data-l="pt">Salvar palavra digitada</span></button>
+    </div>
+    <h2><span data-l="en">Your words</span><span data-l="pt">Suas palavras</span></h2>
+    <ul id="wList" class="stats"></ul>
+    <div class="stack"><button id="wClear"><span data-l="en">Remove all my words</span><span data-l="pt">Remover todas as minhas palavras</span></button>
+      <button id="wBack" class="primary"><span data-l="en">Back to settings</span><span data-l="pt">Voltar às configurações</span></button></div>
+  </section>
+
   <!-- ============ LEVEL SELECT ============ -->
   <section id="levels" class="screen" hidden aria-labelledby="lvTitle">
     <h1 id="lvTitle" tabindex="-1"><span data-l="en">Level select</span><span data-l="pt">Escolher nível</span></h1>
@@ -571,7 +618,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
 <script>
 "use strict";
-const VERSION='0.10.2';
+const VERSION='0.11';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -601,14 +648,14 @@ const PT={
  'play':'jogar','continue':'continuar','settings':'configurações','how to play':'como jogar','what is new':'novidades','credits':'créditos',
  'Paused. Say or choose: resume, restart level, settings, how to play, or quit to main menu.':'Pausado. Diga ou escolha: retomar, reiniciar nível, configurações, como jogar ou sair para o menu principal.',
  'You escape the Backrooms, for now. Your progress is saved from the start of the level. ':'Você escapa dos Backrooms, por enquanto. Seu progresso está salvo desde o começo do nível. ',
- 'New game. Step one: say voice commands, or buttons only. Step two: say easy, normal, or nightmare. Then say start. Right now: {ctl}, {diff}.':'Novo jogo. Passo um: diga comandos de voz, ou só botões. Passo dois: diga fácil, normal ou pesadelo. Depois diga começar. Agora está: {ctl}, {diff}.',
+ 'New game. Step one: say voice commands, or buttons only. Step two: say easy, normal, or nightmare. Step three: normal lives, or say hardcore for one life. Then say start. Right now: {ctl}, {diff}.':'Novo jogo. Passo um: diga comandos de voz, ou só botões. Passo dois: diga fácil, normal ou pesadelo. Passo três: vidas normais, ou diga hardcore para uma vida só. Depois diga começar. Agora está: {ctl}, {diff}.',
  'voice commands':'comandos de voz','buttons only':'só botões',
  'Settings. Use the buttons, or say things like music off, faster, slower, jump scares off, easy, normal or nightmare. Say back when done.':'Configurações. Use os botões, ou diga coisas como desligar música, mais rápido, mais devagar, desligar sustos, fácil, normal ou pesadelo. Diga voltar quando terminar.',
  'Credits. Music by Kevin MacLeod. Sound effects from OpenGameArt, credited on this page. Say back to return.':'Créditos. Música de Kevin MacLeod. Efeitos sonoros do OpenGameArt, com os créditos nesta página. Diga voltar para sair.',
  'How to play. Say back to return.':'Como jogar. Diga voltar para sair.',
  'What is new. Version {v}. Say back to return.':'Novidades. Versão {v}. Diga voltar para sair.',
  'You are in the main menu. Say play, continue, settings, how to play, or credits.':'Você está no menu principal. Diga jogar, continuar, configurações, como jogar ou créditos.',
- 'Say play, continue, level select, extra levels, endless mode, tutorial, settings, how to play, achievements, what is new, or credits.':'Diga jogar, continuar, escolher nível, níveis extras, modo infinito, tutorial, configurações, como jogar, conquistas, novidades ou créditos.',
+ 'Say play, continue, level select, extra levels, new game plus, endless mode, tutorial, settings, how to play, achievements, what is new, or credits.':'Diga jogar, continuar, escolher nível, níveis extras, novo jogo mais, modo infinito, tutorial, configurações, como jogar, conquistas, novidades ou créditos.',
  'Say resume, restart level, settings, how to play, or quit to main menu.':'Diga retomar, reiniciar nível, configurações, como jogar ou sair para o menu principal.',
  'Say back to return to the menu.':'Diga voltar para ir ao menu.',
  'There is nothing to resume.':'Não há nada para retomar.',
@@ -722,6 +769,31 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'The music will get quieter while the narrator speaks.':'A música vai ficar mais baixa enquanto o narrador fala.',
+ 'Hardcore. One life. No second chances.':'Hardcore. Uma vida. Sem segunda chance.',
+ 'Narrator volume {v}.':'Volume do narrador: {v}.',
+ 'The music stays at the same volume while the narrator speaks.':'A música fica no mesmo volume enquanto o narrador fala.',
+ 'No custom words yet.':'Nenhuma palavra personalizada ainda.',
+ 'Remove {w}':'Remover {w}',
+ 'Removed.':'Removido.',
+ 'I did not catch a word. Try again.':'Não entendi nenhuma palavra. Tente de novo.',
+ 'That is too long. Use one or two words.':'Isso é longo demais. Use uma ou duas palavras.',
+ 'Saved. Now saying {w} means {c}.':'Salvo. Agora dizer {w} significa {c}.',
+ 'Custom voice words. Pick a command, then press say my word now, or type a word and save it. You have {n} custom words.':'Palavras de voz personalizadas. Escolha um comando, depois aperte dizer minha palavra agora, ou digite uma palavra e salve. Você tem {n} palavras personalizadas.',
+ 'Voice commands are off, so type your word and press save.':'Os comandos de voz estão desligados, então digite a sua palavra e aperte salvar.',
+ 'After the beep, say your word for {c}.':'Depois do bipe, diga a sua palavra para {c}.',
+ 'I did not hear anything. Try again.':'Não ouvi nada. Tente de novo.',
+ 'All your custom words are removed.':'Todas as suas palavras personalizadas foram removidas.',
+ 'Normal. You will have checkpoints.':'Normal. Você terá checkpoints.',
+ 'Hardcore mode. You have one life.':'Modo hardcore. Você tem uma vida.',
+ 'New Game Plus unlocks after you finish the story.':'O Novo Jogo Mais é liberado depois que você termina a história.',
+ 'New Game Plus {n}. You keep the items you finished with, but every level has more monsters, and they hunt harder.':'Novo Jogo Mais {n}. Você fica com os itens com que terminou, mas cada nível tem mais monstros, e eles caçam com mais força.',
+ 'HARDCORE RUN OVER':'FIM DA PARTIDA HARDCORE',
+ 'Reached':'Chegou até',
+ 'Best hardcore level':'Melhor nível no hardcore',
+ 'Your sanity hits zero. In hardcore there are no second chances. The Backrooms take you, and your run is over.':'Sua sanidade chega a zero. No hardcore não há segunda chance. Os Backrooms levam você, e a sua partida acabou.',
+ 'New Game Plus is now open in the main menu, and you keep the items you are holding.':'O Novo Jogo Mais agora está aberto no menu principal, e você fica com os itens que está carregando.',
+ 'new game plus':'novo jogo mais',
  'You find a Royal Ration, a sealed tin of food. You have {n}. Say eat to get your strength back.':'Você encontra uma Ração Real, uma lata de comida lacrada. Você tem {n}. Diga comer para recuperar as forças.',
  'You find a road flare. You have {n}. Say flare to light it: it lights up the dark and drives Smilers away for a while.':'Você encontra um sinalizador. Você tem {n}. Diga sinalizador para acender: ele ilumina o escuro e afasta os Sorridentes por um tempo.',
  'You find a rusty bear trap. You have {n}. Say set trap to leave it where you stand. The next monster to step there gets stuck.':'Você encontra uma armadilha de urso enferrujada. Você tem {n}. Diga armadilha para deixá-la onde você está. O próximo monstro que pisar ali fica preso.',
@@ -865,7 +937,7 @@ function applyLang(){
 
 /* ============================== settings ============================== */
 const S={ voice:lsGet('br_voice',true), narr:lsGet('br_narr',true), rate:lsGet('br_rate',1.1), music:lsGet('br_musicv',0.7),
-  fx:lsGet('br_fx',1), scares:lsGet('br_scares',true), gfx:lsGet('br_gfx','3d'), diff:lsGet('br_diff','normal'), mic:false };
+  fx:lsGet('br_fx',1), scares:lsGet('br_scares',true), gfx:lsGet('br_gfx','3d'), hard:false, vvol:lsGet('br_vvol',1), duck:lsGet('br_duck',true), diff:lsGet('br_diff','normal'), mic:false };
 const DIFFS={
   easy:{label:'Easy',drain:0.5,hit:18,scare:5,water:2,chase:0.7,idle:15000,sense:-1,moth:3},
   normal:{label:'Normal',drain:0.8,hit:25,scare:10,water:0,chase:1,idle:10000,sense:0,moth:5},
@@ -1283,6 +1355,7 @@ setInterval(audioWake,1000);
 function audioSession(rec){try{if(navigator.audioSession)navigator.audioSession.type=rec?'play-and-record':'playback';}catch(e){}}
 ['pointerdown','keydown','touchend'].forEach(ev=>document.addEventListener(ev,audioWake,{passive:true,capture:true}));
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(audioWake,300);});
+function duck(on){if(!A.ctx||!A.music)return;const v=(on&&S.duck)?S.music*0.35:S.music;A.music.gain.cancelScheduledValues(now());A.music.gain.setTargetAtTime(v,now(),on?0.12:0.6);}
 function unlockTracks(){TRACKS.forEach(n=>{const tr=track(n);const pr=tr.el.play();if(pr&&pr.then)pr.then(()=>{if(tr.want===0)tr.el.pause();}).catch(()=>{});});}
 let chaseLevel=-1;
 function onlyMusic(list,sec=2.5){TRACKS.forEach(n=>{const v=list[n]||0;if(v||(TR[n]&&TR[n].want))fadeTrack(n,v,sec);});musicBox(!!list.musicbox);calliope(!!list.calliope);}
@@ -1403,7 +1476,7 @@ function pickVoice(){if(!('speechSynthesis' in window))return;const vs=speechSyn
   voice=en.find(v=>/en(-|_)US/i.test(v.lang)&&/natural|google|samantha|aria|jenny/i.test(v.name))||en[0]||null;
   voice2=en.find(v=>v!==voice&&/female|zira|karen|moira|tessa|fiona|victoria|google uk/i.test(v.name))||en.find(v=>v!==voice)||voice;}
 if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
-function utter(text,{pitch=1,rate=S.rate,v=voice,vol=1}={}){const u=new SpeechSynthesisUtterance(text);u.addEventListener('start',()=>setTimeout(audioWake,120));u.addEventListener('end',()=>setTimeout(audioWake,80));u.rate=rate;u.pitch=pitch;u.volume=vol;if(v)u.voice=v;u.lang=LANG==='pt'?'pt-BR':'en-US';return u;}
+function utter(text,{pitch=1,rate=S.rate,v=voice,vol=1}={}){const u=new SpeechSynthesisUtterance(text);u.addEventListener('start',()=>setTimeout(audioWake,120));u.addEventListener('end',()=>setTimeout(audioWake,80));u.rate=rate;u.pitch=pitch;u.volume=Math.min(1,vol*(S.vvol??1));if(v)u.voice=v;u.lang=LANG==='pt'?'pt-BR':'en-US';return u;}
 function say(text,{log=true,extras}={}){
   const ex=extras||G.extras; G.extras=[];
   const hold=(G.holdSpeech||0)-performance.now(); if(hold>0){setTimeout(()=>say(text,{log,extras:ex}),hold+30);return;}
@@ -1414,13 +1487,13 @@ function say(text,{log=true,extras}={}){
   live.textContent=''; setTimeout(()=>{live.textContent=full;},40);
   const tok=G.sayTok=(G.sayTok||0)+1;
   if(S.narr&&'speechSynthesis' in window){
-    speechSynthesis.cancel(); speakingText=full.toLowerCase(); speaking=true;
+    speechSynthesis.cancel(); speakingText=full.toLowerCase(); speaking=true; duck(true); setTimeout(()=>{if(tok===G.sayTok&&!speaking)duck(false);},full.length*95/S.rate+2500);
     const segs=[]; let grp=(text.match(/[^.!?]+[.!?]*/g)||[text]).map(p=>utter(p.trim()));
     ex.forEach(e=>{if(e.label)grp.push(utter(e.label));const clip=voClip(e);
       if(clip){segs.push(grp);grp=[];segs.push({clip,pos:e.pos});}
       else (e.text.match(/[^.!?]+[.!?]*/g)||[e.text]).forEach(p=>grp.push(utter(p.trim(),e.opts||{})));});
     segs.push(grp);
-    const runSeg=i=>{if(tok!==G.sayTok)return; if(i>=segs.length){speaking=false;lastSpeakEnd=performance.now();return;}
+    const runSeg=i=>{if(tok!==G.sayTok)return; if(i>=segs.length){speaking=false;lastSpeakEnd=performance.now();duck(false);return;}
       const sg=segs[i];
       if(Array.isArray(sg)){if(!sg.length)return runSeg(i+1);let done=false;const fin=()=>{if(done)return;done=true;runSeg(i+1);};
         const lu=sg[sg.length-1];lu.onend=lu.onerror=fin;sg.forEach(u=>speechSynthesis.speak(u));
@@ -1473,6 +1546,7 @@ function setMic(on,silent){
 }
 function setMicUI(){const b=$('#micBtn');b.setAttribute('aria-pressed',String(S.mic));b.textContent=t(S.mic?'Voice commands: on':'Voice commands: off');}
 function heardSpeech(alts){
+  if(G.teach){if(!G.teach.until||performance.now()>G.teach.until)return;const cmd=G.teach.cmd;G.teach=null;$('#heard').textContent=t('Heard: “{t}”',{t:alts[0]});return saveAlias(alts[0],cmd);}
   const busy=speaking||('speechSynthesis' in window&&speechSynthesis.speaking)||performance.now()-lastSpeakEnd<350;
   for(const tx of alts){const cmd=parse(tx);if(!cmd)continue;
     if(busy){const words=tx.split(/\s+/).length;if(words>3)continue;if(words>1&&speakingText.includes(tx))continue;}
@@ -1481,7 +1555,26 @@ function heardSpeech(alts){
 }
 const NUMW={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,um:1,uma:1,dois:2,duas:2,tres:3,quatro:4,cinco:5,seis:6,sete:7,oito:8,nove:9,dez:10,onze:11,doze:12,treze:13,catorze:14,quatorze:14,quinze:15};
 const norm=s=>' '+s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim()+' ';
-function parse(s){return LANG==='pt'?(parsePt(s)||parseEn(s)):parseEn(s);}
+const WCMDS=['forward','back','left','right','turnleft','turnright','turnaround','listen','look','hide','drink','eat','light','throw','sprint','sneak','use','flare','trap','decoy','mark','findmark','talk','radio','status','repeat','history','help','menu'];
+const WNAMES={en:{forward:'go forward',back:'go back',left:'go left',right:'go right',turnleft:'turn left',turnright:'turn right',turnaround:'turn around',listen:'listen',look:'look around',hide:'hide',drink:'drink almond water',eat:'eat a ration',light:'flashlight',throw:'throw a firecracker',sprint:'sprint',sneak:'sneak',use:'use',flare:'light a flare',trap:'set a trap',decoy:'music box',mark:'drop a mark',findmark:'find my mark',talk:'talk',radio:'radio',status:'status',repeat:'repeat',history:'last five messages',help:'help',menu:'pause'},
+  pt:{forward:'ir em frente',back:'voltar',left:'ir à esquerda',right:'ir à direita',turnleft:'virar à esquerda',turnright:'virar à direita',turnaround:'meia volta',listen:'escutar',look:'olhar em volta',hide:'esconder',drink:'beber água de amêndoa',eat:'comer ração',light:'lanterna',throw:'atirar bombinha',sprint:'correr',sneak:'agachar',use:'usar',flare:'acender sinalizador',trap:'armar armadilha',decoy:'caixinha de música',mark:'marcar',findmark:'achar marca',talk:'falar',radio:'rádio',status:'status',repeat:'repetir',history:'últimas cinco mensagens',help:'ajuda',menu:'pausa'}};
+let ALIAS=lsGet('br_alias',{});
+function aliasCmd(s){const tx=norm(s);for(const [w,c] of Object.entries(ALIAS)){if(tx===' '+w+' '||tx.includes(' '+w+' '))return c==='light'?{c,n:'toggle'}:{c};}return null;}
+function parse(s){return aliasCmd(s)||(LANG==='pt'?(parsePt(s)||parseEn(s)):parseEn(s));}
+function renderWords(){
+  const sel=$('#wCmd'); const cur=sel.value; sel.innerHTML=WCMDS.map(c=>`<option value="${c}">${WNAMES[LANG][c]}</option>`).join(''); if(cur)sel.value=cur;
+  const ul=$('#wList'); ul.innerHTML=''; const e=Object.entries(ALIAS);
+  if(!e.length){const li=document.createElement('li');li.textContent=t('No custom words yet.');ul.appendChild(li);}
+  e.forEach(([w,c])=>{const li=document.createElement('li');li.textContent='“'+w+'” → '+WNAMES[LANG][c]+' ';const b=document.createElement('button');b.textContent=t('Remove {w}',{w});b.addEventListener('click',()=>{delete ALIAS[w];lsSet('br_alias',ALIAS);renderWords();say(t('Removed.'),{log:false});});li.appendChild(b);ul.appendChild(li);});
+}
+function saveAlias(word,cmd){const w=norm(word).trim();if(!w)return say(t('I did not catch a word. Try again.'),{log:false});
+  if(w.split(' ').length>3)return say(t('That is too long. Use one or two words.'),{log:false});
+  ALIAS[w]=cmd;lsSet('br_alias',ALIAS);renderWords();say(t('Saved. Now saying {w} means {c}.',{w,c:WNAMES[LANG][cmd]}),{log:false});}
+function openWords(){renderWords();show('words',t('Custom voice words. Pick a command, then press say my word now, or type a word and save it. You have {n} custom words.',{n:Object.keys(ALIAS).length}));}
+function teachWord(){const cmd=$('#wCmd').value; if(!S.mic||!SR){say(t('Voice commands are off, so type your word and press save.'),{log:false});return;}
+  G.teach={cmd,until:0}; say(t('After the beep, say your word for {c}.',{c:WNAMES[LANG][cmd]}),{log:false});
+  const wait=()=>{if(!G.teach)return;if(speaking||('speechSynthesis' in window&&speechSynthesis.speaking)){setTimeout(wait,200);return;}setTimeout(()=>{if(!G.teach)return;sfx(ping,0,0.5,0);G.teach.until=performance.now()+6000;},400);};setTimeout(wait,300);
+  setTimeout(()=>{if(G.teach&&G.teach.until&&performance.now()>G.teach.until){G.teach=null;say(t('I did not hear anything. Try again.'),{log:false});}},12000);}
 function parseEn(s){
   const tx=norm(s); const has=re=>re.test(tx);
   let n=1; const m=tx.match(/ (\d+|two|three|four|five|six|seven|eight)( times| steps)? /); if(m)n=clamp(parseInt(m[1])||NUMW[m[1]]||1,1,8);
@@ -1489,6 +1582,9 @@ function parseEn(s){
   if(has(/ (stop listening|microphone off|mic off|voice off|buttons only|use buttons) /))return{c:'micoff'};
   if(has(/ (3d|3 d|three d) (graphics|view|on) |^ (3d|3 d|three d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classic|2d|2 d|two d)( graphics| view)? /))return{c:'gfx',n:'classic'};
+  if(has(/ (new game plus|new game \+|game plus|ng plus) /))return{c:'ngp'};
+  if(has(/ (custom words|custom voice words|my words|voice words) /))return{c:'words'};
+  if(has(/ (hardcore|one life) /))return{c:'hardset',n:'1'};
   if(has(/ (extra levels|extra level|extras|bonus levels|bonus) /))return{c:'extra'};
   if(has(/ (level select|select level|select a level|chapter select|chapters|choose level|choose a level|pick a level) /))return{c:'levels'};
   if(screen==='levels'){const cm=tx.match(/ (\d+) /)||tx.match(/ (zero|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen) /);if(cm)return{c:'chapter',n:isNaN(parseInt(cm[1]))?NUMW[cm[1]]:parseInt(cm[1])};}
@@ -1562,6 +1658,9 @@ function parsePt(s){
   if(has(/ (parar de ouvir|desligar microfone|desliga o microfone|microfone desligado|so botoes|usar botoes|voz desligada|desligar voz) /))return{c:'micoff'};
   if(has(/ (3d|3 d|tres d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classico|graficos classicos|2d|2 d) /))return{c:'gfx',n:'classic'};
+  if(has(/ (novo jogo mais|novo jogo \+|jogo mais) /))return{c:'ngp'};
+  if(has(/ (palavras personalizadas|minhas palavras|palavras de voz) /))return{c:'words'};
+  if(has(/ (hardcore|uma vida) /))return{c:'hardset',n:'1'};
   if(has(/ (niveis extras|nivel extra|extras|niveis bonus|bonus) /))return{c:'extra'};
   if(has(/ (escolher nivel|escolher um nivel|selecionar nivel|capitulos|escolher capitulo|niveis) /))return{c:'levels'};
   if(screen==='levels'){const cm=tx.match(/ (\d+) /)||tx.match(/ (zero|um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|catorze|quatorze) /);if(cm)return{c:'chapter',n:isNaN(parseInt(cm[1]))?NUMW[cm[1]]:parseInt(cm[1])};}
@@ -1628,7 +1727,7 @@ function parsePt(s){
 }
 
 /* ============================== screens ============================== */
-const SCREENS=['splash','menu','pause','ach','levels','setup','settings','howto','news','credits','end','game'];
+const SCREENS=['splash','menu','pause','ach','levels','words','setup','settings','howto','news','credits','end','game'];
 let screen='splash';
 function show(id,announce){
   if(id!=='game'&&G.state==='transition'){G.state='menu';clearAmb();}// leaving during a fall cancels it
@@ -1648,9 +1747,9 @@ function openMenu(){
   showMain();
 }
 function showMain(prefix=''){
-  $('#mContinue').hidden=!lsGet('br_save',null); $('#mLevels').hidden=chaptersOpen().length<2; $('#mExtra').hidden=!extrasOpen();
+  $('#mContinue').hidden=!lsGet('br_save',null); $('#mLevels').hidden=chaptersOpen().length<2; $('#mExtra').hidden=!extrasOpen(); $('#mNgp').hidden=!extrasOpen();
   menuMusic();
-  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels','endless mode','tutorial','settings','how to play','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
+  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','endless mode','tutorial','settings','how to play','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
   show('menu',prefix+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
 }
 function quitToMain(){
@@ -1659,12 +1758,12 @@ function quitToMain(){
 }
 function openSetup(){
   if(G.state==='paused'||G.state==='won'||G.state==='dead')G.state='menu';
-  show('setup',t('New game. Step one: say voice commands, or buttons only. Step two: say easy, normal, or nightmare. Then say start. Right now: {ctl}, {diff}.',{ctl:t(S.voice?'voice commands':'buttons only'),diff:DL()}));
+  show('setup',t('New game. Step one: say voice commands, or buttons only. Step two: say easy, normal, or nightmare. Step three: normal lives, or say hardcore for one life. Then say start. Right now: {ctl}, {diff}.',{ctl:t(S.voice?'voice commands':'buttons only'),diff:DL()}));
 }
 function syncChoices(){
   $$('.choice').forEach(b=>{const k=b.dataset.set,v=b.dataset.val;let cur;
     if(k==='voice')cur=S.voice?'1':'0'; else if(k==='narr')cur=S.narr?'1':'0'; else if(k==='scares')cur=S.scares?'1':'0';
-    else if(k==='music')cur=String(S.music); else if(k==='fx')cur=String(S.fx); else if(k==='diff')cur=S.diff; else if(k==='gfx')cur=S.gfx; else if(k==='lang')cur=LANG;
+    else if(k==='music')cur=String(S.music); else if(k==='fx')cur=String(S.fx); else if(k==='diff')cur=S.diff; else if(k==='gfx')cur=S.gfx; else if(k==='hard')cur=S.hard?'1':'0'; else if(k==='vvol')cur=String(S.vvol); else if(k==='duck')cur=S.duck?'1':'0'; else if(k==='lang')cur=LANG;
     b.setAttribute('aria-pressed',String(cur===v));});
   $('#rateVal').textContent=S.rate;
 }
@@ -1677,6 +1776,9 @@ function applySetting(k,v,quiet){
   if(k==='fx'){S.fx=+v;lsSet('br_fx',S.fx);if(A.ctx)A.fx.gain.setTargetAtTime(S.fx,now(),0.1);msg=t('Sound effects {v}.',{v:t({0.5:'low',0.75:'medium',1:'high'}[S.fx])});sfx(pickup);}
   if(k==='scares'){S.scares=v==='1';lsSet('br_scares',S.scares);msg=t(S.scares?'Jump scares on. Good luck.':'Jump scares off.');}
   if(k==='diff'){S.diff=v;lsSet('br_diff',v);msg=t('Difficulty: {d}.',{d:DL()});}
+  if(k==='vvol'){S.vvol=+v;lsSet('br_vvol',S.vvol);msg=t('Narrator volume {v}.',{v:t({0.6:'low',0.8:'medium',1:'high'}[S.vvol])});}
+  if(k==='duck'){S.duck=v==='1';lsSet('br_duck',S.duck);msg=t(S.duck?'The music will get quieter while the narrator speaks.':'The music stays at the same volume while the narrator speaks.');}
+  if(k==='hard'){S.hard=v==='1';msg=t(S.hard?'Hardcore. One life. No second chances.':'Normal. You will have checkpoints.');}
   if(k==='gfx'){S.gfx=v==='classic'?'classic':'3d';lsSet('br_gfx',S.gfx);msg=t(S.gfx==='3d'?(window.R3&&R3.available?'3D graphics on.':'3D graphics are not supported on this device, so the classic view is used.'):'Classic graphics on.');}
   syncChoices(); if(!quiet&&msg)say(msg,{log:false});
 }
@@ -1731,13 +1833,14 @@ function newLevel(){
     else if(type==='face')c=cells.filter(([x,y])=>dist[y][x]>=2);
     else c=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));
     if(!c.length)c=cells; const p=pick(c); return {type,x:p[0],y:p[1],cool:3+rand(4)};});
+  if(G.mode==='story'&&G.ngp&&!lv.calm&&!lv.secret&&!lv.run){const far=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));for(let i=0;i<Math.min(3,G.ngp);i++){const p=pick(far.length?far:cells);G.mons.push({type:['hound','howler','wretch'][i%3],x:p[0],y:p[1],cool:4});}}
   G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
   G.wasWet=false; G.mark=null; G.markSought=false; G.caughtLevel=false; G.inHide=false; G.hideNear=false; G.watchFreeze=0;
   G.spots=new Map(); {const n=lv.hides??(lv.calm||lv.run||lv.secret||lv.water?0:3);const sc=cells.filter(([x,y])=>dist[y][x]>=2&&!G.items.has(key(x,y))&&!isHazard(x,y)&&!isWater(x,y));for(let i=0;i<n&&sc.length;i++){const c=sc.splice(rand(sc.length),1)[0];G.spots.set(key(...c),i);}}
   G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
   updateHUD(); ambience(); levelMusic(); if(A.ctx)A.amb.gain.setTargetAtTime(0.7,now(),0.1);
 }
-function saveCheckpoint(){if(G.mode!=='story')return;lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff,drank:!!G.drank,full:!!G.full,v:7});
+function saveCheckpoint(){if(G.mode!=='story')return;lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff,drank:!!G.drank,full:!!G.full,hard:!!G.hard,ngp:G.ngp||0,v:7});
   if(!L().secret){const u=unlocked();if(!u.has(G.level)){u.add(G.level);lsSet('br_unl',[...u]);}}}
 // 0.6.2 and older: Poolrooms and Level Fun came before Lights Out, and the Library before the Carnival
 const OLD2NEW=[0,1,2,3,4,9,10,5,6,7,8,12,11,13,14,15], NEW2OLD=[0,1,2,3,4,7,8,9,10,5,6,12,11,13,14,15];
@@ -1752,7 +1855,7 @@ function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;
   if((s.v||0)<6&&s.level>=10)s.level=s.level===10?13:15;// 0.5: the Run level was last
   if((s.v||0)<6)s.full=true;
   if((s.v||0)<7)s.level=resumeAt(s.level);// 0.7: levels are in order
-  G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.tapes=allTapes();G.lastTape=s.lastTape??-1;G.drank=!!s.drank;G.full=!!s.full;G.mode='story';G.edef=null;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
+  G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.tapes=allTapes();G.lastTape=s.lastTape??-1;G.drank=!!s.drank;G.full=!!s.full;G.hard=!!s.hard;G.ngp=s.ngp||0;G.mode='story';G.edef=null;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
 function enterLevel(prefix=''){
   initAudio(); newLevel(); saveCheckpoint(); show('game');
   let intro=introText(); const nm=LX('name');
@@ -1761,9 +1864,16 @@ function enterLevel(prefix=''){
 }
 function newGame(skipTut){
   if(!skipTut&&!lsGet('br_tut',0))return startTutorial(true);
+  G.hard=!!S.hard;G.ngp=0;
   G.mode='story';G.edef=null;G.drank=false;G.full=true;G.level=0;G.inv=freshInv();G.sanity=100;G.steps=0;G.deaths=0;G.tapes=new Set();G.tapes=allTapes();G.lastTape=-1;G.startTime=Date.now();G.sneak=false;setSneakUI();
   const ctl=(S.voice&&!SR)?' Voice commands are not available in this browser, so use the buttons or keyboard.':S.voice?' Voice commands are on. Say help to hear them, or pause to stop.':' You are playing with buttons and keyboard.';
-  enterLevel(t('Difficulty: {d}.{ctl}',{d:DL(),ctl:t(ctl)}));
+  enterLevel(t('Difficulty: {d}.{ctl}',{d:DL(),ctl:t(ctl)})+(G.hard?' '+t('Hardcore mode. You have one life.'):''));
+}
+function newGamePlus(){
+  if(!lsGet('br_beat',0))return narrateMenu(t('New Game Plus unlocks after you finish the story.'));
+  const n=lsGet('br_ngp',0)+1; G.hard=false; G.ngp=n;
+  G.mode='story';G.edef=null;G.drank=false;G.full=true;G.level=0;G.inv={...freshInv(),...lsGet('br_ngpinv',{}),light:false,keycard:false};G.sanity=100;G.steps=0;G.deaths=0;G.tapes=allTapes();G.lastTape=-1;G.startTime=Date.now();G.sneak=false;setSneakUI();
+  enterLevel(t('New Game Plus {n}. You keep the items you finished with, but every level has more monsters, and they hunt harder.',{n}));
 }
 function storyLevels(){return LEVELS.map((l,i)=>i).filter(i=>!LEVELS[i].secret);}
 function chapterOpen(i){return !!LEVELS[i]&&!LEVELS[i].secret&&(lsGet('br_beat',0)||unlocked().has(i));}
@@ -1775,7 +1885,7 @@ function openLevels(){
   show('levels',t('Level select. {n} levels unlocked. Say level and a number, or choose one. Say back to return.',{n:open.length}));
 }
 function chapterInv(i){const I=freshInv();if(i>=2){I.flashlight=true;I.battery=80;}if(i>=3)I.radio=true;I.water=Math.min(2,Math.floor(i/4));I.fire=i>=3?2:1;I.energy=i>=5?3:0;return I;}
-function startChapter(i){
+function startChapter(i){G.hard=false;G.ngp=0;
   if(!chapterOpen(i))return say(t('That level is still locked. Reach it in the story first.'));
   G.mode='story';G.edef=null;G.drank=false;G.full=(i===0);G.level=i;G.inv=chapterInv(i);G.sanity=100;G.steps=0;G.deaths=0;G.tapes=allTapes();G.lastTape=-1;G.startTime=Date.now();G.sneak=false;setSneakUI();
   enterLevel('');
@@ -1830,7 +1940,7 @@ function monstersTurn(){
     if(m.type==='clump'&&G.steps%2)continue;
     if(m.type==='deep'){if(isWater(G.x,G.y)){const wd=bfs(G.x,G.y,G.wet);if(wd[m.y][m.x]<=T.sense+DF().sense&&Math.random()<T.chase*Df.chase){moveMon(m,stepToward(wd,m.x,m.y));continue;}}if(Math.random()<0.5)wander(m);continue;}
     if(nd&&T.hostile&&m.type!=='chaser'&&nd[m.y][m.x]<=10&&nd[m.y][m.x]>0){if(Math.random()<0.95)moveMon(m,stepToward(nd,m.x,m.y));continue;}
-    let sense=T.sense+Df.sense; if(G.sneak)sense=Math.min(sense,2); if(G.sprinted)sense+=3; if(G.alert>0)sense+=3;
+    let sense=T.sense+Df.sense+(G.mode==='story'&&G.ngp?1:0); if(G.sneak)sense=Math.min(sense,2); if(G.sprinted)sense+=3; if(G.alert>0)sense+=3;
     if(m.type==='librarian')sense=G.sneak?1:G.sprinted?14:T.sense+Df.sense;
     if(m.type==='jester'){m.tp=(m.tp??(8+rand(4)))-1;if(m.tp<=0&&d>2){m.tp=9+rand(4);const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=3&&dist[y][x]<=5&&!(x===G.exit[0]&&y===G.exit[1]))c.push([x,y]);
       if(c.length){const p=pick(c);m.x=p[0];m.y=p[1];const {w,pan}=relDirWords(m.x,m.y);play('cackle',{pan,vol:0.8,muffle:0.1});sfx(jingle,pan,0.7);G.extras.push({text:t('A burst of laughter, {w}. The Jester was not there a moment ago.',{w})});continue;}}}
@@ -2263,6 +2373,8 @@ function levelComplete(parts){
     }
     G.state='won'; clearAmb(); stopAllMusic(3); setTimeout(()=>sfx(winSound),1500); lsDel('br_save'); escapeAchievements(); lsSet('br_beat',1);
     const hint=t('You found {n} of {total} tapes. Some say that with all of them, the daylight is not the real ending.',{n:G.tapes.size,total:NTAPES});
+    lsSet('br_ngpinv',{...G.inv,light:false,keycard:false}); if(G.hard)unlock('ironwill'); if(G.ngp){lsSet('br_ngp',Math.max(lsGet('br_ngp',0),G.ngp));unlock('ngplus');}
+    G.extras.push({text:t('New Game Plus is now open in the main menu, and you keep the items you are holding.')});
     G.extras.push({text:t('Extra levels are now open in the main menu. The story is over, but the Backrooms keep going.')});
     showEnd(t('YOU ESCAPED'),finishStats(),[...parts,t('You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!'),hint].join(' '));
     return;
@@ -2277,6 +2389,8 @@ function gameOver(parts){
     showEnd(t('THE BACKROOMS WIN'),[[t('Depth reached'),G.depth],[t('Best depth'),best],[t('Time'),elapsedText()],[t('Steps'),G.steps]],[...parts,t('Your sanity hits zero. The Backrooms swallow you at depth {n}.',{n:G.depth})].join(' '));
     return;
   }
+  if(G.mode==='story'&&G.hard){G.state='over';lsDel('br_save');const best=Math.max(lsGet('br_hardbest',0),G.level);lsSet('br_hardbest',best);
+    showEnd(t('HARDCORE RUN OVER'),[[t('Reached'),LX('name')],[t('Best hardcore level'),best],[t('Time'),elapsedText()],[t('Steps'),G.steps]],[...parts,t('Your sanity hits zero. In hardcore there are no second chances. The Backrooms take you, and your run is over.')].join(' '));return;}
   G.state='dead';
   $('#deadBar').hidden=false; setTimeout(()=>{if(G.state==='dead')$('#dRetry').focus();},Math.max(0,(G.holdSpeech||0)-performance.now())+300);
   const s=G.mode==='story'?lsGet('br_save',null):null; if(s){s.deaths=G.deaths;lsSet('br_save',s);}
@@ -2402,7 +2516,7 @@ function extraDef(n){
   return def;
 }
 function extrasOpen(){return !!lsGet('br_beat',0);}
-function startExtra(n){
+function startExtra(n){G.hard=false;G.ngp=0;
   if(!extrasOpen())return narrateMenu(t('Extra levels unlock after you finish the story.'));
   n=Math.max(FIRSTX,n||lsGet('br_extra',FIRSTX));
   G.mode='extra'; G.xn=n; G.edef=extraDef(n); G.level=G.edef.base??0; G.inv=chapterInv(14); G.inv.water=Math.max(G.inv.water,2);
@@ -2410,7 +2524,7 @@ function startExtra(n){
   initAudio(); newLevel(); show('game');
   say(t('Extra levels. The story is over, but the Backrooms keep going.')+' '+introText()+' '+pathsText());
 }
-function startEndless(){
+function startEndless(){G.hard=false;G.ngp=0;
   G.mode='endless'; G.depth=1; G.inv=freshInv(); G.inv.flashlight=true; G.inv.battery=60; G.inv.radio=true;
   G.sanity=100; G.steps=0; G.deaths=0; G.tapes=new Set(); G.lastTape=-1; G.drank=false; G.startTime=Date.now(); G.sneak=false; setSneakUI();
   G.edef=endlessDef(1); G.level=G.edef.base; initAudio(); newLevel(); show('game');
@@ -2446,6 +2560,8 @@ const ACH=[
  {id:'extra50',en:['There Is No Bottom','Reach Level 50 in the extra levels.'],pt:['Não Tem Fundo','Chegue ao Nível 50 nos níveis extras.']},
  {id:'puzzle',en:['Electrician','Solve a puzzle.'],pt:['Eletricista','Resolva um quebra-cabeça.']},
  {id:'trapper',en:['Trapper','Catch a monster in a bear trap.'],pt:['Caçador','Pegue um monstro numa armadilha de urso.']},
+ {id:'ironwill',en:['Iron Will','Finish the story in Hardcore mode.'],pt:['Vontade de Ferro','Termine a história no modo Hardcore.']},
+ {id:'ngplus',en:['Again and Again','Finish New Game Plus.'],pt:['De Novo e de Novo','Termine o Novo Jogo Mais.']},
  {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']}
 ];
 const ACHV=lsGet('br_ach',{}); const STATS=lsGet('br_stats',{});
@@ -2494,6 +2610,7 @@ function run(c,n,r){
   if(c==='voiceon')return applySetting('voice','1');
   if(c==='lang')return applySetting('lang',n);
   if(c==='gfx')return applySetting('gfx',n);
+  if(c==='hardset'&&screen==='setup')return applySetting('hard',n);
   if(screen==='splash')return;
   if(screen!=='game'||G.state!=='play'){
     if(c==='quit')return (G.state==='paused'||G.state==='dead')?quitToMain():showMain();
@@ -2504,12 +2621,14 @@ function run(c,n,r){
     if(c==='credits')return show('credits',t('Credits. Music by Kevin MacLeod. Sound effects from OpenGameArt, credited on this page. Say back to return.'));
     if(c==='howto')return show('howto',t('How to play. Say back to return.'));
     if(c==='news')return show('news',t('What is new. Version {v}. Say back to return.',{v:VERSION}));
-    if(c==='help')return narrateMenu(t(screen==='menu'?'Say play, continue, level select, extra levels, endless mode, tutorial, settings, how to play, achievements, what is new, or credits.':screen==='pause'?'Say resume, restart level, settings, how to play, or quit to main menu.':'Say back to return to the menu.'));
+    if(c==='help')return narrateMenu(t(screen==='menu'?'Say play, continue, level select, extra levels, new game plus, endless mode, tutorial, settings, how to play, achievements, what is new, or credits.':screen==='pause'?'Say resume, restart level, settings, how to play, or quit to main menu.':'Say back to return to the menu.'));
     if(c==='diff')return applySetting('diff',n);
     if(c==='endless')return startEndless();
     if(c==='tutorial')return startTutorial(false);
     if(c==='ach')return show('ach',renderAch());
     if(c==='extra')return startExtra();
+    if(c==='ngp')return newGamePlus();
+    if(c==='words')return openWords();
     if(c==='levels')return chaptersOpen().length<2?narrateMenu(t('Level select unlocks after you finish Level 0.')):openLevels();
     if(c==='chapter')return startChapter(n);
     if((c==='retry'||c==='play')&&screen==='end'&&G.mode==='endless')return startEndless();
@@ -2536,7 +2655,7 @@ function run(c,n,r){
     case 'play':case 'retry':case 'resume':case 'continue':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'diff':return say(t('You can change difficulty from the settings.'));
     case 'settings':case 'credits':case 'howto':case 'news':case 'ach':openMenu();return run(c);
-    case 'levels':case 'chapter':case 'extra':return say(t('You are already in the Backrooms. Say pause to stop.'));
+    case 'levels':case 'chapter':case 'extra':case 'ngp':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'endless':return say(t('You are already in the Backrooms. Say pause to stop.'));
   }
 }
@@ -2646,7 +2765,13 @@ $('#mNews').addEventListener('click',()=>run('news'));
 $('#mEndless').addEventListener('click',startEndless);
 $('#mAch').addEventListener('click',()=>run('ach'));
 $('#mLevels').addEventListener('click',()=>run('levels'));
+$('#openWords').addEventListener('click',openWords);
+$('#wSay').addEventListener('click',teachWord);
+$('#wSave').addEventListener('click',()=>{saveAlias($('#wText').value,$('#wCmd').value);$('#wText').value='';});
+$('#wClear').addEventListener('click',()=>{ALIAS={};lsSet('br_alias',ALIAS);renderWords();say(t('All your custom words are removed.'),{log:false});});
+$('#wBack').addEventListener('click',()=>run('settings'));
 $('#mExtra').addEventListener('click',()=>run('extra'));
+$('#mNgp').addEventListener('click',()=>run('ngp'));
 $('#mCredits').addEventListener('click',()=>run('credits'));
 $('#startGame').addEventListener('click',()=>newGame());
 $$('.backBtn').forEach(b=>b.addEventListener('click',openMenu));
