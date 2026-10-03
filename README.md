@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.6.2**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.7**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.7**: levels in ascending order with "chapter N of 15", rewritten story links, tapes renumbered in finding order, new app icon, saves resume at the first unplayed level.
 - **0.6.2**: iPhone app ready: native voice commands and vibration through Capacitor plugins, sound plays with the silent switch on; fixed the wall bump sound.
 - **0.6.1**: new menu music ("The Dread", picked by players), no buzzing or screams on the menu, new Frontrooms music ("Unnatural Situation").
 - **0.6**: the story grows to 15 levels with a real ending (the Endless City, the Silent Library, the Carnival, the Frontrooms), four new monsters, 3D graphics (three.js, switchable to classic), level select, tapes kept between runs, new menu music, three new achievements.

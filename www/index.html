@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <title>Accessible Backrooms</title>
 <meta name="description" content="An accessible, voice-controlled audio horror game set in the Backrooms. Play with your voice, a screen reader, a keyboard or touch.">
 <script>
@@ -244,6 +245,14 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.7: in order</h2>
+      <ul>
+        <li>The levels are now in order. The numbers only go up: 0, 1, 2, 3, 4, 6, 7, 9, 11, 37, then Fun, the Carnival, Level 283 and the way home.</li>
+        <li>Every level now tells you which chapter it is, like chapter 6 of 15.</li>
+        <li>The story links between the levels are rewritten to match, and Marcus's tapes are numbered in the order you find them.</li>
+        <li>New app icon.</li>
+        <li>If you were in the middle of the story, you continue from the first level you have not played yet.</li>
+      </ul>
       <h2>Version 0.6.2: getting ready for iPhone</h2>
       <ul>
         <li>Voice commands and vibration now work inside the iPhone app.</li>
@@ -312,6 +321,14 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.7: em ordem</h2>
+      <ul>
+        <li>Os níveis agora estão em ordem. Os números só sobem: 0, 1, 2, 3, 4, 6, 7, 9, 11, 37, depois Diversão, o Carnaval, o Nível 283 e o caminho de casa.</li>
+        <li>Cada nível agora diz qual capítulo ele é, por exemplo capítulo 6 de 15.</li>
+        <li>As ligações da história entre os níveis foram reescritas, e as fitas do Marcus estão numeradas na ordem em que você as encontra.</li>
+        <li>Novo ícone do app.</li>
+        <li>Se você estava no meio da história, continua do primeiro nível que ainda não jogou.</li>
+      </ul>
       <h2>Versão 0.6.2: preparando para o iPhone</h2>
       <ul>
         <li>Os comandos de voz e a vibração agora funcionam dentro do app de iPhone.</li>
@@ -478,7 +495,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
 <script>
 "use strict";
-const VERSION='0.6.2';
+const VERSION='0.7';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -629,6 +646,7 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'Chapter {n} of {total}.':'Capítulo {n} de {total}.',
  '3D graphics on.':'Gráficos 3D ligados.','Classic graphics on.':'Gráficos clássicos ligados.',
  '3D graphics are not supported on this device, so the classic view is used.':'Este aparelho não suporta gráficos 3D, então a visão clássica é usada.',
  'Chapter {n}: {name}':'Capítulo {n}: {name}',
@@ -815,34 +833,12 @@ const LEVELS=[
    wall:[45,18,62], floor:[220,10,35], ceil:[45,10,80], amb:'office', music:'music1', step:'carpet', beacon:'phone',
    exitWhat:'a phone ringing on the exit desk',
    intro:'Level 4, The Abandoned Office. Endless cubicles, dead computers, and phones that never stop ringing. Something huge and wet drags itself between the desks: the Clump. It is slow, but it fills the whole corridor, so find another way around it. Find the phone ringing at the exit desk. Desks and closets here make good hiding spots.',
-   exitText:'You pick up the ringing phone. A voice on the other end whispers: wrong number. The floor opens beneath you, and you fall into warm water.',
+   exitText:'You pick up the ringing phone. A voice on the other end whispers: wrong number. The floor opens beneath you. You fall straight past Level 5, through a blur of hotel hallways, and land hard in total darkness.',
    flavor:['A coffee mug sits on a desk. The coffee is still warm.','Every monitor shows the same word: STAY.','A printer spits out blank pages, one after another.','Somewhere, a phone rings. Nobody answers.','The cubicle walls are covered in sticky notes that say HELP.','A swivel chair slowly turns to face you.'],
    pt:{name:'Nível 4, O Escritório Abandonado',short:'4',exitWhat:'um telefone tocando na mesa da saída',
    intro:'Nível 4, O Escritório Abandonado. Baias sem fim, computadores mortos e telefones que nunca param de tocar. Algo enorme e molhado se arrasta entre as mesas: o Amontoado. Ele é lento, mas enche o corredor inteiro, então encontre outro caminho. Encontre o telefone tocando na mesa da saída. As mesas e os armários daqui são bons esconderijos.',
-   exitText:'Você atende o telefone que está tocando. Uma voz do outro lado sussurra: número errado. O chão se abre debaixo de você, e você cai em água morna.',
+   exitText:'Você atende o telefone que está tocando. Uma voz do outro lado sussurra: número errado. O chão se abre debaixo de você. Você cai direto pelo Nível 5, passando por um borrão de corredores de hotel, e aterrissa com força na escuridão total.',
    flavor:['Uma caneca de café está numa mesa. O café ainda está quente.','Todos os monitores mostram a mesma palavra: FIQUE.','Uma impressora cospe páginas em branco, uma atrás da outra.','Em algum lugar, um telefone toca. Ninguém atende.','As paredes das baias estão cobertas de post-its que dizem SOCORRO.','Uma cadeira giratória vira devagar na sua direção.']}},
- { name:'Level 37, The Poolrooms', short:'37', tape:4, w:9,h:9, loops:0.25, mons:['face','face'], dark:0, lights:true, calm:true,
-   items:{water:2,battery:1,energy:1,tape:1},
-   wall:[190,30,82], floor:[195,45,70], ceil:[190,20,90], amb:'pool', music:'music3', step:'tile', beacon:'bubbles',
-   exitWhat:'water gurgling down a drain',
-   intro:'Level 37, The Poolrooms. You surface in warm water and climb out onto white tiles. Endless pools, soft light, the gentle lapping of water. It is peaceful here. Too peaceful. Faceless people wander these halls. They will not hurt you. Say talk when one is near. Find the drain that leads down.',
-   exitText:'A huge drain at the bottom of a shallow pool. The water pulls at your ankles, then swallows you.',
-   flavor:['The water is perfectly still. You cannot see the bottom.','Every sound echoes forever here.','White tiles, white tiles, white tiles.','A slide leads up into the ceiling. Nothing comes down.','You hear someone swimming in the next room. Then they stop.','The water is warm, like a bath. You want to lie down in it.'],
-   pt:{name:'Nível 37, As Piscinas',short:'37',exitWhat:'água descendo por um ralo',
-   intro:'Nível 37, As Piscinas. Você emerge em água morna e sobe para azulejos brancos. Piscinas sem fim, luz suave, o barulhinho da água. É tranquilo aqui. Tranquilo demais. Pessoas sem rosto andam por estes corredores. Elas não vão machucar você. Diga falar quando uma estiver perto. Encontre o ralo que leva para baixo.',
-   exitText:'Um ralo enorme no fundo de uma piscina rasa. A água puxa seus tornozelos, depois engole você.',
-   flavor:['A água está perfeitamente parada. Você não consegue ver o fundo.','Todo som ecoa para sempre aqui.','Azulejos brancos, azulejos brancos, azulejos brancos.','Um escorregador sobe até o teto. Nada desce por ele.','Você ouve alguém nadando na sala ao lado. Depois para.','A água é morna, como um banho. Você tem vontade de se deitar nela.']}},
- { name:'Level Fun', short:'Fun', tape:5, w:10,h:10, loops:0.16, mons:['party','party'], dark:0, lights:true, locked:true,
-   items:{water:3,fire:2,energy:1,tape:1,keycard:1},
-   wall:[320,45,60], floor:[280,25,40], ceil:[50,60,80], amb:'party', music:'musicbox', step:'carpet', beacon:'chime',
-   exitWhat:'an elevator chime',
-   intro:'Level Fun. Balloons. Streamers. A cake that has gone grey. A music box plays happy birthday, slightly wrong. The Partygoers are here, and they want you to join the party. The exit door is locked: find the keycard first. Do not let them hug you.',
-   exitText:'You swipe the keycard. The elevator doors slide open. Behind you, someone whispers: party is over. The doors close and the lights go out.',
-   flavor:['A banner on the wall says: HAPPY BIRTHDAY =)','Deflated balloons cover the floor.','There are paper plates set out for a hundred guests.','A party hat sits on the floor. It is wet.','Someone wrote on the wall in frosting: STAY =)','Confetti falls from nowhere.'],
-   pt:{name:'Nível Diversão',short:'Diversão',exitWhat:'o sininho de um elevador',
-   intro:'Nível Diversão. Balões. Serpentinas. Um bolo que ficou cinza. Uma caixinha de música toca parabéns, um pouco errado. Os Festeiros estão aqui, e eles querem que você entre na festa. A porta de saída está trancada: encontre o cartão de acesso primeiro. Não deixe que eles abracem você.',
-   exitText:'Você passa o cartão. As portas do elevador se abrem. Atrás de você, alguém sussurra: a festa acabou. As portas se fecham e as luzes se apagam.',
-   flavor:['Uma faixa na parede diz: FELIZ ANIVERSÁRIO =)','Balões murchos cobrem o chão.','Há pratos de papel postos para cem convidados.','Um chapéu de festa está no chão. Está molhado.','Alguém escreveu na parede com glacê: FIQUE =)','Confete cai do nada.']}},
  { name:'Level 6, Lights Out', short:'6', tape:6, w:10,h:10, loops:0.16, mons:['skin','moths'], dark:1, lights:false,
    items:{water:3,fire:1,battery:2,energy:1,tape:1},
    wall:[40,10,40], floor:[30,10,30], ceil:[30,10,30], amb:'void', music:'music5', step:'concrete', beacon:'wind',
@@ -881,34 +877,56 @@ const LEVELS=[
    wall:[220,10,30], floor:[220,8,22], ceil:[230,30,8], amb:'city', music:'music10', step:'concrete', beacon:'crosswalk',
    exitWhat:'a crosswalk signal ticking beside the subway stairs',
    intro:'Level 11, The Endless City. The car stalls in the middle of an empty city at night. Skyscrapers in every direction, every window dark. You hear traffic everywhere, but there are no cars. Wretches roam these streets: people who were lost here too long. If one spots you, it shrieks, and everything nearby comes running. Find the subway. Listen for the crosswalk signal ticking beside the stairs.',
-   exitText:'You go down the subway stairs. A train waits with its doors open and its lights flickering. You step inside, the doors close, and the train carries you somewhere very, very quiet.',
+   exitText:'You go down the subway stairs. A train waits with its doors open and its lights flickering. You step inside, the doors close, and the train dives deeper and deeper, until warm water rushes in through the doors and pulls you under.',
    flavor:['A traffic light changes from red to green. Nobody is waiting.','Newspapers blow down the empty street. They are all dated today.','A car alarm starts, then stops in the middle of a beep.','You hear a bus pull up and open its doors. There is no bus.','Every shop window shows your reflection, a second too late.','A payphone is ringing on the corner.'],
    pt:{name:'Nível 11, A Cidade Sem Fim',short:'11',exitWhat:'o sinal de pedestre tiquetaqueando ao lado da escada do metrô',
    intro:'Nível 11, A Cidade Sem Fim. O carro morre no meio de uma cidade vazia, à noite. Arranha-céus para todo lado, todas as janelas apagadas. Você ouve trânsito por toda parte, mas não há carros. Miseráveis vagam por estas ruas: pessoas que ficaram perdidas aqui tempo demais. Se um deles vir você, ele grita, e tudo por perto vem correndo. Encontre o metrô. Escute o sinal de pedestre tiquetaqueando ao lado da escada.',
-   exitText:'Você desce a escada do metrô. Um trem espera de portas abertas, com as luzes piscando. Você entra, as portas se fecham, e o trem leva você para um lugar muito, muito silencioso.',
+   exitText:'Você desce a escada do metrô. Um trem espera de portas abertas, com as luzes piscando. Você entra, as portas se fecham, e o trem desce cada vez mais fundo, até que água morna invade as portas e puxa você para baixo.',
    flavor:['Um semáforo muda de vermelho para verde. Ninguém está esperando.','Jornais voam pela rua vazia. Todos têm a data de hoje.','Um alarme de carro dispara, depois para no meio de um bipe.','Você ouve um ônibus parar e abrir as portas. Não há ônibus.','Toda vitrine mostra seu reflexo, um segundo atrasado.','Um orelhão está tocando na esquina.']}},
- { name:'Level 283, The Silent Library', short:'283', w:11,h:10, loops:0.2, mons:['librarian','smiler'], dark:0.5, lights:true, hides:4,
-   items:{water:3,fire:3,battery:2,energy:1},
-   wall:[25,40,25], floor:[0,40,22], ceil:[30,30,15], amb:'library', music:'music11', step:'carpet', beacon:'clock',
-   exitWhat:'a grandfather clock chiming by the exit',
-   intro:'Level 283, The Silent Library. Endless shelves of books that nobody wrote. It is so quiet you can hear your own heartbeat. Something tall walks between the shelves: the Librarian. It is blind, but it hears everything. Walking normally is too loud here, so say sneak. Standing still is safe. Smilers hide in the dark aisles, so keep your flashlight ready. Find the grandfather clock that chimes by the exit.',
-   exitText:'Behind the grandfather clock is a tiny wooden door. You crawl through it, and the smell of popcorn and rain hits you.',
-   flavor:['Every book on this shelf has the same title: YOUR NAME.','A page turns by itself on a reading desk.','The silence presses on your ears.','A sign on the wall says: QUIET PLEASE. Someone scratched the word PLEASE out.','A book lies open on the floor. Every page is a list of names. The last one is still wet.'],
-   pt:{name:'Nível 283, A Biblioteca Silenciosa',short:'283',exitWhat:'um relógio de pêndulo badalando perto da saída',
-   intro:'Nível 283, A Biblioteca Silenciosa. Estantes sem fim de livros que ninguém escreveu. Está tão quieto que você ouve o próprio coração. Algo alto anda entre as estantes: a Bibliotecária. Ela é cega, mas ouve tudo. Andar normalmente faz barulho demais aqui, então diga agachar. Ficar parado é seguro. Sorridentes se escondem nos corredores escuros, então deixe a lanterna por perto. Encontre o relógio de pêndulo que badala perto da saída.',
-   exitText:'Atrás do relógio de pêndulo há uma portinha de madeira. Você passa engatinhando, e sente cheiro de pipoca e chuva.',
-   flavor:['Todos os livros desta estante têm o mesmo título: SEU NOME.','Uma página vira sozinha numa mesa de leitura.','O silêncio aperta seus ouvidos.','Uma placa na parede diz: SILÊNCIO, POR FAVOR. Alguém riscou o POR FAVOR.','Um livro está aberto no chão. Cada página é uma lista de nomes. O último ainda está molhado.']}},
+ { name:'Level 37, The Poolrooms', short:'37', tape:4, w:9,h:9, loops:0.25, mons:['face','face'], dark:0, lights:true, calm:true,
+   items:{water:2,battery:1,energy:1,tape:1},
+   wall:[190,30,82], floor:[195,45,70], ceil:[190,20,90], amb:'pool', music:'music3', step:'tile', beacon:'bubbles',
+   exitWhat:'water gurgling down a drain',
+   intro:'Level 37, The Poolrooms. You surface in warm water and climb out onto white tiles. Endless pools, soft light, the gentle lapping of water. It is peaceful here. Too peaceful. Faceless people wander these halls. They will not hurt you. Say talk when one is near. Find the drain that leads down.',
+   exitText:'A huge drain at the bottom of a shallow pool. The water pulls at your ankles, then swallows you.',
+   flavor:['The water is perfectly still. You cannot see the bottom.','Every sound echoes forever here.','White tiles, white tiles, white tiles.','A slide leads up into the ceiling. Nothing comes down.','You hear someone swimming in the next room. Then they stop.','The water is warm, like a bath. You want to lie down in it.'],
+   pt:{name:'Nível 37, As Piscinas',short:'37',exitWhat:'água descendo por um ralo',
+   intro:'Nível 37, As Piscinas. Você emerge em água morna e sobe para azulejos brancos. Piscinas sem fim, luz suave, o barulhinho da água. É tranquilo aqui. Tranquilo demais. Pessoas sem rosto andam por estes corredores. Elas não vão machucar você. Diga falar quando uma estiver perto. Encontre o ralo que leva para baixo.',
+   exitText:'Um ralo enorme no fundo de uma piscina rasa. A água puxa seus tornozelos, depois engole você.',
+   flavor:['A água está perfeitamente parada. Você não consegue ver o fundo.','Todo som ecoa para sempre aqui.','Azulejos brancos, azulejos brancos, azulejos brancos.','Um escorregador sobe até o teto. Nada desce por ele.','Você ouve alguém nadando na sala ao lado. Depois para.','A água é morna, como um banho. Você tem vontade de se deitar nela.']}},
+ { name:'Level Fun', short:'Fun', tape:5, w:10,h:10, loops:0.16, mons:['party','party'], dark:0, lights:true, locked:true,
+   items:{water:3,fire:2,energy:1,tape:1,keycard:1},
+   wall:[320,45,60], floor:[280,25,40], ceil:[50,60,80], amb:'party', music:'musicbox', step:'carpet', beacon:'chime',
+   exitWhat:'an elevator chime',
+   intro:'Level Fun. Balloons. Streamers. A cake that has gone grey. A music box plays happy birthday, slightly wrong. The Partygoers are here, and they want you to join the party. The exit door is locked: find the keycard first. Do not let them hug you.',
+   exitText:'You swipe the keycard. The elevator doors slide open. Behind you, someone whispers: party is over. The doors close and the lights go out.',
+   flavor:['A banner on the wall says: HAPPY BIRTHDAY =)','Deflated balloons cover the floor.','There are paper plates set out for a hundred guests.','A party hat sits on the floor. It is wet.','Someone wrote on the wall in frosting: STAY =)','Confetti falls from nowhere.'],
+   pt:{name:'Nível Diversão',short:'Diversão',exitWhat:'o sininho de um elevador',
+   intro:'Nível Diversão. Balões. Serpentinas. Um bolo que ficou cinza. Uma caixinha de música toca parabéns, um pouco errado. Os Festeiros estão aqui, e eles querem que você entre na festa. A porta de saída está trancada: encontre o cartão de acesso primeiro. Não deixe que eles abracem você.',
+   exitText:'Você passa o cartão. As portas do elevador se abrem. Atrás de você, alguém sussurra: a festa acabou. As portas se fecham e as luzes se apagam.',
+   flavor:['Uma faixa na parede diz: FELIZ ANIVERSÁRIO =)','Balões murchos cobrem o chão.','Há pratos de papel postos para cem convidados.','Um chapéu de festa está no chão. Está molhado.','Alguém escreveu na parede com glacê: FIQUE =)','Confete cai do nada.']}},
  { name:'Level Carnival', short:'Carnival', w:12,h:10, loops:0.2, mons:['jester','party','party'], dark:0.4, lights:true, hides:3,
    items:{water:3,fire:2,battery:1,energy:2},
    wall:[345,45,30], floor:[30,25,18], ceil:[260,40,8], amb:'carnival', music:'calliope', step:'concrete', beacon:'striker',
    exitWhat:'the bell of the high striker game by the merry-go-round',
    intro:'Level Carnival. An abandoned carnival under a starless sky. A broken organ plays a waltz that never ends. Rides creak in the wind. The Partygoers followed you here, and they brought a friend: the Jester. It does not walk. It just appears somewhere close, laughing. Find the merry-go-round. Listen for the bell of the high striker game next to it.',
-   exitText:'You climb onto the merry-go-round. It starts to spin, faster and faster, the organ screaming, until the world tears apart. You land in a long red hallway. An alarm starts to scream.',
+   exitText:'You climb onto the merry-go-round. It starts to spin, faster and faster, the organ screaming, until the world tears apart. When it stops, you are sitting in an old reading chair, and everything is completely silent.',
    flavor:['A Ferris wheel turns slowly. Every seat is empty, except one.','A popcorn machine is still popping. Nobody is there.','A sign says: WIN A PRIZE. The prize shelf is full of shoes.','Your reflection in the fun house mirror waves at you. You did not wave.','Cotton candy, pink and grey with mold, sticks to your shoe.'],
    pt:{name:'Nível Carnaval',short:'Carnaval',exitWhat:'o sino do jogo de força perto do carrossel',
    intro:'Nível Carnaval. Um parque de diversões abandonado sob um céu sem estrelas. Um órgão quebrado toca uma valsa que nunca acaba. Os brinquedos rangem no vento. Os Festeiros seguiram você até aqui, e trouxeram um amigo: o Bobo da Corte. Ele não anda. Ele só aparece, em algum lugar perto, rindo. Encontre o carrossel. Escute o sino do jogo de força ao lado dele.',
-   exitText:'Você sobe no carrossel. Ele começa a girar, cada vez mais rápido, o órgão gritando, até o mundo se rasgar. Você cai num longo corredor vermelho. Um alarme começa a gritar.',
+   exitText:'Você sobe no carrossel. Ele começa a girar, cada vez mais rápido, o órgão gritando, até o mundo se rasgar. Quando para, você está sentado numa velha poltrona de leitura, e tudo está completamente em silêncio.',
    flavor:['Uma roda-gigante gira devagar. Todos os assentos estão vazios, menos um.','Uma pipoqueira ainda está estourando pipoca. Não há ninguém.','Uma placa diz: GANHE UM PRÊMIO. A prateleira de prêmios está cheia de sapatos.','Seu reflexo no espelho da casa maluca acena para você. Você não acenou.','Algodão-doce, rosa e cinza de mofo, gruda no seu sapato.']}},
+ { name:'Level 283, The Silent Library', short:'283', w:11,h:10, loops:0.2, mons:['librarian','smiler'], dark:0.5, lights:true, hides:4,
+   items:{water:3,fire:3,battery:2,energy:1},
+   wall:[25,40,25], floor:[0,40,22], ceil:[30,30,15], amb:'library', music:'music11', step:'carpet', beacon:'clock',
+   exitWhat:'a grandfather clock chiming by the exit',
+   intro:'Level 283, The Silent Library. Endless shelves of books that nobody wrote. It is so quiet you can hear your own heartbeat. Something tall walks between the shelves: the Librarian. It is blind, but it hears everything. Walking normally is too loud here, so say sneak. Standing still is safe. Smilers hide in the dark aisles, so keep your flashlight ready. Find the grandfather clock that chimes by the exit.',
+   exitText:'Behind the grandfather clock is a tiny wooden door. You crawl through it into a long red hallway. Then an alarm starts to scream.',
+   flavor:['Every book on this shelf has the same title: YOUR NAME.','A page turns by itself on a reading desk.','The silence presses on your ears.','A sign on the wall says: QUIET PLEASE. Someone scratched the word PLEASE out.','A book lies open on the floor. Every page is a list of names. The last one is still wet.'],
+   pt:{name:'Nível 283, A Biblioteca Silenciosa',short:'283',exitWhat:'um relógio de pêndulo badalando perto da saída',
+   intro:'Nível 283, A Biblioteca Silenciosa. Estantes sem fim de livros que ninguém escreveu. Está tão quieto que você ouve o próprio coração. Algo alto anda entre as estantes: a Bibliotecária. Ela é cega, mas ouve tudo. Andar normalmente faz barulho demais aqui, então diga agachar. Ficar parado é seguro. Sorridentes se escondem nos corredores escuros, então deixe a lanterna por perto. Encontre o relógio de pêndulo que badala perto da saída.',
+   exitText:'Atrás do relógio de pêndulo há uma portinha de madeira. Você passa engatinhando e chega a um longo corredor vermelho. Então um alarme começa a gritar.',
+   flavor:['Todos os livros desta estante têm o mesmo título: SEU NOME.','Uma página vira sozinha numa mesa de leitura.','O silêncio aperta seus ouvidos.','Uma placa na parede diz: SILÊNCIO, POR FAVOR. Alguém riscou o POR FAVOR.','Um livro está aberto no chão. Cada página é uma lista de nomes. O último ainda está molhado.']}},
  { name:'Level Run For Your Life', short:'!', w:12,h:5, loops:0.06, mons:['chaser'], dark:0, lights:true, run:true,
    items:{water:2,energy:3},
    wall:[0,60,45], floor:[0,40,25], ceil:[0,50,40], amb:'alarm', music:'music6', step:'concrete', beacon:'birds',
@@ -947,19 +965,19 @@ const TAPES={en:[
  'Tape two. There is water here, and people. Or there were. Someone left a note that says: do not stand in the dark. I did not understand it until I saw the teeth.',
  'Tape three. It is so hot. I heard my sister calling me from the pipes. My sister died nine years ago. I did not follow the voice. Do not follow the voice.',
  'Tape four. Everything here hums. The wires talk, if you listen long enough. They told me there is a way out at the very end, past the red door, past the daylight. They said: find all my tapes, and you will find me.',
- 'Tape five. The pools are beautiful. Nothing hurts you here. I could stay. I think that is the trap. The longer you stay, the less you want to leave.',
- 'Tape six. Balloons. Cake. Everyone is smiling. They said, hello friend, come to the party. If you hear this, do not go to the party. Find the keycard. Run.',
- 'Tape seven. I cannot see anything anymore. My batteries are dead. Something keeps telling me it found the exit. It sounds just like me now. If you hear me calling you... it is not me.',
- 'Tape eight. The water goes on forever. Something huge moves under it, and it sings. I am so tired. I am going to the room behind the daylight. If you have all eight tapes, come find me. Please. It is really me this time.'],
+ 'Tape seven. The pools are beautiful. Nothing hurts you here. I could stay. I think that is the trap. The longer you stay, the less you want to leave.',
+ 'Tape eight. Balloons. Cake. Everyone is smiling. They said, hello friend, come to the party. Do not go to the party. Find the keycard. I am so tired. I am going to the room behind the daylight. If you have all eight tapes, come find me. Please. It is really me this time.',
+ 'Tape five. I cannot see anything anymore. My batteries are dead. Something keeps telling me it found the exit. It sounds just like me now. If you hear me calling you... it is not me.',
+ 'Tape six. The water goes on forever. Something huge moves under it, and it sings. I put my feet in the water once. Just once. Do not do that.'],
  pt:[
  'Fita um. Meu nome é Marcus. Não sei que dia é hoje. As luzes nunca se apagam. Contei as salas. Quatro mil e doze. Depois encontrei minhas próprias marcas de contagem na parede.',
  'Fita dois. Tem água aqui, e pessoas. Ou tinha. Alguém deixou um bilhete que diz: não fique no escuro. Eu não entendi até ver os dentes.',
  'Fita três. Está tão quente. Ouvi minha irmã me chamando dos canos. Minha irmã morreu há nove anos. Eu não segui a voz. Não siga a voz.',
  'Fita quatro. Tudo aqui zumbe. Os fios falam, se você escutar por tempo suficiente. Eles me disseram que existe uma saída bem no final, depois da porta vermelha, depois da luz do dia. Eles disseram: encontre todas as minhas fitas, e você vai me encontrar.',
- 'Fita cinco. As piscinas são lindas. Nada machuca você aqui. Eu poderia ficar. Acho que essa é a armadilha. Quanto mais você fica, menos quer ir embora.',
- 'Fita seis. Balões. Bolo. Todo mundo sorrindo. Eles disseram: olá, amigo, venha para a festa. Se você ouvir isso, não vá para a festa. Encontre o cartão. Corra.',
- 'Fita sete. Não consigo ver mais nada. Minhas pilhas acabaram. Algo fica me dizendo que encontrou a saída. Agora soa igualzinho a mim. Se você me ouvir chamando... não sou eu.',
- 'Fita oito. A água não acaba nunca. Algo enorme se move debaixo dela, e canta. Estou tão cansado. Vou para a sala atrás da luz do dia. Se você tiver as oito fitas, venha me encontrar. Por favor. Desta vez sou eu de verdade.']};
+ 'Fita sete. As piscinas são lindas. Nada machuca você aqui. Eu poderia ficar. Acho que essa é a armadilha. Quanto mais você fica, menos quer ir embora.',
+ 'Fita oito. Balões. Bolo. Todo mundo sorrindo. Eles disseram: olá, amigo, venha para a festa. Não vá para a festa. Encontre o cartão. Estou tão cansado. Vou para a sala atrás da luz do dia. Se você tiver as oito fitas, venha me encontrar. Por favor. Desta vez sou eu de verdade.',
+ 'Fita cinco. Não consigo ver mais nada. Minhas pilhas acabaram. Algo fica me dizendo que encontrou a saída. Agora soa igualzinho a mim. Se você me ouvir chamando... não sou eu.',
+ 'Fita seis. A água não acaba nunca. Algo enorme se move debaixo dela, e canta. Eu coloquei os pés na água uma vez. Só uma vez. Não faça isso.']};
 const NTAPES=8;
 const ITEMNAME={en:{water:'a bottle of almond water',fire:'a firecracker',battery:'a battery',energy:'an energy bar',tape:'a cassette tape',flashlight:'a flashlight',radio:'a walkie-talkie',keycard:'a keycard'},
   pt:{water:'uma garrafa de água de amêndoa',fire:'uma bombinha',battery:'uma pilha',energy:'uma barra de energia',tape:'uma fita cassete',flashlight:'uma lanterna',radio:'um walkie-talkie',keycard:'um cartão de acesso'}};
@@ -1481,7 +1499,7 @@ function openMenu(){
   showMain();
 }
 function showMain(prefix=''){
-  $('#mContinue').hidden=!lsGet('br_save',null); $('#mLevels').hidden=levelReach()<1;
+  $('#mContinue').hidden=!lsGet('br_save',null); $('#mLevels').hidden=chaptersOpen().length<2;
   menuMusic();
   const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select','endless mode','tutorial','settings','how to play','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
   show('menu',prefix+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
@@ -1560,18 +1578,26 @@ function newLevel(){
   G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
   updateHUD(); ambience(); levelMusic(); if(A.ctx)A.amb.gain.setTargetAtTime(0.7,now(),0.1);
 }
-function saveCheckpoint(){if(G.mode==='endless')return;lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff,drank:!!G.drank,full:!!G.full,v:6});
-  if(!L().secret&&G.level>lsGet('br_reach',0))lsSet('br_reach',G.level);}
+function saveCheckpoint(){if(G.mode==='endless')return;lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff,drank:!!G.drank,full:!!G.full,v:7});
+  if(!L().secret){const u=unlocked();if(!u.has(G.level)){u.add(G.level);lsSet('br_unl',[...u]);}}}
+// 0.6.2 and older: Poolrooms and Level Fun came before Lights Out, and the Library before the Carnival
+const OLD2NEW=[0,1,2,3,4,9,10,5,6,7,8,12,11,13,14,15], NEW2OLD=[0,1,2,3,4,7,8,9,10,5,6,12,11,13,14,15];
+const resumeAt=old=>NEW2OLD.findIndex(o=>o>=old);
+function unlocked(){let u=lsGet('br_unl',null);
+  if(!u){const r=lsGet('br_reach',null);u=[0];if(r!==null){for(let i=0;i<=r;i++)u.push(OLD2NEW[i]);u.push(resumeAt(r));}lsSet('br_unl',u);}
+  return new Set(u.filter(i=>i>=0&&i<LEVELS.length-1));}
 function allTapes(){return new Set([...lsGet('br_tapes',[]),...(G.tapes||[])]);}
 function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;
   if(!s.v){const M=[0,1,2,4,5,6,8];s.tapes=(s.tapes||[]).map(i=>M[i]??i);if(s.lastTape>=0)s.lastTape=M[s.lastTape]??s.lastTape;s.level=[0,1,2,5,6,7,10][s.level]??s.level;}// 0.3: seven levels
   else if(s.v===4)s.level=[0,1,2,3,5,6,7,8,10,11][s.level]??s.level;// 0.4: ten levels
   if((s.v||0)<6&&s.level>=10)s.level=s.level===10?13:15;// 0.5: the Run level was last
   if((s.v||0)<6)s.full=true;
+  if((s.v||0)<7)s.level=resumeAt(s.level);// 0.7: levels are in order
   G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.tapes=allTapes();G.lastTape=s.lastTape??-1;G.drank=!!s.drank;G.full=!!s.full;G.mode='story';G.edef=null;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
 function enterLevel(prefix=''){
   initAudio(); newLevel(); saveCheckpoint(); show('game');
-  say((prefix?prefix+' ':'')+LX('intro')+' '+pathsText());
+  const ch=(G.mode==='story'&&!L().secret)?t('Chapter {n} of {total}.',{n:G.level+1,total:storyLevels().length})+' ':'';
+  say((prefix?prefix+' ':'')+ch+LX('intro')+' '+pathsText());
 }
 function newGame(skipTut){
   if(!skipTut&&!lsGet('br_tut',0))return startTutorial(true);
@@ -1580,18 +1606,19 @@ function newGame(skipTut){
   enterLevel(t('Difficulty: {d}.{ctl}',{d:DL(),ctl:t(ctl)}));
 }
 function storyLevels(){return LEVELS.map((l,i)=>i).filter(i=>!LEVELS[i].secret);}
-function levelReach(){return Math.min(lsGet('br_beat',0)?LEVELS.length-2:lsGet('br_reach',0),LEVELS.length-2);}
+function chapterOpen(i){return !!LEVELS[i]&&!LEVELS[i].secret&&(lsGet('br_beat',0)||unlocked().has(i));}
+function chaptersOpen(){return storyLevels().filter(chapterOpen);}
 function openLevels(){
-  const reach=levelReach(); const box=$('#lvList'); box.innerHTML='';
-  storyLevels().filter(i=>i<=reach).forEach(i=>{const b=document.createElement('button');const lv=LEVELS[i];
+  const open=chaptersOpen(); const box=$('#lvList'); box.innerHTML='';
+  open.forEach(i=>{const b=document.createElement('button');const lv=LEVELS[i];
     b.textContent=t('Chapter {n}: {name}',{n:i+1,name:LANG==='pt'?lv.pt.name:lv.name});b.addEventListener('click',()=>startChapter(i));box.appendChild(b);});
-  show('levels',t('Level select. {n} chapters unlocked. Say chapter and a number, or choose one. Say back to return.',{n:reach+1}));
+  show('levels',t('Level select. {n} chapters unlocked. Say chapter and a number, or choose one. Say back to return.',{n:open.length}));
 }
 function chapterInv(i){const I=freshInv();if(i>=2){I.flashlight=true;I.battery=80;}if(i>=3)I.radio=true;I.water=Math.min(2,Math.floor(i/4));I.fire=i>=3?2:1;I.energy=i>=5?3:0;return I;}
 function startChapter(i){
-  if(i>levelReach()||!LEVELS[i]||LEVELS[i].secret)return say(t('That chapter is still locked. Reach it in the story first.'));
+  if(!chapterOpen(i))return say(t('That chapter is still locked. Reach it in the story first.'));
   G.mode='story';G.edef=null;G.drank=false;G.full=(i===0);G.level=i;G.inv=chapterInv(i);G.sanity=100;G.steps=0;G.deaths=0;G.tapes=allTapes();G.lastTape=-1;G.startTime=Date.now();G.sneak=false;setSneakUI();
-  enterLevel(t('Chapter {n}.',{n:i+1}));
+  enterLevel('');
 }
 function continueGame(){if(!loadCheckpoint())return say(t('There is no saved checkpoint.'));G.startTime=Date.now();G.sneak=false;setSneakUI();enterLevel(t('Checkpoint loaded.'));}
 function retryLevel(){if(G.mode==='endless')return startEndless();if(G.mode==='tutorial')return startTutorial(G.tutThenPlay);const s=lsGet('br_save',null);if(s&&s.level===G.level){G.inv={...freshInv(),...s.inv};G.tapes=new Set(s.tapes);}G.sanity=100;G.sneak=false;setSneakUI();enterLevel(t('You try again.'));}
@@ -2204,7 +2231,7 @@ function run(c,n,r){
     if(c==='endless')return startEndless();
     if(c==='tutorial')return startTutorial(false);
     if(c==='ach')return show('ach',renderAch());
-    if(c==='levels')return levelReach()<1?narrateMenu(t('Level select unlocks after you finish Level 0.')):openLevels();
+    if(c==='levels')return chaptersOpen().length<2?narrateMenu(t('Level select unlocks after you finish Level 0.')):openLevels();
     if(c==='chapter')return startChapter(n-1);
     if((c==='retry'||c==='play')&&screen==='end'&&G.mode==='endless')return startEndless();
     if(c==='continue')return continueGame();
