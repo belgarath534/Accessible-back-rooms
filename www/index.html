@@ -248,6 +248,11 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.9.1: more music</h2>
+      <ul>
+        <li>Every story level now has its own music. New tracks for the Abandoned Office and the Suburbs.</li>
+        <li>The extra levels have their own set of four new tracks.</li>
+      </ul>
       <h2>Version 0.9: puzzles</h2>
       <ul>
         <li>Puzzles! In the Electrical Station, the Carnival and the Silent Library, the exit is sealed. Find three breakers, bells or levers, and use them from the lowest sound to the highest. Get the order wrong and an alarm calls every monster to you. Say use, or press the Use button.</li>
@@ -339,6 +344,11 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.9.1: mais música</h2>
+      <ul>
+        <li>Cada nível da história agora tem a sua própria música. Músicas novas para o Escritório Abandonado e o Subúrbio.</li>
+        <li>Os níveis extras têm o seu próprio conjunto de quatro músicas novas.</li>
+      </ul>
       <h2>Versão 0.9: quebra-cabeças</h2>
       <ul>
         <li>Quebra-cabeças! Na Estação Elétrica, no Carnaval e na Biblioteca Silenciosa, a saída está lacrada. Encontre três disjuntores, sinos ou alavancas, e use do som mais grave ao mais agudo. Se errar a ordem, um alarme chama todos os monstros até você. Diga usar, ou aperte o botão Usar.</li>
@@ -454,7 +464,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
     <p data-l="en"><b>Accessible Backrooms</b>, designed and built with Claude Code. Inspired by the Backrooms, a shared internet legend, and the community wiki that grew around it.</p>
     <p data-l="pt"><b>Backrooms Acessível</b>, criado e construído com o Claude Code. Inspirado nos Backrooms, uma lenda compartilhada da internet, e na wiki da comunidade que cresceu em volta dela.</p>
     <h2><span data-l="en">Music</span><span data-l="pt">Música</span></h2>
-    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four”, “Echoes of Time v2”, “Spider Eyes”, “Ossuary 6 - Air”, “The Dread”, “Night of Chaos”, “Hush”, “Unnatural Situation”. <span data-l="en">Licensed under</span><span data-l="pt">Licença</span> <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
+    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four”, “Echoes of Time v2”, “Spider Eyes”, “Ossuary 6 - Air”, “The Dread”, “Night of Chaos”, “Hush”, “Unnatural Situation”, “Oppressive Gloom”, “Ghost Story”, “Darkling”, “Ghostpocalypse - 7 Master”, “Ghost Processional”, “Static Motion”. <span data-l="en">Licensed under</span><span data-l="pt">Licença</span> <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
     <h2><span data-l="en">Sound effects</span><span data-l="pt">Efeitos sonoros</span></h2>
     <p>“Female Screams”, congusbongus, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
     <p>“Long deep impact”, ROHHSA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
@@ -529,7 +539,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
 <script>
 "use strict";
-const VERSION='0.9';
+const VERSION='0.9.1';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -881,7 +891,7 @@ const LEVELS=[
    flavor:['Um transformador zumbe tão alto que você sente nos dentes.','O ar cheira a plástico queimado.','Cabos cobrem o chão como cipós.','Uma placa de aviso diz: PERIGO, ALTA TENSÃO.','Uma caixa de fusíveis está aberta. Todos os fusíveis queimaram.','As luzes pulsam no ritmo do zumbido.']}},
  { name:'Level 4, The Abandoned Office', short:'4', w:10,h:10, loops:0.2, mons:['clump','howler'], dark:0.15, lights:true, hides:4,
    items:{water:3,fire:2,battery:1,energy:1},
-   wall:[45,18,62], floor:[220,10,35], ceil:[45,10,80], amb:'office', music:'music1', step:'carpet', beacon:'phone',
+   wall:[45,18,62], floor:[220,10,35], ceil:[45,10,80], amb:'office', music:'music13', step:'carpet', beacon:'phone',
    exitWhat:'a phone ringing on the exit desk',
    intro:'Level 4, The Abandoned Office. Endless cubicles, dead computers, and phones that never stop ringing. Something huge and wet drags itself between the desks: the Clump. It is slow, but it fills the whole corridor, so find another way around it. Find the phone ringing at the exit desk. Desks and closets here make good hiding spots.',
    exitText:'You pick up the ringing phone. A voice on the other end whispers: wrong number. The floor opens beneath you. You fall for a long, long time, and land hard in total darkness.',
@@ -914,7 +924,7 @@ const LEVELS=[
    flavor:['Ondas batem no concreto.','A água está negra e perfeitamente parada, até que não está mais.','Algo roça seu tornozelo. Alga. Provavelmente.','Bem longe, algo canta debaixo da água.','O ar tem gosto de sal e ferrugem.']}},
  { name:'Level 7, The Suburbs', short:'7', w:11,h:9, loops:0.2, mons:['watcher','watcher'], dark:0.5, lights:false, hides:4,
    items:{water:3,fire:1,battery:2,energy:2},
-   wall:[30,20,40], floor:[100,20,18], ceil:[230,30,10], amb:'suburbs', music:'music5', step:'grass', beacon:'engine',
+   wall:[30,20,40], floor:[100,20,18], ceil:[230,30,10], amb:'suburbs', music:'music14', step:'grass', beacon:'engine',
    exitWhat:'a car engine running',
    intro:'Level 7, The Suburbs. A quiet neighborhood at night that goes on forever. Every house is dark, and pale faces watch you from the windows. Window Watchers only move when you are not paying attention. Say listen often: while you listen, they freeze. Find the car with its engine running.',
    exitText:'You climb into the car. The engine roars, the headlights flicker on, and you drive until the houses turn into tall, dark buildings. Then the engine dies.',
@@ -1199,7 +1209,7 @@ function monSound(m,pan,vol,muffle){const T=MT[m.type];
 function heart(fast){tap(fast?'HEAVY':'MEDIUM');if(!play(fast?'heartfast':'heartslow',{vol:0.9}))sfx(heartbeat);}
 
 /* ---------- music tracks ---------- */
-const TR={}, TRACKS=['menu','music0','music1','music2','music3','music5','music6','music7','music8','music9','music10','music11','music12','chase','drone'];
+const TR={}, TRACKS=['menu','music0','music1','music2','music3','music5','music6','music7','music8','music9','music10','music11','music12','music13','music14','music15','music16','music17','music18','chase','drone'];
 function track(name){if(TR[name])return TR[name];const el=new Audio('audio/'+name+'.mp3');el.loop=true;el.preload='auto';const g=gainNode(0);try{A.ctx.createMediaElementSource(el).connect(g);}catch(e){}g.connect(A.music);TR[name]={el,g,want:0};return TR[name];}
 function fadeTrack(name,v,sec=2){if(!A.ctx)return;if(name==='musicbox'){musicBox(v>0);return;}if(name==='calliope'){calliope(v>0);return;}const tr=track(name);tr.want=v;tr.g.gain.cancelScheduledValues(now());tr.g.gain.setTargetAtTime(v,now(),sec/3);
   if(v>0&&tr.el.paused){const pr=tr.el.play();if(pr&&pr.catch)pr.catch(()=>{});}
@@ -2255,7 +2265,7 @@ function extraDef(n){
   delete def.items.tape; delete def.items.flashlight; delete def.items.radio;
   const X=['howler','hound','smiler','party','wretch','clump'];for(let i=0;i<Math.min(4,1+Math.floor(k/4));i++)def.mons.push(X[(n+i)%X.length]); def.calm=false;
   const low=x=>x.replace(/^(The|O|A|Os|As) /,m=>m.toLowerCase()); const title=b.name.replace(/^[^,]*, /,''), tpt=b.pt.name.replace(/^[^,]*, /,'');
-  def.name=`Level ${n}, ${title}`; def.short=String(n);
+  def.name=`Level ${n}, ${title}`; def.short=String(n); def.music=['music15','music16','music17','music18'][n%4];
   def.intro=`Level ${n}. It looks like ${low(title)}, but deeper, darker, and something here has been waiting for you. `+b.intro.slice(b.intro.indexOf('. ')+2);
   def.pt={...b.pt,name:`Nível ${n}, ${tpt}`,short:String(n),intro:`Nível ${n}. Parece ${low(tpt)}, mas mais fundo, mais escuro, e algo aqui estava esperando por você. `+b.pt.intro.slice(b.pt.intro.indexOf('. ')+2)};
   return def;

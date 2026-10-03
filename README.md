@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.9**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.9.1**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.9.1**: every story level has its own music (new tracks for the Office and the Suburbs), four new tracks for extra levels.
 - **0.9**: sound-order puzzles (Electrical Station, Carnival, Silent Library), idle monsters stalk you from any distance, gentler sanity drain in the dark, fixes found by fuzz testing.
 - **0.8**: story levels numbered 0 to 14 with no gaps ("Level 5 of 14"), extra levels after the story (Level 15 and up, endless and saved; handmade ones go in the EXTRAS list), two new achievements.
 - **0.7**: levels in ascending order with "chapter N of 15", rewritten story links, tapes renumbered in finding order, new app icon, saves resume at the first unplayed level.
@@ -46,7 +47,7 @@ Opening `index.html` directly from disk will not load the audio files in most br
 
 ## Credits
 
-Music by Kevin MacLeod (incompetech.com): "Dark Hallway", "Unseen Horrors", "Dark Fog", "Penumbra", "Gathering Darkness", "Lightless Dawn", "Long Note Four", "Echoes of Time v2", "Spider Eyes", "Ossuary 6 - Air", "The Dread", "Night of Chaos", "Hush" and "Unnatural Situation". 3D graphics use three.js (MIT license). Licensed under Creative Commons: By Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/).
+Music by Kevin MacLeod (incompetech.com): "Dark Hallway", "Unseen Horrors", "Dark Fog", "Penumbra", "Gathering Darkness", "Lightless Dawn", "Long Note Four", "Echoes of Time v2", "Spider Eyes", "Ossuary 6 - Air", "The Dread", "Night of Chaos", "Hush", "Unnatural Situation", "Oppressive Gloom", "Ghost Story", "Darkling", "Ghostpocalypse - 7 Master", "Ghost Processional" and "Static Motion". 3D graphics use three.js (MIT license). Licensed under Creative Commons: By Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/).
 
 Sound effects from OpenGameArt.org:
 
