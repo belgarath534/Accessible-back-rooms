@@ -105,6 +105,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
         <button id="mLevels" hidden><span data-l="en">Level select</span><span data-l="pt">Escolher nível</span></button>
         <button id="mNgp" hidden><span data-l="en">New Game Plus</span><span data-l="pt">Novo Jogo Mais</span></button>
         <button id="mExtra" hidden><span data-l="en">Extra levels</span><span data-l="pt">Níveis extras</span></button>
+        <button id="mDaily"><span data-l="en">Daily challenge</span><span data-l="pt">Desafio diário</span></button>
         <button id="mEndless"><span data-l="en">Endless mode</span><span data-l="pt">Modo infinito</span></button>
         <button id="mContinue" hidden><span data-l="en">Continue from checkpoint</span><span data-l="pt">Continuar do checkpoint</span></button>
         <button id="mSettings"><span data-l="en">Settings</span><span data-l="pt">Configurações</span></button>
@@ -263,6 +264,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.14: new places and a daily challenge</h2>
+      <ul>
+        <li>Three handmade extra levels after the story: Level 15, the Hospital, with the Patients on squeaking gurneys. Level 16, the Endless Hotel, where the Bellhop offers you room service. Level 17, the Frozen Field, where every step crunches in the snow and the Frostbitten follow your trail.</li>
+        <li>Daily challenge: a new maze every day, the same for everyone, with a twist like lights out or twice the monsters. Keep a streak going. Fewer steps is better.</li>
+        <li>Fixed: a music box still playing when you left a level could break the next level.</li>
+        <li>Five new achievements.</li>
+      </ul>
       <h2>Version 0.13: locks, tunes and the Host</h2>
       <ul>
         <li>The Abandoned Office exit has a keypad. Find three numbers written on scraps of paper, then say code and the numbers, or press Enter code. A wrong code sets off an alarm.</li>
@@ -394,6 +402,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.14: lugares novos e um desafio diário</h2>
+      <ul>
+        <li>Três níveis extras feitos à mão depois da história: Nível 15, o Hospital, com os Pacientes em macas que rangem. Nível 16, o Hotel Sem Fim, onde o Mensageiro oferece serviço de quarto. Nível 17, o Campo Congelado, onde cada passo range na neve e os Congelados seguem o seu rastro.</li>
+        <li>Desafio diário: um labirinto novo todo dia, o mesmo para todo mundo, com um desafio como luzes apagadas ou o dobro de monstros. Mantenha a sua sequência. Menos passos é melhor.</li>
+        <li>Corrigido: uma caixinha de música ainda tocando quando você saía de um nível podia quebrar o próximo nível.</li>
+        <li>Cinco novas conquistas.</li>
+      </ul>
       <h2>Versão 0.13: trancas, melodias e o Anfitrião</h2>
       <ul>
         <li>A saída do Escritório Abandonado tem um teclado. Encontre três números escritos em pedaços de papel, depois diga código e os números, ou aperte Digitar código. Um código errado dispara um alarme.</li>
@@ -657,7 +672,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.13';
+const VERSION='0.14';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -694,7 +709,7 @@ const PT={
  'How to play. Say back to return.':'Como jogar. Diga voltar para sair.',
  'What is new. Version {v}. Say back to return.':'Novidades. Versão {v}. Diga voltar para sair.',
  'You are in the main menu. Say play, continue, settings, how to play, or credits.':'Você está no menu principal. Diga jogar, continuar, configurações, como jogar ou créditos.',
- 'Say play, continue, level select, extra levels, new game plus, endless mode, tutorial, settings, how to play, achievements, what is new, or credits.':'Diga jogar, continuar, escolher nível, níveis extras, novo jogo mais, modo infinito, tutorial, configurações, como jogar, conquistas, novidades ou créditos.',
+ 'Say play, continue, level select, extra levels, new game plus, daily challenge, endless mode, tutorial, settings, how to play, achievements, what is new, or credits.':'Diga jogar, continuar, escolher nível, níveis extras, novo jogo mais, desafio diário, modo infinito, tutorial, configurações, como jogar, conquistas, novidades ou créditos.',
  'Say resume, restart level, settings, how to play, or quit to main menu.':'Diga retomar, reiniciar nível, configurações, como jogar ou sair para o menu principal.',
  'Say back to return to the menu.':'Diga voltar para ir ao menu.',
  'There is nothing to resume.':'Não há nada para retomar.',
@@ -808,6 +823,20 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'Somewhere {w}, someone knocks, and says:':'Em algum lugar {w}, alguém bate e diz:',
+ 'The Patient lurches off its gurney and grabs you with cold, bandaged hands!':'O Paciente salta da maca e agarra você com mãos frias e enfaixadas!',
+ 'The Bellhop takes your arm, smiling. Your room is ready. You tear yourself free!':'O Mensageiro segura o seu braço, sorrindo. O seu quarto está pronto. Você se solta à força!',
+ 'Frozen hands close around your throat. You feel the cold all the way down to your bones!':'Mãos congeladas se fecham no seu pescoço. Você sente o frio até os ossos!',
+ 'Daily challenge for {d}. Everyone gets the same maze today. Today’s twist: {tw} Your streak is {s} days.':'Desafio diário de {d}. Todo mundo recebe o mesmo labirinto hoje. O desafio de hoje: {tw} A sua sequência é de {s} dias.',
+ 'DAILY CHALLENGE COMPLETE':'DESAFIO DIÁRIO CONCLUÍDO',
+ 'Your best today':'Seu melhor hoje',
+ 'Streak':'Sequência',
+ '{n} days':'{n} dias',
+ 'You made it out of today’s maze. Come back tomorrow for a new one. Fewer steps is better, so you can try again to beat your best.':'Você saiu do labirinto de hoje. Volte amanhã para um novo. Menos passos é melhor, então você pode tentar de novo para bater o seu recorde.',
+ 'THE DAILY CHALLENGE WINS':'O DESAFIO DIÁRIO VENCEU',
+ 'Your sanity hits zero. Today’s maze beat you. Say play again to try once more.':'Sua sanidade chega a zero. O labirinto de hoje venceu você. Diga jogar de novo para tentar mais uma vez.',
+ 'daily challenge':'desafio diário',
+ 'Daily challenge. Today’s twist: {tw}':'Desafio diário. O desafio de hoje: {tw}',
  'The Host screams at the flare and backs away from the light.':'O Anfitrião grita para o sinalizador e recua da luz.',
  'The Host wraps around you. It whispers in your mother’s voice, your best friend’s voice, your own voice. You tear free and run, and it lets you, for now. You lose {n} sanity.':'O Anfitrião envolve você. Ele sussurra com a voz da sua mãe, do seu melhor amigo, com a sua própria voz. Você se solta e corre, e ele deixa, por enquanto. Você perde {n} de sanidade.',
  'You find a scrap of paper with a number on it. It says: the {pos} number of the door code is {d}.':'Você encontra um pedaço de papel com um número. Diz: o {pos} número do código da porta é {d}.',
@@ -1040,6 +1069,9 @@ const MT={
   jester:{name:'the Jester',sound:'jingling bells and a soft giggle',pt:{name:'o Bobo da Corte',sound:'guizos tilintando e uma risadinha baixa'},sfx:['cackle','giggle'],sense:6,chase:0.5,hostile:true},
   mimic:{name:'the Mimic',sound:'a familiar voice humming in another room',pt:{name:'o Imitador',sound:'uma voz conhecida cantarolando em outro cômodo'},sfx:['breath2','breath'],sense:6,chase:0.55,hostile:true,copier:true},
   host:{name:'the Host',sound:'heavy, wet footsteps, and a voice that sounds like everyone you love',pt:{name:'o Anfitrião',sound:'passos pesados e molhados, e uma voz que soa como todo mundo que você ama'},sfx:['growl4','moan','attack2'],sense:99,chase:0.55,hostile:true,boss:true},
+  patient:{name:'the Patient',sound:'squeaking gurney wheels and wet, rattling breaths',pt:{name:'o Paciente',sound:'rodinhas de maca rangendo e uma respiração molhada e chiada'},sfx:['breath2','moan'],sense:6,chase:0.55,hostile:true},
+  bellhop:{name:'the Bellhop',sound:'a polite knock, and a voice saying room service',pt:{name:'o Mensageiro',sound:'uma batida educada, e uma voz dizendo serviço de quarto'},sfx:['breath','ghost2'],sense:6,chase:0.5,hostile:true,copier:true},
+  frost:{name:'the Frostbitten',sound:'cracking ice and slow, heavy steps in the snow',pt:{name:'o Congelado',sound:'gelo rachando e passos lentos e pesados na neve'},sfx:['growl3','moan'],sense:9,chase:0.42,hostile:true},
   survivor:{name:'a survivor',sound:'someone breathing fast and scared',pt:{name:'um sobrevivente',sound:'alguém respirando rápido e com medo'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   marcus:{name:'Marcus',sound:'a tired voice',pt:{name:'Marcus',sound:'uma voz cansada'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   chaser:{name:'something enormous',sound:'thundering footsteps',pt:{name:'algo enorme',sound:'passos estrondosos'},sfx:['growl4','attack','attack2'],sense:99,chase:0.72,hostile:true}
@@ -1055,6 +1087,8 @@ const SURV_HELLO={en:['Hey! Is someone there? My name is {n}. I am human, I prom
   pt:['Ei! Tem alguém aí? Meu nome é {n}. Eu sou humano, eu prometo. Chega mais perto, devagar.','Por favor, aqui. Eu sou {n}. Estou perdido há semanas. Eu não vou machucar você.','Quem está aí? Você é de verdade? Eu sou {n}. Vem aqui, eu tenho suprimentos.']};
 // the fake one copies a voice, but not perfectly: it repeats words
 const fakeify=s2=>s2.replace(/(\b\w{3,}\b)([.,!?])/g,(m,w,p)=>Math.random()<0.6?w+' '+w.toLowerCase()+p:m);
+const ROOMSERVICE={en:['Room service! I have your order.','Housekeeping. May I come in?','Your room is ready. Just follow me.','Checkout was hours ago. Please come to the front desk.'],
+  pt:['Serviço de quarto! Trouxe o seu pedido.','Arrumação. Posso entrar?','O seu quarto está pronto. É só me seguir.','O check-out foi há horas. Por favor, venha até a recepção.']};
 const WHISPERS={en:['turn around','it sees you','stay with us','behind you','you were never here'],pt:['vire-se','ele vê você','fique com a gente','atrás de você','você nunca esteve aqui']};
 const MARCUS={en:['Hello? Is someone there?','Over here. Please, follow my voice.','It is really me this time. I promise.','I can hear your footsteps. Keep going.'],pt:['Olá? Tem alguém aí?','Aqui. Por favor, siga a minha voz.','Desta vez sou eu de verdade. Eu prometo.','Consigo ouvir seus passos. Continue.']};
 const MARCUS_FOUND={en:'You found me. You actually found me. I thought I would be here forever. Come on. Let us go home.',pt:'Você me encontrou. Você me encontrou mesmo. Achei que ficaria aqui para sempre. Vamos. Vamos para casa.'};
@@ -1323,7 +1357,7 @@ function stepToward(dist,x,y){let best=-1,bd=dist[y][x];for(const d of [0,1,2,3]
 function stepAway(dist,x,y){let best=-1,bd=dist[y][x];for(const d of [0,1,2,3].sort(()=>Math.random()-.5)){if(!isOpen(x,y,d))continue;const v=dist[y+DY[d]][x+DX[d]];if(v>bd){bd=v;best=d;}}return best;}
 const rel=d=>(d-G.f+4)%4, abs=r=>(G.f+r)%4;
 const isDark=(x,y)=>{const k=key(x,y);return G.dark.has(k)&&!(G.flare&&G.flare.lit.has(k));};
-const L=()=>((G.mode==='endless'||G.mode==='extra')&&G.edef)?G.edef:LEVELS[G.level];
+const L=()=>((G.mode==='endless'||G.mode==='extra'||G.mode==='daily')&&G.edef)?G.edef:LEVELS[G.level];
 const isWater=(x,y)=>!!(G.wet&&G.wet.has(key(x,y)));
 const isHazard=(x,y)=>!!(G.haz&&G.haz.has(key(x,y)));
 
@@ -1369,6 +1403,7 @@ function sfx(fn,...args){if(!A.ctx)return;try{fn(...args);}catch(e){}}
 /* ---------- synthesized sounds ---------- */
 function footstep(vol=1,muffle=0){const t=now(),st=isWater(G.x,G.y)?'water':L().step;
   if(st==='grass'){for(let i=0;i<2;i++){const tt=t+i*0.3;const n=noise(tt,0.2);const g=gainNode(0);envelope(g,tt,0.02,0.4*vol*(G.sneak?0.35:1),0.15);n.connect(filt('bandpass',2500,0.6)).connect(g).connect(spot(i?0.15:-0.15,1,muffle));}return;}
+  if(st==='snow'){for(let i=0;i<2;i++){const tt=t+i*0.32;const n=noise(tt,0.25);const g=gainNode(0);envelope(g,tt,0.01,0.55*vol*(G.sneak?0.5:1),0.2);n.connect(filt('lowpass',1800,0.7)).connect(g).connect(spot(i?0.15:-0.15,1,muffle));}return;}
   if(st==='water'){for(let i=0;i<2;i++){const tt=t+i*0.3;const n=noise(tt,0.4);const g=gainNode(0);envelope(g,tt,0.02,0.5*vol,0.3);n.connect(filt('bandpass',700+rand(300),0.8)).connect(g).connect(spot(i?0.2:-0.2,1,muffle));}return;}for(let i=0;i<2;i++){const tt=t+i*0.27;const out=spot(i?0.15:-0.15,(st==='carpet'?0.55:0.45)*vol*(G.sneak?0.35:1),muffle);
   const n=noise(tt,0.12);const f=st==='carpet'?filt('lowpass',420,0.8):st==='tile'?filt('bandpass',3200,2):st==='metal'?filt('bandpass',2400,2):filt('bandpass',1300,1.2);
   const g=gainNode(0);envelope(g,tt,0.005,1,st==='carpet'?0.12:0.08);n.connect(f).connect(g).connect(out);
@@ -1403,6 +1438,8 @@ function beacon(pan,vol,muffle){const t=now(),ty=L().beacon;const out=spot(pan,v
   else if(ty==='radio'){[392,523,659,587,523].forEach((f,i)=>{const tt=t+i*0.22;const o=osc('square',f,tt,0.3);const g=gainNode(0);envelope(g,tt,0.01,0.25,0.22);o.connect(filt('bandpass',1500,2)).connect(g).connect(out);});}
   else if(ty==='air'||ty==='wind'){const n=noise(t,1.5);const g=gainNode(0);envelope(g,t,0.4,0.4,1);n.connect(filt('bandpass',ty==='air'?700:400,0.8)).connect(g).connect(out);}
   else if(ty==='bubbles'){if(!play('bubbles',{pan,vol,muffle})){const n=noise(t,1);const g=gainNode(0);envelope(g,t,0.1,0.4,0.8);n.connect(filt('lowpass',500)).connect(g).connect(out);}}
+  else if(ty==='monitor'){[0,0.9].forEach(d=>{const o=osc('sine',1000,t+d,0.15);const g=gainNode(0);envelope(g,t+d,0.003,0.25,0.12);o.connect(g).connect(out);});}
+  else if(ty==='fireplace'){for(let i=0;i<10;i++){const tt=t+Math.random()*1.2;const n=noise(tt,0.04);const g=gainNode(0);envelope(g,tt,0.001,0.5,0.03);n.connect(filt('bandpass',1800+rand(2000),1.5)).connect(g).connect(out);}const w=noise(t,1.3);const wg=gainNode(0);envelope(wg,t,0.2,0.2,1);w.connect(filt('lowpass',500)).connect(wg).connect(out);}
   else if(ty==='chime'){[1318.5,1046.5].forEach((f,i)=>{const tt=t+i*0.35;const o=osc('sine',f,tt,1.2);const g=gainNode(0);envelope(g,tt,0.005,0.3,1.1);o.connect(g).connect(out);});}
   else if(ty==='phone'){phoneRing(pan,vol*1.5,muffle);}
   else if(ty==='engine'){engine(pan,vol*1.5,muffle);}
@@ -1446,6 +1483,8 @@ function play(name,{pan=0,vol=1,muffle=0,rate=1,dest,delay=0}={}){if(!A.ctx)retu
 function shush(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const n=noise(t,1.8);const g=gainNode(0);g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.5,t+0.35);g.gain.setValueAtTime(0.5,t+1.1);g.gain.linearRampToValueAtTime(0.0001,t+1.7);n.connect(filt('bandpass',4200,1.2)).connect(g).connect(out);}
 function jingle(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);for(let i=0;i<9;i++){const tt=t+i*0.07+Math.random()*0.04;const f=2800+rand(1600);[1,2.4].forEach((m,k)=>{const o=osc('sine',f*m,tt,0.25);const g=gainNode(0);envelope(g,tt,0.002,k?0.04:0.12,0.2);o.connect(g).connect(out);});}}
 function monSound(m,pan,vol,muffle){const T=MT[m.type];
+  if(m.type==='patient'){sfx(squeak,pan,vol*0.8);setTimeout(()=>sfx(squeak,pan,vol*0.6),260);}
+  if(m.type==='frost'){const t0=now();const out=spot(pan,vol,muffle);for(let i=0;i<4;i++){const tt=t0+i*0.09;const n=noise(tt,0.05);const g=gainNode(0);envelope(g,tt,0.001,0.5,0.04);n.connect(filt('highpass',3000)).connect(g).connect(out);}}
   if(m.type==='librarian'){sfx(shush,pan,vol,muffle);if(Math.random()<0.4)play('breath',{pan,vol:vol*0.5,muffle:muffle+0.3,rate:0.7});return;}
   if(m.type==='jester'){sfx(jingle,pan,vol,muffle);if(Math.random()<0.5)return;}
   if(m.type==='moths')return sfx(flutter,pan,vol,muffle);
@@ -1556,6 +1595,12 @@ function ambience(){
   if(type==='ocean'){const w=longNoise();const wg=gainNode(0.07);w.connect(filt('lowpass',500,0.7)).connect(wg).connect(A.amb);const lfo=longOsc('sine',0.12);const lg=gainNode(0.05);lfo.connect(lg).connect(wg.gain);
     loopTimer(()=>sfx(deepSong,V3(Math.random()*2-1,-0.9,Math.random()*2-1),0.25),9000,20000);}
   if(type==='last'){loopTimer(ticktock,1000,1001);}
+  if(type==='hospital'){lampHum(120,0.03);loopTimer(()=>{const tt=now();const pos=rndPos(0);const o=osc('sine',1000,tt,0.12);const g=gainNode(0);envelope(g,tt,0.003,0.08,0.1);o.connect(g).connect(spot(pos,0.5,0.5));},1100,1300);
+    loopTimer(()=>sfx(squeak,rndPos(0),0.25),8000,18000);loopTimer(()=>play('moan',{pan:rndPos(0),vol:0.12,muffle:0.8,rate:0.8}),15000,30000);}
+  if(type==='hotel'){lampHum(60,0.02);loopTimer(()=>{const tt=now();const pos=rndPos(0);[0,0.25,0.5].forEach(d=>{const n=noise(tt+d,0.05);const g=gainNode(0);envelope(g,tt+d,0.002,0.5,0.05);n.connect(filt('lowpass',600)).connect(g).connect(spot(pos,0.6,0.5));});},7000,16000);
+    loopTimer(()=>{const tt=now();[1318.5,1046.5].forEach((f,i)=>{const o=osc('sine',f,tt+i*0.35,1);const g=gainNode(0);envelope(g,tt+i*0.35,0.005,0.1,0.9);o.connect(g).connect(spot(rndPos(0),0.5,0.6));});},12000,25000);}
+  if(type==='frozen'){const w=longNoise();const wg=gainNode(0.06);w.connect(filt('bandpass',600,0.5)).connect(wg).connect(A.amb);const lfo=longOsc('sine',0.07);const lg=gainNode(0.045);lfo.connect(lg).connect(wg.gain);
+    loopTimer(()=>{const tt=now();const out=spot(rndPos(-0.3),0.5,0.4);const o=osc('sawtooth',90,tt,0.8);o.frequency.linearRampToValueAtTime(60,tt+0.7);const g=gainNode(0);envelope(g,tt,0.01,0.15,0.7);o.connect(filt('bandpass',400,6)).connect(g).connect(out);},6000,14000);}
   if(type==='city'){const w=longNoise();const wg=gainNode(0.03);w.connect(filt('bandpass',380,0.6)).connect(wg).connect(A.amb);const lfo=longOsc('sine',0.09);const lg=gainNode(0.02);lfo.connect(lg).connect(wg.gain);
     loopTimer(()=>{const tt=now();const n=noise(tt,3.2);const f=filt('lowpass',300,1);f.frequency.setValueAtTime(250,tt);f.frequency.linearRampToValueAtTime(1500,tt+1.5);f.frequency.linearRampToValueAtTime(250,tt+3);const g=gainNode(0);g.gain.setValueAtTime(0.0001,tt);g.gain.linearRampToValueAtTime(0.35,tt+1.5);g.gain.linearRampToValueAtTime(0.0001,tt+3.1);const s=Math.random()<0.5?-1:1;const pn=A.ctx.createStereoPanner?A.ctx.createStereoPanner():null;
       if(pn){pn.pan.setValueAtTime(-s,tt);pn.pan.linearRampToValueAtTime(s,tt+3);n.connect(f).connect(g).connect(pn).connect(A.amb);}else n.connect(f).connect(g).connect(A.amb);},5000,13000);
@@ -1700,6 +1745,7 @@ function parseEn(s){
   if(has(/ (stop listening|microphone off|mic off|voice off|buttons only|use buttons) /))return{c:'micoff'};
   if(has(/ (3d|3 d|three d) (graphics|view|on) |^ (3d|3 d|three d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classic|2d|2 d|two d)( graphics| view)? /))return{c:'gfx',n:'classic'};
+  if(has(/ (daily|daily challenge|challenge|today) /))return{c:'daily'};
   if(has(/ (journal|notes|my notes|diary) /))return{c:'journal'};
   if(has(/ (new game plus|new game \+|game plus|ng plus) /))return{c:'ngp'};
   if(has(/ (custom words|custom voice words|my words|voice words) /))return{c:'words'};
@@ -1780,6 +1826,7 @@ function parsePt(s){
   if(has(/ (parar de ouvir|desligar microfone|desliga o microfone|microfone desligado|so botoes|usar botoes|voz desligada|desligar voz) /))return{c:'micoff'};
   if(has(/ (3d|3 d|tres d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classico|graficos classicos|2d|2 d) /))return{c:'gfx',n:'classic'};
+  if(has(/ (desafio|desafio diario|de hoje) /))return{c:'daily'};
   if(has(/ (diario|bilhetes|meus bilhetes|anotacoes) /))return{c:'journal'};
   if(has(/ (novo jogo mais|novo jogo \+|jogo mais) /))return{c:'ngp'};
   if(has(/ (palavras personalizadas|minhas palavras|palavras de voz) /))return{c:'words'};
@@ -1875,7 +1922,7 @@ function openMenu(){
 function showMain(prefix=''){
   $('#mContinue').hidden=!lsGet('br_save',null); $('#mLevels').hidden=chaptersOpen().length<2; $('#mExtra').hidden=!extrasOpen(); $('#mNgp').hidden=!extrasOpen();
   menuMusic();
-  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','endless mode','tutorial','settings','how to play','journal','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
+  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','daily challenge','endless mode','tutorial','settings','how to play','journal','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
   show('menu',prefix+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
 }
 function quitToMain(){
@@ -1950,9 +1997,9 @@ function newLevel(){
     if(lv.dark>=0.3||Math.random()<0.4)place('flare',([x,y])=>dist[y][x]>=2);
     if(lvn>=3&&!lv.calm)place('trap',([x,y])=>dist[y][x]>=2);
     if(lvn>=4&&!lv.calm&&Math.random()<0.7)place('decoy',([x,y])=>dist[y][x]>=3);}
-  G.flare=null; G.traps=new Set(); G.hostHit=false;
+  G.flare=null; G.decoy=null; G.alert=0; G.traps=new Set(); G.hostHit=false;
   // sometimes another lost person is here. Sometimes it only sounds like one.
-  const lvn2=G.mode==='story'?G.level:12; const survOk=!lv.calm&&!lv.run&&!lv.secret&&!lv.final&&G.mode!=='tutorial'&&G.mode!=='endless';
+  const lvn2=G.mode==='story'?G.level:12; const survOk=!lv.calm&&!lv.run&&!lv.secret&&!lv.final&&G.mode!=='tutorial'&&G.mode!=='endless'&&G.mode!=='daily';
   G.survOn=survOk&&lvn2>=2&&Math.random()<(G.mode==='story'?0.5:0.35);
   G.code=null; if(lv.codelock&&G.mode!=='tutorial'){const digits=[1+rand(9),rand(10),rand(10)];G.code={digits,found:[false,false,false],done:false};
     [0,1,2].forEach(i=>place('clue'+i,([x,y])=>dist[y][x]>=3&&exD[y][x]>=2));}
@@ -2027,7 +2074,7 @@ function startChapter(i){G.hard=false;G.ngp=0;
   enterLevel('');
 }
 function continueGame(){if(!loadCheckpoint())return say(t('There is no saved checkpoint.'));G.startTime=Date.now();G.sneak=false;setSneakUI();enterLevel(t('Checkpoint loaded.'));}
-function retryLevel(){if(G.mode==='endless')return startEndless();if(G.mode==='extra')return startExtra(G.xn);if(G.mode==='tutorial')return startTutorial(G.tutThenPlay);const s=lsGet('br_save',null);if(s&&s.level===G.level){G.inv={...freshInv(),...s.inv};G.tapes=new Set(s.tapes);}G.sanity=100;G.sneak=false;setSneakUI();enterLevel(t('You try again.'));}
+function retryLevel(){if(G.mode==='endless')return startEndless();if(G.mode==='daily')return startDaily();if(G.mode==='extra')return startExtra(G.xn);if(G.mode==='tutorial')return startTutorial(G.tutThenPlay);const s=lsGet('br_save',null);if(s&&s.level===G.level){G.inv={...freshInv(),...s.inv};G.tapes=new Set(s.tapes);}G.sanity=100;G.sneak=false;setSneakUI();enterLevel(t('You try again.'));}
 function resume(){if(G.state!=='paused')return;G.state='play';show('game');ambience();levelMusic();if(G.mode==='tutorial')return say(tutText(G.tutStep));say(t('Resumed. {name}. {paths}',{name:LX('name'),paths:pathsText()}));}
 
 /* ============================== game logic ============================== */
@@ -2077,8 +2124,9 @@ function monstersTurn(){
     if(m.type==='clump'&&G.steps%2)continue;
     if(m.type==='deep'){if(isWater(G.x,G.y)){const wd=bfs(G.x,G.y,G.wet);if(wd[m.y][m.x]<=T.sense+DF().sense&&Math.random()<T.chase*Df.chase){moveMon(m,stepToward(wd,m.x,m.y));continue;}}if(Math.random()<0.5)wander(m);continue;}
     if(nd&&T.hostile&&m.type!=='chaser'&&nd[m.y][m.x]<=10&&nd[m.y][m.x]>0){if(Math.random()<0.95)moveMon(m,stepToward(nd,m.x,m.y));continue;}
-    let sense=T.sense+Df.sense+(G.mode==='story'&&G.ngp?1:0); if(G.sneak)sense=Math.min(sense,2); if(G.sprinted)sense+=3; if(G.alert>0)sense+=3;
+    let sense=T.sense+Df.sense+(G.mode==='story'&&G.ngp?1:0)+(G.mode==='daily'&&L().twist===3?2:0); if(G.sneak)sense=Math.min(sense,2); if(G.sprinted)sense+=3; if(G.alert>0)sense+=3;
     if(m.type==='librarian')sense=G.sneak?1:G.sprinted?14:T.sense+Df.sense;
+    if(m.type==='frost')sense=T.sense+Df.sense+(G.sprinted?3:0);
     if(m.type==='jester'){m.tp=(m.tp??(8+rand(4)))-1;if(m.tp<=0&&d>2){m.tp=9+rand(4);const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=3&&dist[y][x]<=5&&!(x===G.exit[0]&&y===G.exit[1]))c.push([x,y]);
       if(c.length){const p=pick(c);m.x=p[0];m.y=p[1];const {w,pan}=relDirWords(m.x,m.y);play('cackle',{pan,vol:0.8,muffle:0.1});sfx(jingle,pan,0.7);G.extras.push({text:t('A burst of laughter, {w}. The Jester was not there a moment ago.',{w})});continue;}}}
     let hunting=d<=sense;
@@ -2105,6 +2153,7 @@ function caughtBy(m){
   const far=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=6&&(m.type!=='deep'||isWater(x,y)))far.push([x,y]);const p=far.length?pick(far):[G.exit[0],G.exit[1]];m.x=p[0];m.y=p[1];
   const how={howler:'The Howler was waiting for you in the dark. It grabs you, its face inches from yours, screaming!',smiler:'A Smiler opens its grin right in front of you. Hundreds of teeth!',hound:'A Hound slams into you, snapping and snarling!',
     skin:'The Skin-Stealer grabs you. It has a face. It is wearing your face!',party:'A Partygoer hugs you. It will not let go. Hello, friend!',deep:'The water explodes. Something huge drags you under, then lets you go. You crawl out, coughing.',clump:'The Clump rolls over you. Dozens of hands pull at you, and dozens of mouths whisper your name.',watcher:'A pale face presses against yours. It was watching you the whole time.',
+    patient:'The Patient lurches off its gurney and grabs you with cold, bandaged hands!',bellhop:'The Bellhop takes your arm, smiling. Your room is ready. You tear yourself free!',frost:'Frozen hands close around your throat. You feel the cold all the way down to your bones!',
     wretch:'A Wretch tackles you, clawing and wheezing. Its eyes are completely empty!',librarian:'A long, cold finger presses against your lips. Shhh. Then its mouth opens wide, and it screams in your face!',
     jester:'The Jester pops up right in front of you. Ta-da! Its bells jingle as it grabs you, laughing!',mimic:'Someone you love smiles at you from the hallway. Then the smile keeps going, wider and wider, past their ears!'}[m.type];
   return t('{how} You tear free and run blindly. You lose {n} sanity.',{how:how?t(how):t('{Name} grabs you!',{Name:cap(MN(m))}),n:hit});
@@ -2152,6 +2201,7 @@ function skinLure(){
   if(m.cool>0||d<2||d>9)return; m.cool=5+rand(4);
   const {w,pan}=relDirWords(m.x,m.y);
   play('breath2',{pan,vol:0.4,muffle:0.5});
+  if(m.type==='bellhop'){const ri=rand(ROOMSERVICE[LANG].length);play('ghost2',{pan,vol:0.15,muffle:0.6,rate:1.4});G.extras.push({label:t('Somewhere {w}, someone knocks, and says:',{w}),text:ROOMSERVICE[LANG][ri],opts:{v:voice2,pitch:0.8,rate:0.9},pos:pan});return;}
   if(m.type==='mimic'){const fi=rand(FAMILY[LANG].length);G.extras.push({label:t('Somewhere {w}, a voice you know calls:',{w}),text:FAMILY[LANG][fi],opts:{v:voice2,pitch:1.1,rate:0.9},vid:'family'+(fi+1),pos:pan});return;}
   const li=rand(LURES[LANG].length);G.extras.push({label:t('Somewhere {w}, a voice calls out:',{w}),text:LURES[LANG][li],opts:{v:voice2,pitch:1.25,rate:0.95},vid:'lure'+(li+1),pos:pan});
 }
@@ -2514,6 +2564,7 @@ function status(){
   if(I.flashlight)b.push(t(I.light?'Flashlight on, battery {n} percent.':'Flashlight off, battery {n} percent.',{n:Math.round(I.battery)})); else if(I.battery)b.push(t('A battery, but no flashlight.'));
   if(I.radio)b.push(t('You have a walkie-talkie.')); if(L().locked)b.push(t(I.keycard?'You have the keycard.':'You need the keycard.'));
   if(G.mode==='endless')b.unshift(t('Endless mode, depth {n}.',{n:G.depth}));
+  else if(G.mode==='daily')b.unshift(t('Daily challenge. Today’s twist: {tw}',{tw:TWISTS[LANG][G.edef.twist]}));
   else if(G.mode==='extra')b.unshift(t('Extra levels. Your deepest is Level {n}.',{n:lsGet('br_extra',FIRSTX)})); else b.push(t('Tapes found: {n} of {total}.',{n:G.tapes.size,total:NTAPES})); if(G.sneak)b.push(t('You are sneaking.')); b.push(t('Facing {d}. Difficulty: {diff}.',{d:DIRN(G.f),diff:DL()}));
   say(b.join(' '));
 }
@@ -2544,6 +2595,8 @@ function levelComplete(parts){
   sfx(noclip); const lv=L(); G.state='transition'; G.blackout=0; G.inv.keycard=false; updateHUD();
   if(!G.caughtLevel&&!lv.calm)unlock('untouchable');
   const exitText=LX('exitText');
+  if(lv.amb==='hospital')unlock('hospital'); if(lv.amb==='hotel')unlock('hotel'); if(lv.amb==='frozen')unlock('frozen');
+  if(G.mode==='daily')return dailyWin(parts);
   if(G.mode==='extra'){
     G.xn++; if(G.xn>lsGet('br_extra',FIRSTX))lsSet('br_extra',G.xn); if(G.xn>=20)unlock('extra20'); if(G.xn>=50)unlock('extra50');
     say([...parts,exitText,t('You feel yourself falling deeper.')].filter(Boolean).join(' '));
@@ -2587,6 +2640,7 @@ function levelComplete(parts){
 }
 function gameOver(parts){
   G.deaths++; jumpscare(); clearAmb(); stopAllMusic(0.5);
+  if(G.mode==='daily'){G.state='over';showEnd(t('THE DAILY CHALLENGE WINS'),[[t('Steps'),G.steps],[t('Time'),elapsedText()]],[...parts,t('Your sanity hits zero. Today’s maze beat you. Say play again to try once more.')].join(' '));return;}
   if(G.mode==='endless'){
     G.state='over'; const best=Math.max(lsGet('br_best',0),G.depth); lsSet('br_best',best);
     showEnd(t('THE BACKROOMS WIN'),[[t('Depth reached'),G.depth],[t('Best depth'),best],[t('Time'),elapsedText()],[t('Steps'),G.steps]],[...parts,t('Your sanity hits zero. The Backrooms swallow you at depth {n}.',{n:G.depth})].join(' '));
@@ -2620,8 +2674,8 @@ function hazardCue(){
   dirs.forEach(r=>{const d=abs(r);const {pan}=relDirWords(G.x+DX[d],G.y+DY[d]);sfx(crackle,V3(pan.x,0.5,pan.z),0.8);});
   return t('Sparks crackle {dirs}.',{dirs:dirs.map(r=>RELSHORT(r)).join(t(' and '))});
 }
-const SPOTS={en:{city:['a dumpster','a phone booth','a bus shelter'],library:['a gap between the bookshelves','a reading desk','a book cart'],carnival:['a ticket booth','a prize booth','a costume trunk'],home:['the hall closet','the space under your bed','the bathtub, behind the curtain'],hum:['an old desk','an air vent'],drip:['a metal locker','a stack of crates'],pipes:['an air vent','a gap between the pipes'],electric:['a metal locker','a fuse cabinet'],office:['a desk','a supply closet','a metal locker'],party:['a table with a long tablecloth','a toy chest'],void:['a metal locker','a closet'],suburbs:['a garden shed','a parked car','a closet'],x:['a metal locker']},
-  pt:{city:['uma caçamba de lixo','uma cabine telefônica','um ponto de ônibus'],library:['um vão entre as estantes','uma mesa de leitura','um carrinho de livros'],carnival:['uma bilheteria','uma barraca de prêmios','um baú de fantasias'],home:['o armário do corredor','o espaço debaixo da sua cama','a banheira, atrás da cortina'],hum:['uma mesa velha','um duto de ar'],drip:['um armário de metal','uma pilha de caixas'],pipes:['um duto de ar','um vão entre os canos'],electric:['um armário de metal','um armário de fusíveis'],office:['uma mesa','um armário de suprimentos','um armário de metal'],party:['uma mesa com uma toalha comprida','um baú de brinquedos'],void:['um armário de metal','um armário'],suburbs:['um galpão de jardim','um carro estacionado','um armário'],x:['um armário de metal']}};
+const SPOTS={en:{hospital:['a hospital bed with a curtain','a supply cart','a laundry chute'],hotel:['a hotel room closet','a room service cart','a bathtub behind a curtain'],frozen:['a snowdrift','an abandoned car','a frozen shed'],city:['a dumpster','a phone booth','a bus shelter'],library:['a gap between the bookshelves','a reading desk','a book cart'],carnival:['a ticket booth','a prize booth','a costume trunk'],home:['the hall closet','the space under your bed','the bathtub, behind the curtain'],hum:['an old desk','an air vent'],drip:['a metal locker','a stack of crates'],pipes:['an air vent','a gap between the pipes'],electric:['a metal locker','a fuse cabinet'],office:['a desk','a supply closet','a metal locker'],party:['a table with a long tablecloth','a toy chest'],void:['a metal locker','a closet'],suburbs:['a garden shed','a parked car','a closet'],x:['a metal locker']},
+  pt:{hospital:['uma cama de hospital com cortina','um carrinho de suprimentos','um duto de roupa suja'],hotel:['um armário de quarto de hotel','um carrinho de serviço de quarto','uma banheira atrás de uma cortina'],frozen:['um monte de neve','um carro abandonado','um galpão congelado'],city:['uma caçamba de lixo','uma cabine telefônica','um ponto de ônibus'],library:['um vão entre as estantes','uma mesa de leitura','um carrinho de livros'],carnival:['uma bilheteria','uma barraca de prêmios','um baú de fantasias'],home:['o armário do corredor','o espaço debaixo da sua cama','a banheira, atrás da cortina'],hum:['uma mesa velha','um duto de ar'],drip:['um armário de metal','uma pilha de caixas'],pipes:['um duto de ar','um vão entre os canos'],electric:['um armário de metal','um armário de fusíveis'],office:['uma mesa','um armário de suprimentos','um armário de metal'],party:['uma mesa com uma toalha comprida','um baú de brinquedos'],void:['um armário de metal','um armário'],suburbs:['um galpão de jardim','um carro estacionado','um armário'],x:['um armário de metal']}};
 function spotName(k){const a=L().amb;const list=SPOTS[LANG][a]||SPOTS[LANG].x;return list[G.spots.get(k)%list.length];}
 function enterHide(){
   G.inHide=true; G.hideNear=false; sfx(creak); play('breath',{vol:0.35,muffle:0.5});
@@ -2703,7 +2757,41 @@ function endlessDef(depth){
 }
 // Extra levels: after the story, the numbers keep going. Handmade extra levels go in EXTRAS
 // (EXTRAS[0] is Level 15, EXTRAS[1] is Level 16, ...). After those, levels are built from the story's places, harder each time.
-const EXTRAS=[];
+const EXTRAS=[
+ { name:'Level 15, The Hospital', short:'15', w:12,h:10, loops:0.2, mons:['patient','patient','smiler'], dark:0.55, lights:true, hides:4, music:'music15',
+   items:{water:3,fire:2,battery:3,energy:2},
+   wall:[180,10,72], floor:[180,8,58], ceil:[180,6,80], amb:'hospital', step:'tile', beacon:'monitor',
+   exitWhat:'a heart monitor beeping by the exit',
+   intro:'Level 15, The Hospital. You wake up on a gurney in a long white hallway. Half the lights are dead. Somewhere a heart monitor is beeping, slow and steady. It is not yours. The Patients still wander these halls on squeaking wheels. You will hear them coming. Find the heart monitor beeping by the exit.',
+   exitText:'You follow the beeping into an empty room. The monitor flatlines. The floor gives way, and you fall onto soft hotel carpet.',
+   flavor:['A wheelchair rolls slowly across the hall by itself.','Every chart on the wall has your name on it.','The smell of bleach is so strong it stings your eyes.','An intercom crackles: Doctor, please report to room zero.','A bed sheet is draped over something on a gurney. It moves.'],
+   pt:{name:'Nível 15, O Hospital',short:'15',exitWhat:'um monitor cardíaco apitando perto da saída',
+   intro:'Nível 15, O Hospital. Você acorda numa maca num corredor branco e comprido. Metade das luzes está queimada. Em algum lugar, um monitor cardíaco apita, lento e constante. Não é o seu. Os Pacientes ainda vagam por estes corredores em rodinhas que rangem. Você vai ouvir quando estiverem chegando. Encontre o monitor cardíaco apitando perto da saída.',
+   exitText:'Você segue o apito até uma sala vazia. O monitor dispara um som contínuo. O chão cede, e você cai num carpete macio de hotel.',
+   flavor:['Uma cadeira de rodas passa devagar pelo corredor, sozinha.','Todas as fichas na parede têm o seu nome.','O cheiro de água sanitária é tão forte que arde nos olhos.','Um interfone chia: Doutor, compareça à sala zero.','Um lençol cobre alguma coisa numa maca. Ela se mexe.']}},
+ { name:'Level 16, The Endless Hotel', short:'16', w:13,h:9, loops:0.22, mons:['bellhop','howler','party'], dark:0.25, lights:true, hides:5, music:'music16',
+   items:{water:3,fire:2,battery:2,energy:2},
+   wall:[350,35,30], floor:[0,45,25], ceil:[40,25,70], amb:'hotel', step:'carpet', beacon:'chime',
+   exitWhat:'an elevator chiming at the end of the hall',
+   intro:'Level 16, The Endless Hotel. Red carpet, gold doors, and room numbers that make no sense. Behind every door, a television is playing. The Bellhop walks these halls, knocking. If someone offers you room service, do not go to them. Find the elevator. Listen for its chime.',
+   exitText:'The elevator doors close. The button for the lobby is missing. The elevator falls, and falls, and the air turns freezing cold.',
+   flavor:['Room 237. Room 9000. Room minus 4.','A do not disturb sign swings on a doorknob, though there is no wind.','Behind a door, someone is laughing at a television that is not on.','A room service tray sits outside a door. The food is still steaming.','The hallway carpet has the same stain every ten steps.'],
+   pt:{name:'Nível 16, O Hotel Sem Fim',short:'16',exitWhat:'um elevador tocando no fim do corredor',
+   intro:'Nível 16, O Hotel Sem Fim. Carpete vermelho, portas douradas e números de quarto que não fazem sentido. Atrás de cada porta, uma televisão está ligada. O Mensageiro anda por estes corredores, batendo nas portas. Se alguém oferecer serviço de quarto, não vá até ele. Encontre o elevador. Escute o sino dele.',
+   exitText:'As portas do elevador se fecham. O botão do térreo não existe. O elevador cai, e cai, e o ar fica gelado.',
+   flavor:['Quarto 237. Quarto 9000. Quarto menos 4.','Uma placa de não perturbe balança na maçaneta, mas não tem vento.','Atrás de uma porta, alguém ri de uma televisão que está desligada.','Uma bandeja de serviço de quarto está do lado de fora de uma porta. A comida ainda solta vapor.','O carpete do corredor tem a mesma mancha a cada dez passos.']}},
+ { name:'Level 17, The Frozen Field', short:'17', w:12,h:10, loops:0.3, mons:['frost','frost','hound'], dark:0.4, lights:false, hides:3, music:'music17',
+   items:{water:3,fire:3,battery:2,energy:3},
+   wall:[205,20,70], floor:[200,15,85], ceil:[215,30,20], amb:'frozen', step:'snow', beacon:'fireplace',
+   exitWhat:'a fire crackling inside a little cabin',
+   intro:'Level 17, The Frozen Field. Snow, as far as you can hear. The wind never stops. Every step crunches, so sneaking will not hide you here. The Frostbitten follow your footsteps through the snow. They are slow, but they never lose your trail. Find the cabin. Listen for its fire.',
+   exitText:'You stumble into the cabin and shut the door. The fire is warm. Then the floorboards open, and you fall into the dark again.',
+   flavor:['Your breath freezes in the air.','Snow fills your footprints behind you. Then something steps in them.','A frozen lamppost stands alone in the field.','Something is buried in the snow here. You do not dig it up.','Far away, ice cracks like a gunshot.'],
+   pt:{name:'Nível 17, O Campo Congelado',short:'17',exitWhat:'uma lareira estalando dentro de uma cabana',
+   intro:'Nível 17, O Campo Congelado. Neve até onde dá para ouvir. O vento nunca para. Cada passo range, então andar agachado não vai esconder você aqui. Os Congelados seguem as suas pegadas na neve. Eles são lentos, mas nunca perdem o seu rastro. Encontre a cabana. Escute a lareira dela.',
+   exitText:'Você entra cambaleando na cabana e fecha a porta. A lareira está quente. Então o assoalho se abre, e você cai no escuro de novo.',
+   flavor:['Sua respiração congela no ar.','A neve cobre as suas pegadas atrás de você. Então alguma coisa pisa nelas.','Um poste congelado está sozinho no campo.','Tem algo enterrado na neve aqui. Você não cava.','Longe, o gelo racha como um tiro.']}}
+];
 const FIRSTX=15;
 function extraDef(n){
   const hand=EXTRAS[n-FIRSTX]; if(hand)return {...hand,pt:{...hand.pt}};
@@ -2717,6 +2805,30 @@ function extraDef(n){
   def.intro=`Level ${n}. It looks like ${low(title)}, but deeper, darker, and something here has been waiting for you. `+b.intro.slice(b.intro.indexOf('. ')+2);
   def.pt={...b.pt,name:`Nível ${n}, ${tpt}`,short:String(n),intro:`Nível ${n}. Parece ${low(tpt)}, mas mais fundo, mais escuro, e algo aqui estava esperando por você. `+b.pt.intro.slice(b.pt.intro.indexOf('. ')+2)};
   return def;
+}
+// ---------- daily challenge: the same maze for everyone today ----------
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+function seeded(str){let h=1779033703^str.length;for(let i=0;i<str.length;i++){h=Math.imul(h^str.charCodeAt(i),3432918353);h=h<<13|h>>>19;}return ()=>{h=Math.imul(h^(h>>>16),2246822507);h=Math.imul(h^(h>>>13),3266489909);return ((h^=h>>>16)>>>0)/4294967296;};}
+const TWISTS={en:['Lights out: the whole level is dark.','Crowded: twice the monsters.','No firecrackers today.','Restless: the monsters hunt harder.','Bring water: no almond water on this level.'],
+  pt:['Luzes apagadas: o nível inteiro está escuro.','Lotado: o dobro de monstros.','Sem bombinhas hoje.','Inquietos: os monstros caçam com mais força.','Traga água: não há água de amêndoa neste nível.']};
+function dailyDef(){const r=seeded('backrooms-'+today());const pool=LEVELS.map((l,i)=>i).filter(i=>!LEVELS[i].run&&!LEVELS[i].secret&&!LEVELS[i].final&&!LEVELS[i].calm);
+  const base=pool[Math.floor(r()*pool.length)],b=LEVELS[base];const tw=Math.floor(r()*TWISTS.en.length);
+  const def={...b,base,w:12,h:10,mons:[...b.mons],items:{...b.items},final:false,twist:tw,calm:false};delete def.items.tape;delete def.items.flashlight;delete def.items.radio;
+  if(tw===0)def.dark=1; if(tw===1)def.mons=[...b.mons,...b.mons]; if(tw===2)def.items.fire=0; if(tw===4)def.items.water=0;
+  def.pt={...b.pt};return def;}
+function startDaily(){
+  G.hard=false;G.ngp=0;G.mode='daily';G.edef=dailyDef();G.level=G.edef.base;G.inv=chapterInv(8);if(G.edef.twist===2)G.inv.fire=0;G.sanity=100;G.steps=0;G.deaths=0;G.tapes=allTapes();G.drank=false;G.full=false;G.startTime=Date.now();G.sneak=false;setSneakUI();
+  const real=Math.random;Math.random=seeded('maze-'+today());try{initAudio();newLevel();}finally{Math.random=real;}show('game');
+  const st=lsGet('br_daily',{});
+  say(t('Daily challenge for {d}. Everyone gets the same maze today. Today’s twist: {tw} Your streak is {s} days.',{d:new Date().toLocaleDateString(LANG==='pt'?'pt-BR':'en-US',{month:'long',day:'numeric'}),tw:TWISTS[LANG][G.edef.twist],s:dailyStreak(st)})+' '+introText()+' '+pathsText());
+}
+function dailyStreak(st){if(!st.last)return 0;const y=new Date(Date.now()-86400000);const ys=y.getFullYear()+'-'+String(y.getMonth()+1).padStart(2,'0')+'-'+String(y.getDate()).padStart(2,'0');return (st.last===today()||st.last===ys)?st.streak||0:0;}
+function dailyWin(parts){
+  G.state='won';clearAmb();stopAllMusic(3);setTimeout(()=>sfx(winSound),1200);
+  const st=lsGet('br_daily',{});const first=st.last!==today();if(first){st.streak=dailyStreak(st)+1;st.last=today();}
+  const steps=G.steps;st.best=st.best||{};const prev=st.best[today()];if(!prev||steps<prev)st.best[today()]=steps;lsSet('br_daily',st);unlock('daily');if(st.streak>=7)unlock('daily7');
+  showEnd(t('DAILY CHALLENGE COMPLETE'),[[t('Steps'),steps],[t('Your best today'),st.best[today()]],[t('Time'),elapsedText()],[t('Streak'),t('{n} days',{n:st.streak})]],
+    [...parts,t('You made it out of today’s maze. Come back tomorrow for a new one. Fewer steps is better, so you can try again to beat your best.')].join(' '));
 }
 function extrasOpen(){return !!lsGet('br_beat',0);}
 function startExtra(n){G.hard=false;G.ngp=0;
@@ -2768,6 +2880,11 @@ const ACH=[
  {id:'company',en:['Good Company','Help three real survivors.'],pt:['Boa Companhia','Ajude três sobreviventes de verdade.']},
  {id:'journal',en:['Collector','Find all fifteen journal notes.'],pt:['Colecionador','Encontre as quinze anotações do diário.']},
  {id:'host',en:['Not Home Yet','Escape the Frontrooms without the Host ever catching you.'],pt:['Ainda Não Estou em Casa','Escape dos Quartos da Frente sem o Anfitrião pegar você.']},
+ {id:'hospital',en:['Discharged','Escape the Hospital.'],pt:['Alta Médica','Escape do Hospital.']},
+ {id:'hotel',en:['Checked Out','Escape the Endless Hotel.'],pt:['Check-out','Escape do Hotel Sem Fim.']},
+ {id:'frozen',en:['Cold Feet','Escape the Frozen Field.'],pt:['Pés Frios','Escape do Campo Congelado.']},
+ {id:'daily',en:['Daily Visitor','Finish a daily challenge.'],pt:['Visitante Diário','Termine um desafio diário.']},
+ {id:'daily7',en:['Seven Days','Finish the daily challenge seven days in a row.'],pt:['Sete Dias','Termine o desafio diário sete dias seguidos.']},
  {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']}
 ];
 const ACHV=lsGet('br_ach',{}); const STATS=lsGet('br_stats',{});
@@ -2834,7 +2951,7 @@ function run(c,n,r){
     if(c==='credits')return show('credits',t('Credits. Music by Kevin MacLeod. Sound effects from OpenGameArt, credited on this page. Say back to return.'));
     if(c==='howto')return show('howto',t('How to play. Say back to return.'));
     if(c==='news')return show('news',t('What is new. Version {v}. Say back to return.',{v:VERSION}));
-    if(c==='help')return narrateMenu(t(screen==='menu'?'Say play, continue, level select, extra levels, new game plus, endless mode, tutorial, settings, how to play, achievements, what is new, or credits.':screen==='pause'?'Say resume, restart level, settings, how to play, or quit to main menu.':'Say back to return to the menu.'));
+    if(c==='help')return narrateMenu(t(screen==='menu'?'Say play, continue, level select, extra levels, new game plus, daily challenge, endless mode, tutorial, settings, how to play, achievements, what is new, or credits.':screen==='pause'?'Say resume, restart level, settings, how to play, or quit to main menu.':'Say back to return to the menu.'));
     if(c==='diff')return applySetting('diff',n);
     if(c==='endless')return startEndless();
     if(c==='tutorial')return startTutorial(false);
@@ -2846,6 +2963,8 @@ function run(c,n,r){
     if(c==='levels')return chaptersOpen().length<2?narrateMenu(t('Level select unlocks after you finish Level 0.')):openLevels();
     if(c==='chapter')return startChapter(n);
     if((c==='retry'||c==='play')&&screen==='end'&&G.mode==='endless')return startEndless();
+    if((c==='retry'||c==='play')&&screen==='end'&&G.mode==='daily')return startDaily();
+    if(c==='daily')return startDaily();
     if(c==='continue')return continueGame();
     if(c==='retry'){if(G.state==='dead'||G.state==='paused')return retryLevel();return screen==='setup'?newGame():openSetup();}
     if(c==='play'){if(screen==='setup')return newGame();if(G.state==='dead')return retryLevel();return openSetup();}
@@ -2870,7 +2989,7 @@ function run(c,n,r){
     case 'play':case 'retry':case 'resume':case 'continue':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'diff':return say(t('You can change difficulty from the settings.'));
     case 'settings':case 'credits':case 'howto':case 'news':case 'ach':case 'journal':openMenu();return run(c);
-    case 'levels':case 'chapter':case 'extra':case 'ngp':return say(t('You are already in the Backrooms. Say pause to stop.'));
+    case 'levels':case 'chapter':case 'extra':case 'ngp':case 'daily':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'endless':return say(t('You are already in the Backrooms. Say pause to stop.'));
   }
 }
@@ -2995,7 +3114,8 @@ $$('.choice').forEach(b=>b.addEventListener('click',()=>applySetting(b.dataset.s
 $('#fasterBtn').addEventListener('click',()=>run('faster'));
 $('#slowerBtn').addEventListener('click',()=>run('slower'));
 $('#resetSave').addEventListener('click',()=>{lsDel('br_save');say(t('Saved checkpoint deleted.'),{log:false});});
-$('#endAgain').addEventListener('click',()=>G.mode==='endless'?startEndless():openSetup());
+$('#endAgain').addEventListener('click',()=>G.mode==='endless'?startEndless():G.mode==='daily'?startDaily():openSetup());
+$('#mDaily').addEventListener('click',()=>run('daily'));
 $('#endMenu').addEventListener('click',()=>{G.state='menu';showMain();});
 $$('[data-cmd]').forEach(b=>b.addEventListener('click',()=>{let c=b.dataset.cmd;if(c==='sneak'&&G.sneak)c='unsneak';run(c,c==='light'?'toggle':c==='code'?undefined:b.dataset.n!==undefined?+b.dataset.n:1,0);}));
 $('#micBtn').addEventListener('click',()=>applySetting('voice',S.mic?'0':'1'));

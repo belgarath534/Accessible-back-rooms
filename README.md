@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.13**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.14**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.14**: handmade extra levels (Hospital, Endless Hotel, Frozen Field) with three new monsters, seeded daily challenge with streaks.
 - **0.13**: keypad code puzzle (Office), sound memory puzzle (Poolrooms), the Host boss in the Frontrooms.
 - **0.12**: survivors (some are Skin-Stealers in disguise), journal with fifteen notes.
 - **0.11**: narrator volume and music ducking, custom voice words, Hardcore mode, New Game Plus.
