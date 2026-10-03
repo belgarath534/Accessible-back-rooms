@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.9.1**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.10**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.10**: new items (Royal Rations, flares, bear traps, wind-up music boxes), story log shows the last five messages and is readable by VoiceOver, history command.
 - **0.9.1**: every story level has its own music (new tracks for the Office and the Suburbs), four new tracks for extra levels.
 - **0.9**: sound-order puzzles (Electrical Station, Carnival, Silent Library), idle monsters stalk you from any distance, gentler sanity drain in the dark, fixes found by fuzz testing.
 - **0.8**: story levels numbered 0 to 14 with no gaps ("Level 5 of 14"), extra levels after the story (Level 15 and up, endless and saved; handmade ones go in the EXTRAS list), two new achievements.

@@ -5,7 +5,7 @@ const T=window.THREE;
 const hasGL=(()=>{try{const c=document.createElement('canvas');return !!(T&&(c.getContext('webgl')||c.getContext('experimental-webgl')));}catch(e){return false;}})();
 const CS=4, WH=3.2, EYE=1.6;
 let ren=null, scene, cam, built=null, lastCell='', lastT=0;
-let puzMeshes=[], amb, glow, flash, fill=[], monMeshes=new Map(), exitSign=null, water=null, sparks=null, curYaw=0, monTex={};
+let flareL=null, puzMeshes=[], amb, glow, flash, fill=[], monMeshes=new Map(), exitSign=null, water=null, sparks=null, curYaw=0, monTex={};
 const cv3=document.getElementById('view3d');
 
 const col=(c,k=1)=>`hsl(${Math.round(c[0])},${Math.round(c[1])}%,${Math.round(Math.max(0,Math.min(100,c[2]*k)))}%)`;
@@ -110,6 +110,7 @@ function build(){
   const hemi=new T.HemisphereLight(lv.run?0xff5040:0xfff4d0,0x202020,lv.lights?0.35:0.12); scene.add(hemi);
   glow=new T.PointLight(lv.run?0xff4030:0xfff0d0,lv.lights?0.9:0.45,9,2); scene.add(glow);
   fill=[0,1,2].map(()=>{const p=new T.PointLight(lv.run?0xff3020:0xfff2cc,0,14,2);scene.add(p);return p;});
+  flareL=new T.PointLight(0xff3018,0,16,1.6); scene.add(flareL);
   flash=new T.SpotLight(0xfff0d0,0,22,0.42,0.5,1.5); scene.add(flash); scene.add(flash.target);
   // exit door
   const [ex,ey]=G.exit; const dirs=[0,1,2,3].filter(d=>!isOpen(ex,ey,d)); const dd=dirs.length?dirs[0]:0;
@@ -157,6 +158,7 @@ function frame(){
   flash.intensity=G.inv.light?3:0; flash.position.copy(cam.position); const fwd=new T.Vector3(-Math.sin(curYaw),-0.08,-Math.cos(curYaw)); flash.target.position.copy(cam.position).add(fwd);
   if(exitSign)exitSign.material.color.setHSL(lv.amb==='home'?0.13:0.0,1,0.4+0.15*Math.sin(now/200));
   puzMeshes.forEach(m=>m.material.color.setHex(m.userData.cell.on?0x30ff60:(Math.sin(now/300+m.userData.cell.tone)>0?0xffb020:0x553322)));
+  if(flareL){if(G.flare){flareL.position.set(G.flare.x*CS,0.5,G.flare.y*CS);flareL.intensity=2.2+Math.random()*0.8;}else flareL.intensity=0;}
   if(water)water.opacity=0.75+0.08*Math.sin(now/600);
   if(sparks)sparks.visible=Math.random()<0.55;
   // monsters
