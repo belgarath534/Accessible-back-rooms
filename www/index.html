@@ -244,6 +244,11 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.6.1: new menu music</h2>
+      <ul>
+        <li>The main menu now plays The Dread, picked by the players. No more buzzing lights or screams on the menu.</li>
+        <li>The Frontrooms has new music: Unnatural Situation.</li>
+      </ul>
       <h2>Version 0.6: the way home</h2>
       <ul>
         <li>The story now has 15 levels and a real ending. Can you find your way home?</li>
@@ -253,7 +258,6 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
         <li>The Frontrooms: your own house, and the Mimic, who calls you in a voice you know.</li>
         <li>3D graphics. Switch between 3D and classic in Settings.</li>
         <li>Level select: replay any chapter you have reached. Tapes you find are now kept forever.</li>
-        <li>New main menu music, with the buzz of the lights from the very first second.</li>
         <li>Three new achievements.</li>
       </ul>
       <h2>Version 0.5.1: louder firecrackers</h2>
@@ -302,6 +306,11 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.6.1: nova música no menu</h2>
+      <ul>
+        <li>O menu principal agora toca The Dread, escolhida pelos jogadores. Sem mais lâmpadas zumbindo ou gritos no menu.</li>
+        <li>Os Quartos da Frente têm música nova: Unnatural Situation.</li>
+      </ul>
       <h2>Versão 0.6: o caminho de casa</h2>
       <ul>
         <li>A história agora tem 15 níveis e um final de verdade. Você consegue encontrar o caminho de casa?</li>
@@ -311,7 +320,6 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
         <li>Os Quartos da Frente: a sua própria casa, e o Imitador, que chama você com uma voz que você conhece.</li>
         <li>Gráficos 3D. Troque entre 3D e clássico nas Configurações.</li>
         <li>Escolher nível: jogue de novo qualquer capítulo que você já alcançou. As fitas encontradas agora ficam guardadas para sempre.</li>
-        <li>Nova música no menu principal, com o zumbido das lâmpadas desde o primeiro segundo.</li>
         <li>Três novas conquistas.</li>
       </ul>
       <h2>Versão 0.5.1: bombinhas mais fortes</h2>
@@ -384,7 +392,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
     <p data-l="en"><b>Accessible Backrooms</b>, designed and built with Claude Code. Inspired by the Backrooms, a shared internet legend, and the community wiki that grew around it.</p>
     <p data-l="pt"><b>Backrooms Acessível</b>, criado e construído com o Claude Code. Inspirado nos Backrooms, uma lenda compartilhada da internet, e na wiki da comunidade que cresceu em volta dela.</p>
     <h2><span data-l="en">Music</span><span data-l="pt">Música</span></h2>
-    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four”, “Echoes of Time v2”, “Spider Eyes”, “Ossuary 6 - Air”, “Static Motion”, “Night of Chaos”, “Hush”, “Anguish”. <span data-l="en">Licensed under</span><span data-l="pt">Licença</span> <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
+    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four”, “Echoes of Time v2”, “Spider Eyes”, “Ossuary 6 - Air”, “The Dread”, “Night of Chaos”, “Hush”, “Unnatural Situation”. <span data-l="en">Licensed under</span><span data-l="pt">Licença</span> <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
     <h2><span data-l="en">Sound effects</span><span data-l="pt">Efeitos sonoros</span></h2>
     <p>“Female Screams”, congusbongus, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
     <p>“Long deep impact”, ROHHSA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
@@ -458,7 +466,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
 <script>
 "use strict";
-const VERSION='0.6';
+const VERSION='0.6.1';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -1116,20 +1124,7 @@ function fadeTrack(name,v,sec=2){if(!A.ctx)return;if(name==='musicbox'){musicBox
   clearTimeout(tr.to);if(v===0)tr.to=setTimeout(()=>{if(tr.want===0)tr.el.pause();},sec*1000+800);}
 function unlockTracks(){TRACKS.forEach(n=>{const tr=track(n);const pr=tr.el.play();if(pr&&pr.then)pr.then(()=>{if(tr.want===0)tr.el.pause();}).catch(()=>{});});}
 let chaseLevel=-1;
-function onlyMusic(list,sec=2.5){TRACKS.forEach(n=>{const v=list[n]||0;if(v||(TR[n]&&TR[n].want))fadeTrack(n,v,sec);});musicBox(!!list.musicbox);calliope(!!list.calliope);menuHum(!!list.menu);}
-// the menu: the buzz of fluorescent lights starts instantly, with something far away in the halls
-const MH={on:false,nodes:[],timers:[]};
-function menuHum(on){if(!A.ctx||on===MH.on)return;MH.on=on;const t0=now();
-  if(!on){MH.timers.forEach(clearTimeout);MH.timers=[];const g=MH.g;if(g){g.gain.cancelScheduledValues(t0);g.gain.setTargetAtTime(0.0001,t0,0.4);}const ns=MH.nodes;MH.nodes=[];setTimeout(()=>ns.forEach(n=>{try{n.stop();}catch(e){}}),2500);return;}
-  const g=MH.g=gainNode(0);g.gain.setTargetAtTime(0.09,t0,0.05);g.connect(A.music);
-  const lp=filt('lowpass',1100,1);lp.connect(g);
-  const o1=A.ctx.createOscillator();o1.type='sawtooth';o1.frequency.value=120;const o2=A.ctx.createOscillator();o2.type='square';o2.frequency.value=240;const g2=gainNode(0.2);
-  o1.connect(lp);o2.connect(g2).connect(lp);o1.start(t0);o2.start(t0);
-  const hs=A.ctx.createBufferSource();hs.buffer=A.noise;hs.loop=true;const hg=gainNode(0.025);hs.connect(filt('highpass',5000)).connect(hg).connect(g);hs.start(t0);
-  MH.nodes=[o1,o2,hs];
-  const later=(fn,min,max)=>{const go=()=>{if(!MH.on)return;fn();MH.timers.push(setTimeout(go,min+Math.random()*(max-min)));};MH.timers.push(setTimeout(go,min+Math.random()*(max-min)));};
-  later(()=>{const tt=now();g.gain.setValueAtTime(0.09,tt);g.gain.linearRampToValueAtTime(0.004,tt+0.03);g.gain.setValueAtTime(0.004,tt+0.1);g.gain.linearRampToValueAtTime(0.09,tt+0.13);g.gain.linearRampToValueAtTime(0.004,tt+0.22);g.gain.linearRampToValueAtTime(0.09,tt+0.3);},5000,12000);
-  later(()=>play(pick(['farscream','farscream2','howl','moan','growl1']),{pan:rndPos(0),vol:0.22,muffle:0.75,dest:A.music,rate:0.85+Math.random()*0.15}),9000,22000);}
+function onlyMusic(list,sec=2.5){TRACKS.forEach(n=>{const v=list[n]||0;if(v||(TR[n]&&TR[n].want))fadeTrack(n,v,sec);});musicBox(!!list.musicbox);calliope(!!list.calliope);}
 function menuMusic(){onlyMusic({menu:0.7},2);}
 function levelMusic(){if(!A.ctx)return;const lv=L();const m={drone:lv.calm?0:0.25};m[lv.music]=SYNTHM[lv.music]?1:lv.secret?0.3:0.6;if(lv.run)m.chase=0.5;onlyMusic(m,3);chaseLevel=-1;setChase(99);}
 function stopAllMusic(sec=1){onlyMusic({},sec);chaseLevel=0;}

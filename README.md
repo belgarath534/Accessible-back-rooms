@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.6**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.6.1**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.6.1**: new menu music ("The Dread", picked by players), no buzzing or screams on the menu, new Frontrooms music ("Unnatural Situation").
 - **0.6**: the story grows to 15 levels with a real ending (the Endless City, the Silent Library, the Carnival, the Frontrooms), four new monsters, 3D graphics (three.js, switchable to classic), level select, tapes kept between runs, new menu music, three new achievements.
 - **0.5.1**: stronger firecrackers (longer lure, you hear monsters rush to the bang, auto-aims down an open path).
 - **0.5**: tutorial, hiding spots, Level 4 (the Abandoned Office) with the Clump, Level 9 (the Suburbs) with the Window Watchers, retry buttons, four new achievements.
@@ -41,7 +42,7 @@ Opening `index.html` directly from disk will not load the audio files in most br
 
 ## Credits
 
-Music by Kevin MacLeod (incompetech.com): "Dark Hallway", "Unseen Horrors", "Dark Fog", "Penumbra", "Gathering Darkness", "Lightless Dawn", "Long Note Four", "Echoes of Time v2", "Spider Eyes", "Ossuary 6 - Air", "Static Motion", "Night of Chaos", "Hush" and "Anguish". 3D graphics use three.js (MIT license). Licensed under Creative Commons: By Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/).
+Music by Kevin MacLeod (incompetech.com): "Dark Hallway", "Unseen Horrors", "Dark Fog", "Penumbra", "Gathering Darkness", "Lightless Dawn", "Long Note Four", "Echoes of Time v2", "Spider Eyes", "Ossuary 6 - Air", "The Dread", "Night of Chaos", "Hush" and "Unnatural Situation". 3D graphics use three.js (MIT license). Licensed under Creative Commons: By Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/).
 
 Sound effects from OpenGameArt.org:
 
