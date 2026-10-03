@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.10.1**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.10.2**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.10.2**: Safari audio session set to playback (play-and-record with voice commands), music wakes right after each spoken line.
 - **0.10.1**: audio wakes back up after iOS pauses it for the microphone; gentler speech recognition restarts.
 - **0.10**: new items (Royal Rations, flares, bear traps, wind-up music boxes), story log shows the last five messages and is readable by VoiceOver, history command.
 - **0.9.1**: every story level has its own music (new tracks for the Office and the Suburbs), four new tracks for extra levels.

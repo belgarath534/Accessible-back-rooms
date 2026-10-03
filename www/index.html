@@ -249,6 +249,8 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.10.2: sound fix for spoken narration</h2>
+      <ul><li>Fixed: in Safari on iPhone, spoken narration could stop the music. The game now tells the iPhone it plays sound, and brings the music back right after the voice speaks.</li></ul>
       <h2>Version 0.10.1: sound fix</h2>
       <ul><li>Fixed: on iPhone, turning on voice commands could stop all the music and sound. The sound now comes back by itself, and the microphone restarts more gently.</li></ul>
       <h2>Version 0.10: new items</h2>
@@ -356,6 +358,8 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.10.2: correção de som com narração falada</h2>
+      <ul><li>Corrigido: no Safari do iPhone, a narração falada podia parar a música. Agora o jogo avisa o iPhone que toca som, e traz a música de volta logo depois que a voz fala.</li></ul>
       <h2>Versão 0.10.1: correção de som</h2>
       <ul><li>Corrigido: no iPhone, ligar os comandos de voz podia parar toda a música e o som. Agora o som volta sozinho, e o microfone reinicia com mais calma.</li></ul>
       <h2>Versão 0.10: itens novos</h2>
@@ -567,7 +571,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 
 <script>
 "use strict";
-const VERSION='0.10.1';
+const VERSION='0.10.2';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -1138,7 +1142,7 @@ const A={ctx:null,ambNodes:[],timers:[],buf:{}};
 function initAudio(){
   if(A.ctx){if(A.ctx.state==='suspended')A.ctx.resume();return;}
   const C=window.AudioContext||window.webkitAudioContext; if(!C)return;
-  const ctx=new C(); A.ctx=ctx; ctx.onstatechange=()=>{if(ctx.state!=='running')setTimeout(audioWake,500);};
+  audioSession(S.mic); const ctx=new C(); A.ctx=ctx; ctx.onstatechange=()=>{if(ctx.state!=='running')setTimeout(audioWake,500);};
   A.master=ctx.createGain(); A.master.gain.value=0.9;
   const comp=ctx.createDynamicsCompressor(); A.master.connect(comp).connect(ctx.destination);
   A.rev=ctx.createConvolver(); A.rev.buffer=impulse(3.2,2.4);
@@ -1274,7 +1278,9 @@ function fadeTrack(name,v,sec=2){if(!A.ctx)return;if(name==='musicbox'){musicBox
 function audioWake(){if(!A.ctx)return;try{if(A.ctx.state!=='running'&&A.ctx.state!=='closed')A.ctx.resume().catch(()=>{});}catch(e){}
   Object.values(TR).forEach(tr=>{if(tr.want>0&&tr.el.paused){const pr=tr.el.play();if(pr&&pr.catch)pr.catch(()=>{});}});
   if(A.master&&A.master.gain.value<0.01&&performance.now()-(G.lastJump||0)>6000){A.master.gain.cancelScheduledValues(now());A.master.gain.setValueAtTime(0.9,now());}}
-setInterval(audioWake,2000);
+setInterval(audioWake,1000);
+// Safari 17+: tell iOS this page plays sound (and records when voice commands are on), so speech and the mic do not shut the music off
+function audioSession(rec){try{if(navigator.audioSession)navigator.audioSession.type=rec?'play-and-record':'playback';}catch(e){}}
 ['pointerdown','keydown','touchend'].forEach(ev=>document.addEventListener(ev,audioWake,{passive:true,capture:true}));
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(audioWake,300);});
 function unlockTracks(){TRACKS.forEach(n=>{const tr=track(n);const pr=tr.el.play();if(pr&&pr.then)pr.then(()=>{if(tr.want===0)tr.el.pause();}).catch(()=>{});});}
@@ -1397,7 +1403,7 @@ function pickVoice(){if(!('speechSynthesis' in window))return;const vs=speechSyn
   voice=en.find(v=>/en(-|_)US/i.test(v.lang)&&/natural|google|samantha|aria|jenny/i.test(v.name))||en[0]||null;
   voice2=en.find(v=>v!==voice&&/female|zira|karen|moira|tessa|fiona|victoria|google uk/i.test(v.name))||en.find(v=>v!==voice)||voice;}
 if('speechSynthesis' in window){pickVoice();speechSynthesis.onvoiceschanged=pickVoice;}
-function utter(text,{pitch=1,rate=S.rate,v=voice,vol=1}={}){const u=new SpeechSynthesisUtterance(text);u.rate=rate;u.pitch=pitch;u.volume=vol;if(v)u.voice=v;u.lang=LANG==='pt'?'pt-BR':'en-US';return u;}
+function utter(text,{pitch=1,rate=S.rate,v=voice,vol=1}={}){const u=new SpeechSynthesisUtterance(text);u.addEventListener('start',()=>setTimeout(audioWake,120));u.addEventListener('end',()=>setTimeout(audioWake,80));u.rate=rate;u.pitch=pitch;u.volume=vol;if(v)u.voice=v;u.lang=LANG==='pt'?'pt-BR':'en-US';return u;}
 function say(text,{log=true,extras}={}){
   const ex=extras||G.extras; G.extras=[];
   const hold=(G.holdSpeech||0)-performance.now(); if(hold>0){setTimeout(()=>say(text,{log,extras:ex}),hold+30);return;}
@@ -1454,7 +1460,7 @@ function tap(style){try{if(HAP)HAP.impact({style:style||'LIGHT'}).catch(()=>{});
 function setMic(on,silent){
   if(NSR){S.mic=on;setMicUI();NS.gen++;if(on){NS.running=false;nativeListen();}else{try{NSR.stop();}catch(e){}}return;}
   if(!SR){if(on&&!silent)say(t('Voice commands are not supported in this browser. Try Chrome, Edge or Safari, or use the buttons and keyboard.'));return;}
-  S.mic=on; setMicUI();
+  S.mic=on; setMicUI(); audioSession(on);
   if(on){ if(!rec){rec=new SR();rec.lang=LANG==='pt'?'pt-BR':'en-US';rec.continuous=true;rec.interimResults=false;rec.maxAlternatives=3;
       const me=rec;
       rec.onresult=e=>{for(let i=e.resultIndex;i<e.results.length;i++){if(!e.results[i].isFinal)continue;heardSpeech([...e.results[i]].map(a=>a.transcript.trim().toLowerCase()));}};
