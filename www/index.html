@@ -111,6 +111,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
         <button id="mSettings"><span data-l="en">Settings</span><span data-l="pt">Configurações</span></button>
         <button id="mTut"><span data-l="en">Tutorial</span><span data-l="pt">Tutorial</span></button>
         <button id="mHowto"><span data-l="en">How to play</span><span data-l="pt">Como jogar</span></button>
+        <button id="mBest"><span data-l="en">Bestiary</span><span data-l="pt">Bestiário</span></button>
         <button id="mJournal"><span data-l="en">Journal</span><span data-l="pt">Diário</span></button>
         <button id="mAch"><span data-l="en">Achievements</span><span data-l="pt">Conquistas</span></button>
         <button id="mNews"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></button>
@@ -264,6 +265,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.15: footsteps</h2>
+      <ul>
+        <li>Monsters now have footsteps. You hear them walking toward you, from the direction they are coming, and every monster sounds different: claws, heavy thuds, dragging, squeaky shoes, sharp heels.</li>
+        <li>Your own footsteps are louder and clearer.</li>
+        <li>Bestiary: every creature you meet is added, with how to survive it and a button to hear its sound safely. Find it in the main menu, or say bestiary.</li>
+        <li>New achievement: meet every creature.</li>
+      </ul>
       <h2>Version 0.14: new places and a daily challenge</h2>
       <ul>
         <li>Three handmade extra levels after the story: Level 15, the Hospital, with the Patients on squeaking gurneys. Level 16, the Endless Hotel, where the Bellhop offers you room service. Level 17, the Frozen Field, where every step crunches in the snow and the Frostbitten follow your trail.</li>
@@ -402,6 +410,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.15: passos</h2>
+      <ul>
+        <li>Os monstros agora têm passos. Você ouve eles andando na sua direção, do lado de onde estão vindo, e cada monstro soa diferente: garras, pancadas pesadas, algo se arrastando, sapatos rangendo, saltos batendo.</li>
+        <li>Os seus próprios passos estão mais altos e claros.</li>
+        <li>Bestiário: toda criatura que você encontra é adicionada, com como sobreviver e um botão para ouvir o som dela com segurança. Fica no menu principal, ou diga bestiário.</li>
+        <li>Nova conquista: encontrar todas as criaturas.</li>
+      </ul>
       <h2>Versão 0.14: lugares novos e um desafio diário</h2>
       <ul>
         <li>Três níveis extras feitos à mão depois da história: Nível 15, o Hospital, com os Pacientes em macas que rangem. Nível 16, o Hotel Sem Fim, onde o Mensageiro oferece serviço de quarto. Nível 17, o Campo Congelado, onde cada passo range na neve e os Congelados seguem o seu rastro.</li>
@@ -576,6 +591,14 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <div class="stack"><button class="backBtn primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
   </section>
 
+  <!-- ============ BESTIARY ============ -->
+  <section id="bestiary" class="screen" hidden aria-labelledby="bTitle">
+    <h1 id="bTitle" tabindex="-1"><span data-l="en">Bestiary</span><span data-l="pt">Bestiário</span></h1>
+    <p id="bCount"></p>
+    <ul id="bList" class="stats"></ul>
+    <div class="stack"><button class="backBtn primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
+  </section>
+
   <!-- ============ LEVEL SELECT ============ -->
   <section id="levels" class="screen" hidden aria-labelledby="lvTitle">
     <h1 id="lvTitle" tabindex="-1"><span data-l="en">Level select</span><span data-l="pt">Escolher nível</span></h1>
@@ -672,7 +695,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.14';
+const VERSION='0.15';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -823,6 +846,13 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'New entry in your bestiary: {name}.':'Nova entrada no seu bestiário: {name}.',
+ '??? You have not met this one yet.':'??? Você ainda não encontrou este.',
+ 'How to survive:':'Como sobreviver:',
+ 'Hear {name}':'Ouvir {name}',
+ '{n} of {total} creatures met.':'{n} de {total} criaturas encontradas.',
+ 'Bestiary. {n} of {total} creatures met. Each one has a hear it button, so you can learn its sound safely. Say back to return.':'Bestiário. {n} de {total} criaturas encontradas. Cada uma tem um botão de ouvir, para você aprender o som dela com segurança. Diga voltar para sair.',
+ 'bestiary':'bestiário',
  'Somewhere {w}, someone knocks, and says:':'Em algum lugar {w}, alguém bate e diz:',
  'The Patient lurches off its gurney and grabs you with cold, bandaged hands!':'O Paciente salta da maca e agarra você com mãos frias e enfaixadas!',
  'The Bellhop takes your arm, smiling. Your room is ready. You tear yourself free!':'O Mensageiro segura o seu braço, sorrindo. O seu quarto está pronto. Você se solta à força!',
@@ -1324,6 +1354,33 @@ const NOTES={en:[
  'Uma página rasgada, com letra tremida: corra corra corra corra corra.',
  'Um bilhete na porta do seu próprio quarto, com a sua própria letra: Não confie na voz da cozinha. Ninguém está cozinhando.']};
 const NNOTES=15;
+const BEST={
+ howler:{en:['A tall, thin shape that waits in the halls, howling.','It is slow to notice you. Keep moving, and do not let it corner you.'],pt:['Uma forma alta e magra que espera nos corredores, uivando.','Demora para notar você. Continue andando, e não deixe que ele te encurrale.']},
+ smiler:{en:['Only a grin and two eyes, glowing in the dark.','It only hunts in the dark. Turn on your flashlight or light a flare, and it runs.'],pt:['Só um sorriso e dois olhos, brilhando no escuro.','Só caça no escuro. Acenda a lanterna ou um sinalizador, e ele foge.']},
+ hound:{en:['A fast, low creature on four legs, with claws that click on the floor.','It is fast and sometimes runs two rooms at once. Hide, or lure it away with a firecracker.'],pt:['Uma criatura rápida e baixa, de quatro patas, com garras que estalam no chão.','É rápido e às vezes corre duas salas de uma vez. Esconda-se, ou atraia com uma bombinha.']},
+ skin:{en:['It looks and sounds almost human. It copies voices.','If a voice calls you, do not follow it. Listen for breathing that is not quite right.'],pt:['Parece e soa quase humano. Ele copia vozes.','Se uma voz chamar você, não siga. Escute a respiração que não está bem certa.']},
+ party:{en:['A yellow, smiling thing that wants you at the party.','It is fast. Find the keycard quickly and do not let it hug you.'],pt:['Uma coisa amarela e sorridente que quer você na festa.','É rápido. Encontre o cartão logo e não deixe que ele abrace você.']},
+ moths:{en:['A swarm of huge moths in the dark.','They come to light. Turn your flashlight off when you hear wings.'],pt:['Um enxame de mariposas enormes no escuro.','Vêm atrás de luz. Desligue a lanterna quando ouvir asas.']},
+ face:{en:['A gentle person with no face, humming.','Harmless. Talk to one, and it points you to the exit and to supplies.'],pt:['Uma pessoa gentil sem rosto, cantarolando.','Inofensivo. Converse, e ele aponta a saída e os suprimentos.']},
+ deep:{en:['Something enormous under the black water. It sings.','It can only reach you while you stand in water. Stay dry when it sings.'],pt:['Algo enorme debaixo da água negra. Ele canta.','Só alcança você enquanto você estiver na água. Fique no seco quando ele cantar.']},
+ clump:{en:['A huge, wet mass of hands and mouths.','Very slow, but it fills the whole corridor. Go around it.'],pt:['Uma massa enorme e molhada de mãos e bocas.','Muito lento, mas enche o corredor inteiro. Dê a volta.']},
+ watcher:{en:['A pale face in a window, tapping on the glass.','It only moves when you are not listening. Say listen, and it freezes.'],pt:['Um rosto pálido numa janela, batendo no vidro.','Só se mexe quando você não está escutando. Diga escutar, e ele congela.']},
+ wretch:{en:['Someone who was lost here far too long.','If it spots you, it shrieks, and everything nearby comes. Stay out of its sight.'],pt:['Alguém que ficou perdido aqui tempo demais.','Se ele vir você, grita, e tudo por perto vem. Fique fora da vista dele.']},
+ librarian:{en:['Tall, blind, and quiet. It hears every step.','Sneak, and it cannot hear you. Standing still is safe.'],pt:['Alta, cega e silenciosa. Ela ouve cada passo.','Ande agachado, e ela não ouve você. Ficar parado é seguro.']},
+ jester:{en:['Bells, a painted face, and laughter.','It does not walk. It appears near you. Keep moving, and listen for the bells.'],pt:['Guizos, um rosto pintado e risadas.','Ele não anda. Ele aparece perto de você. Continue andando, e escute os guizos.']},
+ mimic:{en:['It calls you in the voices of your family.','Do not answer it. Nobody is cooking.'],pt:['Ele chama você com as vozes da sua família.','Não responda. Ninguém está cozinhando.']},
+ chaser:{en:['Something enormous, at the end of everything.','Do not stop. Sprint, and never look back.'],pt:['Algo enorme, no fim de tudo.','Não pare. Corra, e nunca olhe para trás.']},
+ host:{en:['The thing that lives in your house now. It always knows where you are.','You cannot outrun it. Flares scare it, traps hold it, music boxes lead it away.'],pt:['A coisa que mora na sua casa agora. Ela sempre sabe onde você está.','Você não consegue fugir dele. Sinalizadores o espantam, armadilhas o prendem, caixinhas de música o levam embora.']},
+ patient:{en:['A patient who never left, rolling on a squeaking gurney.','You will hear the wheels coming. Hide behind a curtain until they pass.'],pt:['Um paciente que nunca saiu, rolando numa maca que range.','Você vai ouvir as rodinhas chegando. Esconda-se atrás de uma cortina até passar.']},
+ bellhop:{en:['A polite voice, knocking on doors, offering room service.','Never follow room service. It copies voices like the Skin-Stealer.'],pt:['Uma voz educada, batendo nas portas, oferecendo serviço de quarto.','Nunca siga o serviço de quarto. Ele copia vozes como o Ladrão de Pele.']},
+ frost:{en:['Frozen and slow, following footprints in the snow.','Sneaking does not help in the snow. Keep moving, and do not stop to rest.'],pt:['Congelado e lento, seguindo pegadas na neve.','Andar agachado não ajuda na neve. Continue andando, e não pare para descansar.']},
+ survivor:{en:['Another lost person. Or something pretending to be one.','A real survivor breathes and helps you. A fake one repeats its words and does not breathe.'],pt:['Outra pessoa perdida. Ou algo fingindo ser uma.','Um sobrevivente de verdade respira e ajuda você. Um falso repete as palavras e não respira.']},
+ marcus:{en:['The man who made the tapes.','He has been waiting a long time. Find him.'],pt:['O homem que gravou as fitas.','Ele está esperando há muito tempo. Encontre-o.']}};
+const bareName=ty=>cap((LANG==='pt'?MT[ty].pt.name:MT[ty].name).replace(/^(the|a|an|um|uma|o|a|os|as) /i,''));
+const BORDER=['howler','smiler','hound','skin','clump','party','moths','watcher','deep','face','wretch','jester','librarian','chaser','mimic','host','survivor','patient','bellhop','frost','marcus'];
+function seeMon(type){if(!BEST[type])return;const seen=lsGet('br_seen',{});if(seen[type])return;seen[type]=1;lsSet('br_seen',seen);
+  G.extras.push({text:t('New entry in your bestiary: {name}.',{name:bareName(type)})});
+  if(BORDER.filter(x=>x!=='marcus').every(x=>seen[x]))unlock('bestiary');}
 const ITEMNAME={en:{water:'a bottle of almond water',fire:'a firecracker',battery:'a battery',energy:'an energy bar',tape:'a cassette tape',flashlight:'a flashlight',radio:'a walkie-talkie',keycard:'a keycard',note:'a handwritten note',ration:'a Royal Ration',flare:'a flare',trap:'a bear trap',decoy:'a wind-up music box'},
   pt:{water:'uma garrafa de água de amêndoa',fire:'uma bombinha',battery:'uma pilha',energy:'uma barra de energia',tape:'uma fita cassete',flashlight:'uma lanterna',radio:'um walkie-talkie',keycard:'um cartão de acesso',note:'um bilhete escrito à mão',ration:'uma Ração Real',flare:'um sinalizador',trap:'uma armadilha de urso',decoy:'uma caixinha de música de corda'}};
 const LX=k=>{const lv=L();return LANG==='pt'&&lv.pt[k]!==undefined?lv.pt[k]:lv[k];};
@@ -1404,8 +1461,9 @@ function sfx(fn,...args){if(!A.ctx)return;try{fn(...args);}catch(e){}}
 function footstep(vol=1,muffle=0){const t=now(),st=isWater(G.x,G.y)?'water':L().step;
   if(st==='grass'){for(let i=0;i<2;i++){const tt=t+i*0.3;const n=noise(tt,0.2);const g=gainNode(0);envelope(g,tt,0.02,0.4*vol*(G.sneak?0.35:1),0.15);n.connect(filt('bandpass',2500,0.6)).connect(g).connect(spot(i?0.15:-0.15,1,muffle));}return;}
   if(st==='snow'){for(let i=0;i<2;i++){const tt=t+i*0.32;const n=noise(tt,0.25);const g=gainNode(0);envelope(g,tt,0.01,0.55*vol*(G.sneak?0.5:1),0.2);n.connect(filt('lowpass',1800,0.7)).connect(g).connect(spot(i?0.15:-0.15,1,muffle));}return;}
-  if(st==='water'){for(let i=0;i<2;i++){const tt=t+i*0.3;const n=noise(tt,0.4);const g=gainNode(0);envelope(g,tt,0.02,0.5*vol,0.3);n.connect(filt('bandpass',700+rand(300),0.8)).connect(g).connect(spot(i?0.2:-0.2,1,muffle));}return;}for(let i=0;i<2;i++){const tt=t+i*0.27;const out=spot(i?0.15:-0.15,(st==='carpet'?0.55:0.45)*vol*(G.sneak?0.35:1),muffle);
-  const n=noise(tt,0.12);const f=st==='carpet'?filt('lowpass',420,0.8):st==='tile'?filt('bandpass',3200,2):st==='metal'?filt('bandpass',2400,2):filt('bandpass',1300,1.2);
+  if(st==='water'){for(let i=0;i<2;i++){const tt=t+i*0.3;const n=noise(tt,0.4);const g=gainNode(0);envelope(g,tt,0.02,0.5*vol,0.3);n.connect(filt('bandpass',700+rand(300),0.8)).connect(g).connect(spot(i?0.2:-0.2,1,muffle));}return;}for(let i=0;i<2;i++){const tt=t+i*0.27;const out=spot(i?0.15:-0.15,(st==='carpet'?0.9:0.75)*vol*(G.sneak?0.35:1),muffle);
+  {const th=osc('sine',85,tt,0.12);th.frequency.exponentialRampToValueAtTime(48,tt+0.1);const tg=gainNode(0);envelope(tg,tt,0.003,0.5,0.1);th.connect(tg).connect(out);}
+  const n=noise(tt,0.12);const f=st==='carpet'?filt('lowpass',950,0.8):st==='tile'?filt('bandpass',3200,2):st==='metal'?filt('bandpass',2400,2):filt('bandpass',1300,1.2);
   const g=gainNode(0);envelope(g,tt,0.005,1,st==='carpet'?0.12:0.08);n.connect(f).connect(g).connect(out);
   if(st==='metal'){const o=osc('sine',880+rand(80),tt,0.25);const og=gainNode(0);envelope(og,tt,0.002,0.12,0.22);o.connect(og).connect(out);}
   if(st==='tile'){const o=osc('sine',300+rand(60),tt,0.2);o.frequency.exponentialRampToValueAtTime(120,tt+0.15);const og=gainNode(0);envelope(og,tt,0.002,0.15,0.15);o.connect(filt('lowpass',800)).connect(og).connect(out);}}}
@@ -1482,6 +1540,24 @@ function loadAssets(){SFXF.forEach(n=>{fetch('audio/'+n+'.mp3').then(r=>r.arrayB
 function play(name,{pan=0,vol=1,muffle=0,rate=1,dest,delay=0}={}){if(!A.ctx)return false;const b=A.buf[name];if(!b)return false;const src=A.ctx.createBufferSource();src.buffer=b;src.playbackRate.value=rate;src.connect(spot(pan,vol,muffle,dest));src.start(now()+delay);return true;}
 function shush(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const n=noise(t,1.8);const g=gainNode(0);g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.5,t+0.35);g.gain.setValueAtTime(0.5,t+1.1);g.gain.linearRampToValueAtTime(0.0001,t+1.7);n.connect(filt('bandpass',4200,1.2)).connect(g).connect(out);}
 function jingle(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);for(let i=0;i<9;i++){const tt=t+i*0.07+Math.random()*0.04;const f=2800+rand(1600);[1,2.4].forEach((m,k)=>{const o=osc('sine',f*m,tt,0.25);const g=gainNode(0);envelope(g,tt,0.002,k?0.04:0.12,0.2);o.connect(g).connect(out);});}}
+// every monster walks differently, so you can hear what is coming, and from where
+function monStep(m,pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const ty=m.type;
+  const thud=(tt,f,amp,len)=>{const o=osc('sine',f,tt,len+0.05);o.frequency.exponentialRampToValueAtTime(f*0.55,tt+len);const g=gainNode(0);envelope(g,tt,0.004,amp,len);o.connect(g).connect(out);const n=noise(tt,0.06);const ng=gainNode(0);envelope(ng,tt,0.002,amp*0.5,0.05);n.connect(filt('lowpass',600)).connect(ng).connect(out);};
+  const tap=(tt,f,amp,len)=>{const n=noise(tt,len+0.02);const g=gainNode(0);envelope(g,tt,0.001,amp,len);n.connect(filt('bandpass',f,2.5)).connect(g).connect(out);};
+  if(ty==='hound'){for(let i=0;i<4;i++){const tt=t+i*0.09;tap(tt,900,0.5,0.04);tap(tt+0.02,3500,0.25,0.015);}return;}
+  if(ty==='chaser'||ty==='host'){thud(t,60,1,0.35);thud(t+0.55,55,1,0.35);if(ty==='host'){const n=noise(t+0.05,0.3);const g=gainNode(0);envelope(g,t+0.05,0.02,0.3,0.25);n.connect(filt('bandpass',500,1)).connect(g).connect(out);}return;}
+  if(ty==='frost'){thud(t,75,0.7,0.25);tap(t,2600,0.35,0.08);thud(t+0.7,70,0.7,0.25);tap(t+0.7,2400,0.35,0.08);return;}
+  if(ty==='clump'){const n=noise(t,0.9);const f=filt('lowpass',300,1);f.frequency.setValueAtTime(200,t);f.frequency.linearRampToValueAtTime(700,t+0.4);f.frequency.linearRampToValueAtTime(250,t+0.85);const g=gainNode(0);envelope(g,t,0.15,0.6,0.7);n.connect(f).connect(g).connect(out);return;}
+  if(ty==='deep'){const n=noise(t,0.7);const g=gainNode(0);envelope(g,t,0.1,0.5,0.55);n.connect(filt('lowpass',450,0.8)).connect(g).connect(out);return;}
+  if(ty==='librarian'){tap(t,2200,0.45,0.03);tap(t+0.75,2100,0.45,0.03);return;}
+  if(ty==='party'){[0,0.3].forEach(d=>{const o=osc('sine',1300,t+d,0.08);o.frequency.linearRampToValueAtTime(1900,t+d+0.06);const g=gainNode(0);envelope(g,t+d,0.005,0.12,0.06);o.connect(g).connect(out);tap(t+d,1200,0.3,0.05);});return;}
+  if(ty==='jester'){sfx(jingle,pan,vol*0.5,muffle);return;}
+  if(ty==='smiler'){for(let i=0;i<6;i++)tap(t+i*0.05+Math.random()*0.02,3000,0.18,0.012);return;}
+  if(ty==='patient'){sfx(squeak,pan,vol*0.6);return;}
+  if(ty==='moths'||ty==='watcher'||ty==='marcus')return;
+  // people, and things pretending to be people
+  [0,0.42].forEach(d=>{thud(t+d,95,0.45,0.1);tap(t+d,1400,0.35,0.05);});
+}
 function monSound(m,pan,vol,muffle){const T=MT[m.type];
   if(m.type==='patient'){sfx(squeak,pan,vol*0.8);setTimeout(()=>sfx(squeak,pan,vol*0.6),260);}
   if(m.type==='frost'){const t0=now();const out=spot(pan,vol,muffle);for(let i=0;i<4;i++){const tt=t0+i*0.09;const n=noise(tt,0.05);const g=gainNode(0);envelope(g,tt,0.001,0.5,0.04);n.connect(filt('highpass',3000)).connect(g).connect(out);}}
@@ -1746,6 +1822,7 @@ function parseEn(s){
   if(has(/ (3d|3 d|three d) (graphics|view|on) |^ (3d|3 d|three d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classic|2d|2 d|two d)( graphics| view)? /))return{c:'gfx',n:'classic'};
   if(has(/ (daily|daily challenge|challenge|today) /))return{c:'daily'};
+  if(has(/ (bestiary|monsters|monster list|creatures) /))return{c:'bestiary'};
   if(has(/ (journal|notes|my notes|diary) /))return{c:'journal'};
   if(has(/ (new game plus|new game \+|game plus|ng plus) /))return{c:'ngp'};
   if(has(/ (custom words|custom voice words|my words|voice words) /))return{c:'words'};
@@ -1827,6 +1904,7 @@ function parsePt(s){
   if(has(/ (3d|3 d|tres d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classico|graficos classicos|2d|2 d) /))return{c:'gfx',n:'classic'};
   if(has(/ (desafio|desafio diario|de hoje) /))return{c:'daily'};
+  if(has(/ (bestiario|monstros|criaturas) /))return{c:'bestiary'};
   if(has(/ (diario|bilhetes|meus bilhetes|anotacoes) /))return{c:'journal'};
   if(has(/ (novo jogo mais|novo jogo \+|jogo mais) /))return{c:'ngp'};
   if(has(/ (palavras personalizadas|minhas palavras|palavras de voz) /))return{c:'words'};
@@ -1900,7 +1978,7 @@ function parsePt(s){
 }
 
 /* ============================== screens ============================== */
-const SCREENS=['splash','menu','pause','ach','levels','words','journal','setup','settings','howto','news','credits','end','game'];
+const SCREENS=['splash','menu','pause','ach','levels','words','journal','bestiary','setup','settings','howto','news','credits','end','game'];
 let screen='splash';
 function show(id,announce){
   if(id!=='game'&&G.state==='transition'){G.state='menu';clearAmb();}// leaving during a fall cancels it
@@ -1922,7 +2000,7 @@ function openMenu(){
 function showMain(prefix=''){
   $('#mContinue').hidden=!lsGet('br_save',null); $('#mLevels').hidden=chaptersOpen().length<2; $('#mExtra').hidden=!extrasOpen(); $('#mNgp').hidden=!extrasOpen();
   menuMusic();
-  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','daily challenge','endless mode','tutorial','settings','how to play','journal','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
+  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','daily challenge','endless mode','tutorial','settings','how to play','bestiary','journal','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
   show('menu',prefix+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
 }
 function quitToMain(){
@@ -2110,7 +2188,7 @@ function moveMon(m,d){if(d<0||m.stuck>0)return;const nx=m.x+DX[d],ny=m.y+DY[d];i
   const k=key(nx,ny);if(G.traps&&G.traps.has(k)&&MT[m.type].hostile&&m.type!=='chaser'){G.traps.delete(k);m.stuck=6;const {w,pan}=relDirWords(nx,ny);sfx(snapTrap,pan);setTimeout(()=>monSound(m,pan,1,0.1),250);G.extras.push({text:t('SNAP! {Name} steps into your bear trap, {w}. It is stuck for a while.',{Name:cap(MN(m)),w})});if(bumpStat('trapped')>=1)unlock('trapper');}}
 function wander(m){const ds=[0,1,2,3].filter(k=>isOpen(m.x,m.y,k));if(ds.length)moveMon(m,pick(ds));}
 function monstersTurn(){
-  const dist=bfs(G.x,G.y); const Df=DF(); let nd=null;
+  const dist=bfs(G.x,G.y); const Df=DF(); let nd=null; const before=G.mons.map(m=>[m.x,m.y]);
   if(G.noise){nd=bfs(G.noise.x,G.noise.y);G.noise.turns--;}
   if(G.alert>0)G.alert--;
   if(G.flare&&--G.flare.turns<=0){G.flare=null;G.extras.push({text:t('Your flare sputters out.')});}
@@ -2140,8 +2218,11 @@ function monstersTurn(){
     else if(Math.random()<0.5)wander(m);
   }
   if(G.noise&&G.noise.turns<=0)G.noise=null;
+  // footsteps of whatever just moved nearby, nearest first
+  if(A.ctx&&!G.inHide){const d2=bfs(G.x,G.y);G.mons.map((m,i)=>({m,moved:before[i]&&(before[i][0]!==m.x||before[i][1]!==m.y),d:d2[m.y][m.x]})).filter(o=>o.moved&&o.d<=7&&o.d>0).sort((a,b)=>a.d-b.d).slice(0,2)
+    .forEach((o,k)=>{const {pan,behind}=relDirWords(o.m.x,o.m.y);setTimeout(()=>sfx(monStep,o.m,pan,clamp(1.05-o.d*0.13,0.12,1),clamp((o.d-1)*0.12+(behind?0.15:0),0,0.85)),380+k*260);});}
 }
-function caughtBy(m){
+function caughtBy(m){seeMon(m.type);
   jumpscare(); G.hurt=performance.now(); const hit=DF().hit; G.sanity=Math.max(0,G.sanity-hit);
   const dist=bfs(G.x,G.y);
   G.caughtLevel=true;
@@ -2163,6 +2244,7 @@ function mothBite(parts){const dist=bfs(G.x,G.y);for(const m of G.mons){if(m.typ
 function monsterCues(force){
   const dist=bfs(G.x,G.y); const txt=[]; let nearest=null,nd=99;
   for(const m of G.mons){const T=MT[m.type];const d=dist[m.y][m.x];const {w,pan}=relDirWords(m.x,m.y);
+    if(d<=4&&!(m.type==='survivor'&&m.fake&&d>1))seeMon(m.type);
     if(m.type==='watcher'){if(G.watchFreeze>0){if(d<=6){glassTapNear(m);txt.push(t('You hear fingernails tapping on glass {w}. It cannot move while you listen.',{w}));}}
       else if(d<=2)txt.push(t('You feel someone staring at you, {w}.',{w}));if(d<=2)setTimeout(()=>heart(d<=1),900);continue;}
     if(m.type==='marcus'){if(d<=2)txt.push(t('Marcus is very close now, {w}. You can hear him breathing.',{w}));continue;}
@@ -2885,6 +2967,7 @@ const ACH=[
  {id:'frozen',en:['Cold Feet','Escape the Frozen Field.'],pt:['Pés Frios','Escape do Campo Congelado.']},
  {id:'daily',en:['Daily Visitor','Finish a daily challenge.'],pt:['Visitante Diário','Termine um desafio diário.']},
  {id:'daily7',en:['Seven Days','Finish the daily challenge seven days in a row.'],pt:['Sete Dias','Termine o desafio diário sete dias seguidos.']},
+ {id:'bestiary',en:['Monster Hunter','Meet every creature in the Backrooms.'],pt:['Caçador de Monstros','Encontre todas as criaturas dos Backrooms.']},
  {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']}
 ];
 const ACHV=lsGet('br_ach',{}); const STATS=lsGet('br_stats',{});
@@ -2893,6 +2976,16 @@ function unlock(id){
   if(ACHV[id])return; const a=ACH.find(a=>a.id===id); if(!a)return;
   ACHV[id]=Date.now(); lsSet('br_ach',ACHV); sfx(achSound);
   G.extras.push({text:t('Achievement unlocked: {name}.',{name:a[LANG][0]})});
+}
+function openBestiary(){
+  initAudio(); const seen=lsGet('br_seen',{}); const ul=$('#bList'); ul.innerHTML=''; let n=0;
+  BORDER.forEach(ty=>{const has=!!seen[ty]; if(ty==='marcus'&&!has)return; if(has)n++; const li=document.createElement('li');
+    if(!has){li.textContent=t('??? You have not met this one yet.');ul.appendChild(li);return;}
+    const nm=bareName(ty); const [d,tip]=BEST[ty][LANG];
+    const h=document.createElement('h2');h.textContent=nm;li.appendChild(h);const p1=document.createElement('p');p1.textContent=d+' '+t('How to survive:')+' '+tip;li.appendChild(p1);
+    const b=document.createElement('button');b.textContent=t('Hear {name}',{name:nm});b.addEventListener('click',()=>{audioWake();const m={type:ty,x:0,y:0};monSound(m,0,0.9,0);setTimeout(()=>sfx(monStep,m,0,0.9,0),1600);});li.appendChild(b);ul.appendChild(li);});
+  const total=BORDER.length-1; $('#bCount').textContent=t('{n} of {total} creatures met.',{n:Math.min(n,total),total});
+  show('bestiary',t('Bestiary. {n} of {total} creatures met. Each one has a hear it button, so you can learn its sound safely. Say back to return.',{n:Math.min(n,total),total}));
 }
 function openJournal(){
   const got=lsGet('br_notes',[]).slice().sort((a,b)=>a-b); const ol=$('#jList'); ol.innerHTML='';
@@ -2957,6 +3050,7 @@ function run(c,n,r){
     if(c==='tutorial')return startTutorial(false);
     if(c==='ach')return show('ach',renderAch());
     if(c==='journal')return openJournal();
+    if(c==='bestiary')return openBestiary();
     if(c==='extra')return startExtra();
     if(c==='ngp')return newGamePlus();
     if(c==='words')return openWords();
@@ -2988,7 +3082,7 @@ function run(c,n,r){
     case 'help':return help(); case 'menu':case 'quit':return openMenu();
     case 'play':case 'retry':case 'resume':case 'continue':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'diff':return say(t('You can change difficulty from the settings.'));
-    case 'settings':case 'credits':case 'howto':case 'news':case 'ach':case 'journal':openMenu();return run(c);
+    case 'settings':case 'credits':case 'howto':case 'news':case 'ach':case 'journal':case 'bestiary':openMenu();return run(c);
     case 'levels':case 'chapter':case 'extra':case 'ngp':case 'daily':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'endless':return say(t('You are already in the Backrooms. Say pause to stop.'));
   }
@@ -3099,6 +3193,7 @@ $('#mNews').addEventListener('click',()=>run('news'));
 $('#mEndless').addEventListener('click',startEndless);
 $('#mAch').addEventListener('click',()=>run('ach'));
 $('#mJournal').addEventListener('click',()=>run('journal'));
+$('#mBest').addEventListener('click',()=>run('bestiary'));
 $('#mLevels').addEventListener('click',()=>run('levels'));
 $('#openWords').addEventListener('click',openWords);
 $('#wSay').addEventListener('click',teachWord);
