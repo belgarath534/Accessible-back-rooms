@@ -268,6 +268,11 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.20.1: easier door codes</h2>
+      <ul>
+        <li>The keypad understands codes said in lots of ways: code 4 7 2, code four seventy two, enter the code 4 7 2, or just the three numbers when you are standing at the door.</li>
+        <li>The keypad and listen now tell you which numbers you have found so far, and repeat the full code once you have all three.</li>
+      </ul>
       <h2>Version 0.20: five new handmade levels</h2>
       <ul>
         <li>Level 18, The School Halls: never run, and watch out when the bell rings.</li>
@@ -451,6 +456,11 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.20.1: códigos de porta mais fáceis</h2>
+      <ul>
+        <li>O teclado entende o código dito de vários jeitos: código 4 7 2, ou só os três números quando você está na porta.</li>
+        <li>O teclado e o escutar agora dizem quais números você já achou, e repetem o código completo quando você tem os três.</li>
+      </ul>
       <h2>Versão 0.20: cinco novos níveis feitos à mão</h2>
       <ul>
         <li>Nível 18, Os Corredores da Escola: nunca corra, e cuidado quando o sinal tocar.</li>
@@ -804,7 +814,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.20';
+const VERSION='0.20.1';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -977,6 +987,13 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'I heard {d}, but the code has three numbers. Try again, like code 4 7 2.':'Eu ouvi {d}, mas o código tem três números. Tente de novo, tipo código 4 7 2.',
+ 'no numbers':'nenhum número',
+ 'You have not found any numbers yet. Say listen to find the nearest scrap of paper.':'Você ainda não achou nenhum número. Diga escutar para achar o pedaço de papel mais perto.',
+ 'Your notes say the code is {c}.':'Suas anotações dizem que o código é {c}.',
+ 'So far your notes say: {c}. Say listen to find the next scrap of paper.':'Até agora suas anotações dizem: {c}. Diga escutar para achar o próximo pedaço de papel.',
+ 'blank':'em branco',
+ 'At the door, say code, then the numbers.':'Na porta, diga código, e depois os números.',
  'The school bell rings! Doors bang open, and everything in the halls starts moving. Hide, or keep your distance.':'O sinal da escola toca! Portas se abrem com força, e tudo nos corredores começa a se mexer. Se esconda, ou mantenha distância.',
  'A train comes roaring through the tunnel! For a few moves, nothing can hear you over the noise. Move now!':'Um trem passa rugindo pelo túnel! Por alguns movimentos, nada consegue ouvir você com esse barulho. Ande agora!',
  'Your flashlight flickers and buzzes. Something electrical is very close, eating your battery.':'Sua lanterna pisca e chia. Algo elétrico está muito perto, comendo a sua pilha.',
@@ -2145,8 +2162,22 @@ function teachWord(){const cmd=$('#wCmd').value; if(!S.mic||!SR){say(t('Voice co
   G.teach={cmd,until:0}; say(t('After the beep, say your word for {c}.',{c:WNAMES[LANG][cmd]}),{log:false});
   const wait=()=>{if(!G.teach)return;if(speaking||('speechSynthesis' in window&&speechSynthesis.speaking)){setTimeout(wait,200);return;}setTimeout(()=>{if(!G.teach)return;sfx(ping,0,0.5,0);G.teach.until=performance.now()+6000;},400);};setTimeout(wait,300);
   setTimeout(()=>{if(G.teach&&G.teach.until&&performance.now()>G.teach.until){G.teach=null;say(t('I did not hear anything. Try again.'),{log:false});}},12000);}
+function spokenDigits(str){const U={zero:0,oh:0,o:0,one:1,won:1,two:2,to:2,too:2,three:3,tree:3,free:3,four:4,for:4,fore:4,five:5,six:6,seven:7,eight:8,ate:8,nine:9};
+  const TEEN={ten:10,eleven:11,twelve:12,thirteen:13,fourteen:14,fifteen:15,sixteen:16,seventeen:17,eighteen:18,nineteen:19};
+  const TENS={twenty:2,thirty:3,forty:4,fifty:5,sixty:6,seventy:7,eighty:8,ninety:9};
+  const w=str.trim().split(/\s+/).filter(Boolean);let out='';
+  for(let i=0;i<w.length;i++){const x=w[i];
+    if(/^\d+$/.test(x))out+=x;
+    else if(x in U)out+=U[x];
+    else if(x in TEEN)out+=TEEN[x];
+    else if(x in TENS){if(w[i+1] in U&&U[w[i+1]]>0){out+=TENS[x]+''+U[w[i+1]];i++;}else out+=TENS[x]+'0';}
+    else if(x==='hundred'){const r=w.slice(i+1).filter(y=>y!=='and');if(!r.length)out+='00';else if((r[0] in U)&&!(r[1] in U))out+='0';}
+    else if(['and','is','the','number','numbers','dash','please','enter','type','its','it'].includes(x))continue;
+    else return null;}
+  return out;}
 function parseEn(s){
   const tx=norm(s); const has=re=>re.test(tx);
+  {const ec=tx.match(/ (?:enter (?:the )?code|the code is|code is) (.+) /);if(ec){const d=spokenDigits(ec[1]);if(d)return{c:'code',n:d};}}
   let n=1; const m=tx.match(/ (\d+|two|three|four|five|six|seven|eight)( times| steps)? /); if(m)n=clamp(parseInt(m[1])||NUMW[m[1]]||1,1,8);
   const dirOf=()=>has(/ (left|lift|lest) /)?3:has(/ (right|write|rite|ride|bright) /)?1:has(/ (back|backward|backwards|behind) /)?2:0;
   if(screen==='skillpick'){if(has(/ (first|one|1|number one|the first) /))return{c:'pick',n:0};if(has(/ (second|two|2|number two|the second) /))return{c:'pick',n:1};
@@ -2202,7 +2233,8 @@ function parseEn(s){
   if(has(/ (scares on|jump scares on) /))return{c:'scareson'};
   if(has(/ (sneak|sneaking|tiptoe|creep) /))return{c:'sneak'};
   if(!has(/ use (voice|buttons|the buttons|voice commands) /)&&has(/ (use|use it|flip|flip it|pull|pull it|press|activate|ring|ring it|ring the bell|switch it on) /))return{c:'use'};
-  {const cm=tx.match(/ (code|enter code|the code is) ((?:\d|zero|one|two|three|four|five|six|seven|eight|nine| )+) /);if(cm){const NW={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9};const d=cm[2].trim().split(/\s+/).map(w=>/^\d+$/.test(w)?w:(NW[w]??'')).join('');return{c:'code',n:d};}
+  {const cm=tx.match(/ (?:enter (?:the )?code|the code is|code is|code|cold|coat|keypad|combination|password) (.+) /);if(cm){const d=spokenDigits(cm[1]);if(d)return{c:'code',n:d};}
+   if(typeof G!=='undefined'&&G.code&&!G.code.done&&G.exit&&G.x===G.exit[0]&&G.y===G.exit[1]){const d=spokenDigits(tx);if(d&&d.length===3)return{c:'code',n:d};}
    if(has(/ (enter code|code|keypad) /))return{c:'code'};}
   if(typeof G!=='undefined'&&G.mem&&!G.mem.done){if(has(/ (low|lo|bottom) /))return{c:'note',n:0};if(has(/ (middle|mid|medium) /))return{c:'note',n:1};if(has(/ (high|hi|top) /))return{c:'note',n:2};}
   {const cm=tx.match(/ (trade|buy|deal) (\d|one|two|three) /);if(cm)return{c:'trade',n:parseInt(cm[2])||NUMW[cm[2]]};}
@@ -2300,6 +2332,7 @@ function parsePt(s){
   if(has(/ (ligar sustos|sustos ligados) /))return{c:'scareson'};
   if(has(/ (agachar|agacha|furtivo|esgueirar|em silencio|ponta dos pes) /))return{c:'sneak'};
   {const cm=tx.match(/ (codigo|o codigo e|digitar codigo) ((?:\d|zero|um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove| )+) /);if(cm){const NW={zero:0,um:1,uma:1,dois:2,duas:2,tres:3,quatro:4,cinco:5,seis:6,sete:7,oito:8,nove:9};const d=cm[2].trim().split(/\s+/).map(w=>/^\d+$/.test(w)?w:(NW[w]??'')).join('');return{c:'code',n:d};}
+   if(typeof G!=='undefined'&&G.code&&!G.code.done&&G.exit&&G.x===G.exit[0]&&G.y===G.exit[1]){const NW={zero:0,um:1,uma:1,dois:2,duas:2,tres:3,quatro:4,cinco:5,seis:6,sete:7,oito:8,nove:9};const w=tx.trim().split(/\s+/);if(w.every(x=>/^\d+$/.test(x)||x in NW)){const d=w.map(x=>/^\d+$/.test(x)?x:NW[x]).join('');if(d.length===3)return{c:'code',n:d};}}
    if(has(/ (codigo|digitar codigo|teclado) /))return{c:'code'};}
   if(G.mem&&!G.mem.done){if(has(/ (grave|baixo) /))return{c:'note',n:0};if(has(/ (medio|meio) /))return{c:'note',n:1};if(has(/ (agudo|alto) /))return{c:'note',n:2};}
   if(!has(/ (usar|usa|use) (voz|botoes|os botoes|comandos) /)&&has(/ (usar|usa|use|puxar|puxa|puxe|acionar|aciona|apertar|aperta|ativar|ativa|tocar o sino|toca o sino|tocar sino) /))return{c:'use'};
@@ -2730,16 +2763,18 @@ function puzzleCue(){
   if(s<0)return t('The exit is sealed. {n} of 3 {objs} are done.',{n:G.puz.next,objs:PUZ()[1]});
   return t('The exit is sealed. {n} of 3 {objs} are done. The nearest one you have not used is {route}, about {d} steps away.',{n:G.puz.next,objs:PUZ()[1],route:routeWords(s),d:bd});
 }
+function codeSoFar(){if(!G.code)return '';const nf=G.code.found.filter(Boolean).length;if(!nf)return t('You have not found any numbers yet. Say listen to find the nearest scrap of paper.');
+  return nf===3?t('Your notes say the code is {c}.',{c:G.code.digits.join(' ')}):t('So far your notes say: {c}. Say listen to find the next scrap of paper.',{c:G.code.digits.map((d,i)=>G.code.found[i]?d:t('blank')).join(', ')});}
 function enterCode(v){
   if(G.state!=='play')return notPlaying();
   if(!G.code||G.code.done)return say(t('There is no keypad here.'));
   if(G.x!==G.exit[0]||G.y!==G.exit[1])return say(t('You need to be at the exit door to use its keypad. {paths}',{paths:pathsText()}));
   if(v===undefined){const typed=window.prompt?window.prompt(t('Type the three-number code')):null;if(typed===null)return;v=typed;}
   const d=String(v).replace(/\D/g,'');
-  if(d.length!==3)return say(t('The code has three numbers. Try again.'));
+  if(d.length!==3)return say(t('I heard {d}, but the code has three numbers. Try again, like code 4 7 2.',{d:d.split('').join(' ')||t('no numbers')})+' '+codeSoFar());
   [0,1,2].forEach(i=>setTimeout(()=>sfx(clickSound,true),i*180));
   if(d===G.code.digits.join('')){G.code.done=true;setTimeout(()=>sfx(ping,0,0.8,0),700);bumpStat('puzzles');unlock('puzzle');const parts=[t('Beep, beep, beep. A green light. The lock clicks open!')];levelComplete(parts);return;}
-  G.noise={x:G.x,y:G.y,turns:5};G.alert=4;sfx(alarmBlare);const parts=[t('Wrong code. The keypad screams an alarm, and something heard it.')];
+  G.noise={x:G.x,y:G.y,turns:5};G.alert=4;sfx(alarmBlare);const parts=[t('Wrong code. The keypad screams an alarm, and something heard it.'),codeSoFar()];
   if(!itemTurn(parts))return; say([...parts,monsterCues(false),pathsText()].filter(Boolean).join(' '));
 }
 const MEMW=()=>LANG==='pt'?['grave','médio','agudo']:['low','middle','high'];
@@ -2860,7 +2895,7 @@ function afterMove(quiet){
   if(G.x===G.exit[0]&&G.y===G.exit[1]){
     if(lv.locked&&!G.inv.keycard&&has('lockpick')){G.inv.keycard=true;sfx(clickSound,true);parts.push(t('No keycard, but you do not need one. You pick the lock in a few seconds.'));}
     if(lv.locked&&!G.inv.keycard){sfx(denied);parts.push(t('A heavy elevator door with a card reader. It is locked. You need the keycard.'));}
-    else if(G.code&&!G.code.done){sfx(denied);parts.push(t('The exit door has a keypad. It needs a three-number code. Numbers are written on scraps of paper around this level. When you know them, say code and the numbers, like code 4 7 2, or press Enter code.'));}
+    else if(G.code&&!G.code.done){sfx(denied);parts.push(t('The exit door has a keypad. It needs a three-number code. Numbers are written on scraps of paper around this level. When you know them, say code and the numbers, like code 4 7 2, or press Enter code.'),codeSoFar());}
     else if(G.mem&&!G.mem.done){parts.push(memIntro());}
     else if(G.puz&&!G.puz.done){sfx(denied);parts.push(t('The exit is sealed. {n} of 3 {objs} are done. Say listen to find the rest.',{n:G.puz.next,objs:PUZ()[1]}));}
     else{levelComplete(parts);return {stop:true};}
@@ -2933,7 +2968,7 @@ function listen(){
   if(G.state!=='play')return notPlaying();
   if(G.sanity<25&&Math.random()<0.3)return say(t('You try to listen, but the sounds come from everywhere at once. You cannot focus.'));
   if(G.mem&&!G.mem.done&&G.x===G.exit[0]&&G.y===G.exit[1])return say(memIntro());
-  const ex=(L().locked&&!G.inv.keycard)?keycardCue():(G.puz&&!G.puz.done)?puzzleCue():(G.code&&!G.code.done&&G.code.found.includes(false))?clueCue():exitCue(false);
+  const ex=(L().locked&&!G.inv.keycard)?keycardCue():(G.puz&&!G.puz.done)?puzzleCue():(G.code&&!G.code.done&&G.code.found.includes(false))?clueCue():(G.code&&!G.code.done)?exitCue(false)+' '+codeSoFar()+' '+t('At the door, say code, then the numbers.'):exitCue(false);
   let fr=''; if(G.mons.some(m=>m.type==='watcher')){G.watchFreeze=3;fr=t('The watchers freeze while you listen.');}
   say(t('You hold still and listen. {ex} {mon}',{ex,mon:monsterCues(true)})+(fr?' '+fr:''));
 }

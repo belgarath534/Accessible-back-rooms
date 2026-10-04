@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.20**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.20.1**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.20.1**: the door keypad understands codes said many ways (four seventy two, enter the code, bare numbers at the door) and reminds you of the numbers you found.
 - **0.20**: five new handmade extra levels: 18 The School Halls, 19 The Dead Mall, 20 The Last Train, 21 Motion, 22 The Server Farm, each with a new monster, mechanic, music, achievement and bestiary entry.
 - **0.19**: iCloud backup on iPhone (automatic, plus Back up and Restore buttons in Settings), using the capacitor-icloud-sync plugin.
 - **0.18**: skills (choose one every few levels, two earned by playing), the Trader (barter almond water), Moth Jelly, Cashew Water, wind chime, disposable camera.
