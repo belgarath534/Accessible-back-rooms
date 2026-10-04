@@ -268,6 +268,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.20.2: Nightmare door codes</h2>
+      <ul>
+        <li>On Nightmare and in Hardcore, the game no longer reminds you of the door code. Remember the numbers, or check your status.</li>
+      </ul>
       <h2>Version 0.20.1: easier door codes</h2>
       <ul>
         <li>The keypad understands codes said in lots of ways: code 4 7 2, code four seventy two, enter the code 4 7 2, or just the three numbers when you are standing at the door.</li>
@@ -456,6 +460,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.20.2: códigos de porta no Pesadelo</h2>
+      <ul>
+        <li>No Pesadelo e no modo Hardcore, o jogo não lembra mais o código da porta. Guarde os números na memória, ou confira o seu status.</li>
+      </ul>
       <h2>Versão 0.20.1: códigos de porta mais fáceis</h2>
       <ul>
         <li>O teclado entende o código dito de vários jeitos: código 4 7 2, ou só os três números quando você está na porta.</li>
@@ -814,7 +822,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.20.1';
+const VERSION='0.20.2';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -987,6 +995,7 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'That is all three numbers. Remember them, or check your status. Then go to the exit door.':'São os três números. Guarde na memória, ou confira o seu status. Depois vá até a porta de saída.',
  'I heard {d}, but the code has three numbers. Try again, like code 4 7 2.':'Eu ouvi {d}, mas o código tem três números. Tente de novo, tipo código 4 7 2.',
  'no numbers':'nenhum número',
  'You have not found any numbers yet. Say listen to find the nearest scrap of paper.':'Você ainda não achou nenhum número. Diga escutar para achar o pedaço de papel mais perto.',
@@ -2763,7 +2772,8 @@ function puzzleCue(){
   if(s<0)return t('The exit is sealed. {n} of 3 {objs} are done.',{n:G.puz.next,objs:PUZ()[1]});
   return t('The exit is sealed. {n} of 3 {objs} are done. The nearest one you have not used is {route}, about {d} steps away.',{n:G.puz.next,objs:PUZ()[1],route:routeWords(s),d:bd});
 }
-function codeSoFar(){if(!G.code)return '';const nf=G.code.found.filter(Boolean).length;if(!nf)return t('You have not found any numbers yet. Say listen to find the nearest scrap of paper.');
+const codeStrict=()=>S.diff==='nightmare'||!!G.hard;
+function codeSoFar(){if(!G.code||codeStrict())return '';const nf=G.code.found.filter(Boolean).length;if(!nf)return t('You have not found any numbers yet. Say listen to find the nearest scrap of paper.');
   return nf===3?t('Your notes say the code is {c}.',{c:G.code.digits.join(' ')}):t('So far your notes say: {c}. Say listen to find the next scrap of paper.',{c:G.code.digits.map((d,i)=>G.code.found[i]?d:t('blank')).join(', ')});}
 function enterCode(v){
   if(G.state!=='play')return notPlaying();
@@ -2827,7 +2837,7 @@ function pickupItems(parts){
   G.items.delete(k); sfx(pickup);
   if(/^clue\d$/.test(ty)&&G.code){const i=+ty[4];G.code.found[i]=true;sfx(tapeClick);
     parts.push(t('You find a scrap of paper with a number on it. It says: the {pos} number of the door code is {d}.',{pos:[t('first'),t('second'),t('third')][i],d:G.code.digits[i]}));
-    const nf=G.code.found.filter(Boolean).length;parts.push(nf===3?t('That is all three. The code is {c}. Go to the exit door and say code, then the numbers.',{c:G.code.digits.join(' ')}):t('You have {n} of 3 numbers.',{n:nf}));}
+    const nf=G.code.found.filter(Boolean).length;parts.push(nf===3?(codeStrict()?t('That is all three numbers. Remember them, or check your status. Then go to the exit door.'):t('That is all three. The code is {c}. Go to the exit door and say code, then the numbers.',{c:G.code.digits.join(' ')})):t('You have {n} of 3 numbers.',{n:nf}));}
   if(ty==='note'){const ni=G.level;const got=lsGet('br_notes',[]);if(!got.includes(ni)){got.push(ni);lsSet('br_notes',got);}sfx(tapeClick);
     parts.push(t('You find a handwritten note. It goes into your journal. {n} of {total} notes.',{n:got.length,total:NNOTES}));G.extras.push({text:NOTES[LANG][ni],opts:{v:voice2,pitch:0.95,rate:S.rate*0.92}});if(got.length>=NNOTES)unlock('journal');}
   if(ty==='jelly'){I.jelly=(I.jelly||0)+1;parts.push(t('You find a jar of Moth Jelly. It glows faintly, and it smells sweet. You have {n}. Say jelly to eat it: it restores a lot of sanity, but moths love the smell.',{n:I.jelly}));}
@@ -2968,7 +2978,7 @@ function listen(){
   if(G.state!=='play')return notPlaying();
   if(G.sanity<25&&Math.random()<0.3)return say(t('You try to listen, but the sounds come from everywhere at once. You cannot focus.'));
   if(G.mem&&!G.mem.done&&G.x===G.exit[0]&&G.y===G.exit[1])return say(memIntro());
-  const ex=(L().locked&&!G.inv.keycard)?keycardCue():(G.puz&&!G.puz.done)?puzzleCue():(G.code&&!G.code.done&&G.code.found.includes(false))?clueCue():(G.code&&!G.code.done)?exitCue(false)+' '+codeSoFar()+' '+t('At the door, say code, then the numbers.'):exitCue(false);
+  const ex=(L().locked&&!G.inv.keycard)?keycardCue():(G.puz&&!G.puz.done)?puzzleCue():(G.code&&!G.code.done&&G.code.found.includes(false))?clueCue():(G.code&&!G.code.done&&!codeStrict())?exitCue(false)+' '+codeSoFar()+' '+t('At the door, say code, then the numbers.'):exitCue(false);
   let fr=''; if(G.mons.some(m=>m.type==='watcher')){G.watchFreeze=3;fr=t('The watchers freeze while you listen.');}
   say(t('You hold still and listen. {ex} {mon}',{ex,mon:monsterCues(true)})+(fr?' '+fr:''));
 }
