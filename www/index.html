@@ -111,6 +111,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
         <button id="mSettings"><span data-l="en">Settings</span><span data-l="pt">Configurações</span></button>
         <button id="mTut"><span data-l="en">Tutorial</span><span data-l="pt">Tutorial</span></button>
         <button id="mHowto"><span data-l="en">How to play</span><span data-l="pt">Como jogar</span></button>
+        <button id="mJuke"><span data-l="en">Jukebox</span><span data-l="pt">Jukebox</span></button>
         <button id="mBest"><span data-l="en">Bestiary</span><span data-l="pt">Bestiário</span></button>
         <button id="mJournal"><span data-l="en">Journal</span><span data-l="pt">Diário</span></button>
         <button id="mAch"><span data-l="en">Achievements</span><span data-l="pt">Conquistas</span></button>
@@ -265,6 +266,11 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.16: jukebox</h2>
+      <ul>
+        <li>A jukebox in the main menu. Every song in the game unlocks as you reach its level, with where it plays and who made it. Say track and a number, next, or stop.</li>
+        <li>It also has the background sounds of every level you have reached, on their own. The Lobby's buzzing lights, the office phones, the ocean.</li>
+      </ul>
       <h2>Version 0.15: footsteps</h2>
       <ul>
         <li>Monsters now have footsteps. You hear them walking toward you, from the direction they are coming, and every monster sounds different: claws, heavy thuds, dragging, squeaky shoes, sharp heels.</li>
@@ -410,6 +416,11 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.16: jukebox</h2>
+      <ul>
+        <li>Uma jukebox no menu principal. Cada música do jogo é liberada quando você chega ao nível dela, com onde ela toca e quem fez. Diga faixa e um número, próxima, ou parar.</li>
+        <li>Também tem os sons de fundo de cada nível que você já alcançou, sozinhos. As lâmpadas zumbindo do Lobby, os telefones do escritório, o oceano.</li>
+      </ul>
       <h2>Versão 0.15: passos</h2>
       <ul>
         <li>Os monstros agora têm passos. Você ouve eles andando na sua direção, do lado de onde estão vindo, e cada monstro soa diferente: garras, pancadas pesadas, algo se arrastando, sapatos rangendo, saltos batendo.</li>
@@ -599,6 +610,18 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <div class="stack"><button class="backBtn primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
   </section>
 
+  <!-- ============ JUKEBOX ============ -->
+  <section id="jukebox" class="screen" hidden aria-labelledby="jkTitle">
+    <h1 id="jkTitle" tabindex="-1"><span data-l="en">Jukebox</span><span data-l="pt">Jukebox</span></h1>
+    <p id="jkNow" aria-live="polite"></p>
+    <div class="stack"><button id="jkStop"><span data-l="en">Stop</span><span data-l="pt">Parar</span></button><button id="jkNext"><span data-l="en">Next track</span><span data-l="pt">Próxima faixa</span></button></div>
+    <h2><span data-l="en">Music</span><span data-l="pt">Música</span></h2>
+    <ol id="jkList" class="stats"></ol>
+    <h2><span data-l="en">Ambience</span><span data-l="pt">Ambiente</span></h2>
+    <ol id="jkAmb" class="stats"></ol>
+    <div class="stack"><button id="jkBack" class="primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
+  </section>
+
   <!-- ============ LEVEL SELECT ============ -->
   <section id="levels" class="screen" hidden aria-labelledby="lvTitle">
     <h1 id="lvTitle" tabindex="-1"><span data-l="en">Level select</span><span data-l="pt">Escolher nível</span></h1>
@@ -695,7 +718,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.15';
+const VERSION='0.16';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -846,6 +869,24 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'Main menu':'Menu principal',
+ 'When something is chasing you':'Quando algo está perseguindo você',
+ 'The deeper extra levels':'Os níveis extras mais fundos',
+ 'A secret place':'Um lugar secreto',
+ 'Happy Birthday, on a broken music box':'Parabéns pra você, numa caixinha de música quebrada',
+ 'A broken carnival organ':'Um órgão de carnaval quebrado',
+ 'by Kevin MacLeod':'de Kevin MacLeod',
+ 'There is no track {n}.':'Não existe a faixa {n}.',
+ 'Track {n} is still locked. Keep playing to unlock it.':'A faixa {n} ainda está trancada. Continue jogando para liberar.',
+ 'Now playing track {n}: {song}. {where}.':'Tocando a faixa {n}: {song}. {where}.',
+ 'Now playing the sounds of {where}.':'Tocando os sons de {where}.',
+ 'Nothing playing.':'Nada tocando.',
+ 'Stopped.':'Parado.',
+ 'Play {n}: {where}. {song}':'Tocar {n}: {where}. {song}',
+ '{n}: locked. Keep playing to unlock it.':'{n}: trancada. Continue jogando para liberar.',
+ 'Sounds of {where}':'Sons de {where}',
+ 'Jukebox. {n} of {total} tracks unlocked. Say track and a number to play it, next for the next one, or stop. Say back to return.':'Jukebox. {n} de {total} faixas liberadas. Diga faixa e um número para tocar, próxima para a próxima, ou parar. Diga voltar para sair.',
+ 'jukebox':'jukebox',
  'New entry in your bestiary: {name}.':'Nova entrada no seu bestiário: {name}.',
  '??? You have not met this one yet.':'??? Você ainda não encontrou este.',
  'How to survive:':'Como sobreviver:',
@@ -1654,9 +1695,9 @@ function jumpscare(){
 
 /* ---------- ambience ---------- */
 function clearAmb(){A.ambNodes.forEach(n=>{try{n.stop();}catch(e){}try{n.disconnect();}catch(e){}});A.ambNodes=[];A.timers.forEach(clearTimeout);A.timers=[];}
-function loopTimer(fn,min,max){const go=()=>{if(G.state==='play')fn();A.timers.push(setTimeout(go,min+Math.random()*(max-min)));};A.timers.push(setTimeout(go,min+Math.random()*(max-min)));}
+function loopTimer(fn,min,max){const go=()=>{if(G.state==='play'||G.jukeAmb)fn();A.timers.push(setTimeout(go,min+Math.random()*(max-min)));};A.timers.push(setTimeout(go,min+Math.random()*(max-min)));}
 function ambience(){
-  if(!A.ctx)return; clearAmb(); const t0=now(),ctx=A.ctx,type=L().amb;
+  if(!A.ctx)return; clearAmb(); const t0=now(),ctx=A.ctx,type=G.jukeAmb||L().amb;
   const keep=n=>{A.ambNodes.push(n);return n;};
   const longNoise=()=>{const s=keep(ctx.createBufferSource());s.buffer=A.noise;s.loop=true;s.start(t0);return s;};
   const longOsc=(tp,f)=>{const o=keep(ctx.createOscillator());o.type=tp;o.frequency.value=f;o.start(t0);return o;};
@@ -1822,6 +1863,9 @@ function parseEn(s){
   if(has(/ (3d|3 d|three d) (graphics|view|on) |^ (3d|3 d|three d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classic|2d|2 d|two d)( graphics| view)? /))return{c:'gfx',n:'classic'};
   if(has(/ (daily|daily challenge|challenge|today) /))return{c:'daily'};
+  if(screen==='jukebox'){const cm=tx.match(/ (\d+) /)||tx.match(/ (one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen) /);if(cm)return{c:'track',n:parseInt(cm[1])||NUMW[cm[1]]};
+    if(has(/ (next|skip|next track|next song) /))return{c:'jnext'};if(has(/ (stop|stop music|pause|silence) /))return{c:'jstop'};}
+  if(has(/ (jukebox|music player|soundtrack|songs) /))return{c:'jukebox'};
   if(has(/ (bestiary|monsters|monster list|creatures) /))return{c:'bestiary'};
   if(has(/ (journal|notes|my notes|diary) /))return{c:'journal'};
   if(has(/ (new game plus|new game \+|game plus|ng plus) /))return{c:'ngp'};
@@ -1904,6 +1948,9 @@ function parsePt(s){
   if(has(/ (3d|3 d|tres d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classico|graficos classicos|2d|2 d) /))return{c:'gfx',n:'classic'};
   if(has(/ (desafio|desafio diario|de hoje) /))return{c:'daily'};
+  if(screen==='jukebox'){const cm=tx.match(/ (\d+) /)||tx.match(/ (um|uma|dois|duas|tres|quatro|cinco|seis|sete|oito|nove|dez|onze|doze|treze|catorze|quatorze|quinze) /);if(cm)return{c:'track',n:parseInt(cm[1])||NUMW[cm[1]]};
+    if(has(/ (proxima|proxima faixa|pular) /))return{c:'jnext'};if(has(/ (parar|para|silencio) /))return{c:'jstop'};}
+  if(has(/ (jukebox|tocador|trilha sonora|musicas) /))return{c:'jukebox'};
   if(has(/ (bestiario|monstros|criaturas) /))return{c:'bestiary'};
   if(has(/ (diario|bilhetes|meus bilhetes|anotacoes) /))return{c:'journal'};
   if(has(/ (novo jogo mais|novo jogo \+|jogo mais) /))return{c:'ngp'};
@@ -1978,7 +2025,7 @@ function parsePt(s){
 }
 
 /* ============================== screens ============================== */
-const SCREENS=['splash','menu','pause','ach','levels','words','journal','bestiary','setup','settings','howto','news','credits','end','game'];
+const SCREENS=['splash','menu','pause','ach','levels','words','journal','bestiary','jukebox','setup','settings','howto','news','credits','end','game'];
 let screen='splash';
 function show(id,announce){
   if(id!=='game'&&G.state==='transition'){G.state='menu';clearAmb();}// leaving during a fall cancels it
@@ -1998,9 +2045,10 @@ function openMenu(){
   showMain();
 }
 function showMain(prefix=''){
+  if(G.jukeAmb){G.jukeAmb=null;clearAmb();}
   $('#mContinue').hidden=!lsGet('br_save',null); $('#mLevels').hidden=chaptersOpen().length<2; $('#mExtra').hidden=!extrasOpen(); $('#mNgp').hidden=!extrasOpen();
   menuMusic();
-  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','daily challenge','endless mode','tutorial','settings','how to play','bestiary','journal','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
+  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','daily challenge','endless mode','tutorial','settings','how to play','jukebox','bestiary','journal','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
   show('menu',prefix+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
 }
 function quitToMain(){
@@ -2987,6 +3035,37 @@ function openBestiary(){
   const total=BORDER.length-1; $('#bCount').textContent=t('{n} of {total} creatures met.',{n:Math.min(n,total),total});
   show('bestiary',t('Bestiary. {n} of {total} creatures met. Each one has a hear it button, so you can learn its sound safely. Say back to return.',{n:Math.min(n,total),total}));
 }
+// ---------- jukebox: every track, unlocked as you reach it ----------
+const SONG={menu:'The Dread',music0:'Unseen Horrors',music1:'Dark Fog',music2:'Penumbra',music3:'Lightless Dawn',music5:'Long Note Four',music6:'Echoes of Time',music7:'Ossuary 6 - Air',music8:'Spider Eyes',music9:'Dark Hallway',
+  music10:'Night of Chaos',music11:'Hush',music12:'Unnatural Situation',music13:'Oppressive Gloom',music14:'Ghost Story',music15:'Darkling',music16:'Ghostpocalypse',music17:'Ghost Processional',music18:'Static Motion',chase:'Gathering Darkness'};
+function jukeTracks(){const L2=(lv)=>LANG==='pt'?lv.pt.name:lv.name;const list=[{key:'menu',where:t('Main menu'),open:true}];
+  storyLevels().forEach(i=>{const lv=LEVELS[i];list.push({key:lv.music,where:L2(lv),open:chapterOpen(i)});});
+  list.push({key:'chase',where:t('When something is chasing you'),open:chapterOpen(1)});
+  EXTRAS.forEach((lv,i)=>list.push({key:lv.music,where:L2(lv),open:lsGet('br_extra',0)>=FIRSTX+i}));
+  list.push({key:'music18',where:t('The deeper extra levels'),open:lsGet('br_extra',0)>=FIRSTX+EXTRAS.length});
+  list.push({key:'music9',where:t('A secret place'),open:!!ACHV.marcus});
+  return list;}
+const songName=k=>k==='musicbox'?t('Happy Birthday, on a broken music box'):k==='calliope'?t('A broken carnival organ'):SONG[k]+', '+t('by Kevin MacLeod');
+const JK={i:-1};
+function jukePlay(i){initAudio();audioWake();const list=jukeTracks();const tr=list[i];if(!tr)return say(t('There is no track {n}.',{n:i+1}),{log:false});
+  if(!tr.open)return say(t('Track {n} is still locked. Keep playing to unlock it.',{n:i+1}),{log:false});
+  G.jukeAmb=null;clearAmb();JK.i=i;onlyMusic({[tr.key]:0.8},1.2);const txt=t('Now playing track {n}: {song}. {where}.',{n:i+1,song:songName(tr.key),where:tr.where});$('#jkNow').textContent=txt;say(txt,{log:false});}
+function jukeAmb(i){initAudio();audioWake();const opts=storyLevels().filter(chapterOpen);const li=opts[i];if(li===undefined)return;
+  onlyMusic({},0.8);JK.i=-1;G.jukeAmb=LEVELS[li].amb;if(A.amb)A.amb.gain.setTargetAtTime(0.7,now(),0.1);ambience();
+  const txt=t('Now playing the sounds of {where}.',{where:LANG==='pt'?LEVELS[li].pt.name:LEVELS[li].name});$('#jkNow').textContent=txt;say(txt,{log:false});}
+function jukeStop(quiet){onlyMusic({},0.8);G.jukeAmb=null;clearAmb();JK.i=-1;$('#jkNow').textContent=t('Nothing playing.');if(!quiet)say(t('Stopped.'),{log:false});}
+function jukeNext(){const list=jukeTracks();for(let k=1;k<=list.length;k++){const j=(JK.i+k)%list.length;if(list[j].open)return jukePlay(j);}}
+function openJukebox(){
+  const list=jukeTracks();const ol=$('#jkList');ol.innerHTML='';
+  list.forEach((tr,i)=>{const li=document.createElement('li');const b=document.createElement('button');
+    b.textContent=tr.open?t('Play {n}: {where}. {song}',{n:i+1,where:tr.where,song:songName(tr.key)}):t('{n}: locked. Keep playing to unlock it.',{n:i+1});
+    b.addEventListener('click',()=>jukePlay(i));li.appendChild(b);ol.appendChild(li);});
+  const al=$('#jkAmb');al.innerHTML='';storyLevels().filter(chapterOpen).forEach((li2,i)=>{const li=document.createElement('li');const b=document.createElement('button');
+    b.textContent=t('Sounds of {where}',{where:LANG==='pt'?LEVELS[li2].pt.name:LEVELS[li2].name});b.addEventListener('click',()=>jukeAmb(i));li.appendChild(b);al.appendChild(li);});
+  $('#jkNow').textContent=t('Nothing playing.');onlyMusic({},0.8);
+  const open=list.filter(x=>x.open).length;
+  show('jukebox',t('Jukebox. {n} of {total} tracks unlocked. Say track and a number to play it, next for the next one, or stop. Say back to return.',{n:open,total:list.length}));
+}
 function openJournal(){
   const got=lsGet('br_notes',[]).slice().sort((a,b)=>a-b); const ol=$('#jList'); ol.innerHTML='';
   $('#jCount').textContent=t('{n} of {total} notes found.',{n:got.length,total:NNOTES});
@@ -3051,6 +3130,8 @@ function run(c,n,r){
     if(c==='ach')return show('ach',renderAch());
     if(c==='journal')return openJournal();
     if(c==='bestiary')return openBestiary();
+    if(c==='jukebox')return openJukebox();
+    if(screen==='jukebox'){if(c==='track')return jukePlay(n-1);if(c==='jnext')return jukeNext();if(c==='jstop')return jukeStop();if(c==='back'||c==='menu'){jukeStop(true);return showMain();}}
     if(c==='extra')return startExtra();
     if(c==='ngp')return newGamePlus();
     if(c==='words')return openWords();
@@ -3082,7 +3163,7 @@ function run(c,n,r){
     case 'help':return help(); case 'menu':case 'quit':return openMenu();
     case 'play':case 'retry':case 'resume':case 'continue':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'diff':return say(t('You can change difficulty from the settings.'));
-    case 'settings':case 'credits':case 'howto':case 'news':case 'ach':case 'journal':case 'bestiary':openMenu();return run(c);
+    case 'settings':case 'credits':case 'howto':case 'news':case 'ach':case 'journal':case 'bestiary':case 'jukebox':openMenu();return run(c);
     case 'levels':case 'chapter':case 'extra':case 'ngp':case 'daily':return say(t('You are already in the Backrooms. Say pause to stop.'));
     case 'endless':return say(t('You are already in the Backrooms. Say pause to stop.'));
   }
@@ -3194,6 +3275,10 @@ $('#mEndless').addEventListener('click',startEndless);
 $('#mAch').addEventListener('click',()=>run('ach'));
 $('#mJournal').addEventListener('click',()=>run('journal'));
 $('#mBest').addEventListener('click',()=>run('bestiary'));
+$('#mJuke').addEventListener('click',()=>run('jukebox'));
+$('#jkStop').addEventListener('click',()=>jukeStop());
+$('#jkNext').addEventListener('click',jukeNext);
+$('#jkBack').addEventListener('click',()=>{jukeStop(true);showMain();});
 $('#mLevels').addEventListener('click',()=>run('levels'));
 $('#openWords').addEventListener('click',openWords);
 $('#wSay').addEventListener('click',teachWord);
