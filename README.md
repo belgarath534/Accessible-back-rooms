@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.18**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.19**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.19**: iCloud backup on iPhone (automatic, plus Back up and Restore buttons in Settings), using the capacitor-icloud-sync plugin.
 - **0.18**: skills (choose one every few levels, two earned by playing), the Trader (barter almond water), Moth Jelly, Cashew Water, wind chime, disposable camera.
 - **0.17**: six survival items (Firesalt, glow sticks, compass, adrenaline shot, mystery bottle, strange pill); item buttons only appear when you have the item.
 - **0.16**: jukebox with every song (unlocked as you play) and each level’s ambience.
@@ -85,3 +86,4 @@ The `ios/` folder is a Capacitor 7 project (app ID `com.accessible.backrooms`, c
 - `Info.plist` has the microphone and speech recognition permission texts.
 - `AppDelegate.swift` sets the audio session to playback, so sound works with the silent switch on and mixes with VoiceOver.
 - `codemagic.yaml` builds an unsigned IPA, the same way as Dungeon Descent. After changing `www/`, run `npx cap sync ios`.
+- iCloud backup uses `capacitor-icloud-sync` (0.2.0 or newer). The game code is already in `www/`; it does nothing until the plugin is installed. To turn it on: `npm install capacitor-icloud-sync@^0.2.0`, `npx cap sync ios`, then in Xcode add the iCloud capability with CloudKit and a container (this needs the paid Apple Developer account). The website ignores iCloud and hides the buttons.

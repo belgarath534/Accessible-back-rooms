@@ -191,6 +191,8 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <div class="setRow" role="group" aria-labelledby="sl7"><span class="lab" id="sl7"><span data-l="en">Difficulty</span><span data-l="pt">Dificuldade</span></span><div class="opts">
       <button class="choice" data-set="diff" data-val="easy"><span data-l="en">Easy</span><span data-l="pt">Fácil</span></button><button class="choice" data-set="diff" data-val="normal">Normal</button><button class="choice" data-set="diff" data-val="nightmare"><span data-l="en">Nightmare</span><span data-l="pt">Pesadelo</span></button></div></div>
     <div class="stack">
+      <button id="cloudSave"><span data-l="en">Back up to iCloud now</span><span data-l="pt">Fazer backup no iCloud agora</span></button>
+      <button id="cloudLoad"><span data-l="en">Restore from iCloud</span><span data-l="pt">Restaurar do iCloud</span></button>
       <button id="resetSave"><span data-l="en">Delete saved checkpoint</span><span data-l="pt">Apagar checkpoint salvo</span></button>
       <button class="backBtn primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button>
     </div>
@@ -266,6 +268,11 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.19: iCloud backup</h2>
+      <ul>
+        <li>On iPhone, your progress, skills, bestiary, journal and settings back up to your own iCloud automatically. Get a new phone, install the game, and your save comes back.</li>
+        <li>Settings has Back up to iCloud now and Restore from iCloud buttons. The website version keeps saving on your device like before.</li>
+      </ul>
       <h2>Version 0.18: skills and the Trader</h2>
       <ul>
         <li>Skills: after Levels 2, 5, 8 and 11, choose one of two skills, like Keen ears, Quiet feet, Thick skin, Lock picking or Pathfinder. Some you earn: survive three Hound attacks to learn Hound sense, and hide five times to learn Shadow. Say skills to hear yours.</li>
@@ -435,6 +442,11 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.19: backup no iCloud</h2>
+      <ul>
+        <li>No iPhone, seu progresso, habilidades, bestiário, diário e ajustes são salvos no seu próprio iCloud automaticamente. Trocou de celular? Instale o jogo e seu save volta.</li>
+        <li>Os Ajustes têm os botões Fazer backup no iCloud agora e Restaurar do iCloud. A versão do site continua salvando no seu aparelho como antes.</li>
+      </ul>
       <h2>Versão 0.18: habilidades e o Comerciante</h2>
       <ul>
         <li>Habilidades: depois dos Níveis 2, 5, 8 e 11, escolha uma de duas habilidades, como Ouvido afiado, Pés silenciosos, Casca grossa, Abrir fechaduras ou Desbravador. Algumas você ganha: sobreviva a três ataques de Cão para aprender Faro de Cão, e se esconda cinco vezes para aprender Sombra. Diga habilidades para ouvir as suas.</li>
@@ -774,7 +786,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.18';
+const VERSION='0.19';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -783,7 +795,29 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 const cap=s=>s?s[0].toUpperCase()+s.slice(1):s;
 const DX=[0,1,0,-1], DY=[-1,0,1,0];
 const lsGet=(k,d)=>{try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v);}catch(e){return d;}};
-const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){} if(k!=='br_cloudts')cloudSoon();};
+// ---------- iCloud backup (iPhone app only, through capacitor-icloud-sync) ----------
+// Every br_ key (progress, settings, achievements, journal, bestiary) goes up as one backup, a few seconds after it changes.
+const ICS=()=>{const C=window.Capacitor;return C&&C.isNativePlatform&&C.isNativePlatform()&&C.Plugins&&C.Plugins.ICloudSync;};
+var cloudTimer=null;
+function cloudSoon(){if(!ICS())return;clearTimeout(cloudTimer);cloudTimer=setTimeout(cloudBackup,8000);}
+function cloudSnapshot(){const o={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith('br_')&&k!=='br_cloudts')o[k]=localStorage.getItem(k);}return o;}
+async function cloudBackup(manual){const P=ICS();if(!P)return manual?say(t('iCloud backup only works in the iPhone app.'),{log:false}):null;
+  try{const a=await P.isAvailable();if(!a.available){if(manual)say(t('iCloud is not available. Check that you are signed in to iCloud in your iPhone settings.'),{log:false});return;}
+    const r=await P.saveData({json:JSON.stringify({v:1,at:Date.now(),data:cloudSnapshot()})});try{localStorage.setItem('br_cloudts',JSON.stringify(r&&r.savedAt||Date.now()));}catch(e){}
+    if(manual)say(t('Your progress is backed up to iCloud.'),{log:false});}
+  catch(e){if(manual)say(e&&e.code==='QUOTA_EXCEEDED'?t('Your iCloud storage is full, so the backup could not be saved.'):t('The iCloud backup did not work this time. It will try again later.'),{log:false});}}
+async function cloudRestore(auto){const P=ICS();if(!P)return auto?null:say(t('iCloud backup only works in the iPhone app.'),{log:false});
+  try{const a=await P.isAvailable();if(!a.available){if(!auto)say(t('iCloud is not available. Check that you are signed in to iCloud in your iPhone settings.'),{log:false});return;}
+    const r=await P.loadData();if(!r.found){if(!auto)say(t('There is no iCloud backup yet.'),{log:false});return;}
+    const b=JSON.parse(r.json);if(!b||!b.data)return;
+    Object.keys(localStorage).filter(k=>k.startsWith('br_')).forEach(k=>{try{localStorage.removeItem(k);}catch(e){}});
+    Object.entries(b.data).forEach(([k,v])=>{try{localStorage.setItem(k,v);}catch(e){}});try{localStorage.setItem('br_cloudts',JSON.stringify(b.at||Date.now()));}catch(e){}
+    say(t('Your progress was restored from iCloud. The game will reload.'),{log:false});setTimeout(()=>location.reload(),3500);}
+  catch(e){if(!auto)say(t('Restoring from iCloud did not work. Try again in a moment.'),{log:false});}}
+// on a fresh install with a backup waiting, bring it back by itself
+setTimeout(async()=>{const P=ICS();if(!P)return;const fresh=!Object.keys(localStorage).some(k=>k.startsWith('br_')&&!['br_lang','br_cloudts'].includes(k));
+  if(fresh){try{const i=P.getInfo?await P.getInfo():{found:true};if(i.found)cloudRestore(true);}catch(e){}}},1500);
 const lsDel=k=>{try{localStorage.removeItem(k);}catch(e){}};
 
 /* ============================== language ============================== */
@@ -925,6 +959,15 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'iCloud backup only works in the iPhone app.':'O backup no iCloud só funciona no app de iPhone.',
+ 'iCloud is not available. Check that you are signed in to iCloud in your iPhone settings.':'O iCloud não está disponível. Confira se você entrou no iCloud nos ajustes do iPhone.',
+ 'Your progress is backed up to iCloud.':'O seu progresso está salvo no iCloud.',
+ 'Your iCloud storage is full, so the backup could not be saved.':'O seu armazenamento do iCloud está cheio, então o backup não pôde ser salvo.',
+ 'The iCloud backup did not work this time. It will try again later.':'O backup no iCloud não funcionou desta vez. Ele vai tentar de novo mais tarde.',
+ 'There is no iCloud backup yet.':'Ainda não há backup no iCloud.',
+ 'Your progress was restored from iCloud. The game will reload.':'O seu progresso foi restaurado do iCloud. O jogo vai recarregar.',
+ 'Restoring from iCloud did not work. Try again in a moment.':'A restauração do iCloud não funcionou. Tente de novo daqui a pouco.',
+ 'Replace your progress on this phone with the iCloud backup?':'Substituir o seu progresso neste celular pelo backup do iCloud?',
  'You learned a skill: {name}. {desc}':'Você aprendeu uma habilidade: {name}. {desc}',
  'First: ':'Primeira: ',
  'Second: ':'Segunda: ',
@@ -3630,6 +3673,10 @@ $('#jkNext').addEventListener('click',jukeNext);
 $('#jkBack').addEventListener('click',()=>{jukeStop(true);showMain();});
 $('#mLevels').addEventListener('click',()=>run('levels'));
 $('#openWords').addEventListener('click',openWords);
+if(!ICS()){$('#cloudSave').hidden=true;$('#cloudLoad').hidden=true;}
+$('#cloudSave').addEventListener('click',()=>cloudBackup(true));
+$('#cloudLoad').addEventListener('click',()=>{if(window.confirm(t('Replace your progress on this phone with the iCloud backup?')))cloudRestore(false);});
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&ICS()){clearTimeout(cloudTimer);cloudBackup();}});
 $('#wSay').addEventListener('click',teachWord);
 $('#wSave').addEventListener('click',()=>{saveAlias($('#wText').value,$('#wCmd').value);$('#wText').value='';});
 $('#wClear').addEventListener('click',()=>{ALIAS={};lsSet('br_alias',ALIAS);renderWords();say(t('All your custom words are removed.'),{log:false});});
