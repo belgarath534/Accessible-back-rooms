@@ -266,6 +266,15 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.18: skills and the Trader</h2>
+      <ul>
+        <li>Skills: after Levels 2, 5, 8 and 11, choose one of two skills, like Keen ears, Quiet feet, Thick skin, Lock picking or Pathfinder. Some you earn: survive three Hound attacks to learn Hound sense, and hide five times to learn Shadow. Say skills to hear yours.</li>
+        <li>The Trader: sometimes a wanderer with a bag of supplies shows up. Talk to them, then say trade and a number. Almond water is the money.</li>
+        <li>Moth Jelly: a big sanity boost, but the moths love the smell.</li>
+        <li>Cashew Water: for ten moves, you hear exactly where every monster is.</li>
+        <li>Wind chime: hang it in a room, and it rings when a monster walks through.</li>
+        <li>Disposable camera: the flash freezes every monster close to you for a few moves.</li>
+      </ul>
       <h2>Version 0.17: six new survival items</h2>
       <ul>
         <li>Firesalt: throw it into a hall, and it bursts into fire that monsters cannot walk through for a while.</li>
@@ -426,6 +435,15 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.18: habilidades e o Comerciante</h2>
+      <ul>
+        <li>Habilidades: depois dos Níveis 2, 5, 8 e 11, escolha uma de duas habilidades, como Ouvido afiado, Pés silenciosos, Casca grossa, Abrir fechaduras ou Desbravador. Algumas você ganha: sobreviva a três ataques de Cão para aprender Faro de Cão, e se esconda cinco vezes para aprender Sombra. Diga habilidades para ouvir as suas.</li>
+        <li>O Comerciante: às vezes aparece um andarilho com uma sacola de suprimentos. Converse, depois diga troca e um número. Água de amêndoa é o dinheiro.</li>
+        <li>Geleia de Mariposa: recupera muita sanidade, mas as mariposas adoram o cheiro.</li>
+        <li>Água de Caju: por dez movimentos, você ouve exatamente onde cada monstro está.</li>
+        <li>Sino de vento: pendure numa sala, e ele toca quando um monstro passa.</li>
+        <li>Câmera descartável: o flash congela todos os monstros perto de você por alguns movimentos.</li>
+      </ul>
       <h2>Versão 0.17: seis itens de sobrevivência novos</h2>
       <ul>
         <li>Sal de Fogo: jogue num corredor, e ele explode em chamas que os monstros não conseguem atravessar por um tempo.</li>
@@ -642,6 +660,12 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <div class="stack"><button id="jkBack" class="primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
   </section>
 
+  <!-- ============ SKILL PICK ============ -->
+  <section id="skillpick" class="screen" hidden aria-labelledby="skTitle">
+    <h1 id="skTitle" tabindex="-1"><span data-l="en">Choose a skill</span><span data-l="pt">Escolha uma habilidade</span></h1>
+    <div id="skOpts" class="stack"></div>
+  </section>
+
   <!-- ============ LEVEL SELECT ============ -->
   <section id="levels" class="screen" hidden aria-labelledby="lvTitle">
     <h1 id="lvTitle" tabindex="-1"><span data-l="en">Level select</span><span data-l="pt">Escolher nível</span></h1>
@@ -707,6 +731,12 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       <button data-cmd="use"><span data-l="en">Use</span><span data-l="pt">Usar</span></button>
       <button data-cmd="look"><span data-l="en">Look</span><span data-l="pt">Olhar</span></button>
       <button data-cmd="hide"><span data-l="en">Hide</span><span data-l="pt">Esconder</span></button>
+      <span id="tradeBtns" hidden></span>
+      <button data-cmd="jelly" data-item="jelly"><span data-l="en">Eat Moth Jelly</span><span data-l="pt">Comer Geleia de Mariposa</span></button>
+      <button data-cmd="cashew" data-item="cashew"><span data-l="en">Drink Cashew Water</span><span data-l="pt">Beber Água de Caju</span></button>
+      <button data-cmd="chime" data-item="chime"><span data-l="en">Hang wind chime</span><span data-l="pt">Pendurar sino de vento</span></button>
+      <button data-cmd="camera" data-item="camera"><span data-l="en">Camera flash</span><span data-l="pt">Flash da câmera</span></button>
+      <button data-cmd="skills"><span data-l="en">My skills</span><span data-l="pt">Minhas habilidades</span></button>
       <button data-cmd="firesalt" data-item="firesalt"><span data-l="en">Throw Firesalt</span><span data-l="pt">Jogar Sal de Fogo</span></button>
       <button data-cmd="glow" data-item="glow"><span data-l="en">Drop glow stick</span><span data-l="pt">Soltar bastão luminoso</span></button>
       <button data-cmd="compass" data-item="compass"><span data-l="en">Use compass</span><span data-l="pt">Usar bússola</span></button>
@@ -744,7 +774,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.17';
+const VERSION='0.18';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -895,6 +925,56 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'You learned a skill: {name}. {desc}':'Você aprendeu uma habilidade: {name}. {desc}',
+ 'First: ':'Primeira: ',
+ 'Second: ':'Segunda: ',
+ 'While you fall, you remember what kept you alive. Choose a skill. First: {a}. {ad} Or second: {b}. {bd} Say first or second.':'Enquanto você cai, lembra do que te manteve vivo. Escolha uma habilidade. Primeira: {a}. {ad} Ou segunda: {b}. {bd} Diga primeira ou segunda.',
+ 'You have not learned any skills yet. Every few levels, you get to choose one.':'Você ainda não aprendeu nenhuma habilidade. A cada poucos níveis, você escolhe uma.',
+ 'Your skills: {list}':'Suas habilidades: {list}',
+ 'Say first or second to choose your skill.':'Diga primeira ou segunda para escolher a sua habilidade.',
+ 'You survived three Hound attacks.':'Você sobreviveu a três ataques de Cão.',
+ 'You have hidden from monsters five times.':'Você se escondeu dos monstros cinco vezes.',
+ 'Hound sense: a Hound is {w}, {n} rooms.':'Faro de Cão: um Cão está {w}, a {n} salas.',
+ 'No keycard, but you do not need one. You pick the lock in a few seconds.':'Sem cartão, mas você não precisa. Você abre a fechadura em poucos segundos.',
+ 'Pathfinder: your gut says the exit is somewhere {w}.':'Desbravador: o seu instinto diz que a saída fica em algum lugar {w}.',
+ 'You find a jar of Moth Jelly. It glows faintly, and it smells sweet. You have {n}. Say jelly to eat it: it restores a lot of sanity, but moths love the smell.':'Você encontra um pote de Geleia de Mariposa. Brilha um pouco, e tem cheiro doce. Você tem {n}. Diga geleia para comer: recupera muita sanidade, mas as mariposas adoram o cheiro.',
+ 'You find a bottle of Cashew Water. You have {n}. Say cashew water to drink it: for ten moves, you will hear exactly where every monster is.':'Você encontra uma garrafa de Água de Caju. Você tem {n}. Diga água de caju para beber: por dez movimentos, você vai ouvir exatamente onde cada monstro está.',
+ 'You find a wind chime. You have {n}. Say chime to hang it here. If a monster walks through this room, it rings, and you will hear it from anywhere.':'Você encontra um sino de vento. Você tem {n}. Diga sino para pendurar aqui. Se um monstro passar por esta sala, ele toca, e você vai ouvir de qualquer lugar.',
+ 'You find a disposable camera with a working flash. You have {n}. Say camera when something is close: the flash freezes every monster nearby for a few moves.':'Você encontra uma câmera descartável com flash funcionando. Você tem {n}. Diga câmera quando algo estiver perto: o flash congela todos os monstros por perto por alguns movimentos.',
+ 'You have no Moth Jelly.':'Você não tem Geleia de Mariposa.',
+ 'Far away, you hear hundreds of wings wake up.':'Bem longe, você ouve centenas de asas acordarem.',
+ 'You eat the Moth Jelly. It is sweet and strange, and your mind feels clear and calm. Sanity is now {s} percent. But the smell is all over your hands now.':'Você come a Geleia de Mariposa. É doce e estranha, e sua mente fica clara e calma. A sanidade agora está em {s} por cento. Mas o cheiro agora está nas suas mãos.',
+ 'You have no Cashew Water.':'Você não tem Água de Caju.',
+ 'You drink the Cashew Water. It tastes bitter. Then every sound in the level becomes sharp and clear.':'Você bebe a Água de Caju. Tem gosto amargo. Então todo som do nível fica nítido e claro.',
+ 'You hear nothing hunting on this level.':'Você não ouve nada caçando neste nível.',
+ 'You hear: {list}.':'Você ouve: {list}.',
+ '{name} {w}, {n} rooms':'{name} {w}, a {n} salas',
+ 'You have no wind chimes.':'Você não tem sinos de vento.',
+ 'You hang the wind chime from the ceiling. It tinkles softly, then goes still. If anything walks through here, you will know.':'Você pendura o sino de vento no teto. Ele tilinta baixinho, depois fica parado. Se algo passar por aqui, você vai saber.',
+ 'You have no camera.':'Você não tem câmera.',
+ 'FLASH! The room goes blinding white. Something screams, frozen in place. You have a few moves. Go!':'FLASH! A sala fica branca, ofuscante. Algo grita, congelado no lugar. Você tem alguns movimentos. Vai!',
+ 'FLASH! The room goes white for a moment. Nothing was close enough to catch it.':'FLASH! A sala fica branca por um instante. Nada estava perto o bastante para ser pego.',
+ 'Your wind chime rings, {w}, {n} rooms away. Something just walked through it.':'O seu sino de vento toca, {w}, a {n} salas. Algo acabou de passar por ele.',
+ 'Cashew Water.':'Água de Caju.',
+ 'The sharp hearing fades.':'A audição afiada passa.',
+ 'Somewhere {w}, someone calls out cheerfully:':'Em algum lugar {w}, alguém chama, animado:',
+ 'Hello there! Trading post is open! I take almond water, the only money that matters down here.':'Olá! O posto de troca está aberto! Eu aceito água de amêndoa, o único dinheiro que vale alguma coisa aqui embaixo.',
+ 'The Trader is {w}, with a big bag of supplies. Say talk to see what they have.':'O Comerciante está {w}, com uma sacola grande de suprimentos. Diga falar para ver o que ele tem.',
+ 'Trade {n}: {item} for {c} almond water.':'Troca {n}: {item} por {c} água de amêndoa.',
+ 'The Trader opens their bag. You have {w} almond water.':'O Comerciante abre a sacola. Você tem {w} água de amêndoa.',
+ 'Say trade and a number, like trade 1, or press a trade button.':'Diga troca e um número, por exemplo troca 1, ou aperte um botão de troca.',
+ 'There is no one here to trade with.':'Não há ninguém aqui para trocar.',
+ 'The Trader only has {n} deals.':'O Comerciante só tem {n} ofertas.',
+ 'The Trader shakes their head. That costs {c} almond water, and you only have {w}.':'O Comerciante balança a cabeça. Isso custa {c} água de amêndoa, e você só tem {w}.',
+ 'Deal. You hand over {c} almond water and get {item}. You have {w} almond water left.':'Fechado. Você entrega {c} água de amêndoa e recebe {item}. Sobram {w} água de amêndoa.',
+ 'Moth Jelly: {n}.':'Geleia de Mariposa: {n}.',
+ 'Cashew Water: {n}.':'Água de Caju: {n}.',
+ 'Wind chimes: {n}.':'Sinos de vento: {n}.',
+ 'Cameras: {n}.':'Câmeras: {n}.',
+ 'Moth Jelly':'Geleia de Mariposa',
+ 'Cashew Water':'Água de Caju',
+ 'Chimes':'Sinos',
+ 'Cameras':'Câmeras',
  'You find a pouch of Firesalt. You have {n}. Say firesalt to throw it into the hall ahead: it bursts into fire that nothing can walk through for a while.':'Você encontra um saquinho de Sal de Fogo. Você tem {n}. Diga sal de fogo para jogar no corredor à frente: ele explode em chamas que nada consegue atravessar por um tempo.',
  'You find a glow stick. You have {n}. Say glow stick to crack it and drop it here. The room stays lit, and Smilers will not come near it.':'Você encontra um bastão luminoso. Você tem {n}. Diga bastão luminoso para quebrar e soltar aqui. A sala fica iluminada, e os Sorridentes não chegam perto.',
  'You find an old compass. Its needle hums. You have {n}. Say compass, and for ten steps it tells you the way to the exit.':'Você encontra uma bússola velha. A agulha zumbe. Você tem {n}. Diga bússola, e por dez passos ela diz o caminho até a saída.',
@@ -1117,7 +1197,7 @@ const PT={
  'Flashlight on, battery {n} percent.':'Lanterna ligada, pilha em {n} por cento.','Flashlight off, battery {n} percent.':'Lanterna desligada, pilha em {n} por cento.',
  'A battery, but no flashlight.':'Uma pilha, mas nenhuma lanterna.','You have a walkie-talkie.':'Você tem um walkie-talkie.','You have the keycard.':'Você tem o cartão de acesso.','You need the keycard.':'Você precisa do cartão de acesso.',
  'Tapes found: {n} of 6.':'Fitas encontradas: {n} de 6.','You are sneaking.':'Você está agachado.','Facing {d}. Difficulty: {diff}.':'Virado para o {d}. Dificuldade: {diff}.',
- 'Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Use to flip a switch or pull a lever. Eat a ration, light a flare, set trap, or music box to use your items. History repeats the last five messages. Firesalt, glow stick, compass, adrenaline, mystery bottle and pill use those items. Talk to Facelings. Radio to check the static. Tape to replay a tape. Mark to leave a mark, and find mark to hear the way back. Also status, repeat, faster, slower, and pause.':'Diga frente, esquerda, direita ou trás para andar. Virar à esquerda, virar à direita ou meia volta. Correr para avançar duas salas. Agachar para andar em silêncio. Escutar para achar a saída. Olhar em volta. Esconder quando algo estiver perto. Beber água de amêndoa. Lanterna para a luz. Bombinha para atrair os monstros. Usar para acionar um interruptor ou puxar uma alavanca. Comer, sinalizador, armadilha ou caixinha de música para usar seus itens. Histórico repete as últimas cinco mensagens. Sal de fogo, bastão luminoso, bússola, adrenalina, garrafa misteriosa e pílula usam esses itens. Falar com os Sem-Rosto. Rádio para ouvir a estática. Fita para ouvir uma fita de novo. Marcar para deixar uma marca, e achar marca para ouvir o caminho de volta. Também: status, repetir, mais rápido, mais devagar e pausa.',
+ 'Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Use to flip a switch or pull a lever. Eat a ration, light a flare, set trap, or music box to use your items. History repeats the last five messages. Skills tells you your skills. Jelly, cashew water, chime and camera use those items. Trade and a number buys from the Trader. Firesalt, glow stick, compass, adrenaline, mystery bottle and pill use those items. Talk to Facelings. Radio to check the static. Tape to replay a tape. Mark to leave a mark, and find mark to hear the way back. Also status, repeat, faster, slower, and pause.':'Diga frente, esquerda, direita ou trás para andar. Virar à esquerda, virar à direita ou meia volta. Correr para avançar duas salas. Agachar para andar em silêncio. Escutar para achar a saída. Olhar em volta. Esconder quando algo estiver perto. Beber água de amêndoa. Lanterna para a luz. Bombinha para atrair os monstros. Usar para acionar um interruptor ou puxar uma alavanca. Comer, sinalizador, armadilha ou caixinha de música para usar seus itens. Histórico repete as últimas cinco mensagens. Habilidades diz as suas habilidades. Geleia, água de caju, sino e câmera usam esses itens. Troca e um número compra do Comerciante. Sal de fogo, bastão luminoso, bússola, adrenalina, garrafa misteriosa e pílula usam esses itens. Falar com os Sem-Rosto. Rádio para ouvir a estática. Fita para ouvir uma fita de novo. Marcar para deixar uma marca, e achar marca para ouvir o caminho de volta. Também: status, repetir, mais rápido, mais devagar e pausa.',
  'You lost your mind. Say try again, or menu.':'Você enlouqueceu. Diga tentar de novo, ou menu.','The game is paused. Say resume.':'O jogo está pausado. Diga retomar.','Say play to start a new game.':'Diga jogar para começar um novo jogo.',
  '{m} minutes and {s} seconds':'{m} minutos e {s} segundos',
  'Difficulty':'Dificuldade','Time':'Tempo','Steps':'Passos','Times you lost your mind':'Vezes que você enlouqueceu','Tapes found':'Fitas encontradas','{n} of 6':'{n} de 6',
@@ -1210,6 +1290,7 @@ const MT={
   patient:{name:'the Patient',sound:'squeaking gurney wheels and wet, rattling breaths',pt:{name:'o Paciente',sound:'rodinhas de maca rangendo e uma respiração molhada e chiada'},sfx:['breath2','moan'],sense:6,chase:0.55,hostile:true},
   bellhop:{name:'the Bellhop',sound:'a polite knock, and a voice saying room service',pt:{name:'o Mensageiro',sound:'uma batida educada, e uma voz dizendo serviço de quarto'},sfx:['breath','ghost2'],sense:6,chase:0.5,hostile:true,copier:true},
   frost:{name:'the Frostbitten',sound:'cracking ice and slow, heavy steps in the snow',pt:{name:'o Congelado',sound:'gelo rachando e passos lentos e pesados na neve'},sfx:['growl3','moan'],sense:9,chase:0.42,hostile:true},
+  trader:{name:'the Trader',sound:'a bag of bottles clinking, and someone humming',pt:{name:'o Comerciante',sound:'uma sacola de garrafas tilintando, e alguém cantarolando'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   survivor:{name:'a survivor',sound:'someone breathing fast and scared',pt:{name:'um sobrevivente',sound:'alguém respirando rápido e com medo'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   marcus:{name:'Marcus',sound:'a tired voice',pt:{name:'Marcus',sound:'uma voz cansada'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   chaser:{name:'something enormous',sound:'thundering footsteps',pt:{name:'algo enorme',sound:'passos estrondosos'},sfx:['growl4','attack','attack2'],sense:99,chase:0.72,hostile:true}
@@ -1220,6 +1301,8 @@ const LURES={en:['Hey! Over here! I found the exit!','Help me! Please, I am stuc
   pt:['Ei! Aqui! Achei a saída!','Me ajuda! Por favor, estou preso!','Está tudo bem. Por aqui é seguro.','Espera por mim! Não me deixa aqui!','Tem alguém aí? Chega mais perto, eu não consigo ver.']};
 const FAMILY={en:['Sweetheart, dinner is ready. Come to the kitchen.','It is me. It is Mom. Come here, let me see you.','Why are you hiding? We have been so worried.','Come give me a hug. You are home now.','Your room is just down here. Follow my voice.'],
   pt:['Querido, o jantar está pronto. Venha para a cozinha.','Sou eu. É a mamãe. Vem aqui, deixa eu te ver.','Por que você está se escondendo? A gente ficou tão preocupado.','Vem me dar um abraço. Você está em casa agora.','Seu quarto é logo aqui. Siga a minha voz.']};
+// the Trader barters for almond water, the money of the Backrooms
+const TRADES=[{give:'flare',cost:2},{give:'trap',cost:2},{give:'decoy',cost:2},{give:'firesalt',cost:2},{give:'compass',cost:1},{give:'adren',cost:3},{give:'glow',cost:1},{give:'ration',cost:1},{give:'battery',cost:1},{give:'cashew',cost:2},{give:'camera',cost:3},{give:'chime',cost:1},{give:'pill',cost:4}];
 const SURV_NAMES=['Dana','Theo','Rosa','Kenji','Priya','Malik','Ines','Jonah'];
 const SURV_HELLO={en:['Hey! Is someone there? My name is {n}. I am human, I promise. Come closer, slowly.','Please, over here. I am {n}. I have been lost for weeks. I will not hurt you.','Who is that? Are you real? I am {n}. Come here, I have supplies.'],
   pt:['Ei! Tem alguém aí? Meu nome é {n}. Eu sou humano, eu prometo. Chega mais perto, devagar.','Por favor, aqui. Eu sou {n}. Estou perdido há semanas. Eu não vou machucar você.','Quem está aí? Você é de verdade? Eu sou {n}. Vem aqui, eu tenho suprimentos.']};
@@ -1462,6 +1545,21 @@ const NOTES={en:[
  'Uma página rasgada, com letra tremida: corra corra corra corra corra.',
  'Um bilhete na porta do seu próprio quarto, com a sua própria letra: Não confie na voz da cozinha. Ninguém está cozinhando.']};
 const NNOTES=15;
+const SKILLS={
+ keen:{en:['Keen ears','You hear monsters from two rooms farther away.'],pt:['Ouvido afiado','Você ouve os monstros de duas salas mais longe.']},
+ quiet:{en:['Quiet feet','Sneaking no longer wears on your nerves.'],pt:['Pés silenciosos','Andar agachado não desgasta mais os seus nervos.']},
+ thick:{en:['Thick skin','Getting grabbed costs less sanity.'],pt:['Casca grossa','Ser agarrado custa menos sanidade.']},
+ marathon:{en:['Marathon','You start every level with one extra sprint.'],pt:['Maratona','Você começa cada nível com uma corrida extra.']},
+ lockpick:{en:['Lock picking','You can open keycard doors without the keycard.'],pt:['Abrir fechaduras','Você abre portas de cartão sem o cartão.']},
+ stomach:{en:['Iron stomach','A mystery bottle is never Liquid Pain for you.'],pt:['Estômago de ferro','Uma garrafa misteriosa nunca é Dor Líquida para você.']},
+ steady:{en:['Steady hands','Flashlight batteries last twice as long.'],pt:['Mãos firmes','As pilhas da lanterna duram o dobro.']},
+ smilerward:{en:['Smiler ward','Smilers back away from you, even in the dark.'],pt:['Proteção contra Sorridentes','Os Sorridentes se afastam de você, mesmo no escuro.']},
+ pathfinder:{en:['Pathfinder','When you arrive on a level, you sense which way the exit is.'],pt:['Desbravador','Quando você chega num nível, sente para que lado fica a saída.']},
+ houndsense:{en:['Hound sense','You learned how Hounds move. You always know where they are.'],pt:['Faro de Cão','Você aprendeu como os Cães se movem. Você sempre sabe onde eles estão.'],earned:true},
+ shadow:{en:['Shadow','Monsters find you less often when you hide.'],pt:['Sombra','Os monstros encontram você com menos frequência quando você se esconde.'],earned:true}};
+const has=k=>!!(G.skills&&G.skills.has(k));
+const SKN=k=>SKILLS[k][LANG][0];
+function learn(k,how){if(!G.skills)G.skills=new Set();if(G.skills.has(k))return;G.skills.add(k);sfx(achSound);G.extras.push({text:t('You learned a skill: {name}. {desc}',{name:SKN(k),desc:SKILLS[k][LANG][1]})+(how?' '+how:'')});}
 const BEST={
  howler:{en:['A tall, thin shape that waits in the halls, howling.','It is slow to notice you. Keep moving, and do not let it corner you.'],pt:['Uma forma alta e magra que espera nos corredores, uivando.','Demora para notar você. Continue andando, e não deixe que ele te encurrale.']},
  smiler:{en:['Only a grin and two eyes, glowing in the dark.','It only hunts in the dark. Turn on your flashlight or light a flare, and it runs.'],pt:['Só um sorriso e dois olhos, brilhando no escuro.','Só caça no escuro. Acenda a lanterna ou um sinalizador, e ele foge.']},
@@ -1485,19 +1583,20 @@ const BEST={
  survivor:{en:['Another lost person. Or something pretending to be one.','A real survivor breathes and helps you. A fake one repeats its words and does not breathe.'],pt:['Outra pessoa perdida. Ou algo fingindo ser uma.','Um sobrevivente de verdade respira e ajuda você. Um falso repete as palavras e não respira.']},
  marcus:{en:['The man who made the tapes.','He has been waiting a long time. Find him.'],pt:['O homem que gravou as fitas.','Ele está esperando há muito tempo. Encontre-o.']}};
 const bareName=ty=>cap((LANG==='pt'?MT[ty].pt.name:MT[ty].name).replace(/^(the|a|an|um|uma|o|a|os|as) /i,''));
-const BORDER=['howler','smiler','hound','skin','clump','party','moths','watcher','deep','face','wretch','jester','librarian','chaser','mimic','host','survivor','patient','bellhop','frost','marcus'];
+BEST.trader={en:['A wanderer from one of the outposts, with a bag full of supplies.','Harmless. Trade your almond water for the tools you need.'],pt:['Um andarilho de um dos postos, com uma sacola cheia de suprimentos.','Inofensivo. Troque a sua água de amêndoa pelas ferramentas de que precisa.']};
+const BORDER=['trader','smiler','hound','skin','clump','party','moths','watcher','deep','face','wretch','jester','librarian','chaser','mimic','host','survivor','patient','bellhop','frost','marcus'];
 function seeMon(type){if(!BEST[type])return;const seen=lsGet('br_seen',{});if(seen[type])return;seen[type]=1;lsSet('br_seen',seen);
   G.extras.push({text:t('New entry in your bestiary: {name}.',{name:bareName(type)})});
   if(BORDER.filter(x=>x!=='marcus').every(x=>seen[x]))unlock('bestiary');}
-const ITEMNAME={en:{water:'a bottle of almond water',fire:'a firecracker',battery:'a battery',energy:'an energy bar',tape:'a cassette tape',flashlight:'a flashlight',radio:'a walkie-talkie',keycard:'a keycard',note:'a handwritten note',ration:'a Royal Ration',flare:'a flare',trap:'a bear trap',decoy:'a wind-up music box',firesalt:'a pouch of Firesalt',glow:'a glow stick',compass:'an old compass',adren:'an adrenaline shot',mystery:'a mystery bottle',pill:'a strange pill'},
-  pt:{water:'uma garrafa de água de amêndoa',fire:'uma bombinha',battery:'uma pilha',energy:'uma barra de energia',tape:'uma fita cassete',flashlight:'uma lanterna',radio:'um walkie-talkie',keycard:'um cartão de acesso',note:'um bilhete escrito à mão',ration:'uma Ração Real',flare:'um sinalizador',trap:'uma armadilha de urso',decoy:'uma caixinha de música de corda',firesalt:'um saquinho de Sal de Fogo',glow:'um bastão luminoso',compass:'uma bússola velha',adren:'uma injeção de adrenalina',mystery:'uma garrafa misteriosa',pill:'uma pílula estranha'}};
+const ITEMNAME={en:{water:'a bottle of almond water',fire:'a firecracker',battery:'a battery',energy:'an energy bar',tape:'a cassette tape',flashlight:'a flashlight',radio:'a walkie-talkie',keycard:'a keycard',note:'a handwritten note',ration:'a Royal Ration',flare:'a flare',trap:'a bear trap',decoy:'a wind-up music box',firesalt:'a pouch of Firesalt',glow:'a glow stick',compass:'an old compass',adren:'an adrenaline shot',mystery:'a mystery bottle',pill:'a strange pill',jelly:'a jar of Moth Jelly',cashew:'a bottle of Cashew Water',chime:'a wind chime',camera:'a disposable camera'},
+  pt:{water:'uma garrafa de água de amêndoa',fire:'uma bombinha',battery:'uma pilha',energy:'uma barra de energia',tape:'uma fita cassete',flashlight:'uma lanterna',radio:'um walkie-talkie',keycard:'um cartão de acesso',note:'um bilhete escrito à mão',ration:'uma Ração Real',flare:'um sinalizador',trap:'uma armadilha de urso',decoy:'uma caixinha de música de corda',firesalt:'um saquinho de Sal de Fogo',glow:'um bastão luminoso',compass:'uma bússola velha',adren:'uma injeção de adrenalina',mystery:'uma garrafa misteriosa',pill:'uma pílula estranha',jelly:'um pote de Geleia de Mariposa',cashew:'uma garrafa de Água de Caju',chime:'um sino de vento',camera:'uma câmera descartável'}};
 const LX=k=>{const lv=L();return LANG==='pt'&&lv.pt[k]!==undefined?lv.pt[k]:lv[k];};
 
 /* ============================== state ============================== */
 const G={ mode:'story', depth:0, level:0, maze:null, w:0,h:0, x:0,y:0, f:0, exit:null, mons:[], items:new Map(), dark:new Set(),
   inv:null, sanity:100, steps:0, deaths:0, tapes:new Set(), lastTape:-1, startTime:0, state:'menu', sneak:false,
   visited:new Set(), lastText:'', entBand:99, blackout:0, sinceScare:0, extras:[], noise:null, sprinted:false };
-function freshInv(){return {water:0,fire:1,battery:0,energy:0,ration:0,flare:0,trap:0,decoy:0,firesalt:0,glow:0,compass:0,adren:0,mystery:0,pill:0,flashlight:false,light:false,radio:false,keycard:false};}
+function freshInv(){return {water:0,fire:1,battery:0,energy:0,ration:0,flare:0,trap:0,decoy:0,firesalt:0,glow:0,compass:0,adren:0,mystery:0,pill:0,jelly:0,cashew:0,chime:0,camera:0,flashlight:false,light:false,radio:false,keycard:false};}
 
 /* ============================== maze ============================== */
 function carve(g,x,y,d){const nx=x+DX[d],ny=y+DY[d];if(ny<0||ny>=g.length||nx<0||nx>=g[0].length)return;g[y][x]&=~(1<<d);g[ny][nx]&=~(1<<((d+2)%4));}
@@ -1926,6 +2025,9 @@ function parseEn(s){
   const tx=norm(s); const has=re=>re.test(tx);
   let n=1; const m=tx.match(/ (\d+|two|three|four|five|six|seven|eight)( times| steps)? /); if(m)n=clamp(parseInt(m[1])||NUMW[m[1]]||1,1,8);
   const dirOf=()=>has(/ (left|lift|lest) /)?3:has(/ (right|write|rite|ride|bright) /)?1:has(/ (back|backward|backwards|behind) /)?2:0;
+  if(screen==='skillpick'){if(has(/ (first|one|1|number one|the first) /))return{c:'pick',n:0};if(has(/ (second|two|2|number two|the second) /))return{c:'pick',n:1};
+    for(const i of [0,1]){const k=SKPICK&&SKPICK.opts[i];if(k&&tx.includes(' '+norm(SKILLS[k].en[0]).trim()+' '))return{c:'pick',n:i};}}
+  if(has(/ (skills|my skills|abilities) /))return{c:'skills'};
   if(has(/ (stop listening|microphone off|mic off|voice off|buttons only|use buttons) /))return{c:'micoff'};
   if(has(/ (3d|3 d|three d) (graphics|view|on) |^ (3d|3 d|three d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classic|2d|2 d|two d)( graphics| view)? /))return{c:'gfx',n:'classic'};
@@ -1979,6 +2081,11 @@ function parseEn(s){
   {const cm=tx.match(/ (code|enter code|the code is) ((?:\d|zero|one|two|three|four|five|six|seven|eight|nine| )+) /);if(cm){const NW={zero:0,one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9};const d=cm[2].trim().split(/\s+/).map(w=>/^\d+$/.test(w)?w:(NW[w]??'')).join('');return{c:'code',n:d};}
    if(has(/ (enter code|code|keypad) /))return{c:'code'};}
   if(typeof G!=='undefined'&&G.mem&&!G.mem.done){if(has(/ (low|lo|bottom) /))return{c:'note',n:0};if(has(/ (middle|mid|medium) /))return{c:'note',n:1};if(has(/ (high|hi|top) /))return{c:'note',n:2};}
+  {const cm=tx.match(/ (trade|buy|deal) (\d|one|two|three) /);if(cm)return{c:'trade',n:parseInt(cm[2])||NUMW[cm[2]]};}
+  if(has(/ (moth jelly|jelly) /))return{c:'jelly'};
+  if(has(/ (cashew water|cashew) /))return{c:'cashew'};
+  if(has(/ (wind chime|chime|hang chime) /))return{c:'chime'};
+  if(has(/ (camera|flash|take a picture|photo) /))return{c:'camera'};
   if(has(/ (firesalt|fire salt|salt) /))return{c:'firesalt',r:dirOf()};
   if(has(/ (glow stick|glowstick|glow) /))return{c:'glow'};
   if(has(/ (compass) /))return{c:'compass'};
@@ -2017,6 +2124,8 @@ function parsePt(s){
   const tx=norm(s); const has=re=>re.test(tx);
   let n=1; const m=tx.match(/ (\d+|dois|duas|tres|quatro|cinco|seis|sete|oito)( vezes| passos| salas)? /); if(m)n=clamp(parseInt(m[1])||NUMW[m[1]]||1,1,8);
   const dirOf=()=>has(/ esquerda /)?3:has(/ direita /)?1:has(/ (tras|atras) /)?2:0;
+  if(screen==='skillpick'){if(has(/ (primeira|primeiro|um|uma|1) /))return{c:'pick',n:0};if(has(/ (segunda|segundo|dois|duas|2) /))return{c:'pick',n:1};}
+  if(has(/ (habilidades|minhas habilidades) /))return{c:'skills'};
   if(has(/ (parar de ouvir|desligar microfone|desliga o microfone|microfone desligado|so botoes|usar botoes|voz desligada|desligar voz) /))return{c:'micoff'};
   if(has(/ (3d|3 d|tres d) /))return{c:'gfx',n:'3d'};
   if(has(/ (classico|graficos classicos|2d|2 d) /))return{c:'gfx',n:'classic'};
@@ -2075,6 +2184,11 @@ function parsePt(s){
   if(has(/ (falar|fala|conversar|conversa|ola|oi|perguntar) /))return{c:'talk'};
   if(has(/ (radio|walkie|walkie talkie|estatica) /))return{c:'radio'};
   if(has(/ (escutar|escuta|ouvir|ouve|dica|qual caminho|onde fica a saida|achar a saida|cade a saida) /))return{c:'listen'};
+  {const cm=tx.match(/ (troca|trocar|comprar) (\d|um|uma|dois|duas|tres) /);if(cm)return{c:'trade',n:parseInt(cm[2])||NUMW[cm[2]]};}
+  if(has(/ (geleia de mariposa|geleia) /))return{c:'jelly'};
+  if(has(/ (agua de caju|caju) /))return{c:'cashew'};
+  if(has(/ (sino de vento|sino|pendurar sino) /))return{c:'chime'};
+  if(has(/ (camera|flash|tirar foto|foto) /))return{c:'camera'};
   if(has(/ (sal de fogo|sal) /))return{c:'firesalt',r:dirOf()};
   if(has(/ (bastao luminoso|bastao de luz|bastao) /))return{c:'glow'};
   if(has(/ (bussola) /))return{c:'compass'};
@@ -2104,7 +2218,7 @@ function parsePt(s){
 }
 
 /* ============================== screens ============================== */
-const SCREENS=['splash','menu','pause','ach','levels','words','journal','bestiary','jukebox','setup','settings','howto','news','credits','end','game'];
+const SCREENS=['splash','menu','pause','ach','levels','words','journal','bestiary','jukebox','skillpick','setup','settings','howto','news','credits','end','game'];
 let screen='splash';
 function show(id,announce){
   if(id!=='game'&&G.state==='transition'){G.state='menu';clearAmb();}// leaving during a fall cancels it
@@ -2208,7 +2322,13 @@ function newLevel(){
     if(lvn>=2&&Math.random()<0.35)place('compass',([x,y])=>dist[y][x]>=2&&dist[y][x]<=bd*0.6);
     if(lvn>=4&&!lv.calm&&Math.random()<0.4)place('adren',([x,y])=>dist[y][x]>=3);
     if(lvn>=1&&Math.random()<0.4)place('mystery',([x,y])=>dist[y][x]>=2);
-    if(lvn>=3&&!lv.final&&!lv.run&&G.mode!=='daily'&&Math.random()<0.12)place('pill',([x,y])=>dist[y][x]>=4);}
+    if(lvn>=3&&!lv.final&&!lv.run&&G.mode!=='daily'&&Math.random()<0.12)place('pill',([x,y])=>dist[y][x]>=4);
+    if(lvn>=2&&Math.random()<0.35)place('jelly',([x,y])=>dist[y][x]>=3);
+    if(lvn>=3&&Math.random()<0.3)place('cashew',([x,y])=>dist[y][x]>=2);
+    if(lvn>=2&&!lv.calm&&Math.random()<0.4)place('chime',([x,y])=>dist[y][x]>=1);
+    if(lvn>=4&&!lv.calm&&Math.random()<0.3)place('camera',([x,y])=>dist[y][x]>=3);}
+  if(has('marathon')&&G.inv)G.inv.energy+=1;
+  G.mothBait=0; G.cashew=0; G.chimes=new Map();
   G.flare=null; G.decoy=null; G.alert=0; G.traps=new Set(); G.hostHit=false; G.fires=new Map(); G.glows=new Set(); G.compass=0; G.adren=0;
   // sometimes another lost person is here. Sometimes it only sounds like one.
   const lvn2=G.mode==='story'?G.level:12; const survOk=!lv.calm&&!lv.run&&!lv.secret&&!lv.final&&G.mode!=='tutorial'&&G.mode!=='endless'&&G.mode!=='daily';
@@ -2227,6 +2347,8 @@ function newLevel(){
     else if(type==='face'||type==='survivor')c=cells.filter(([x,y])=>dist[y][x]>=3);
     else c=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));
     if(!c.length)c=cells; const p=pick(c); return {type,x:p[0],y:p[1],cool:3+rand(4)};});
+  if(survOk&&lvn2>=3&&G.mode!=='daily'&&Math.random()<0.3){const c=cells.filter(([x,y])=>dist[y][x]>=2&&dist[y][x]<=bd-1);const p2=pick(c.length?c:cells);
+    const deals=TRADES.slice().sort(()=>Math.random()-.5).slice(0,3);G.mons.push({type:'trader',x:p2[0],y:p2[1],deals,greeted:false});}
   if(G.survOn){const c=cells.filter(([x,y])=>dist[y][x]>=3&&dist[y][x]<=bd-1);const p=pick(c.length?c:cells);G.mons.push({type:'survivor',x:p[0],y:p[1],name:pick(SURV_NAMES),fake:Math.random()<(lvn2>=8?0.45:0.3),greeted:false,helped:false});}
   if(G.mode==='story'&&G.ngp&&!lv.calm&&!lv.secret&&!lv.run){const far=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));for(let i=0;i<Math.min(3,G.ngp);i++){const p=pick(far.length?far:cells);G.mons.push({type:['hound','howler','wretch'][i%3],x:p[0],y:p[1],cool:4});}}
   G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
@@ -2235,7 +2357,7 @@ function newLevel(){
   G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
   updateHUD(); ambience(); levelMusic(); if(A.ctx)A.amb.gain.setTargetAtTime(0.7,now(),0.1);
 }
-function saveCheckpoint(){if(G.mode!=='story')return;lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff,drank:!!G.drank,full:!!G.full,hard:!!G.hard,ngp:G.ngp||0,v:7});
+function saveCheckpoint(){if(G.mode!=='story')return;lsSet('br_save',{level:G.level,inv:G.inv,sanity:G.sanity,steps:G.steps,deaths:G.deaths,tapes:[...G.tapes],lastTape:G.lastTape,diff:S.diff,drank:!!G.drank,full:!!G.full,hard:!!G.hard,ngp:G.ngp||0,skills:[...(G.skills||[])],v:7});
   if(!L().secret){const u=unlocked();if(!u.has(G.level)){u.add(G.level);lsSet('br_unl',[...u]);}}}
 // 0.6.2 and older: Poolrooms and Level Fun came before Lights Out, and the Library before the Carnival
 const OLD2NEW=[0,1,2,3,4,9,10,5,6,7,8,12,11,13,14,15], NEW2OLD=[0,1,2,3,4,7,8,9,10,5,6,12,11,13,14,15];
@@ -2250,7 +2372,7 @@ function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;
   if((s.v||0)<6&&s.level>=10)s.level=s.level===10?13:15;// 0.5: the Run level was last
   if((s.v||0)<6)s.full=true;
   if((s.v||0)<7)s.level=resumeAt(s.level);// 0.7: levels are in order
-  G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.tapes=allTapes();G.lastTape=s.lastTape??-1;G.drank=!!s.drank;G.full=!!s.full;G.hard=!!s.hard;G.ngp=s.ngp||0;G.mode='story';G.edef=null;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
+  G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.tapes=allTapes();G.lastTape=s.lastTape??-1;G.drank=!!s.drank;G.full=!!s.full;G.hard=!!s.hard;G.ngp=s.ngp||0;G.skills=new Set(s.skills||[]);G.mode='story';G.edef=null;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
 function enterLevel(prefix=''){
   initAudio(); newLevel(); saveCheckpoint(); show('game');
   let intro=introText(); const nm=LX('name');
@@ -2259,14 +2381,14 @@ function enterLevel(prefix=''){
 }
 function newGame(skipTut){
   if(!skipTut&&!lsGet('br_tut',0))return startTutorial(true);
-  G.hard=!!S.hard;G.ngp=0;
+  G.hard=!!S.hard;G.ngp=0;G.skills=new Set();G.houndHits=0;G.runHides=0;
   G.mode='story';G.edef=null;G.drank=false;G.full=true;G.level=0;G.inv=freshInv();G.sanity=100;G.steps=0;G.deaths=0;G.tapes=new Set();G.tapes=allTapes();G.lastTape=-1;G.startTime=Date.now();G.sneak=false;setSneakUI();
   const ctl=(S.voice&&!SR)?' Voice commands are not available in this browser, so use the buttons or keyboard.':S.voice?' Voice commands are on. Say help to hear them, or pause to stop.':' You are playing with buttons and keyboard.';
   enterLevel(t('Difficulty: {d}.{ctl}',{d:DL(),ctl:t(ctl)})+(G.hard?' '+t('Hardcore mode. You have one life.'):''));
 }
 function newGamePlus(){
   if(!lsGet('br_beat',0))return narrateMenu(t('New Game Plus unlocks after you finish the story.'));
-  const n=lsGet('br_ngp',0)+1; G.hard=false; G.ngp=n;
+  const n=lsGet('br_ngp',0)+1; G.hard=false; G.ngp=n; G.skills=new Set(lsGet('br_ngpskills',[]));
   G.mode='story';G.edef=null;G.drank=false;G.full=true;G.level=0;G.inv={...freshInv(),...lsGet('br_ngpinv',{}),light:false,keycard:false};G.sanity=100;G.steps=0;G.deaths=0;G.tapes=allTapes();G.lastTape=-1;G.startTime=Date.now();G.sneak=false;setSneakUI();
   enterLevel(t('New Game Plus {n}. You keep the items you finished with, but every level has more monsters, and they hunt harder.',{n}));
 }
@@ -2280,7 +2402,7 @@ function openLevels(){
   show('levels',t('Level select. {n} levels unlocked. Say level and a number, or choose one. Say back to return.',{n:open.length}));
 }
 function chapterInv(i){const I=freshInv();if(i>=2){I.flashlight=true;I.battery=80;}if(i>=3)I.radio=true;I.water=Math.min(2,Math.floor(i/4));I.fire=i>=3?2:1;I.energy=i>=5?3:0;return I;}
-function startChapter(i){G.hard=false;G.ngp=0;
+function startChapter(i){G.hard=false;G.ngp=0;G.skills=new Set();
   if(!chapterOpen(i))return say(t('That level is still locked. Reach it in the story first.'));
   G.mode='story';G.edef=null;G.drank=false;G.full=(i===0);G.level=i;G.inv=chapterInv(i);G.sanity=100;G.steps=0;G.deaths=0;G.tapes=allTapes();G.lastTape=-1;G.startTime=Date.now();G.sneak=false;setSneakUI();
   enterLevel('');
@@ -2306,20 +2428,22 @@ function relDirWords(tx,ty){
 }
 function routeWords(s){const r=rel(s);return r===0?t('straight ahead'):r===2?t('back the way you came'):t('through the opening {dir}',{dir:RELN(r)});}
 function updateHUD(){
-  const I=G.inv; const bits=[[t('Level'),LX('short')],[t('Sanity'),Math.round(G.sanity)+'%'],[t('Water'),I.water],[t('Firecrackers'),I.fire],[t('Sprints'),I.energy]];[['ration','Rations'],['flare','Flares'],['trap','Traps'],['decoy','Music boxes'],['firesalt','Firesalt'],['glow','Glow sticks'],['compass','Compasses'],['adren','Adrenaline'],['mystery','Mystery bottles'],['pill','Pills']].forEach(([k,n])=>{if(I[k])bits.push([t(n),I[k]]);});
+  const I=G.inv; const bits=[[t('Level'),LX('short')],[t('Sanity'),Math.round(G.sanity)+'%'],[t('Water'),I.water],[t('Firecrackers'),I.fire],[t('Sprints'),I.energy]];[['ration','Rations'],['flare','Flares'],['trap','Traps'],['decoy','Music boxes'],['firesalt','Firesalt'],['glow','Glow sticks'],['compass','Compasses'],['adren','Adrenaline'],['mystery','Mystery bottles'],['pill','Pills'],['jelly','Moth Jelly'],['cashew','Cashew Water'],['chime','Chimes'],['camera','Cameras']].forEach(([k,n])=>{if(I[k])bits.push([t(n),I[k]]);});
   if(I.flashlight)bits.push([t('Light'),t(I.light?'on':'off')+' '+Math.round(I.battery)+'%']);
   if(G.mode==='endless')bits.unshift([t('Depth'),G.depth]);
   if(I.radio)bits.push([t('Radio'),t('yes')]); if(L().locked)bits.push([t('Keycard'),t(I.keycard?'yes':'no')]);
   bits.push([t('Tapes'),G.tapes.size+'/'+NTAPES],[t('Facing'),DIRN(G.f)]); if(G.sneak)bits.push(['',t('sneaking')]);
   $$('[data-item]').forEach(b=>{b.hidden=!(I[b.dataset.item]>0);});
+  if(G.maze&&G.state==='play'){const tr=nearTrader();if(!tr)$('#tradeBtns').hidden=true;else if($('#tradeBtns').hidden)renderTrades(tr);}
   {const atEx=G.exit&&G.x===G.exit[0]&&G.y===G.exit[1];$('#codeBtn').hidden=!(G.code&&!G.code.done&&atEx);$('#memBtns').hidden=!(G.mem&&!G.mem.done&&atEx);}
   $('#hud').innerHTML=bits.map(([k,v])=>`<span>${k?k+': ':''}<b>${v}</b></span>`).join('');
   const fill=$('#sanityFill'); fill.style.width=G.sanity+'%'; fill.style.background=G.sanity>50?'var(--ok)':G.sanity>25?'#f2c94b':'var(--danger)';
 }
-function drain(mult=1){let d=DF().drain*mult;if(G.sneak)d*=1.2;if(isDark(G.x,G.y)&&!G.inv.light)d*=L().dark>=1?1.15:1.35;if(L().calm)d*=0.4;G.sanity=Math.max(0,G.sanity-d);
-  if(G.inv.light){G.inv.battery=Math.max(0,G.inv.battery-1.5);if(G.inv.battery<=0){G.inv.light=false;G.extras.push({text:t('Your flashlight flickers and dies.')});sfx(clickSound,false);}}}
+function drain(mult=1){let d=DF().drain*mult;if(G.sneak&&!has('quiet'))d*=1.2;if(isDark(G.x,G.y)&&!G.inv.light)d*=L().dark>=1?1.15:1.35;if(L().calm)d*=0.4;G.sanity=Math.max(0,G.sanity-d);
+  if(G.inv.light){G.inv.battery=Math.max(0,G.inv.battery-(has('steady')?0.75:1.5));if(G.inv.battery<=0){G.inv.light=false;G.extras.push({text:t('Your flashlight flickers and dies.')});sfx(clickSound,false);}}}
 function nearestHostile(dist){let best=null,bd=Infinity;for(const m of G.mons){if(!MT[m.type].hostile&&m.type!=='moths')continue;const d=dist[m.y][m.x];if(d<bd){bd=d;best=m;}}return best?{m:best,d:bd}:null;}
 function moveMon(m,d){if(d<0||m.stuck>0)return;const nx=m.x+DX[d],ny=m.y+DY[d];if(m.type==='deep'&&!isWater(nx,ny))return;
+  if(G.chimes&&G.chimes.has(key(nx,ny))&&MT[m.type].hostile&&(G.steps-(G.chimes.get(key(nx,ny))||-99))>2){G.chimes.set(key(nx,ny),G.steps);const {w,pan}=relDirWords(nx,ny);setTimeout(()=>sfx(chimeRing,pan,0.9),200);G.extras.push({text:t('Your wind chime rings, {w}, {n} rooms away. Something just walked through it.',{w,n:bfs(G.x,G.y)[ny][nx]})});}
   if(G.fires&&G.fires.has(key(nx,ny))&&MT[m.type].hostile)return; if(m.type==='smiler'&&G.glows&&G.glows.has(key(nx,ny)))return;m.x=nx;m.y=ny;
   const k=key(nx,ny);if(G.traps&&G.traps.has(k)&&MT[m.type].hostile&&m.type!=='chaser'){G.traps.delete(k);m.stuck=6;const {w,pan}=relDirWords(nx,ny);sfx(snapTrap,pan);setTimeout(()=>monSound(m,pan,1,0.1),250);G.extras.push({text:t('SNAP! {Name} steps into your bear trap, {w}. It is stuck for a while.',{Name:cap(MN(m)),w})});if(bumpStat('trapped')>=1)unlock('trapper');}}
 function wander(m){const ds=[0,1,2,3].filter(k=>isOpen(m.x,m.y,k));if(ds.length)moveMon(m,pick(ds));}
@@ -2328,6 +2452,7 @@ function monstersTurn(){
   if(G.noise){nd=bfs(G.noise.x,G.noise.y);G.noise.turns--;}
   if(G.alert>0)G.alert--;
   if(G.fires&&G.fires.size){for(const [k,v] of [...G.fires]){if(v<=1){G.fires.delete(k);G.extras.push({text:t('A wall of Firesalt fire burns out.')});}else G.fires.set(k,v-1);}}
+  if(G.mothBait>0)G.mothBait--;
   if(G.adren>0){G.adren--;if(G.adren===0)G.extras.push({text:t('The adrenaline wears off. Your hands start shaking again.')});}
   if(G.flare&&--G.flare.turns<=0){G.flare=null;G.extras.push({text:t('Your flare sputters out.')});}
   if(G.decoy){G.decoy.turns--;const {pan}=relDirWords(G.decoy.x,G.decoy.y);sfx(decoyTune,pan,0.5);if(G.decoy.turns<=0){G.decoy=null;}else if(G.noise&&G.noise.x===G.decoy.x&&G.noise.y===G.decoy.y)G.noise.turns=Math.max(G.noise.turns,2);else G.noise={x:G.decoy.x,y:G.decoy.y,turns:2};nd=bfs(G.noise.x,G.noise.y);}
@@ -2350,18 +2475,20 @@ function monstersTurn(){
     if(m.type==='host'&&G.flare&&bfs(G.flare.x,G.flare.y)[m.y][m.x]<=2){moveMon(m,stepAway(bfs(G.flare.x,G.flare.y),m.x,m.y));if(!m.burnt){m.burnt=true;G.extras.push({text:t('The Host screams at the flare and backs away from the light.')});}continue;}
     if(m.type==='host'&&!m.burnt)m.burnt=false;
     if(m.type==='smiler'&&G.flare&&bfs(G.flare.x,G.flare.y)[m.y][m.x]<=3){moveMon(m,stepAway(bfs(G.flare.x,G.flare.y),m.x,m.y));continue;}
+    if(m.type==='smiler'&&has('smilerward')&&d<=2){moveMon(m,stepAway(dist,m.x,m.y));continue;}
     if(m.type==='smiler'){if(G.inv.light&&d<=3){moveMon(m,stepAway(dist,m.x,m.y));continue;} hunting=hunting&&isDark(G.x,G.y)&&!G.inv.light;}
-    if(m.type==='moths')hunting=G.inv.light&&d<=sense;
+    if(m.type==='moths')hunting=(G.inv.light||G.mothBait>0)&&d<=(G.mothBait>0?12:sense);
     if(hunting){if(Math.random()<T.chase*Df.chase){moveMon(m,stepToward(dist,m.x,m.y));if(m.type==='hound'&&d>3&&Math.random()<0.3)moveMon(m,stepToward(bfs(G.x,G.y),m.x,m.y));}}
     else if(Math.random()<0.5)wander(m);
   }
   if(G.noise&&G.noise.turns<=0)G.noise=null;
   // footsteps of whatever just moved nearby, nearest first
-  if(A.ctx&&!G.inHide){const d2=bfs(G.x,G.y);G.mons.map((m,i)=>({m,moved:before[i]&&(before[i][0]!==m.x||before[i][1]!==m.y),d:d2[m.y][m.x]})).filter(o=>o.moved&&o.d<=7&&o.d>0).sort((a,b)=>a.d-b.d).slice(0,2)
+  if(A.ctx&&!G.inHide){const d2=bfs(G.x,G.y);G.mons.map((m,i)=>({m,moved:before[i]&&(before[i][0]!==m.x||before[i][1]!==m.y),d:d2[m.y][m.x]})).filter(o=>o.moved&&o.d<=(has('keen')?9:7)&&o.d>0).sort((a,b)=>a.d-b.d).slice(0,2)
     .forEach((o,k)=>{const {pan,behind}=relDirWords(o.m.x,o.m.y);setTimeout(()=>sfx(monStep,o.m,pan,clamp(1.05-o.d*0.13,0.12,1),clamp((o.d-1)*0.12+(behind?0.15:0),0,0.85)),380+k*260);});}
 }
 function caughtBy(m){seeMon(m.type);
-  jumpscare(); G.hurt=performance.now(); const hit=DF().hit; G.sanity=Math.max(0,G.sanity-hit);
+  jumpscare(); G.hurt=performance.now(); const hit=Math.round(DF().hit*(has('thick')?0.7:1)); G.sanity=Math.max(0,G.sanity-hit);
+  if(m.type==='hound'&&G.mode==='story'){G.houndHits=(G.houndHits||0)+1;if(G.houndHits>=3)setTimeout(()=>{if(G.sanity>0)learn('houndsense',t('You survived three Hound attacks.'));},10);}
   const dist=bfs(G.x,G.y);
   G.caughtLevel=true;
   if(m.type==='host'){const extra=Math.round(hit*0.5);G.sanity=Math.max(0,G.sanity-extra);G.hostHit=true;const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=7)c.push([x,y]);const p=c.length?pick(c):[G.exit[0],G.exit[1]];m.x=p[0];m.y=p[1];
@@ -2389,6 +2516,10 @@ function monsterCues(force){
     if(m.type==='watcher'){if(G.watchFreeze>0){if(d<=6){glassTapNear(m);txt.push(t('You hear fingernails tapping on glass {w}. It cannot move while you listen.',{w}));}}
       else if(d<=2)txt.push(t('You feel someone staring at you, {w}.',{w}));if(d<=2)setTimeout(()=>heart(d<=1),900);continue;}
     if(m.type==='marcus'){if(d<=2)txt.push(t('Marcus is very close now, {w}. You can hear him breathing.',{w}));continue;}
+    if(m.type==='trader'){
+      if(!m.greeted&&d<=4){m.greeted=true;G.extras.push({label:t('Somewhere {w}, someone calls out cheerfully:',{w}),text:t('Hello there! Trading post is open! I take almond water, the only money that matters down here.'),opts:{v:voice2,pitch:0.9,rate:1},pos:pan});}
+      if(d<=1)txt.push(t('The Trader is {w}, with a big bag of supplies. Say talk to see what they have.',{w:d===0?t('right here'):w}));
+      if(d<=3&&Math.random()<0.5)setTimeout(()=>sfx(chimeRing,pan,0.15),200);continue;}
     if(m.type==='survivor'){
       if(!m.greeted&&d<=4){m.greeted=true;const h=SURV_HELLO[LANG][rand(3)].replace('{n}',m.name);G.extras.push({label:t('Somewhere {w}, a voice calls:',{w}),text:m.fake?fakeify(h):h,opts:{v:voice2,pitch:m.fake?0.92:1.05,rate:0.95},pos:pan});}
       if(d<=1)txt.push(t('{n} is standing {w}. Say talk to speak with them.',{n:m.name,w:d===0?t('right here'):w}));
@@ -2400,7 +2531,8 @@ function monsterCues(force){
       else if(d<=5){monSound(m,pan,clamp(1-d*0.15,0.2,1),d*0.1);if(d<=3||force||!G.mothTold){txt.push(t(G.inv.light?'You hear {sound} {w}. Your light is drawing them in.':'You hear {sound} {w}.',{sound:MS(m),w}));G.mothTold=true;}}continue;}
     if(d<nd){nd=d;nearest=m;}
   }
-  if(nearest){const m=nearest,T=MT[m.type],d=nd;const {w,pan,behind}=relDirWords(m.x,m.y);const sense=T.sense+DF().sense;
+  if(has('houndsense'))for(const h of G.mons){if(h.type!=='hound'||h===nearest)continue;const hd=dist[h.y][h.x];if(hd<=10)txt.push(t('Hound sense: a Hound is {w}, {n} rooms.',{w:relDirWords(h.x,h.y).w,n:hd}));}
+  if(nearest){const m=nearest,T=MT[m.type],d=nd;const {w,pan,behind}=relDirWords(m.x,m.y);const sense=T.sense+DF().sense+(has('keen')?2:0);
     if(!force&&d>1&&d<=3&&m.type!=='chaser'&&Math.random()<0.35){if(A.ctx){fadeTrack('chase',0,0.4);if(!SYNTHM[L().music])fadeTrack(L().music,0.04,0.4);chaseLevel=-2;}G.entBand=2;setTimeout(()=>heart(false),900);txt.push(t('Everything has gone very quiet.'));}
     else{
       if(d<=sense+1&&(d<=3||Math.random()<0.7)&&!T.copier)monSound(m,pan,clamp(1.15-d*0.17,0.12,1),clamp((d-1)*0.14+(behind?0.2:0),0,0.9));
@@ -2450,6 +2582,7 @@ function puzTone(tone,pan,muffle){const t=now();const f=[220,330,494][tone];cons
   [1,2,3].forEach((m,k)=>{const o=osc(G.puz&&G.puz.kind==='breaker'?'sawtooth':'sine',f*m,t,1.6);const g=gainNode(0);envelope(g,t,0.01,[0.25,0.07,0.03][k],1.4);o.connect(filt('lowpass',2400)).connect(g).connect(out);});}
 function puzzleHint(){if(!G.puz)return '';return ' '+t('The exit is sealed. Somewhere on this level are three {objs}. Use them in order, from the lowest sound to the highest. If you get the order wrong, an alarm calls every monster to you.',{objs:PUZ()[1]});}
 function introText(){let x=LX('intro')+puzzleHint();
+  if(has('pathfinder')&&G.exit)x+=' '+t('Pathfinder: your gut says the exit is somewhere {w}.',{w:relDirWords(G.exit[0],G.exit[1]).w});
   if(G.code)x+=' '+t('The exit door here is locked with a keypad code. Find the three numbers written on scraps of paper.');
   if(G.mem)x+=' '+t('The drain that leads out is shut by a singing valve. You will have to repeat its tune.');
   return x;}
@@ -2525,6 +2658,10 @@ function pickupItems(parts){
     const nf=G.code.found.filter(Boolean).length;parts.push(nf===3?t('That is all three. The code is {c}. Go to the exit door and say code, then the numbers.',{c:G.code.digits.join(' ')}):t('You have {n} of 3 numbers.',{n:nf}));}
   if(ty==='note'){const ni=G.level;const got=lsGet('br_notes',[]);if(!got.includes(ni)){got.push(ni);lsSet('br_notes',got);}sfx(tapeClick);
     parts.push(t('You find a handwritten note. It goes into your journal. {n} of {total} notes.',{n:got.length,total:NNOTES}));G.extras.push({text:NOTES[LANG][ni],opts:{v:voice2,pitch:0.95,rate:S.rate*0.92}});if(got.length>=NNOTES)unlock('journal');}
+  if(ty==='jelly'){I.jelly=(I.jelly||0)+1;parts.push(t('You find a jar of Moth Jelly. It glows faintly, and it smells sweet. You have {n}. Say jelly to eat it: it restores a lot of sanity, but moths love the smell.',{n:I.jelly}));}
+  if(ty==='cashew'){I.cashew=(I.cashew||0)+1;parts.push(t('You find a bottle of Cashew Water. You have {n}. Say cashew water to drink it: for ten moves, you will hear exactly where every monster is.',{n:I.cashew}));}
+  if(ty==='chime'){I.chime=(I.chime||0)+1;parts.push(t('You find a wind chime. You have {n}. Say chime to hang it here. If a monster walks through this room, it rings, and you will hear it from anywhere.',{n:I.chime}));}
+  if(ty==='camera'){I.camera=(I.camera||0)+1;parts.push(t('You find a disposable camera with a working flash. You have {n}. Say camera when something is close: the flash freezes every monster nearby for a few moves.',{n:I.camera}));}
   if(ty==='firesalt'){I.firesalt=(I.firesalt||0)+1;parts.push(t('You find a pouch of Firesalt. You have {n}. Say firesalt to throw it into the hall ahead: it bursts into fire that nothing can walk through for a while.',{n:I.firesalt}));}
   if(ty==='glow'){I.glow=(I.glow||0)+1;parts.push(t('You find a glow stick. You have {n}. Say glow stick to crack it and drop it here. The room stays lit, and Smilers will not come near it.',{n:I.glow}));}
   if(ty==='compass'){I.compass=(I.compass||0)+1;parts.push(t('You find an old compass. Its needle hums. You have {n}. Say compass, and for ten steps it tells you the way to the exit.',{n:I.compass}));}
@@ -2584,6 +2721,7 @@ function afterMove(quiet){
   if(G.mark&&G.markSought&&G.x===G.mark.x&&G.y===G.mark.y){G.markSought=false;sfx(ping,V3(0,0,-0.3),0.6,0);parts.push(t('You are back at your mark.'));unlock('mapper');}
   const pz=puzAt(G.x,G.y); if(pz){sfx(puzTone,pz.tone,0,0.5);parts.push(pz.on?t('You already used this one.'):t('There is {obj} here. It makes a {pitch} sound. Say use to {verb} it.',{obj:PUZ()[0],pitch:PITCH()[pz.tone],verb:PUZ()[2]}));}
   if(G.x===G.exit[0]&&G.y===G.exit[1]){
+    if(lv.locked&&!G.inv.keycard&&has('lockpick')){G.inv.keycard=true;sfx(clickSound,true);parts.push(t('No keycard, but you do not need one. You pick the lock in a few seconds.'));}
     if(lv.locked&&!G.inv.keycard){sfx(denied);parts.push(t('A heavy elevator door with a card reader. It is locked. You need the keycard.'));}
     else if(G.code&&!G.code.done){sfx(denied);parts.push(t('The exit door has a keypad. It needs a three-number code. Numbers are written on scraps of paper around this level. When you know them, say code and the numbers, like code 4 7 2, or press Enter code.'));}
     else if(G.mem&&!G.mem.done){parts.push(memIntro());}
@@ -2603,6 +2741,7 @@ function afterMove(quiet){
   skinLure(); scareEvents(parts,caughtNow); hallucinate(); marcusCall(); parts.push(hazardCue());
   if(G.sanity<=0){gameOver(parts);return {stop:true};}
   const exDist=bfs(G.exit[0],G.exit[1])[G.y][G.x];
+  if(G.cashew>0){G.cashew--;parts.push(t('Cashew Water.')+' '+cashewReport());if(G.cashew===0)parts.push(t('The sharp hearing fades.'));}
   if(G.compass>0){G.compass--;const ed=bfs(G.exit[0],G.exit[1]);const s2=stepToward(ed,G.x,G.y);if(s2>=0&&exDist>0)parts.push(t('Compass: the exit is {route}, {n} steps.',{route:routeWords(s2),n:exDist}));if(G.compass===0)parts.push(t('The compass needle stops moving.'));}
   if(exDist<=3){const ex=exitCue(true);if(exDist===1)parts.push(t('The exit is very close. ')+ex);}
   if(G.inv.radio&&G.steps%2===0)setTimeout(()=>radioBurst(clamp(0.6-exDist*0.04,0.05,0.6)),700);
@@ -2727,7 +2866,7 @@ function useMystery(){
   if(G.state!=='play')return notPlaying();
   if(!G.inv.mystery)return say(t('You have no mystery bottles.'));
   G.inv.mystery--; sfx(drinkSound); G.drank=true;
-  if(Math.random()<0.6){G.sanity=Math.min(100,G.sanity+40);G.inv.energy+=2;updateHUD();return say(t('It is almond water, but stronger. Much stronger. Your head clears completely, and your legs feel light. Sanity is now {s} percent.',{s:Math.round(G.sanity)}));}
+  if(has('stomach')||Math.random()<0.6){G.sanity=Math.min(100,G.sanity+40);G.inv.energy+=2;updateHUD();return say(t('It is almond water, but stronger. Much stronger. Your head clears completely, and your legs feel light. Sanity is now {s} percent.',{s:Math.round(G.sanity)}));}
   const hurt=20;G.sanity=Math.max(0,G.sanity-hurt);G.hurt=performance.now();updateHUD();setTimeout(()=>play(pick(['giggle','ghost2','weird']),{pan:Math.random()*2-1,vol:0.5,muffle:0.3}),700);
   if(G.sanity<=0)return gameOver([t('It burns. This is not almond water. It is Liquid Pain.')]);
   say(t('It burns. This is not almond water. It is Liquid Pain. The walls start whispering your name. You lose {n} sanity.',{n:hurt}));
@@ -2738,6 +2877,38 @@ function usePill(){
   if(L().final||L().secret||L().run||G.mode==='tutorial'||G.mode==='daily')return say(t('You swallow the pill, but nothing happens. Something here is holding you in place. You spit it out and keep it for later.'));
   G.inv.pill--; G.sanity=Math.max(5,G.sanity-30); G.hurt=performance.now(); updateHUD();
   levelComplete([t('You swallow the pill. Your stomach drops. The floor turns soft, like water, and you sink straight through it. You lose 30 sanity.')]);
+}
+function chimeRing(pan,vol){const t=now();const out=spot(pan,vol,0.15);[2093,2637,3136,2349].forEach((f,i)=>{const tt=t+i*0.13+Math.random()*0.05;const o=osc('sine',f,tt,1.6);const g=gainNode(0);envelope(g,tt,0.003,0.12,1.5);o.connect(g).connect(out);});}
+function shutter(){const t=now();const n=noise(t,0.06);const g=gainNode(0);envelope(g,t,0.001,0.8,0.05);n.connect(filt('highpass',2000)).connect(g).connect(spot(0,1));const o=osc('sine',3000,t+0.05,0.6);o.frequency.exponentialRampToValueAtTime(6000,t+0.6);const og=gainNode(0);envelope(og,t+0.05,0.01,0.08,0.5);o.connect(og).connect(spot(0,1));}
+function eatJelly(){
+  if(G.state!=='play')return notPlaying();
+  if(!G.inv.jelly)return say(t('You have no Moth Jelly.'));
+  G.inv.jelly--; G.sanity=Math.min(100,G.sanity+45); G.mothBait=12; sfx(crunch); updateHUD();
+  let extra='';if(!G.mons.some(m=>m.type==='moths')&&Math.random()<0.5&&!L().calm){const dd=bfs(G.x,G.y);const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dd[y][x]>=7)c.push([x,y]);if(c.length){const p2=pick(c);G.mons.push({type:'moths',x:p2[0],y:p2[1],cool:3});extra=' '+t('Far away, you hear hundreds of wings wake up.');}}
+  say(t('You eat the Moth Jelly. It is sweet and strange, and your mind feels clear and calm. Sanity is now {s} percent. But the smell is all over your hands now.',{s:Math.round(G.sanity)})+extra);
+}
+function drinkCashew(){
+  if(G.state!=='play')return notPlaying();
+  if(!G.inv.cashew)return say(t('You have no Cashew Water.'));
+  G.inv.cashew--; G.cashew=10; sfx(drinkSound); updateHUD();
+  say(t('You drink the Cashew Water. It tastes bitter. Then every sound in the level becomes sharp and clear.')+' '+cashewReport());
+}
+function cashewReport(){const dd=bfs(G.x,G.y);const list=G.mons.filter(m=>MT[m.type].hostile).map(m=>({m,d:dd[m.y][m.x]})).sort((a,b)=>a.d-b.d);
+  if(!list.length)return t('You hear nothing hunting on this level.');
+  return t('You hear: {list}.',{list:list.map(o=>t('{name} {w}, {n} rooms',{name:MN(o.m),w:relDirWords(o.m.x,o.m.y).w,n:o.d})).join('; ')});}
+function hangChime(){
+  if(G.state!=='play')return notPlaying();
+  if(!G.inv.chime)return say(t('You have no wind chimes.'));
+  G.inv.chime--; G.chimes.set(key(G.x,G.y),0); sfx(chimeRing,0,0.6); const parts=[]; if(!itemTurn(parts))return;
+  say([t('You hang the wind chime from the ceiling. It tinkles softly, then goes still. If anything walks through here, you will know.'),...parts,pathsText()].filter(Boolean).join(' '));
+}
+function useCamera(){
+  if(G.state!=='play')return notPlaying();
+  if(!G.inv.camera)return say(t('You have no camera.'));
+  G.inv.camera--; sfx(shutter); G.flash=performance.now(); const dd=bfs(G.x,G.y); let n=0;
+  for(const m of G.mons){if(!MT[m.type].hostile||m.type==='chaser'||dd[m.y][m.x]>2)continue;m.stuck=Math.max(m.stuck||0,m.type==='host'?2:4);n++;const {pan}=relDirWords(m.x,m.y);setTimeout(()=>monSound(m,pan,0.9,0.1),300);}
+  const parts=[]; if(!itemTurn(parts))return;
+  say([n?t('FLASH! The room goes blinding white. Something screams, frozen in place. You have a few moves. Go!'):t('FLASH! The room goes white for a moment. Nothing was close enough to catch it.'),...parts,pathsText()].filter(Boolean).join(' '));
 }
 function showHistory(){const h=G.history||[];if(!h.length)return say(t('Nothing has happened yet.'),{log:false});say(t('The last {n} things that happened, newest first.',{n:h.length})+' '+h.map((x,i)=>(i+1)+'. '+x).join(' '),{log:false});}
 function drink(){
@@ -2778,6 +2949,20 @@ function sneak(on){
   say(t(G.sneak?'You crouch low and move quietly. Monsters only notice you up close, but sneaking wears on your nerves.':'You stand up and walk normally.'));
 }
 function setSneakUI(){$('#sneakBtn').setAttribute('aria-pressed',String(!!G.sneak));}
+function nearTrader(){const dd=bfs(G.x,G.y);return G.mons.find(m=>m.type==='trader'&&dd[m.y][m.x]<=1);}
+function talkTrader(m){seeMon('trader');renderTrades(m);
+  const offers=m.deals.map((d,i)=>t('Trade {n}: {item} for {c} almond water.',{n:i+1,item:ITEMNAME[LANG][d.give],c:d.cost})).join(' ');
+  say(t('The Trader opens their bag. You have {w} almond water.',{w:G.inv.water})+' '+offers+' '+t('Say trade and a number, like trade 1, or press a trade button.'));}
+function renderTrades(m){const box=$('#tradeBtns');box.innerHTML='';if(!m){box.hidden=true;return;}box.hidden=false;
+  m.deals.forEach((d,i)=>{const b=document.createElement('button');b.textContent=t('Trade {n}: {item} for {c} almond water.',{n:i+1,item:ITEMNAME[LANG][d.give],c:d.cost});b.addEventListener('click',()=>run('trade',i+1));box.appendChild(b);});}
+function doTrade(n){
+  if(G.state!=='play')return notPlaying();
+  const m=nearTrader(); if(!m)return say(t('There is no one here to trade with.'));
+  const d=m.deals[n-1]; if(!d)return say(t('The Trader only has {n} deals.',{n:m.deals.length}));
+  if(G.inv.water<d.cost)return say(t('The Trader shakes their head. That costs {c} almond water, and you only have {w}.',{c:d.cost,w:G.inv.water}));
+  G.inv.water-=d.cost; if(d.give==='battery')G.inv.battery=Math.min(100,G.inv.battery+50); else G.inv[d.give]=(G.inv[d.give]||0)+1; sfx(pickup); updateHUD(); if(bumpStat('trades')>=3)unlock('trader');
+  say(t('Deal. You hand over {c} almond water and get {item}. You have {w} almond water left.',{c:d.cost,item:ITEMNAME[LANG][d.give],w:G.inv.water}));
+}
 function talkSurvivor(m){
   if(m.fake){
     m.type='skin';m.fake=false;jumpscare();G.hurt=performance.now();const hit=DF().hit;G.sanity=Math.max(0,G.sanity-hit);G.caughtLevel=true;
@@ -2796,7 +2981,8 @@ function talkSurvivor(m){
 }
 function talk(){
   if(G.state!=='play')return notPlaying();
-  const dist=bfs(G.x,G.y); const sv=G.mons.find(m=>m.type==='survivor'&&dist[m.y][m.x]<=1); if(sv)return talkSurvivor(sv); const f=G.mons.find(m=>m.type==='face'&&dist[m.y][m.x]<=1);
+  const dist=bfs(G.x,G.y); const tr=G.mons.find(m=>m.type==='trader'&&dist[m.y][m.x]<=1); if(tr)return talkTrader(tr);
+  const sv=G.mons.find(m=>m.type==='survivor'&&dist[m.y][m.x]<=1); if(sv)return talkSurvivor(sv); const f=G.mons.find(m=>m.type==='face'&&dist[m.y][m.x]<=1);
   if(!f)return say(t(L().calm?'There is no one close enough to talk to.':'There is no one to talk to. You hope.'));
   const tips=[]; const ed=bfs(G.exit[0],G.exit[1]); const s=stepToward(ed,G.x,G.y);
   if(s>=0)tips.push(t('The Faceling slowly lifts an arm and points {dir}, toward the way out. {n} rooms.',{dir:[t('straight ahead'),RELN(1),RELN(2),RELN(3)][rel(s)],n:ed[G.y][G.x]}));
@@ -2829,7 +3015,7 @@ function hide(){
   const m=near.m;
   if(m.type==='moths'){G.inv.light=false;updateHUD();wander(m);return say(t('You switch off your light and hold perfectly still. The fluttering drifts away. {paths}',{paths:pathsText()}));}
   if(Math.random()<0.7){moveMon(m,stepAway(dist,m.x,m.y));const {pan}=relDirWords(m.x,m.y);monSound(m,pan,0.6,0.3);updateHUD();setChase(bfs(G.x,G.y)[m.y][m.x]);
-    if(bumpStat('hides')>=5)unlock('hider');
+    if(bumpStat('hides')>=5)unlock('hider'); G.runHides=(G.runHides||0)+1; if(G.runHides>=5&&G.mode==='story')learn('shadow',t('You have hidden from monsters five times.'));
     return say(t('You press yourself against the wall and hold your breath. {Name} passes so close you can feel it. Then it moves away. {paths}',{Name:cap(MN(m)),paths:pathsText()}));}
   moveMon(m,stepToward(dist,m.x,m.y));
   if(m.x===G.x&&m.y===G.y){const c=caughtBy(m);updateHUD();if(G.sanity<=0)return gameOver([c]);return say(t('You hold your breath. It stops. It sniffs the air. It found you. {caught} {paths}',{caught:c,paths:pathsText()}));}
@@ -2837,7 +3023,7 @@ function hide(){
 }
 function status(){
   if(!G.inv)return say(t('The game has not started.'));
-  const I=G.inv; const b=[LX('name')+'.',...(G.puz&&!G.puz.done?[t('{n} of 3 {objs} done.',{n:G.puz.next,objs:PUZ()[1]})]:[]),...(G.code&&!G.code.done?[t('Door code numbers found: {c}.',{c:G.code.digits.map((d,i)=>G.code.found[i]?d:'?').join(' ')})]:[]),t('Sanity {n} percent.',{n:Math.round(G.sanity)}),t('Almond water: {n}.',{n:I.water}),t('Firecrackers: {n}.',{n:I.fire}),t('Sprints: {n}.',{n:I.energy}),...[['ration','Royal Rations: {n}.'],['flare','Flares: {n}.'],['trap','Bear traps: {n}.'],['decoy','Music boxes: {n}.'],['firesalt','Firesalt: {n}.'],['glow','Glow sticks: {n}.'],['compass','Compasses: {n}.'],['adren','Adrenaline shots: {n}.'],['mystery','Mystery bottles: {n}.'],['pill','Strange pills: {n}.']].filter(([k])=>I[k]).map(([k,s])=>t(s,{n:I[k]}))];
+  const I=G.inv; const b=[LX('name')+'.',...(G.puz&&!G.puz.done?[t('{n} of 3 {objs} done.',{n:G.puz.next,objs:PUZ()[1]})]:[]),...(G.code&&!G.code.done?[t('Door code numbers found: {c}.',{c:G.code.digits.map((d,i)=>G.code.found[i]?d:'?').join(' ')})]:[]),t('Sanity {n} percent.',{n:Math.round(G.sanity)}),t('Almond water: {n}.',{n:I.water}),t('Firecrackers: {n}.',{n:I.fire}),t('Sprints: {n}.',{n:I.energy}),...[['ration','Royal Rations: {n}.'],['flare','Flares: {n}.'],['trap','Bear traps: {n}.'],['decoy','Music boxes: {n}.'],['firesalt','Firesalt: {n}.'],['glow','Glow sticks: {n}.'],['compass','Compasses: {n}.'],['adren','Adrenaline shots: {n}.'],['mystery','Mystery bottles: {n}.'],['pill','Strange pills: {n}.'],['jelly','Moth Jelly: {n}.'],['cashew','Cashew Water: {n}.'],['chime','Wind chimes: {n}.'],['camera','Cameras: {n}.']].filter(([k])=>I[k]).map(([k,s])=>t(s,{n:I[k]}))];
   if(I.flashlight)b.push(t(I.light?'Flashlight on, battery {n} percent.':'Flashlight off, battery {n} percent.',{n:Math.round(I.battery)})); else if(I.battery)b.push(t('A battery, but no flashlight.'));
   if(I.radio)b.push(t('You have a walkie-talkie.')); if(L().locked)b.push(t(I.keycard?'You have the keycard.':'You need the keycard.'));
   if(G.mode==='endless')b.unshift(t('Endless mode, depth {n}.',{n:G.depth}));
@@ -2845,7 +3031,7 @@ function status(){
   else if(G.mode==='extra')b.unshift(t('Extra levels. Your deepest is Level {n}.',{n:lsGet('br_extra',FIRSTX)})); else b.push(t('Tapes found: {n} of {total}.',{n:G.tapes.size,total:NTAPES})); if(G.sneak)b.push(t('You are sneaking.')); b.push(t('Facing {d}. Difficulty: {diff}.',{d:DIRN(G.f),diff:DL()}));
   say(b.join(' '));
 }
-function help(){say(t('Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Use to flip a switch or pull a lever. Eat a ration, light a flare, set trap, or music box to use your items. History repeats the last five messages. Firesalt, glow stick, compass, adrenaline, mystery bottle and pill use those items. Talk to Facelings. Radio to check the static. Tape to replay a tape. Mark to leave a mark, and find mark to hear the way back. Also status, repeat, faster, slower, and pause.'));}
+function help(){say(t('Say forward, left, right or back to walk. Turn left, turn right, or turn around. Sprint to run two rooms. Sneak to move quietly. Listen for the exit. Look around. Hide when something is close. Drink almond water. Light for the flashlight. Throw a firecracker to lure monsters. Use to flip a switch or pull a lever. Eat a ration, light a flare, set trap, or music box to use your items. History repeats the last five messages. Skills tells you your skills. Jelly, cashew water, chime and camera use those items. Trade and a number buys from the Trader. Firesalt, glow stick, compass, adrenaline, mystery bottle and pill use those items. Talk to Facelings. Radio to check the static. Tape to replay a tape. Mark to leave a mark, and find mark to hear the way back. Also status, repeat, faster, slower, and pause.'));}
 function notPlaying(){
   if(G.state==='dead')say(t('You lost your mind. Say try again, or menu.'));
   else if(G.state==='paused')say(t('The game is paused. Say resume.'));
@@ -2906,14 +3092,16 @@ function levelComplete(parts){
     }
     G.state='won'; clearAmb(); stopAllMusic(3); setTimeout(()=>sfx(winSound),1500); lsDel('br_save'); escapeAchievements(); lsSet('br_beat',1);
     const hint=t('You found {n} of {total} tapes. Some say that with all of them, the daylight is not the real ending.',{n:G.tapes.size,total:NTAPES});
-    lsSet('br_ngpinv',{...G.inv,light:false,keycard:false}); if(G.hard)unlock('ironwill'); if(!G.hostHit)unlock('host'); if(G.ngp){lsSet('br_ngp',Math.max(lsGet('br_ngp',0),G.ngp));unlock('ngplus');}
+    lsSet('br_ngpinv',{...G.inv,light:false,keycard:false}); lsSet('br_ngpskills',[...(G.skills||[])]); if(G.hard)unlock('ironwill'); if(!G.hostHit)unlock('host'); if(G.ngp){lsSet('br_ngp',Math.max(lsGet('br_ngp',0),G.ngp));unlock('ngplus');}
     G.extras.push({text:t('New Game Plus is now open in the main menu, and you keep the items you are holding.')});
     G.extras.push({text:t('Extra levels are now open in the main menu. The story is over, but the Backrooms keep going.')});
     showEnd(t('YOU ESCAPED'),finishStats(),[...parts,t('You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!'),hint].join(' '));
     return;
   }
   say([...parts,exitText,t('You feel yourself falling through reality.')].join(' '));
-  setTimeout(()=>{if(G.state!=='transition')return;G.level++;G.sanity=Math.min(100,G.sanity+25);G.sneak=false;setSneakUI();enterLevel(t('Checkpoint saved.'));},4500);
+  const pickNow=[2,5,8,11].includes(G.level);
+  const adv=()=>{G.level++;G.sanity=Math.min(100,G.sanity+25);G.sneak=false;setSneakUI();enterLevel(t('Checkpoint saved.'));};
+  setTimeout(()=>{if(G.state!=='transition')return;if(pickNow&&offerSkills(adv))return;adv();},4500);
 }
 function gameOver(parts){
   G.deaths++; jumpscare(); clearAmb(); stopAllMusic(0.5);
@@ -2966,7 +3154,7 @@ function hideTick(){
   if(G.sanity<=0){G.inHide=false;return gameOver([]);}
   if(near&&near.d<=1&&near.m.type!=='moths'){
     const {pan}=relDirWords(near.m.x,near.m.y); sfx(sniff,pan); monSound(near.m,pan,0.5,0.4);
-    if(G.hideNear&&Math.random()<0.18){G.inHide=false;const c=caughtBy(near.m);updateHUD();if(G.sanity<=0)return gameOver([c]);return say(t('It tears your hiding spot open!')+' '+c+' '+pathsText());}
+    if(G.hideNear&&Math.random()<(has('shadow')?0.08:0.18)){G.inHide=false;const c=caughtBy(near.m);updateHUD();if(G.sanity<=0)return gameOver([c]);return say(t('It tears your hiding spot open!')+' '+c+' '+pathsText());}
     if(!G.hideNear){G.hideNear=true;say(t('Something stops right outside. It sniffs at your hiding spot.'));}
   }else if(G.hideNear){G.hideNear=false;unlock('hideseek');say(t('It moves on. You let out your breath.'));}
 }
@@ -3108,7 +3296,7 @@ function dailyWin(parts){
     [...parts,t('You made it out of today’s maze. Come back tomorrow for a new one. Fewer steps is better, so you can try again to beat your best.')].join(' '));
 }
 function extrasOpen(){return !!lsGet('br_beat',0);}
-function startExtra(n){G.hard=false;G.ngp=0;
+function startExtra(n){G.hard=false;G.ngp=0;G.skills=new Set(lsGet('br_ngpskills',[]));
   if(!extrasOpen())return narrateMenu(t('Extra levels unlock after you finish the story.'));
   n=Math.max(FIRSTX,n||lsGet('br_extra',FIRSTX));
   G.mode='extra'; G.xn=n; G.edef=extraDef(n); G.level=G.edef.base??0; G.inv=chapterInv(14); G.inv.water=Math.max(G.inv.water,2);
@@ -3116,7 +3304,7 @@ function startExtra(n){G.hard=false;G.ngp=0;
   initAudio(); newLevel(); show('game');
   say(t('Extra levels. The story is over, but the Backrooms keep going.')+' '+introText()+' '+pathsText());
 }
-function startEndless(){G.hard=false;G.ngp=0;
+function startEndless(){G.hard=false;G.ngp=0;G.skills=new Set();
   G.mode='endless'; G.depth=1; G.inv=freshInv(); G.inv.flashlight=true; G.inv.battery=60; G.inv.radio=true;
   G.sanity=100; G.steps=0; G.deaths=0; G.tapes=new Set(); G.lastTape=-1; G.drank=false; G.startTime=Date.now(); G.sneak=false; setSneakUI();
   G.edef=endlessDef(1); G.level=G.edef.base; initAudio(); newLevel(); show('game');
@@ -3163,6 +3351,7 @@ const ACH=[
  {id:'daily',en:['Daily Visitor','Finish a daily challenge.'],pt:['Visitante Diário','Termine um desafio diário.']},
  {id:'daily7',en:['Seven Days','Finish the daily challenge seven days in a row.'],pt:['Sete Dias','Termine o desafio diário sete dias seguidos.']},
  {id:'bestiary',en:['Monster Hunter','Meet every creature in the Backrooms.'],pt:['Caçador de Monstros','Encontre todas as criaturas dos Backrooms.']},
+ {id:'trader',en:['Haggler','Make three trades with the Trader.'],pt:['Pechincheiro','Faça três trocas com o Comerciante.']},
  {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']}
 ];
 const ACHV=lsGet('br_ach',{}); const STATS=lsGet('br_stats',{});
@@ -3213,6 +3402,15 @@ function openJukebox(){
   const open=list.filter(x=>x.open).length;
   show('jukebox',t('Jukebox. {n} of {total} tracks unlocked. Say track and a number to play it, next for the next one, or stop. Say back to return.',{n:open,total:list.length}));
 }
+let SKPICK=null;
+function offerSkills(then){
+  if(!G.skills)G.skills=new Set();const pool=Object.keys(SKILLS).filter(k=>!SKILLS[k].earned&&!G.skills.has(k)).sort(()=>Math.random()-.5).slice(0,2);if(pool.length<1)return false;
+  SKPICK={opts:pool,then};const box=$('#skOpts');box.innerHTML='';
+  pool.forEach((k,i)=>{const b=document.createElement('button');b.className=i?'':'primary';b.textContent=(i?t('Second: '):t('First: '))+SKN(k)+'. '+SKILLS[k][LANG][1];b.addEventListener('click',()=>pickSkill(i));box.appendChild(b);});
+  clearAmb();show('skillpick',t('While you fall, you remember what kept you alive. Choose a skill. First: {a}. {ad} Or second: {b}. {bd} Say first or second.',{a:SKN(pool[0]),ad:SKILLS[pool[0]][LANG][1],b:pool[1]?SKN(pool[1]):'',bd:pool[1]?SKILLS[pool[1]][LANG][1]:''}));
+  return true;}
+function pickSkill(i){if(!SKPICK||!SKPICK.opts[i])return;const k=SKPICK.opts[i],then=SKPICK.then;SKPICK=null;learn(k);then();}
+function skillsText(){const k=[...(G.skills||[])];if(!k.length)return t('You have not learned any skills yet. Every few levels, you get to choose one.');return t('Your skills: {list}',{list:k.map(x=>SKN(x)+': '+SKILLS[x][LANG][1]).join(' ')});}
 function openJournal(){
   const got=lsGet('br_notes',[]).slice().sort((a,b)=>a-b); const ol=$('#jList'); ol.innerHTML='';
   $('#jCount').textContent=t('{n} of {total} notes found.',{n:got.length,total:NNOTES});
@@ -3261,6 +3459,8 @@ function run(c,n,r){
   if(c==='gfx')return applySetting('gfx',n);
   if(c==='hardset'&&screen==='setup')return applySetting('hard',n);
   if(screen==='splash')return;
+  if(screen==='skillpick'){if(c==='pick')return pickSkill(n);if(c==='repeat')return;return narrateMenu(t('Say first or second to choose your skill.'));}
+  if(c==='skills')return say(skillsText(),{log:false});
   if(screen!=='game'||G.state!=='play'){
     if(c==='quit')return (G.state==='paused'||G.state==='dead')?quitToMain():showMain();
     if(screen==='pause'&&(c==='back'||c==='continue'))return resume();
@@ -3305,6 +3505,7 @@ function run(c,n,r){
     case 'light':return light(n); case 'talk':return talk(); case 'radio':return radio(); case 'tape':return tape();
     case 'use':return (G.mem&&!G.mem.done&&G.x===G.exit[0]&&G.y===G.exit[1])?say(memIntro()):(G.code&&!G.code.done&&G.x===G.exit[0]&&G.y===G.exit[1])?enterCode():usePuzzle();
     case 'code':return enterCode(n); case 'note':return memNote(n);
+    case 'jelly':return eatJelly(); case 'cashew':return drinkCashew(); case 'chime':return hangChime(); case 'camera':return useCamera(); case 'trade':return doTrade(n);
     case 'firesalt':return useFiresalt(r||0); case 'glow':return useGlow(); case 'compass':return useCompass(); case 'adren':return useAdren(); case 'mystery':return useMystery(); case 'pill':return usePill();
     case 'eat':return eat(); case 'flare':return useFlare(); case 'trap':return setTrap(); case 'decoy':return useDecoy();
     case 'hide':return hide(); case 'listen':return listen(); case 'look':return look(); case 'drink':return drink(); case 'status':return status();
@@ -3335,9 +3536,9 @@ function drawMon(m,b){const w=(b.r-b.l),cxm=W/2,tm=performance.now();
   if(m.type==='watcher'){cx.fillStyle='rgba(235,235,230,0.85)';cx.beginPath();cx.ellipse(cxm,b.t+(b.b-b.t)*0.35,(b.r-b.l)*0.09,(b.b-b.t)*0.14,0,0,7);cx.fill();cx.fillStyle='#000';cx.beginPath();cx.arc(cxm-(b.r-b.l)*0.03,b.t+(b.b-b.t)*0.32,3,0,7);cx.arc(cxm+(b.r-b.l)*0.03,b.t+(b.b-b.t)*0.32,3,0,7);cx.fill();return;}
   if(m.type==='librarian'){cx.fillStyle='rgba(40,38,36,0.95)';cx.beginPath();cx.ellipse(cxm,top+eh*0.5,ew*0.32,eh*0.6,0,0,7);cx.fill();cx.fillStyle='#bdb6a8';cx.beginPath();cx.ellipse(cxm,top+eh*0.12,ew*0.16,eh*0.12,0,0,7);cx.fill();return;}
   if(m.type==='jester'){cx.fillStyle='#6d1a4f';cx.beginPath();cx.ellipse(cxm,top+eh*0.6,ew/2,eh*0.42,0,0,7);cx.fill();cx.fillStyle='#f2efe6';cx.beginPath();cx.arc(cxm,top+eh*0.22,ew*0.22,0,7);cx.fill();cx.strokeStyle='#c4182b';cx.lineWidth=Math.max(2,ew*0.04);cx.beginPath();cx.arc(cxm,top+eh*0.24,ew*0.13,0.1*Math.PI,0.9*Math.PI);cx.stroke();cx.fillStyle='#e6c13a';[-1,1].forEach(k=>{cx.beginPath();cx.arc(cxm+k*ew*0.3,top+eh*0.02,ew*0.05,0,7);cx.fill();});return;}
-  cx.fillStyle=m.type==='face'?'#ddd6c4':m.type==='marcus'||m.type==='survivor'?'#8c836f':m.type==='party'?'#e8c43a':'rgba(5,5,5,0.92)';
+  cx.fillStyle=m.type==='face'?'#ddd6c4':m.type==='marcus'||m.type==='survivor'||m.type==='trader'?'#8c836f':m.type==='party'?'#e8c43a':'rgba(5,5,5,0.92)';
   cx.beginPath();cx.ellipse(cxm,top+eh*0.55,ew/2*(m.type==='chaser'?1.7:1),eh/2,0,0,7);cx.fill();
-  if(m.type==='face'||m.type==='marcus'||m.type==='survivor')return;
+  if(m.type==='face'||m.type==='marcus'||m.type==='survivor'||m.type==='trader')return;
   if(m.type==='party'){cx.strokeStyle='#000';cx.lineWidth=Math.max(2,ew*0.05);cx.beginPath();cx.arc(cxm-ew*0.15,top+eh*0.3,ew*0.03,0,7);cx.stroke();cx.beginPath();cx.arc(cxm+ew*0.15,top+eh*0.3,ew*0.03,0,7);cx.stroke();cx.beginPath();cx.arc(cxm,top+eh*0.36,ew*0.2,0.15*Math.PI,0.85*Math.PI);cx.stroke();return;}
   cx.fillStyle=MT[m.type].copier?'#e9d7c0':'#fff';cx.beginPath();cx.arc(cxm-ew*0.18,top+eh*0.3,ew*0.06,0,7);cx.arc(cxm+ew*0.18,top+eh*0.3,ew*0.06,0,7);cx.fill();
   if(m.type==='smiler'){cx.strokeStyle='#fff';cx.lineWidth=Math.max(2,ew*0.04);cx.beginPath();cx.arc(cxm,top+eh*0.38,ew*0.25,0.15*Math.PI,0.85*Math.PI);cx.stroke();}}

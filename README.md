@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.17**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.18**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.18**: skills (choose one every few levels, two earned by playing), the Trader (barter almond water), Moth Jelly, Cashew Water, wind chime, disposable camera.
 - **0.17**: six survival items (Firesalt, glow sticks, compass, adrenaline shot, mystery bottle, strange pill); item buttons only appear when you have the item.
 - **0.16**: jukebox with every song (unlocked as you play) and each level’s ambience.
 - **0.15**: monster footsteps with a different sound per creature, clearer player footsteps, bestiary with survival tips and sound previews.
