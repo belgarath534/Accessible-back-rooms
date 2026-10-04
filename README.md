@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.19**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.20**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.20**: five new handmade extra levels: 18 The School Halls, 19 The Dead Mall, 20 The Last Train, 21 Motion, 22 The Server Farm, each with a new monster, mechanic, music, achievement and bestiary entry.
 - **0.19**: iCloud backup on iPhone (automatic, plus Back up and Restore buttons in Settings), using the capacitor-icloud-sync plugin.
 - **0.18**: skills (choose one every few levels, two earned by playing), the Trader (barter almond water), Moth Jelly, Cashew Water, wind chime, disposable camera.
 - **0.17**: six survival items (Firesalt, glow sticks, compass, adrenaline shot, mystery bottle, strange pill); item buttons only appear when you have the item.
@@ -59,7 +60,7 @@ Opening `index.html` directly from disk will not load the audio files in most br
 
 ## Credits
 
-Music by Kevin MacLeod (incompetech.com): "Dark Hallway", "Unseen Horrors", "Dark Fog", "Penumbra", "Gathering Darkness", "Lightless Dawn", "Long Note Four", "Echoes of Time v2", "Spider Eyes", "Ossuary 6 - Air", "The Dread", "Night of Chaos", "Hush", "Unnatural Situation", "Oppressive Gloom", "Ghost Story", "Darkling", "Ghostpocalypse - 7 Master", "Ghost Processional" and "Static Motion". 3D graphics use three.js (MIT license). Licensed under Creative Commons: By Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/).
+Music by Kevin MacLeod (incompetech.com): "Dark Hallway", "Unseen Horrors", "Dark Fog", "Penumbra", "Gathering Darkness", "Lightless Dawn", "Long Note Four", "Echoes of Time v2", "Spider Eyes", "Ossuary 6 - Air", "The Dread", "Night of Chaos", "Hush", "Unnatural Situation", "Oppressive Gloom", "Ghost Story", "Darkling", "Ghostpocalypse - 7 Master", "Ghost Processional" and "Static Motion", "The House of Leaves", "Bathed in the Light", "Dark Times", "Monkeys Spinning Monkeys", "Anguish". 3D graphics use three.js (MIT license). Licensed under Creative Commons: By Attribution 4.0 (https://creativecommons.org/licenses/by/4.0/).
 
 Sound effects from OpenGameArt.org:
 

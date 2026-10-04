@@ -268,6 +268,15 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.20: five new handmade levels</h2>
+      <ul>
+        <li>Level 18, The School Halls: never run, and watch out when the bell rings.</li>
+        <li>Level 19, The Dead Mall: the Mannequins freeze in your flashlight beam, so bring batteries.</li>
+        <li>Level 20, The Last Train: the Rail Crawlers hunt by sound, but they cannot hear you while a train roars past.</li>
+        <li>Level 21, Motion: a cheerful cartoon world where the Toons can stretch their arms two rooms.</li>
+        <li>Level 22, The Server Farm: the Glitch skips toward you and eats your flashlight batteries.</li>
+        <li>Each level has its own music, sounds, hiding spots, achievement and bestiary entry. Extra levels you make by hand now go to 22, and the random ones start after that.</li>
+      </ul>
       <h2>Version 0.19: iCloud backup</h2>
       <ul>
         <li>On iPhone, your progress, skills, bestiary, journal and settings back up to your own iCloud automatically. Get a new phone, install the game, and your save comes back.</li>
@@ -442,6 +451,15 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.20: cinco novos níveis feitos à mão</h2>
+      <ul>
+        <li>Nível 18, Os Corredores da Escola: nunca corra, e cuidado quando o sinal tocar.</li>
+        <li>Nível 19, O Shopping Morto: os Manequins congelam na luz da lanterna, então leve pilhas.</li>
+        <li>Nível 20, O Último Trem: os Rastejadores dos Trilhos caçam pelo som, mas não ouvem você enquanto um trem passa rugindo.</li>
+        <li>Nível 21, Movimento: um mundo de desenho alegre onde os Desenhos esticam os braços por duas salas.</li>
+        <li>Nível 22, A Fazenda de Servidores: o Glitch pula na sua direção e come as pilhas da sua lanterna.</li>
+        <li>Cada nível tem música, sons, esconderijos, conquista e entrada no bestiário próprios. Os níveis extras feitos à mão agora vão até o 22, e os aleatórios começam depois disso.</li>
+      </ul>
       <h2>Versão 0.19: backup no iCloud</h2>
       <ul>
         <li>No iPhone, seu progresso, habilidades, bestiário, diário e ajustes são salvos no seu próprio iCloud automaticamente. Trocou de celular? Instale o jogo e seu save volta.</li>
@@ -692,7 +710,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <p data-l="en"><b>Accessible Backrooms</b>, designed and built with Claude Code. Inspired by the Backrooms, a shared internet legend, and the community wiki that grew around it.</p>
     <p data-l="pt"><b>Backrooms Acessível</b>, criado e construído com o Claude Code. Inspirado nos Backrooms, uma lenda compartilhada da internet, e na wiki da comunidade que cresceu em volta dela.</p>
     <h2><span data-l="en">Music</span><span data-l="pt">Música</span></h2>
-    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four”, “Echoes of Time v2”, “Spider Eyes”, “Ossuary 6 - Air”, “The Dread”, “Night of Chaos”, “Hush”, “Unnatural Situation”, “Oppressive Gloom”, “Ghost Story”, “Darkling”, “Ghostpocalypse - 7 Master”, “Ghost Processional”, “Static Motion”. <span data-l="en">Licensed under</span><span data-l="pt">Licença</span> <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
+    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four”, “Echoes of Time v2”, “Spider Eyes”, “Ossuary 6 - Air”, “The Dread”, “Night of Chaos”, “Hush”, “Unnatural Situation”, “Oppressive Gloom”, “Ghost Story”, “Darkling”, “Ghostpocalypse - 7 Master”, “Ghost Processional”, “Static Motion”, “The House of Leaves”, “Bathed in the Light”, “Dark Times”, “Monkeys Spinning Monkeys”, “Anguish”. <span data-l="en">Licensed under</span><span data-l="pt">Licença</span> <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
     <h2><span data-l="en">Sound effects</span><span data-l="pt">Efeitos sonoros</span></h2>
     <p>“Female Screams”, congusbongus, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
     <p>“Long deep impact”, ROHHSA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
@@ -786,7 +804,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.19';
+const VERSION='0.20';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -959,6 +977,19 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'The school bell rings! Doors bang open, and everything in the halls starts moving. Hide, or keep your distance.':'O sinal da escola toca! Portas se abrem com força, e tudo nos corredores começa a se mexer. Se esconda, ou mantenha distância.',
+ 'A train comes roaring through the tunnel! For a few moves, nothing can hear you over the noise. Move now!':'Um trem passa rugindo pelo túnel! Por alguns movimentos, nada consegue ouvir você com esse barulho. Ande agora!',
+ 'Your flashlight flickers and buzzes. Something electrical is very close, eating your battery.':'Sua lanterna pisca e chia. Algo elétrico está muito perto, comendo a sua pilha.',
+ 'A burst of static, {w}. The Glitch just skipped closer.':'Um chiado de estática, {w}. O Glitch acabou de pular para mais perto.',
+ 'A sharp whistle, {w}! The Hall Monitor has seen you. No running in the halls!':'Um apito agudo, {w}! O Monitor de Corredor viu você. Proibido correr nos corredores!',
+ 'Boing! Rubber arms stretch toward you, {w}!':'Boing! Braços de borracha se esticam na sua direção, {w}!',
+ 'A Mannequin stands frozen {w}, caught in your light.':'Um Manequim está parado {w}, preso na sua luz.',
+ 'The Hall Monitor grabs you by the collar and blows its whistle right in your ear. Detention, forever!':'O Monitor de Corredor agarra você pela gola e apita bem no seu ouvido. Detenção, para sempre!',
+ 'Cold plastic fingers close around your wrist. When you turn, the Mannequin is already smiling!':'Dedos frios de plástico se fecham no seu pulso. Quando você se vira, o Manequim já está sorrindo!',
+ 'The Rail Crawler drops from the ceiling onto your back, all claws and teeth!':'O Rastejador dos Trilhos cai do teto nas suas costas, só garras e dentes!',
+ 'The Toon wraps its rubber arms around you and squeezes, laughing a laugh track!':'O Desenho enrola os braços de borracha em você e aperta, rindo uma risada de plateia!',
+ 'The Glitch flickers right into you. For a second you are everywhere and nowhere, and it hurts!':'O Glitch pisca para dentro de você. Por um segundo você está em todo lugar e em lugar nenhum, e dói!',
+ 'Monkeys Spinning Monkeys, slowed and warped':'Monkeys Spinning Monkeys, lenta e distorcida',
  'iCloud backup only works in the iPhone app.':'O backup no iCloud só funciona no app de iPhone.',
  'iCloud is not available. Check that you are signed in to iCloud in your iPhone settings.':'O iCloud não está disponível. Confira se você entrou no iCloud nos ajustes do iPhone.',
  'Your progress is backed up to iCloud.':'O seu progresso está salvo no iCloud.',
@@ -1334,6 +1365,11 @@ const MT={
   bellhop:{name:'the Bellhop',sound:'a polite knock, and a voice saying room service',pt:{name:'o Mensageiro',sound:'uma batida educada, e uma voz dizendo serviço de quarto'},sfx:['breath','ghost2'],sense:6,chase:0.5,hostile:true,copier:true},
   frost:{name:'the Frostbitten',sound:'cracking ice and slow, heavy steps in the snow',pt:{name:'o Congelado',sound:'gelo rachando e passos lentos e pesados na neve'},sfx:['growl3','moan'],sense:9,chase:0.42,hostile:true},
   trader:{name:'the Trader',sound:'a bag of bottles clinking, and someone humming',pt:{name:'o Comerciante',sound:'uma sacola de garrafas tilintando, e alguém cantarolando'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
+  hallmon:{name:'the Hall Monitor',sound:'a sharp whistle and squeaking sneakers',pt:{name:'o Monitor de Corredor',sound:'um apito agudo e tênis rangendo'},sfx:['breath','growl1'],sense:6,chase:0.6,hostile:true},
+  mannequin:{name:'a Mannequin',sound:'creaking plastic and clicking joints',pt:{name:'um Manequim',sound:'plástico rangendo e juntas estalando'},sfx:null,sense:7,chase:0.7,hostile:true},
+  crawler:{name:'the Rail Crawler',sound:'claws skittering on metal rails',pt:{name:'o Rastejador dos Trilhos',sound:'garras correndo sobre trilhos de metal'},sfx:['growl2','breath2'],sense:4,chase:0.8,hostile:true},
+  toon:{name:'the Toon',sound:'a slide whistle and a honking horn',pt:{name:'o Desenho',sound:'um apito de êmbolo e uma buzina'},sfx:null,sense:6,chase:0.55,hostile:true},
+  glitch:{name:'the Glitch',sound:'bursts of static and a stuttering voice',pt:{name:'o Glitch',sound:'chiados de estática e uma voz gaguejando'},sfx:null,sense:6,chase:0.5,hostile:true},
   survivor:{name:'a survivor',sound:'someone breathing fast and scared',pt:{name:'um sobrevivente',sound:'alguém respirando rápido e com medo'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   marcus:{name:'Marcus',sound:'a tired voice',pt:{name:'Marcus',sound:'uma voz cansada'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   chaser:{name:'something enormous',sound:'thundering footsteps',pt:{name:'algo enorme',sound:'passos estrondosos'},sfx:['growl4','attack','attack2'],sense:99,chase:0.72,hostile:true}
@@ -1627,7 +1663,12 @@ const BEST={
  marcus:{en:['The man who made the tapes.','He has been waiting a long time. Find him.'],pt:['O homem que gravou as fitas.','Ele está esperando há muito tempo. Encontre-o.']}};
 const bareName=ty=>cap((LANG==='pt'?MT[ty].pt.name:MT[ty].name).replace(/^(the|a|an|um|uma|o|a|os|as) /i,''));
 BEST.trader={en:['A wanderer from one of the outposts, with a bag full of supplies.','Harmless. Trade your almond water for the tools you need.'],pt:['Um andarilho de um dos postos, com uma sacola cheia de suprimentos.','Inofensivo. Troque a sua água de amêndoa pelas ferramentas de que precisa.']};
-const BORDER=['trader','smiler','hound','skin','clump','party','moths','watcher','deep','face','wretch','jester','librarian','chaser','mimic','host','survivor','patient','bellhop','frost','marcus'];
+BEST.hallmon={en:['A tall figure in a sash and sneakers, patrolling the halls with a whistle.','Never run. Sprinting lets it hear you from across the school. When the bell rings, it gets restless.'],pt:['Uma figura alta com faixa e tênis, patrulhando os corredores com um apito.','Nunca corra. Correr deixa ele ouvir você do outro lado da escola. Quando o sinal toca, ele fica agitado.']};
+BEST.mannequin={en:['Store mannequins that turn their heads when nobody is looking.','They cannot move in light. Keep your flashlight on, and bring spare batteries.'],pt:['Manequins de loja que viram a cabeça quando ninguém está olhando.','Eles não se mexem na luz. Deixe a lanterna ligada, e leve pilhas extras.']};
+BEST.crawler={en:['Something long and pale that lives in the subway tunnels.','It is almost blind and hunts by sound. When a train roars past, it cannot hear you.'],pt:['Algo comprido e pálido que vive nos túneis do metrô.','Ele é quase cego e caça pelo som. Quando um trem passa rugindo, ele não consegue ouvir você.']};
+BEST.toon={en:['A grinning cartoon with rubber-hose arms and big white eyes.','Its arms stretch. If you hear it two rooms away, it can still reach you. Keep more distance.'],pt:['Um desenho sorridente com braços de borracha e olhos brancos enormes.','Os braços dele esticam. Se você ouvir ele a duas salas, ele ainda consegue alcançar você. Mantenha mais distância.']};
+BEST.glitch={en:['A flicker in the air, made of static and broken voices.','It skips closer every few moves, and it eats flashlight batteries. Turn your light off when it is near.'],pt:['Uma oscilação no ar, feita de estática e vozes quebradas.','Ele pula para mais perto a cada poucos movimentos, e come pilhas de lanterna. Desligue a luz quando ele estiver perto.']};
+const BORDER=['trader','smiler','hound','skin','clump','party','moths','watcher','deep','face','wretch','jester','librarian','chaser','mimic','host','survivor','patient','bellhop','frost','hallmon','mannequin','crawler','toon','glitch','marcus'];
 function seeMon(type){if(!BEST[type])return;const seen=lsGet('br_seen',{});if(seen[type])return;seen[type]=1;lsSet('br_seen',seen);
   G.extras.push({text:t('New entry in your bestiary: {name}.',{name:bareName(type)})});
   if(BORDER.filter(x=>x!=='marcus').every(x=>seen[x]))unlock('bestiary');}
@@ -1746,6 +1787,11 @@ function beacon(pan,vol,muffle){const t=now(),ty=L().beacon;const out=spot(pan,v
   else if(ty==='radio'){[392,523,659,587,523].forEach((f,i)=>{const tt=t+i*0.22;const o=osc('square',f,tt,0.3);const g=gainNode(0);envelope(g,tt,0.01,0.25,0.22);o.connect(filt('bandpass',1500,2)).connect(g).connect(out);});}
   else if(ty==='air'||ty==='wind'){const n=noise(t,1.5);const g=gainNode(0);envelope(g,t,0.4,0.4,1);n.connect(filt('bandpass',ty==='air'?700:400,0.8)).connect(g).connect(out);}
   else if(ty==='bubbles'){if(!play('bubbles',{pan,vol,muffle})){const n=noise(t,1);const g=gainNode(0);envelope(g,t,0.1,0.4,0.8);n.connect(filt('lowpass',500)).connect(g).connect(out);}}
+  else if(ty==='piano'){const notes=[220,261.6,329.6,311.1,293.7,246.9];for(let i=0;i<4;i++){const f=pick(notes)*(Math.random()<0.3?2:1);const tt=t+i*0.42;[1,2,3].forEach((h,k)=>{const o=osc('triangle',f*h,tt,1.4);const g=gainNode(0);envelope(g,tt,0.004,0.22/(k+1),1.3);o.connect(g).connect(out);});}}
+  else if(ty==='fountain'){for(let i=0;i<14;i++){const tt=t+Math.random()*1.4;const n=noise(tt,0.06);const g=gainNode(0);envelope(g,tt,0.002,0.35,0.05);n.connect(filt('bandpass',1500+rand(3000),2)).connect(g).connect(out);}const w=noise(t,1.5);const wg=gainNode(0);envelope(wg,t,0.2,0.25,1.2);w.connect(filt('bandpass',900,0.6)).connect(wg).connect(out);}
+  else if(ty==='train'){[659.3,523.3,392].forEach((f,i)=>{const o=osc('sine',f,t+i*0.3,0.6);const g=gainNode(0);envelope(g,t+i*0.3,0.005,0.3,0.55);o.connect(g).connect(out);});const n=noise(t+1,0.6);const ng=gainNode(0);envelope(ng,t+1,0.05,0.2,0.5);n.connect(filt('highpass',2500)).connect(ng).connect(out);}
+  else if(ty==='doorbell'){[784,659.3,523.3,659.3,784,1046.5].forEach((f,i)=>{const o=osc('sine',f,t+i*0.16,0.4);const g=gainNode(0);envelope(g,t+i*0.16,0.004,0.28,0.35);o.connect(g).connect(out);});}
+  else if(ty==='terminal'){for(let i=0;i<3;i++){const o=osc('square',i===2?1760:880,t+i*0.22,0.1);const g=gainNode(0);envelope(g,t+i*0.22,0.002,0.12,0.08);o.connect(filt('lowpass',3000)).connect(g).connect(out);}}
   else if(ty==='monitor'){[0,0.9].forEach(d=>{const o=osc('sine',1000,t+d,0.15);const g=gainNode(0);envelope(g,t+d,0.003,0.25,0.12);o.connect(g).connect(out);});}
   else if(ty==='fireplace'){for(let i=0;i<10;i++){const tt=t+Math.random()*1.2;const n=noise(tt,0.04);const g=gainNode(0);envelope(g,tt,0.001,0.5,0.03);n.connect(filt('bandpass',1800+rand(2000),1.5)).connect(g).connect(out);}const w=noise(t,1.3);const wg=gainNode(0);envelope(wg,t,0.2,0.2,1);w.connect(filt('lowpass',500)).connect(wg).connect(out);}
   else if(ty==='chime'){[1318.5,1046.5].forEach((f,i)=>{const tt=t+i*0.35;const o=osc('sine',f,tt,1.2);const g=gainNode(0);envelope(g,tt,0.005,0.3,1.1);o.connect(g).connect(out);});}
@@ -1804,6 +1850,11 @@ function monStep(m,pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);
   if(ty==='jester'){sfx(jingle,pan,vol*0.5,muffle);return;}
   if(ty==='smiler'){for(let i=0;i<6;i++)tap(t+i*0.05+Math.random()*0.02,3000,0.18,0.012);return;}
   if(ty==='patient'){sfx(squeak,pan,vol*0.6);return;}
+  if(ty==='hallmon'){[0,0.3].forEach(d=>{tap(t+d,1500,0.35,0.05);});setTimeout(()=>sfx(sneakerSqueak,pan,vol*0.8,muffle),Math.random()<0.5?0:300);return;}
+  if(ty==='mannequin'){[0,0.5].forEach(d=>{tap(t+d,2600,0.5,0.02);tap(t+d+0.04,1900,0.35,0.02);});return;}
+  if(ty==='crawler'){for(let i=0;i<8;i++)tap(t+i*0.05+Math.random()*0.02,4200,0.3,0.015);return;}
+  if(ty==='toon'){sfx(boing,pan,vol*0.6,muffle);return;}
+  if(ty==='glitch'){tap(t,5000,0.25,0.02);tap(t+0.13,700,0.25,0.03);return;}
   if(ty==='moths'||ty==='watcher'||ty==='marcus')return;
   // people, and things pretending to be people
   [0,0.42].forEach(d=>{thud(t+d,95,0.45,0.1);tap(t+d,1400,0.35,0.05);});
@@ -1818,13 +1869,32 @@ function monSound(m,pan,vol,muffle){const T=MT[m.type];
   if(m.type==='deep')return sfx(deepSong,typeof pan==='object'?V3(pan.x,-0.7,pan.z):pan,vol);
   if(m.type==='marcus')return;
   if(m.type==='watcher')return sfx(glassTap,pan,vol);
+  if(m.type==='hallmon'&&Math.random()<0.5){sfx(whistle,pan,vol*0.8,muffle);return;}
+  if(m.type==='mannequin')return sfx(plasticCreak,pan,vol,muffle);
+  if(m.type==='crawler'){sfx(skitter,pan,vol,muffle);if(Math.random()<0.5)return;}
+  if(m.type==='toon'){sfx(Math.random()<0.5?slideWhistle:honk,pan,vol,muffle);if(Math.random()<0.3)play('giggle',{pan,vol:vol*0.6,muffle,rate:1.3});return;}
+  if(m.type==='glitch'){sfx(glitchBurst,pan,vol,muffle);play('static',{pan,vol:vol*0.4,muffle,rate:1.5});return;}
   if(m.type==='clump'){sfx(squelch,pan,vol,muffle);play('ghost2',{pan,vol:vol*0.6,muffle,rate:0.55});return;}
   if(m.type==='party'&&Math.random()<0.4)sfx(Math.random()<0.5?partyHorn:squeak,pan,vol,muffle);
   if(!T.sfx||!play(pick(T.sfx),{pan,vol:vol*1.2,muffle,rate:0.88+Math.random()*0.2}))sfx(synthGrowl,pan,vol,muffle);}
+function whistle(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);[0,0.32].forEach((d,i)=>{const o=osc('sine',2900,t+d,i?0.55:0.22);const lfo=osc('sine',38,t+d,i?0.55:0.22);const lg=gainNode(90);lfo.connect(lg).connect(o.frequency);const g=gainNode(0);envelope(g,t+d,0.01,0.35,i?0.5:0.18);o.connect(g).connect(out);});}
+function sneakerSqueak(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const o=osc('sine',1700+rand(400),t,0.09);o.frequency.linearRampToValueAtTime(2600,t+0.07);const g=gainNode(0);envelope(g,t,0.004,0.18,0.07);o.connect(filt('bandpass',2200,2)).connect(g).connect(out);}
+function plasticCreak(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);for(let i=0;i<5;i++){const tt=t+i*0.06+Math.random()*0.03;const n=noise(tt,0.03);const g=gainNode(0);envelope(g,tt,0.001,0.5,0.025);n.connect(filt('bandpass',1400+rand(900),6)).connect(g).connect(out);}
+  const o=osc('sawtooth',160,t+0.32,0.5);o.frequency.linearRampToValueAtTime(110,t+0.8);const g=gainNode(0);envelope(g,t+0.32,0.05,0.12,0.45);o.connect(filt('bandpass',700,8)).connect(g).connect(out);}
+function skitter(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);for(let i=0;i<9;i++){const tt=t+i*0.045+Math.random()*0.015;const n=noise(tt,0.02);const g=gainNode(0);envelope(g,tt,0.001,0.4,0.015);n.connect(filt('bandpass',4200,3)).connect(g).connect(out);}}
+function slideWhistle(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const up=Math.random()<0.5;const o=osc('sine',up?500:1800,t,0.6);o.frequency.exponentialRampToValueAtTime(up?1800:400,t+0.5);const g=gainNode(0);envelope(g,t,0.02,0.22,0.5);o.connect(g).connect(out);}
+function honk(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);[0,0.25].forEach(d=>{const o=osc('square',330,t+d,0.18);const o2=osc('square',415,t+d,0.18);const g=gainNode(0);envelope(g,t+d,0.01,0.12,0.15);const f=filt('lowpass',1500,2);o.connect(f);o2.connect(f);f.connect(g).connect(out);});}
+function boing(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const o=osc('sine',160,t,0.35);o.frequency.exponentialRampToValueAtTime(520,t+0.1);o.frequency.exponentialRampToValueAtTime(180,t+0.3);const lfo=osc('sine',22,t,0.35);const lg=gainNode(40);lfo.connect(lg).connect(o.frequency);const g=gainNode(0);envelope(g,t,0.005,0.35,0.3);o.connect(g).connect(out);}
+function glitchBurst(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);for(let i=0;i<6;i++){const tt=t+i*0.07+Math.random()*0.04;const n=noise(tt,0.05);const g=gainNode(0);envelope(g,tt,0.001,0.4,0.04);n.connect(filt('bandpass',600+rand(5000),1)).connect(g).connect(out);
+  if(i%2){const o=osc('square',200+rand(900),tt,0.05);const og=gainNode(0);envelope(og,tt,0.001,0.08,0.04);o.connect(og).connect(out);}}}
+function schoolBell(){const t=now();const out=spot(V3(0,0.4,-1),0.7,0.15);for(let i=0;i<34;i++){const tt=t+i*0.055;[1250,1873].forEach(f=>{const o=osc('sine',f,tt,0.09);const g=gainNode(0);envelope(g,tt,0.002,0.1,0.07);o.connect(g).connect(out);});const n=noise(tt,0.01);const ng=gainNode(0);envelope(ng,tt,0.001,0.15,0.008);n.connect(filt('highpass',3000)).connect(ng).connect(out);}}
+function trainPass(){const t=now();const n=noise(t,6);const f=filt('lowpass',200,0.7);f.frequency.setValueAtTime(150,t);f.frequency.linearRampToValueAtTime(1100,t+2.5);f.frequency.linearRampToValueAtTime(180,t+5.8);const g=gainNode(0);g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.9,t+2.4);g.gain.exponentialRampToValueAtTime(0.0001,t+5.9);
+  const pan=V3(-1,0,0);const p=A.ctx.createStereoPanner?A.ctx.createStereoPanner():null;n.connect(f).connect(g);if(p){p.pan.setValueAtTime(-0.9,t);p.pan.linearRampToValueAtTime(0.9,t+5.5);g.connect(p).connect(spot(0,1,0));}else g.connect(spot(pan,1,0));
+  for(let i=0;i<16;i++){const tt=t+1.2+i*0.22;const o=osc('sine',70,tt,0.1);const og=gainNode(0);envelope(og,tt,0.003,0.5,0.08);o.connect(og).connect(spot(0,0.9,0.2));}}
 function heart(fast){tap(fast?'HEAVY':'MEDIUM');if(!play(fast?'heartfast':'heartslow',{vol:0.9}))sfx(heartbeat);}
 
 /* ---------- music tracks ---------- */
-const TR={}, TRACKS=['menu','music0','music1','music2','music3','music5','music6','music7','music8','music9','music10','music11','music12','music13','music14','music15','music16','music17','music18','chase','drone'];
+const TR={}, TRACKS=['menu','music0','music1','music2','music3','music5','music6','music7','music8','music9','music10','music11','music12','music13','music14','music15','music16','music17','music18','music19','music20','music21','music22','music23','chase','drone'];
 function track(name){if(TR[name])return TR[name];const el=new Audio('audio/'+name+'.mp3');el.loop=true;el.preload='auto';const g=gainNode(0);try{A.ctx.createMediaElementSource(el).connect(g);}catch(e){}g.connect(A.music);TR[name]={el,g,want:0};return TR[name];}
 function fadeTrack(name,v,sec=2){if(!A.ctx)return;if(name==='musicbox'){musicBox(v>0);return;}if(name==='calliope'){calliope(v>0);return;}const tr=track(name);tr.want=v;tr.g.gain.cancelScheduledValues(now());tr.g.gain.setTargetAtTime(v,now(),sec/3);
   if(v>0&&tr.el.paused){const pr=tr.el.play();if(pr&&pr.catch)pr.catch(()=>{});}
@@ -1921,6 +1991,17 @@ function ambience(){
   if(type==='ocean'){const w=longNoise();const wg=gainNode(0.07);w.connect(filt('lowpass',500,0.7)).connect(wg).connect(A.amb);const lfo=longOsc('sine',0.12);const lg=gainNode(0.05);lfo.connect(lg).connect(wg.gain);
     loopTimer(()=>sfx(deepSong,V3(Math.random()*2-1,-0.9,Math.random()*2-1),0.25),9000,20000);}
   if(type==='last'){loopTimer(ticktock,1000,1001);}
+  if(type==='school'){lampHum(120,0.025);loopTimer(()=>{const tt=now();const pos=rndPos(0);const n=noise(tt,0.15);const g=gainNode(0);envelope(g,tt,0.002,0.6,0.12);n.connect(filt('lowpass',900)).connect(g).connect(spot(pos,0.5,0.5));const o=osc('square',140,tt,0.25);const og=gainNode(0);envelope(og,tt,0.002,0.1,0.22);o.connect(filt('bandpass',500,4)).connect(og).connect(spot(pos,0.5,0.5));},6000,15000);
+    loopTimer(()=>play('giggle',{pan:rndPos(0),vol:0.12,muffle:0.8,rate:1.15}),14000,30000);loopTimer(()=>{const tt=now();[523.3,659.3,784].forEach((f,i)=>{const o=osc('sine',f,tt+i*0.3,0.6);const g=gainNode(0);envelope(g,tt+i*0.3,0.01,0.08,0.55);o.connect(g).connect(spot(V3(0,0.8,-0.3),0.4,0.5));});},25000,45000);}
+  if(type==='mall'){lampHum(60,0.015);loopTimer(()=>{const tt=now();const notes=[392,440,493.9,587.3,659.3];for(let i=0;i<6;i++){const o=osc('sine',pick(notes)*0.5,tt+i*0.5,0.9);const g=gainNode(0);envelope(g,tt+i*0.5,0.05,0.05,0.8);o.connect(g).connect(spot(V3(0,0.8,0),0.4,0.7));}},9000,16000);
+    loopTimer(()=>{const tt=now();const n=noise(tt,1.2);const g=gainNode(0);envelope(g,tt,0.2,0.08,1);n.connect(filt('bandpass',3000,1)).connect(g).connect(spot(rndPos(0),0.4,0.5));},10000,22000);loopTimer(()=>sfx(plasticCreak,rndPos(0),0.15,0.6),12000,26000);}
+  if(type==='metro'){const r=longNoise();const rg=gainNode(0.035);r.connect(filt('lowpass',140,0.8)).connect(rg).connect(A.amb);loopTimer(()=>{const tt=now();const pos=rndPos(0);for(let i=0;i<5;i++){const n=noise(tt+i*0.05,0.03);const g=gainNode(0);envelope(g,tt+i*0.05,0.001,0.4,0.02);n.connect(filt('highpass',4000)).connect(g).connect(spot(pos,0.45,0.3));}},7000,15000);
+    loopTimer(()=>{const tt=now();const o=osc('sawtooth',300+rand(200),tt,1.4);o.frequency.linearRampToValueAtTime(250,tt+1.3);const lfo=osc('sine',9,tt,1.4);const lg=gainNode(80);lfo.connect(lg).connect(o.frequency);const g=gainNode(0);envelope(g,tt,0.05,0.05,1.3);o.connect(filt('bandpass',1000,3)).connect(g).connect(spot(V3(0,0.8,-0.5),0.4,0.6));},20000,40000);}
+  if(type==='motion'){loopTimer(()=>{const tt=now();const pos=rndPos(0.5);for(let i=0;i<3;i++){const o=osc('sine',2200+rand(800),tt+i*0.12,0.1);o.frequency.linearRampToValueAtTime(3200,tt+i*0.12+0.08);const g=gainNode(0);envelope(g,tt+i*0.12,0.005,0.08,0.08);o.connect(g).connect(spot(pos,0.35,0.3));}},3000,8000);
+    loopTimer(()=>play('laughter',{pan:rndPos(0),vol:0.1,muffle:0.7,rate:0.75}),18000,35000);loopTimer(()=>sfx(boing,rndPos(0),0.15,0.5),9000,20000);}
+  if(type==='servers'){const f=longNoise();const fg=gainNode(0.05);f.connect(filt('bandpass',900,0.4)).connect(fg).connect(A.amb);lampHum(60,0.012);
+    loopTimer(()=>{const tt=now();const pos=rndPos(0);for(let i=0;i<4;i++){const n=noise(tt+i*0.08,0.015);const g=gainNode(0);envelope(g,tt+i*0.08,0.001,0.3,0.01);n.connect(filt('bandpass',3500,4)).connect(g).connect(spot(pos,0.4,0.3));}},2500,6000);
+    loopTimer(()=>{const tt=now();const o=osc('square',1000+rand(1500),tt,0.08);const g=gainNode(0);envelope(g,tt,0.002,0.04,0.06);o.connect(filt('lowpass',3000)).connect(g).connect(spot(rndPos(0),0.35,0.4));},5000,11000);}
   if(type==='hospital'){lampHum(120,0.03);loopTimer(()=>{const tt=now();const pos=rndPos(0);const o=osc('sine',1000,tt,0.12);const g=gainNode(0);envelope(g,tt,0.003,0.08,0.1);o.connect(g).connect(spot(pos,0.5,0.5));},1100,1300);
     loopTimer(()=>sfx(squeak,rndPos(0),0.25),8000,18000);loopTimer(()=>play('moan',{pan:rndPos(0),vol:0.12,muffle:0.8,rate:0.8}),15000,30000);}
   if(type==='hotel'){lampHum(60,0.02);loopTimer(()=>{const tt=now();const pos=rndPos(0);[0,0.25,0.5].forEach(d=>{const n=noise(tt+d,0.05);const g=gainNode(0);envelope(g,tt+d,0.002,0.5,0.05);n.connect(filt('lowpass',600)).connect(g).connect(spot(pos,0.6,0.5));});},7000,16000);
@@ -2395,7 +2476,7 @@ function newLevel(){
   if(G.survOn){const c=cells.filter(([x,y])=>dist[y][x]>=3&&dist[y][x]<=bd-1);const p=pick(c.length?c:cells);G.mons.push({type:'survivor',x:p[0],y:p[1],name:pick(SURV_NAMES),fake:Math.random()<(lvn2>=8?0.45:0.3),greeted:false,helped:false});}
   if(G.mode==='story'&&G.ngp&&!lv.calm&&!lv.secret&&!lv.run){const far=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));for(let i=0;i<Math.min(3,G.ngp);i++){const p=pick(far.length?far:cells);G.mons.push({type:['hound','howler','wretch'][i%3],x:p[0],y:p[1],cool:4});}}
   G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
-  G.wasWet=false; G.mark=null; G.markSought=false; G.caughtLevel=false; G.inHide=false; G.hideNear=false; G.watchFreeze=0;
+  G.wasWet=false; G.mark=null; G.markSought=false; G.caughtLevel=false; G.inHide=false; G.hideNear=false; G.watchFreeze=0; G.train=0;
   G.spots=new Map(); {const n=lv.hides??(lv.calm||lv.run||lv.secret||lv.water?0:3);const sc=cells.filter(([x,y])=>dist[y][x]>=2&&!G.items.has(key(x,y))&&!isHazard(x,y)&&!isWater(x,y));for(let i=0;i<n&&sc.length;i++){const c=sc.splice(rand(sc.length),1)[0];G.spots.set(key(...c),i);}}
   G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
   updateHUD(); ambience(); levelMusic(); if(A.ctx)A.amb.gain.setTargetAtTime(0.7,now(),0.1);
@@ -2494,6 +2575,9 @@ function monstersTurn(){
   const dist=bfs(G.x,G.y); const Df=DF(); let nd=null; const before=G.mons.map(m=>[m.x,m.y]);
   if(G.noise){nd=bfs(G.noise.x,G.noise.y);G.noise.turns--;}
   if(G.alert>0)G.alert--;
+  const xamb=L().amb;
+  if(xamb==='school'&&G.steps>0&&G.steps%15===0){sfx(schoolBell);G.alert=Math.max(G.alert,3);G.extras.push({text:t('The school bell rings! Doors bang open, and everything in the halls starts moving. Hide, or keep your distance.')});}
+  if(xamb==='metro'){if(G.train>0)G.train--;else if(G.steps>0&&G.steps%11===0){G.train=3;sfx(trainPass);G.extras.push({text:t('A train comes roaring through the tunnel! For a few moves, nothing can hear you over the noise. Move now!')});}}
   if(G.fires&&G.fires.size){for(const [k,v] of [...G.fires]){if(v<=1){G.fires.delete(k);G.extras.push({text:t('A wall of Firesalt fire burns out.')});}else G.fires.set(k,v-1);}}
   if(G.mothBait>0)G.mothBait--;
   if(G.adren>0){G.adren--;if(G.adren===0)G.extras.push({text:t('The adrenaline wears off. Your hands start shaking again.')});}
@@ -2505,15 +2589,22 @@ function monstersTurn(){
     if(T.npc){if(m.type!=='marcus'&&Math.random()<0.3)wander(m);continue;}
     if(G.inHide&&T.hostile&&m.type!=='chaser'){if(Math.random()<0.5)wander(m);continue;}
     if(m.type==='watcher'&&G.watchFreeze>0)continue;
+    if(m.type==='mannequin'&&G.inv.light)continue;
     if(m.type==='clump'&&G.steps%2)continue;
     if(m.type==='deep'){if(isWater(G.x,G.y)){const wd=bfs(G.x,G.y,G.wet);if(wd[m.y][m.x]<=T.sense+DF().sense&&Math.random()<T.chase*Df.chase){moveMon(m,stepToward(wd,m.x,m.y));continue;}}if(Math.random()<0.5)wander(m);continue;}
     if(nd&&T.hostile&&m.type!=='chaser'&&nd[m.y][m.x]<=10&&nd[m.y][m.x]>0){if(Math.random()<0.95)moveMon(m,stepToward(nd,m.x,m.y));continue;}
     let sense=T.sense+Df.sense+(G.mode==='story'&&G.ngp?1:0)+(G.mode==='daily'&&L().twist===3?2:0); if(G.sneak)sense=Math.min(sense,2); if(G.sprinted)sense+=3; if(G.alert>0)sense+=3;
     if(m.type==='librarian')sense=G.sneak?1:G.sprinted?14:T.sense+Df.sense;
     if(m.type==='frost')sense=T.sense+Df.sense+(G.sprinted?3:0);
+    if(m.type==='hallmon'&&G.sprinted)sense+=8;
+    if(G.train>0)sense=Math.min(sense,1);
+    if(m.type==='glitch'){if(G.inv.light&&d<=2&&G.inv.battery>0){G.inv.battery=Math.max(0,G.inv.battery-3);if(!m.drainTold||G.inv.battery<=0){m.drainTold=true;G.extras.push({text:t('Your flashlight flickers and buzzes. Something electrical is very close, eating your battery.')});}if(G.inv.battery<=0){G.inv.light=false;G.extras.push({text:t('Your flashlight flickers and dies.')});}}
+      m.tp=(m.tp??(5+rand(3)))-1;if(m.tp<=0&&d>2&&d<=9){m.tp=5+rand(3);moveMon(m,stepToward(dist,m.x,m.y));moveMon(m,stepToward(dist,m.x,m.y));const {w,pan}=relDirWords(m.x,m.y);sfx(glitchBurst,pan,0.9,0.1);G.extras.push({text:t('A burst of static, {w}. The Glitch just skipped closer.',{w})});continue;}}
     if(m.type==='jester'){m.tp=(m.tp??(8+rand(4)))-1;if(m.tp<=0&&d>2){m.tp=9+rand(4);const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=3&&dist[y][x]<=5&&!(x===G.exit[0]&&y===G.exit[1]))c.push([x,y]);
       if(c.length){const p=pick(c);m.x=p[0];m.y=p[1];const {w,pan}=relDirWords(m.x,m.y);play('cackle',{pan,vol:0.8,muffle:0.1});sfx(jingle,pan,0.7);G.extras.push({text:t('A burst of laughter, {w}. The Jester was not there a moment ago.',{w})});continue;}}}
     let hunting=d<=sense;
+    if(m.type==='hallmon'&&hunting&&!(m.shriek>0)){m.shriek=10;const {w,pan}=relDirWords(m.x,m.y);sfx(whistle,pan,1,0.05);G.extras.push({text:t('A sharp whistle, {w}! The Hall Monitor has seen you. No running in the halls!',{w})});}
+    if(m.type==='toon'&&hunting&&d===2&&Math.random()<0.4){moveMon(m,stepToward(dist,m.x,m.y));moveMon(m,stepToward(dist,m.x,m.y));const {w,pan}=relDirWords(m.x,m.y);sfx(slideWhistle,pan,1,0);G.extras.push({text:t('Boing! Rubber arms stretch toward you, {w}!',{w})});continue;}
     if(m.type==='wretch'&&hunting&&!(m.shriek>0)){m.shriek=8;G.alert=4;const {w,pan}=relDirWords(m.x,m.y);play('screech',{pan,vol:0.9,muffle:0.1});play('scream2',{pan,vol:0.5,rate:0.8,muffle:0.3});G.extras.push({text:t('A Wretch spots you and shrieks, {w}! Everything nearby heard that.',{w})});}
     if(m.type==='host'&&G.flare&&bfs(G.flare.x,G.flare.y)[m.y][m.x]<=2){moveMon(m,stepAway(bfs(G.flare.x,G.flare.y),m.x,m.y));if(!m.burnt){m.burnt=true;G.extras.push({text:t('The Host screams at the flare and backs away from the light.')});}continue;}
     if(m.type==='host'&&!m.burnt)m.burnt=false;
@@ -2542,6 +2633,8 @@ function caughtBy(m){seeMon(m.type);
   const far=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=6&&(m.type!=='deep'||isWater(x,y)))far.push([x,y]);const p=far.length?pick(far):[G.exit[0],G.exit[1]];m.x=p[0];m.y=p[1];
   const how={howler:'The Howler was waiting for you in the dark. It grabs you, its face inches from yours, screaming!',smiler:'A Smiler opens its grin right in front of you. Hundreds of teeth!',hound:'A Hound slams into you, snapping and snarling!',
     skin:'The Skin-Stealer grabs you. It has a face. It is wearing your face!',party:'A Partygoer hugs you. It will not let go. Hello, friend!',deep:'The water explodes. Something huge drags you under, then lets you go. You crawl out, coughing.',clump:'The Clump rolls over you. Dozens of hands pull at you, and dozens of mouths whisper your name.',watcher:'A pale face presses against yours. It was watching you the whole time.',
+    hallmon:'The Hall Monitor grabs you by the collar and blows its whistle right in your ear. Detention, forever!',mannequin:'Cold plastic fingers close around your wrist. When you turn, the Mannequin is already smiling!',
+    crawler:'The Rail Crawler drops from the ceiling onto your back, all claws and teeth!',toon:'The Toon wraps its rubber arms around you and squeezes, laughing a laugh track!',glitch:'The Glitch flickers right into you. For a second you are everywhere and nowhere, and it hurts!',
     patient:'The Patient lurches off its gurney and grabs you with cold, bandaged hands!',bellhop:'The Bellhop takes your arm, smiling. Your room is ready. You tear yourself free!',frost:'Frozen hands close around your throat. You feel the cold all the way down to your bones!',
     wretch:'A Wretch tackles you, clawing and wheezing. Its eyes are completely empty!',librarian:'A long, cold finger presses against your lips. Shhh. Then its mouth opens wide, and it screams in your face!',
     jester:'The Jester pops up right in front of you. Ta-da! Its bells jingle as it grabs you, laughing!',mimic:'Someone you love smiles at you from the hallway. Then the smile keeps going, wider and wider, past their ears!'}[m.type];
@@ -2558,6 +2651,7 @@ function monsterCues(force){
     if(d<=4&&!(m.type==='survivor'&&m.fake&&d>1))seeMon(m.type);
     if(m.type==='watcher'){if(G.watchFreeze>0){if(d<=6){glassTapNear(m);txt.push(t('You hear fingernails tapping on glass {w}. It cannot move while you listen.',{w}));}}
       else if(d<=2)txt.push(t('You feel someone staring at you, {w}.',{w}));if(d<=2)setTimeout(()=>heart(d<=1),900);continue;}
+    if(m.type==='mannequin'&&G.inv.light&&d<=3){txt.push(t('A Mannequin stands frozen {w}, caught in your light.',{w}));continue;}
     if(m.type==='marcus'){if(d<=2)txt.push(t('Marcus is very close now, {w}. You can hear him breathing.',{w}));continue;}
     if(m.type==='trader'){
       if(!m.greeted&&d<=4){m.greeted=true;G.extras.push({label:t('Somewhere {w}, someone calls out cheerfully:',{w}),text:t('Hello there! Trading post is open! I take almond water, the only money that matters down here.'),opts:{v:voice2,pitch:0.9,rate:1},pos:pan});}
@@ -3101,7 +3195,7 @@ function levelComplete(parts){
   sfx(noclip); const lv=L(); G.state='transition'; G.blackout=0; G.inv.keycard=false; updateHUD();
   if(!G.caughtLevel&&!lv.calm)unlock('untouchable');
   const exitText=LX('exitText');
-  if(lv.amb==='hospital')unlock('hospital'); if(lv.amb==='hotel')unlock('hotel'); if(lv.amb==='frozen')unlock('frozen');
+  if(lv.amb==='hospital')unlock('hospital'); if(lv.amb==='hotel')unlock('hotel'); if(lv.amb==='frozen')unlock('frozen'); if(['school','mall','metro','motion','servers'].includes(lv.amb))unlock(lv.amb);
   if(G.mode==='daily')return dailyWin(parts);
   if(G.mode==='extra'){
     G.xn++; if(G.xn>lsGet('br_extra',FIRSTX))lsSet('br_extra',G.xn); if(G.xn>=20)unlock('extra20'); if(G.xn>=50)unlock('extra50');
@@ -3182,8 +3276,8 @@ function hazardCue(){
   dirs.forEach(r=>{const d=abs(r);const {pan}=relDirWords(G.x+DX[d],G.y+DY[d]);sfx(crackle,V3(pan.x,0.5,pan.z),0.8);});
   return t('Sparks crackle {dirs}.',{dirs:dirs.map(r=>RELSHORT(r)).join(t(' and '))});
 }
-const SPOTS={en:{hospital:['a hospital bed with a curtain','a supply cart','a laundry chute'],hotel:['a hotel room closet','a room service cart','a bathtub behind a curtain'],frozen:['a snowdrift','an abandoned car','a frozen shed'],city:['a dumpster','a phone booth','a bus shelter'],library:['a gap between the bookshelves','a reading desk','a book cart'],carnival:['a ticket booth','a prize booth','a costume trunk'],home:['the hall closet','the space under your bed','the bathtub, behind the curtain'],hum:['an old desk','an air vent'],drip:['a metal locker','a stack of crates'],pipes:['an air vent','a gap between the pipes'],electric:['a metal locker','a fuse cabinet'],office:['a desk','a supply closet','a metal locker'],party:['a table with a long tablecloth','a toy chest'],void:['a metal locker','a closet'],suburbs:['a garden shed','a parked car','a closet'],x:['a metal locker']},
-  pt:{hospital:['uma cama de hospital com cortina','um carrinho de suprimentos','um duto de roupa suja'],hotel:['um armário de quarto de hotel','um carrinho de serviço de quarto','uma banheira atrás de uma cortina'],frozen:['um monte de neve','um carro abandonado','um galpão congelado'],city:['uma caçamba de lixo','uma cabine telefônica','um ponto de ônibus'],library:['um vão entre as estantes','uma mesa de leitura','um carrinho de livros'],carnival:['uma bilheteria','uma barraca de prêmios','um baú de fantasias'],home:['o armário do corredor','o espaço debaixo da sua cama','a banheira, atrás da cortina'],hum:['uma mesa velha','um duto de ar'],drip:['um armário de metal','uma pilha de caixas'],pipes:['um duto de ar','um vão entre os canos'],electric:['um armário de metal','um armário de fusíveis'],office:['uma mesa','um armário de suprimentos','um armário de metal'],party:['uma mesa com uma toalha comprida','um baú de brinquedos'],void:['um armário de metal','um armário'],suburbs:['um galpão de jardim','um carro estacionado','um armário'],x:['um armário de metal']}};
+const SPOTS={en:{school:['a row of lockers','a teacher’s desk','a janitor’s closet'],mall:['a changing room','a clothing rack','a kiosk counter'],metro:['a maintenance closet','a ticket booth','a gap under the platform'],motion:['a painted hole in the wall','a giant flower pot','a hollow cartoon tree'],servers:['an empty server rack','the space under the raised floor','a cooling vent'],hospital:['a hospital bed with a curtain','a supply cart','a laundry chute'],hotel:['a hotel room closet','a room service cart','a bathtub behind a curtain'],frozen:['a snowdrift','an abandoned car','a frozen shed'],city:['a dumpster','a phone booth','a bus shelter'],library:['a gap between the bookshelves','a reading desk','a book cart'],carnival:['a ticket booth','a prize booth','a costume trunk'],home:['the hall closet','the space under your bed','the bathtub, behind the curtain'],hum:['an old desk','an air vent'],drip:['a metal locker','a stack of crates'],pipes:['an air vent','a gap between the pipes'],electric:['a metal locker','a fuse cabinet'],office:['a desk','a supply closet','a metal locker'],party:['a table with a long tablecloth','a toy chest'],void:['a metal locker','a closet'],suburbs:['a garden shed','a parked car','a closet'],x:['a metal locker']},
+  pt:{school:['uma fileira de armários','a mesa do professor','o armário do zelador'],mall:['um provador','uma arara de roupas','o balcão de um quiosque'],metro:['um armário de manutenção','uma bilheteria','um vão embaixo da plataforma'],motion:['um buraco pintado na parede','um vaso de flor gigante','uma árvore de desenho oca'],servers:['um rack de servidor vazio','o espaço embaixo do piso elevado','uma saída de ventilação'],hospital:['uma cama de hospital com cortina','um carrinho de suprimentos','um duto de roupa suja'],hotel:['um armário de quarto de hotel','um carrinho de serviço de quarto','uma banheira atrás de uma cortina'],frozen:['um monte de neve','um carro abandonado','um galpão congelado'],city:['uma caçamba de lixo','uma cabine telefônica','um ponto de ônibus'],library:['um vão entre as estantes','uma mesa de leitura','um carrinho de livros'],carnival:['uma bilheteria','uma barraca de prêmios','um baú de fantasias'],home:['o armário do corredor','o espaço debaixo da sua cama','a banheira, atrás da cortina'],hum:['uma mesa velha','um duto de ar'],drip:['um armário de metal','uma pilha de caixas'],pipes:['um duto de ar','um vão entre os canos'],electric:['um armário de metal','um armário de fusíveis'],office:['uma mesa','um armário de suprimentos','um armário de metal'],party:['uma mesa com uma toalha comprida','um baú de brinquedos'],void:['um armário de metal','um armário'],suburbs:['um galpão de jardim','um carro estacionado','um armário'],x:['um armário de metal']}};
 function spotName(k){const a=L().amb;const list=SPOTS[LANG][a]||SPOTS[LANG].x;return list[G.spots.get(k)%list.length];}
 function enterHide(){
   G.inHide=true; G.hideNear=false; sfx(creak); play('breath',{vol:0.35,muffle:0.5});
@@ -3293,12 +3387,67 @@ const EXTRAS=[
    wall:[205,20,70], floor:[200,15,85], ceil:[215,30,20], amb:'frozen', step:'snow', beacon:'fireplace',
    exitWhat:'a fire crackling inside a little cabin',
    intro:'Level 17, The Frozen Field. Snow, as far as you can hear. The wind never stops. Every step crunches, so sneaking will not hide you here. The Frostbitten follow your footsteps through the snow. They are slow, but they never lose your trail. Find the cabin. Listen for its fire.',
-   exitText:'You stumble into the cabin and shut the door. The fire is warm. Then the floorboards open, and you fall into the dark again.',
+   exitText:'You stumble into the cabin and shut the door. The fire is warm. Then the floorboards open, and you land on a cold tile floor that smells like floor wax.',
    flavor:['Your breath freezes in the air.','Snow fills your footprints behind you. Then something steps in them.','A frozen lamppost stands alone in the field.','Something is buried in the snow here. You do not dig it up.','Far away, ice cracks like a gunshot.'],
    pt:{name:'Nível 17, O Campo Congelado',short:'17',exitWhat:'uma lareira estalando dentro de uma cabana',
    intro:'Nível 17, O Campo Congelado. Neve até onde dá para ouvir. O vento nunca para. Cada passo range, então andar agachado não vai esconder você aqui. Os Congelados seguem as suas pegadas na neve. Eles são lentos, mas nunca perdem o seu rastro. Encontre a cabana. Escute a lareira dela.',
-   exitText:'Você entra cambaleando na cabana e fecha a porta. A lareira está quente. Então o assoalho se abre, e você cai no escuro de novo.',
-   flavor:['Sua respiração congela no ar.','A neve cobre as suas pegadas atrás de você. Então alguma coisa pisa nelas.','Um poste congelado está sozinho no campo.','Tem algo enterrado na neve aqui. Você não cava.','Longe, o gelo racha como um tiro.']}}
+   exitText:'Você entra cambaleando na cabana e fecha a porta. A lareira está quente. Então o assoalho se abre, e você cai num chão frio de azulejo com cheiro de cera.',
+   flavor:['Sua respiração congela no ar.','A neve cobre as suas pegadas atrás de você. Então alguma coisa pisa nelas.','Um poste congelado está sozinho no campo.','Tem algo enterrado na neve aqui. Você não cava.','Longe, o gelo racha como um tiro.']}},
+ { name:'Level 18, The School Halls', short:'18', w:12,h:10, loops:0.22, mons:['hallmon','hallmon','howler'], dark:0.3, lights:true, hides:5, music:'music19',
+   items:{water:3,fire:2,battery:2,energy:2},
+   wall:[45,30,62], floor:[30,10,55], ceil:[50,10,82], amb:'school', step:'tile', beacon:'piano',
+   exitWhat:'a piano playing in the music room',
+   intro:'Level 18, The School Halls. Lockers, waxed floors, and classrooms full of empty desks. Every clock says the same time. The Hall Monitor patrols these halls with a whistle. Never run here, it will hear you from across the school. And every so often, the bell rings, and everything starts moving. Find the music room. Listen for the piano.',
+   exitText:'The piano stops the moment you open the door. The sheet music on the stand is blank. The floor tilts, and you slide down onto smooth marble and soft, endless music.',
+   flavor:['A chalkboard reads: you are late.','Every desk in this classroom has your name carved into it.','A locker door creaks open by itself. It is full of wet sand.','The intercom clicks on. Nobody speaks, but you hear breathing.','Paper snowflakes hang from the ceiling, turning slowly.','A lunch tray sits on the floor. The food is still warm.'],
+   pt:{name:'Nível 18, Os Corredores da Escola',short:'18',exitWhat:'um piano tocando na sala de música',
+   intro:'Nível 18, Os Corredores da Escola. Armários, chão encerado e salas cheias de carteiras vazias. Todo relógio marca a mesma hora. O Monitor de Corredor patrulha estes corredores com um apito. Nunca corra aqui, ele vai ouvir você do outro lado da escola. E de vez em quando o sinal toca, e tudo começa a se mexer. Encontre a sala de música. Escute o piano.',
+   exitText:'O piano para no momento em que você abre a porta. A partitura no suporte está em branco. O chão se inclina, e você escorrega até um mármore liso e uma música suave e sem fim.',
+   flavor:['Um quadro-negro diz: você está atrasado.','Todas as carteiras desta sala têm o seu nome entalhado.','Uma porta de armário range e abre sozinha. Está cheia de areia molhada.','O interfone liga com um clique. Ninguém fala, mas você ouve uma respiração.','Flocos de neve de papel pendem do teto, girando devagar.','Uma bandeja de almoço está no chão. A comida ainda está quente.']}},
+ { name:'Level 19, The Dead Mall', short:'19', w:13,h:10, loops:0.25, mons:['mannequin','mannequin','mannequin','skin'], dark:0.7, lights:false, hides:4, music:'music20',
+   items:{water:3,fire:2,battery:5,energy:2,flashlight:1},
+   wall:[30,15,70], floor:[35,8,78], ceil:[40,5,60], amb:'mall', step:'tile', beacon:'fountain',
+   exitWhat:'a fountain splashing in the food court',
+   intro:'Level 19, The Dead Mall. Closed stores, dusty escalators, and soft music playing to no one. The power is mostly out. The Mannequins in the store windows are not where they were a moment ago. They cannot move while your light is on them, so keep your flashlight on, and watch your batteries. There is a flashlight and spare batteries somewhere close by. Find the food court. Listen for the fountain.',
+   exitText:'You reach the fountain. The water is full of coins, and every coin has your face on it. You lean closer, and the water pulls you in, down into roaring, rattling dark.',
+   flavor:['A sale sign says: everything must go. Including you.','An escalator runs slowly, carrying nothing up to nowhere.','A shopping cart sits in the middle of the hall, full of shoes. All your size.','Every television in the electronics store shows this exact hallway. You are not in it.','A store window is empty. There is a price tag on the floor where something used to stand.'],
+   pt:{name:'Nível 19, O Shopping Morto',short:'19',exitWhat:'uma fonte respingando na praça de alimentação',
+   intro:'Nível 19, O Shopping Morto. Lojas fechadas, escadas rolantes empoeiradas e uma música suave tocando para ninguém. A energia quase toda caiu. Os Manequins nas vitrines não estão onde estavam um momento atrás. Eles não se mexem enquanto a sua luz estiver neles, então deixe a lanterna ligada, e cuide das pilhas. Tem uma lanterna e pilhas extras em algum lugar aqui perto. Encontre a praça de alimentação. Escute a fonte.',
+   exitText:'Você chega à fonte. A água está cheia de moedas, e toda moeda tem o seu rosto. Você se inclina, e a água puxa você para baixo, para um escuro que ruge e chacoalha.',
+   flavor:['Uma placa de liquidação diz: tudo deve sair. Inclusive você.','Uma escada rolante anda devagar, levando nada para lugar nenhum.','Um carrinho de compras está no meio do corredor, cheio de sapatos. Todos do seu número.','Toda televisão da loja de eletrônicos mostra este corredor. Você não aparece nele.','Uma vitrine está vazia. Tem uma etiqueta de preço no chão onde alguma coisa estava de pé.']}},
+ { name:'Level 20, The Last Train', short:'20', w:12,h:9, loops:0.2, mons:['crawler','crawler','hound'], dark:0.55, lights:true, hides:4, music:'music21',
+   items:{water:3,fire:2,battery:3,energy:2},
+   wall:[160,8,35], floor:[0,0,30], ceil:[160,6,22], amb:'metro', step:'concrete', beacon:'train',
+   exitWhat:'a train waiting at the platform with its doors open',
+   intro:'Level 20, The Last Train. Subway tunnels, tiled platforms, and tracks that hum under your feet. The Rail Crawlers live in the tunnels. They are almost blind, but they hear everything. Every so often, a train roars through. While it passes, nothing can hear you, so that is your moment to move. Find the waiting train. Listen for its door chime.',
+   exitText:'You step onto the train. The doors close behind you. The only other passenger is a cartoon, grinning, and the train pulls out into bright, painted sunlight.',
+   flavor:['The map on the wall shows only one stop. It is called you.','A ticket machine prints a ticket by itself. It says: one way.','Graffiti on the tile reads: do not wait for the next train.','The rails are warm. Something passed here recently.','A newspaper on the bench has tomorrow’s date.'],
+   pt:{name:'Nível 20, O Último Trem',short:'20',exitWhat:'um trem esperando na plataforma com as portas abertas',
+   intro:'Nível 20, O Último Trem. Túneis de metrô, plataformas de azulejo e trilhos que zumbem sob os seus pés. Os Rastejadores dos Trilhos vivem nos túneis. Eles são quase cegos, mas ouvem tudo. De vez em quando, um trem passa rugindo. Enquanto ele passa, nada consegue ouvir você, então é a sua hora de andar. Encontre o trem esperando. Escute o sinal das portas.',
+   exitText:'Você entra no trem. As portas se fecham atrás de você. O único outro passageiro é um desenho animado, sorrindo, e o trem sai para uma luz do sol brilhante e pintada.',
+   flavor:['O mapa na parede mostra só uma estação. Ela se chama você.','Uma máquina de bilhetes imprime um bilhete sozinha. Diz: só ida.','Uma pichação no azulejo diz: não espere o próximo trem.','Os trilhos estão quentes. Algo passou aqui faz pouco tempo.','Um jornal no banco tem a data de amanhã.']}},
+ { name:'Level 21, Motion', short:'21', w:12,h:10, loops:0.3, mons:['toon','toon','party'], dark:0, lights:true, hides:4, music:'music22',
+   items:{water:3,fire:3,battery:2,energy:2},
+   wall:[100,55,55], floor:[95,60,45], ceil:[200,80,70], amb:'motion', step:'grass', beacon:'doorbell',
+   exitWhat:'a cartoon door with a doorbell that plays a happy tune',
+   intro:'Level 21, Motion. Everything here is drawn by hand. Bright green hills, a smiling sun, and birds that whistle the same three notes. It looks happy. It is not. The Toons have rubber arms that stretch, so if one is two rooms away, it can still reach you. Keep your distance. Find the cartoon door. Listen for its doorbell.',
+   exitText:'You ring the doorbell. The door is painted on the wall, but it opens anyway. Behind it is a hum of fans and a thousand blinking lights.',
+   flavor:['The sun in the sky turns to watch you.','A painted hole on the ground looks deep enough to fall into. You walk around it.','The grass is all the same blade, copied over and over.','Somewhere, a laugh track plays at nothing.','A cartoon anvil hangs from a rope above you. The rope creaks.'],
+   pt:{name:'Nível 21, Movimento',short:'21',exitWhat:'uma porta de desenho com uma campainha que toca uma musiquinha alegre',
+   intro:'Nível 21, Movimento. Tudo aqui é desenhado à mão. Morros verdes brilhantes, um sol sorridente e pássaros que assobiam as mesmas três notas. Parece alegre. Não é. Os Desenhos têm braços de borracha que esticam, então se um estiver a duas salas, ele ainda alcança você. Mantenha distância. Encontre a porta de desenho. Escute a campainha.',
+   exitText:'Você toca a campainha. A porta é pintada na parede, mas abre mesmo assim. Atrás dela, um zumbido de ventiladores e mil luzes piscando.',
+   flavor:['O sol no céu se vira para olhar você.','Um buraco pintado no chão parece fundo o bastante para cair. Você dá a volta.','A grama é toda a mesma folhinha, copiada sem parar.','Em algum lugar, uma risada de plateia toca para nada.','Uma bigorna de desenho pende de uma corda acima de você. A corda range.']}},
+ { name:'Level 22, The Server Farm', short:'22', w:13,h:10, loops:0.2, mons:['glitch','glitch','smiler'], dark:0.5, lights:true, hides:4, music:'music23',
+   items:{water:3,fire:2,battery:4,energy:2},
+   wall:[210,15,25], floor:[210,10,35], ceil:[210,10,18], amb:'servers', step:'metal', beacon:'terminal',
+   exitWhat:'a computer terminal beeping',
+   intro:'Level 22, The Server Farm. Endless rows of computers, roaring fans, and blinking lights. Somewhere in all this data is a record of every person who ever noclipped. The Glitch lives in the machines. It skips closer every few moves, and it eats flashlight batteries, so turn your light off when it is near. Find the terminal. Listen for its beeping.',
+   exitText:'You reach the terminal. The screen shows your name, then a single word: deeper. The floor tiles drop away beneath you.',
+   flavor:['A screen shows a live camera feed of the back of your head.','The fans all stop at once. Then they start again.','A printer spits out a page. It is a map, and you are not on it.','Every cable here is warm, like something alive.','A sticky note on a monitor says: do not let it out.'],
+   pt:{name:'Nível 22, A Fazenda de Servidores',short:'22',exitWhat:'um terminal de computador apitando',
+   intro:'Nível 22, A Fazenda de Servidores. Fileiras sem fim de computadores, ventiladores rugindo e luzes piscando. Em algum lugar nesses dados está o registro de todo mundo que já atravessou a realidade. O Glitch vive nas máquinas. Ele pula para mais perto a cada poucos movimentos, e come pilhas de lanterna, então desligue a luz quando ele estiver perto. Encontre o terminal. Escute os apitos dele.',
+   exitText:'Você chega ao terminal. A tela mostra o seu nome, depois uma única palavra: mais fundo. O piso cai sob os seus pés.',
+   flavor:['Uma tela mostra uma câmera ao vivo da sua nuca.','Os ventiladores param todos de uma vez. Depois voltam.','Uma impressora cospe uma folha. É um mapa, e você não está nele.','Todo cabo aqui está quente, como algo vivo.','Um post-it num monitor diz: não deixe ele sair.']}}
 ];
 const FIRSTX=15;
 function extraDef(n){
@@ -3309,7 +3458,7 @@ function extraDef(n){
   delete def.items.tape; delete def.items.flashlight; delete def.items.radio;
   const X=['howler','hound','smiler','party','wretch','clump'];for(let i=0;i<Math.min(4,1+Math.floor(k/4));i++)def.mons.push(X[(n+i)%X.length]); def.calm=false;
   const low=x=>x.replace(/^(The|O|A|Os|As) /,m=>m.toLowerCase()); const title=b.name.replace(/^[^,]*, /,''), tpt=b.pt.name.replace(/^[^,]*, /,'');
-  def.name=`Level ${n}, ${title}`; def.short=String(n); def.music=['music15','music16','music17','music18'][n%4];
+  def.name=`Level ${n}, ${title}`; def.short=String(n); def.music=['music15','music16','music17','music18','music19','music20','music21','music22','music23'][n%9];
   def.intro=`Level ${n}. It looks like ${low(title)}, but deeper, darker, and something here has been waiting for you. `+b.intro.slice(b.intro.indexOf('. ')+2);
   def.pt={...b.pt,name:`Nível ${n}, ${tpt}`,short:String(n),intro:`Nível ${n}. Parece ${low(tpt)}, mas mais fundo, mais escuro, e algo aqui estava esperando por você. `+b.pt.intro.slice(b.pt.intro.indexOf('. ')+2)};
   return def;
@@ -3388,6 +3537,11 @@ const ACH=[
  {id:'company',en:['Good Company','Help three real survivors.'],pt:['Boa Companhia','Ajude três sobreviventes de verdade.']},
  {id:'journal',en:['Collector','Find all fifteen journal notes.'],pt:['Colecionador','Encontre as quinze anotações do diário.']},
  {id:'host',en:['Not Home Yet','Escape the Frontrooms without the Host ever catching you.'],pt:['Ainda Não Estou em Casa','Escape dos Quartos da Frente sem o Anfitrião pegar você.']},
+ {id:'school',en:['Skipping Class','Escape the School Halls.'],pt:['Matando Aula','Escape dos Corredores da Escola.']},
+ {id:'mall',en:['Closing Time','Escape the Dead Mall.'],pt:['Hora de Fechar','Escape do Shopping Morto.']},
+ {id:'metro',en:['Mind the Gap','Escape the Last Train.'],pt:['Cuidado com o Vão','Escape do Último Trem.']},
+ {id:'motion',en:['That’s All, Folks','Escape Motion.'],pt:['Isso É Tudo, Pessoal','Escape do Movimento.']},
+ {id:'servers',en:['Logged Out','Escape the Server Farm.'],pt:['Desconectado','Escape da Fazenda de Servidores.']},
  {id:'hospital',en:['Discharged','Escape the Hospital.'],pt:['Alta Médica','Escape do Hospital.']},
  {id:'hotel',en:['Checked Out','Escape the Endless Hotel.'],pt:['Check-out','Escape do Hotel Sem Fim.']},
  {id:'frozen',en:['Cold Feet','Escape the Frozen Field.'],pt:['Pés Frios','Escape do Campo Congelado.']},
@@ -3416,7 +3570,7 @@ function openBestiary(){
 }
 // ---------- jukebox: every track, unlocked as you reach it ----------
 const SONG={menu:'The Dread',music0:'Unseen Horrors',music1:'Dark Fog',music2:'Penumbra',music3:'Lightless Dawn',music5:'Long Note Four',music6:'Echoes of Time',music7:'Ossuary 6 - Air',music8:'Spider Eyes',music9:'Dark Hallway',
-  music10:'Night of Chaos',music11:'Hush',music12:'Unnatural Situation',music13:'Oppressive Gloom',music14:'Ghost Story',music15:'Darkling',music16:'Ghostpocalypse',music17:'Ghost Processional',music18:'Static Motion',chase:'Gathering Darkness'};
+  music10:'Night of Chaos',music11:'Hush',music12:'Unnatural Situation',music13:'Oppressive Gloom',music14:'Ghost Story',music15:'Darkling',music16:'Ghostpocalypse',music17:'Ghost Processional',music18:'Static Motion',music19:'The House of Leaves',music20:'Bathed in the Light',music21:'Dark Times',music22:'Monkeys Spinning Monkeys, slowed and warped',music23:'Anguish',chase:'Gathering Darkness'};
 function jukeTracks(){const L2=(lv)=>LANG==='pt'?lv.pt.name:lv.name;const list=[{key:'menu',where:t('Main menu'),open:true}];
   storyLevels().forEach(i=>{const lv=LEVELS[i];list.push({key:lv.music,where:L2(lv),open:chapterOpen(i)});});
   list.push({key:'chase',where:t('When something is chasing you'),open:chapterOpen(1)});
