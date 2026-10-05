@@ -271,6 +271,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.21.1: puzzle shortcuts</h2>
+      <ul>
+        <li>In the Electrical Station, the Carnival and the Silent Library, solving the puzzle now opens a secret shortcut that drops you a few steps from the exit, so you do not have to walk all the way back.</li>
+      </ul>
       <h2>Version 0.21: pictures</h2>
       <ul>
         <li>Levels now have real artwork. It fades in over the view when a level starts, so sighted friends can see where you are.</li>
@@ -469,6 +473,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.21.1: atalhos dos quebra-cabeças</h2>
+      <ul>
+        <li>Na Estação Elétrica, no Carnaval e na Biblioteca Silenciosa, resolver o quebra-cabeça agora abre um atalho secreto que deixa você a poucos passos da saída, sem precisar andar tudo de volta.</li>
+      </ul>
       <h2>Versão 0.21: imagens</h2>
       <ul>
         <li>Os níveis agora têm arte de verdade. Ela aparece sobre a tela quando um nível começa, para amigos que enxergam verem onde você está.</li>
@@ -839,7 +847,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.21';
+const VERSION='0.21.1';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -1012,6 +1020,10 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'A bookshelf swings open beside you, revealing a hidden passage. You squeeze through and come out close to the exit.':'Uma estante se abre do seu lado, revelando uma passagem secreta. Você se espreme por ela e sai perto da saída.',
+ 'A tent flap blows open beside you, revealing a shortcut. You slip through and come out close to the exit.':'A lona de uma tenda se abre do seu lado, revelando um atalho. Você passa por ela e sai perto da saída.',
+ 'A service hatch clanks open in the floor. You crawl through a narrow duct and come out close to the exit.':'Um alçapão de manutenção se abre no chão. Você rasteja por um duto estreito e sai perto da saída.',
+ 'The exit is about {n} steps away. Say listen to find it.':'A saída está a uns {n} passos. Diga escutar para achar.',
  'This level does not have a picture yet. More pictures are added every few days.':'Este nível ainda não tem imagem. Novas imagens chegam a cada poucos dias.',
  'The picture for this level shows:':'A imagem deste nível mostra:',
  'Say describe to hear what the picture of this level shows.':'Diga descrever para ouvir o que a imagem deste nível mostra.',
@@ -2814,6 +2826,13 @@ function puzzleCue(){
 const codeStrict=()=>S.diff==='nightmare'||!!G.hard;
 function codeSoFar(){if(!G.code||codeStrict())return '';const nf=G.code.found.filter(Boolean).length;if(!nf)return t('You have not found any numbers yet. Say listen to find the nearest scrap of paper.');
   return nf===3?t('Your notes say the code is {c}.',{c:G.code.digits.join(' ')}):t('So far your notes say: {c}. Say listen to find the next scrap of paper.',{c:G.code.digits.map((d,i)=>G.code.found[i]?d:t('blank')).join(', ')});}
+// after a puzzle, a secret shortcut drops you near the exit, so you do not walk the whole map back
+function puzShortcut(parts){if(!G.exit)return;const ed=bfs(G.exit[0],G.exit[1]);if(ed[G.y][G.x]<=7)return;
+  const md=G.mons.filter(m=>MT[m.type].hostile).map(m=>bfs(m.x,m.y));const c=[];
+  for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(ed[y][x]>=2&&ed[y][x]<=4&&!(G.haz&&G.haz.has(key(x,y)))&&md.every(d=>d[y][x]>=3))c.push([x,y]);
+  if(!c.length)return;const p=pick(c);G.x=p[0];G.y=p[1];G.prevX=undefined;sfx(noclip);
+  const k=G.puz.kind;parts.push(t(k==='lever'?'A bookshelf swings open beside you, revealing a hidden passage. You squeeze through and come out close to the exit.':k==='bell'?'A tent flap blows open beside you, revealing a shortcut. You slip through and come out close to the exit.':'A service hatch clanks open in the floor. You crawl through a narrow duct and come out close to the exit.'));
+  parts.push(t('The exit is about {n} steps away. Say listen to find it.',{n:ed[p[1]][p[0]]}));}
 function enterCode(v){
   if(G.state!=='play')return notPlaying();
   if(!G.code||G.code.done)return say(t('There is no keypad here.'));
@@ -2844,7 +2863,7 @@ function usePuzzle(){
   if(c.on)return say(t('You already used this one. {paths}',{paths:pathsText()}));
   exitHide(); sfx(puzTone,c.tone,0,0); const parts=[];
   if(c.tone===G.puz.next){c.on=true;G.puz.next++;sfx(clickSound,true);
-    if(G.puz.next>=3){G.puz.done=true;setTimeout(()=>{sfx(bang,G.exit?relDirWords(G.exit[0],G.exit[1]).pan:0,0.5,0.6);},700);parts.push(t('It clicks into place. Somewhere far away, a heavy lock clunks open. The exit is open now!'));if(bumpStat('puzzles')>=1)unlock('puzzle');}
+    if(G.puz.next>=3){G.puz.done=true;setTimeout(()=>{sfx(bang,G.exit?relDirWords(G.exit[0],G.exit[1]).pan:0,0.5,0.6);},700);parts.push(t('It clicks into place. Somewhere far away, a heavy lock clunks open. The exit is open now!'));if(bumpStat('puzzles')>=1)unlock('puzzle');puzShortcut(parts);}
     else parts.push(t('It clicks into place. {n} of 3 done.',{n:G.puz.next}));}
   else{G.puz.cells.forEach(q=>q.on=false);G.puz.next=0;G.noise={x:G.x,y:G.y,turns:5};G.alert=4;sfx(alarmBlare);
     parts.push(t('Wrong order! An alarm blares, and everything you did snaps back to the start. Every monster on this level heard that.'));}
