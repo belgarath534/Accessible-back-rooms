@@ -52,6 +52,9 @@ button.choice[aria-pressed="true"]::before{content:"✓ ";color:var(--accent)}
 #viewWrap:focus-visible{outline:4px solid var(--accent);outline-offset:3px}
 canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 #view{position:relative;z-index:1}
+#artCard{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:3;opacity:0;transition:opacity 1.2s ease}
+#artCard.on{opacity:1}
+.bArt{display:block;width:100%;max-width:480px;border-radius:10px;margin:.4em 0}
 #view3d{position:absolute;left:0;top:0;width:100%;height:100%;aspect-ratio:auto}
 #hud{display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 0;font-weight:650;font-size:.95rem}
 #hud span b{color:var(--accent)}
@@ -268,6 +271,12 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.21: pictures</h2>
+      <ul>
+        <li>Levels now have real artwork. It fades in over the view when a level starts, so sighted friends can see where you are.</li>
+        <li>Every picture has a description. VoiceOver reads it, and you can say describe at any time to hear what the picture of your level shows.</li>
+        <li>The first pictures are Levels 0, 1 and 2. More levels, and monster portraits for the bestiary, arrive a few at a time.</li>
+      </ul>
       <h2>Version 0.20.2: Nightmare door codes</h2>
       <ul>
         <li>On Nightmare and in Hardcore, the game no longer reminds you of the door code. Remember the numbers, or check your status.</li>
@@ -460,6 +469,12 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.21: imagens</h2>
+      <ul>
+        <li>Os níveis agora têm arte de verdade. Ela aparece sobre a tela quando um nível começa, para amigos que enxergam verem onde você está.</li>
+        <li>Toda imagem tem uma descrição. O VoiceOver lê, e você pode dizer descrever a qualquer momento para ouvir o que a imagem do seu nível mostra.</li>
+        <li>As primeiras imagens são dos Níveis 0, 1 e 2. Mais níveis, e retratos dos monstros no bestiário, chegam aos poucos.</li>
+      </ul>
       <h2>Versão 0.20.2: códigos de porta no Pesadelo</h2>
       <ul>
         <li>No Pesadelo e no modo Hardcore, o jogo não lembra mais o código da porta. Guarde os números na memória, ou confira o seu status.</li>
@@ -755,6 +770,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <div id="viewWrap" tabindex="0" role="application" aria-roledescription="game">
       <canvas id="view3d" aria-hidden="true"></canvas>
       <canvas id="view" width="960" height="540" aria-hidden="true"></canvas>
+      <img id="artCard" alt="" hidden>
     </div>
     <div id="deadBar" class="stack" hidden>
       <button id="dRetry" class="primary"><span data-l="en">Try again</span><span data-l="pt">Tentar de novo</span></button>
@@ -778,6 +794,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       <span id="memBtns" hidden><button data-cmd="note" data-n="0"><span data-l="en">Low note</span><span data-l="pt">Nota grave</span></button><button data-cmd="note" data-n="1"><span data-l="en">Middle note</span><span data-l="pt">Nota média</span></button><button data-cmd="note" data-n="2"><span data-l="en">High note</span><span data-l="pt">Nota aguda</span></button></span>
       <button data-cmd="use"><span data-l="en">Use</span><span data-l="pt">Usar</span></button>
       <button data-cmd="look"><span data-l="en">Look</span><span data-l="pt">Olhar</span></button>
+      <button data-cmd="picture"><span data-l="en">Describe picture</span><span data-l="pt">Descrever imagem</span></button>
       <button data-cmd="hide"><span data-l="en">Hide</span><span data-l="pt">Esconder</span></button>
       <span id="tradeBtns" hidden></span>
       <button data-cmd="jelly" data-item="jelly"><span data-l="en">Eat Moth Jelly</span><span data-l="pt">Comer Geleia de Mariposa</span></button>
@@ -822,7 +839,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.20.2';
+const VERSION='0.21';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -995,6 +1012,9 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'This level does not have a picture yet. More pictures are added every few days.':'Este nível ainda não tem imagem. Novas imagens chegam a cada poucos dias.',
+ 'The picture for this level shows:':'A imagem deste nível mostra:',
+ 'Say describe to hear what the picture of this level shows.':'Diga descrever para ouvir o que a imagem deste nível mostra.',
  'That is all three numbers. Remember them, or check your status. Then go to the exit door.':'São os três números. Guarde na memória, ou confira o seu status. Depois vá até a porta de saída.',
  'I heard {d}, but the code has three numbers. Try again, like code 4 7 2.':'Eu ouvi {d}, mas o código tem três números. Tente de novo, tipo código 4 7 2.',
  'no numbers':'nenhum número',
@@ -2250,6 +2270,7 @@ function parseEn(s){
   if(has(/ (moth jelly|jelly) /))return{c:'jelly'};
   if(has(/ (cashew water|cashew) /))return{c:'cashew'};
   if(has(/ (wind chime|chime|hang chime) /))return{c:'chime'};
+  if(has(/ (describe|describe (the )?(level|picture|room|scene)|what does (it|this|the level) look like|show (me )?(the )?picture|level picture) /))return{c:'picture'};
   if(has(/ (camera|flash|take a picture|photo) /))return{c:'camera'};
   if(has(/ (firesalt|fire salt|salt) /))return{c:'firesalt',r:dirOf()};
   if(has(/ (glow stick|glowstick|glow) /))return{c:'glow'};
@@ -2354,6 +2375,7 @@ function parsePt(s){
   if(has(/ (geleia de mariposa|geleia) /))return{c:'jelly'};
   if(has(/ (agua de caju|caju) /))return{c:'cashew'};
   if(has(/ (sino de vento|sino|pendurar sino) /))return{c:'chime'};
+  if(has(/ (descrever|descreva|descricao|como e aqui|mostrar imagem|imagem do nivel) /))return{c:'picture'};
   if(has(/ (camera|flash|tirar foto|foto) /))return{c:'camera'};
   if(has(/ (sal de fogo|sal) /))return{c:'firesalt',r:dirOf()};
   if(has(/ (bastao luminoso|bastao de luz|bastao) /))return{c:'glow'};
@@ -2539,11 +2561,28 @@ function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;
   if((s.v||0)<6)s.full=true;
   if((s.v||0)<7)s.level=resumeAt(s.level);// 0.7: levels are in order
   G.level=s.level;G.inv={...freshInv(),...s.inv};G.sanity=Math.max(60,s.sanity);G.steps=s.steps;G.deaths=s.deaths;G.tapes=new Set(s.tapes);G.tapes=allTapes();G.lastTape=s.lastTape??-1;G.drank=!!s.drank;G.full=!!s.full;G.hard=!!s.hard;G.ngp=s.ngp||0;G.skills=new Set(s.skills||[]);G.mode='story';G.edef=null;if(s.diff){S.diff=s.diff;lsSet('br_diff',s.diff);}return true;}
+// artwork: only pictures that exist are listed; each has a description for VoiceOver and the picture command
+const ART={
+ lvl0:{en:'A long hallway of stained yellow wallpaper between square pillars. The brown carpet is wet and shines under a row of fluorescent ceiling panels that fades into the distance. Far away, at the very end, a tiny red light glows.',pt:'Um corredor comprido de papel de parede amarelo e manchado entre pilares quadrados. O carpete marrom está molhado e brilha sob uma fileira de lâmpadas fluorescentes que some na distância. Bem longe, no fim, uma luzinha vermelha brilha.'},
+ lvl1:{en:'A huge dark concrete basement held up by thick pillars. Wooden crates are stacked in the shadows. A few lights hang from the ceiling, and their glow reflects in puddles on the floor. At the far end, a metal stairwell leads down.',pt:'Um porão enorme e escuro de concreto, sustentado por pilares grossos. Caixotes de madeira estão empilhados nas sombras. Algumas lâmpadas pendem do teto, e o brilho delas reflete nas poças do chão. No fundo, uma escada de metal desce.'},
+ lvl2:{en:'A narrow metal walkway runs through a tunnel crammed with rusty pipes, valve wheels and gauges. Steam drifts through the air. A few small orange lamps glow along the right wall, and the far end disappears into darkness.',pt:'Uma passarela estreita de metal atravessa um túnel cheio de canos enferrujados, registros e medidores. Vapor flutua no ar. Algumas lampadazinhas laranja brilham na parede da direita, e o fundo some na escuridão.'}
+};
+const MONART={};
+function artKey(){const lv=L();if(!lv)return '';if(lv.final)return 'last';if(G.mode==='extra'&&EXTRAS[G.xn-FIRSTX])return 'x'+G.xn;if(lv.base!==undefined)return 'lvl'+lv.base;return 'lvl'+G.level;}
+var artTimer=null;
+function showArt(){const el=$('#artCard');if(!el)return;const k=artKey(),a=ART[k];clearTimeout(artTimer);el.classList.remove('on');
+  if(!a){el.hidden=true;return;}
+  el.src='img/'+k+'.jpg';el.alt=a[LANG]||a.en;el.hidden=false;requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('on')));
+  artTimer=setTimeout(()=>{el.classList.remove('on');artTimer=setTimeout(()=>{el.hidden=true;},1300);},9000);}
+function describeArt(){if(G.state!=='play'&&G.state!=='paused')return notPlaying();const a=ART[artKey()];
+  if(!a)return say(t('This level does not have a picture yet. More pictures are added every few days.'));
+  return say(t('The picture for this level shows:')+' '+(a[LANG]||a.en));}
 function enterLevel(prefix=''){
-  initAudio(); newLevel(); saveCheckpoint(); show('game');
+  initAudio(); newLevel(); saveCheckpoint(); show('game'); showArt();
   let intro=introText(); const nm=LX('name');
   if(G.mode==='story'&&!L().secret&&intro.startsWith(nm+'.'))intro=t('Level {n} of {total}, {title}.',{n:G.level,total:storyLevels().length-1,title:nm.replace(/^[^,]*, /,'')})+intro.slice(nm.length+1);
-  say((prefix?prefix+' ':'')+intro+' '+pathsText());
+  let hint='';if(ART[artKey()]&&!lsGet('br_arthint',0)){lsSet('br_arthint',1);hint=' '+t('Say describe to hear what the picture of this level shows.');}
+  say((prefix?prefix+' ':'')+intro+' '+pathsText()+hint);
 }
 function newGame(skipTut){
   if(!skipTut&&!lsGet('br_tut',0))return startTutorial(true);
@@ -3608,7 +3647,8 @@ function openBestiary(){
   BORDER.forEach(ty=>{const has=!!seen[ty]; if(ty==='marcus'&&!has)return; if(has)n++; const li=document.createElement('li');
     if(!has){li.textContent=t('??? You have not met this one yet.');ul.appendChild(li);return;}
     const nm=bareName(ty); const [d,tip]=BEST[ty][LANG];
-    const h=document.createElement('h2');h.textContent=nm;li.appendChild(h);const p1=document.createElement('p');p1.textContent=d+' '+t('How to survive:')+' '+tip;li.appendChild(p1);
+    const h=document.createElement('h2');h.textContent=nm;li.appendChild(h);
+    if(MONART[ty]){const im=document.createElement('img');im.className='bArt';im.src='img/mon_'+ty+'.jpg';im.alt=MONART[ty][LANG]||MONART[ty].en;im.loading='lazy';li.appendChild(im);}const p1=document.createElement('p');p1.textContent=d+' '+t('How to survive:')+' '+tip;li.appendChild(p1);
     const b=document.createElement('button');b.textContent=t('Hear {name}',{name:nm});b.addEventListener('click',()=>{audioWake();const m={type:ty,x:0,y:0};monSound(m,0,0.9,0);setTimeout(()=>sfx(monStep,m,0,0.9,0),1600);});li.appendChild(b);ul.appendChild(li);});
   const total=BORDER.length-1; $('#bCount').textContent=t('{n} of {total} creatures met.',{n:Math.min(n,total),total});
   show('bestiary',t('Bestiary. {n} of {total} creatures met. Each one has a hear it button, so you can learn its sound safely. Say back to return.',{n:Math.min(n,total),total}));
@@ -3734,6 +3774,7 @@ function run(c,n,r){
     if(c==='play'){if(screen==='setup')return newGame();if(G.state==='dead')return retryLevel();return openSetup();}
     if(c==='tape')return tape();
     if(c==='status')return status();
+    if(c==='picture')return describeArt();
     if(G.state==='dead')return notPlaying();
     return;
   }
@@ -3750,6 +3791,7 @@ function run(c,n,r){
     case 'jelly':return eatJelly(); case 'cashew':return drinkCashew(); case 'chime':return hangChime(); case 'camera':return useCamera(); case 'trade':return doTrade(n);
     case 'firesalt':return useFiresalt(r||0); case 'glow':return useGlow(); case 'compass':return useCompass(); case 'adren':return useAdren(); case 'mystery':return useMystery(); case 'pill':return usePill();
     case 'eat':return eat(); case 'flare':return useFlare(); case 'trap':return setTrap(); case 'decoy':return useDecoy();
+    case 'picture':return describeArt();
     case 'hide':return hide(); case 'listen':return listen(); case 'look':return look(); case 'drink':return drink(); case 'status':return status();
     case 'help':return help(); case 'menu':case 'quit':return openMenu();
     case 'play':case 'retry':case 'resume':case 'continue':return say(t('You are already in the Backrooms. Say pause to stop.'));
