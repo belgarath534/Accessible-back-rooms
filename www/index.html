@@ -271,6 +271,12 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.22: events</h2>
+      <ul>
+        <li>Four new random events, on top of the blackouts. A telephone rings somewhere: reach it in time and a voice tells you the way out. A stampede rushes past and pulls the monsters away. Gas leaks from a vent, so sprint out of it. And doors start slamming, closer and closer: hide or sneak before something enormous comes through.</li>
+        <li>Halloween, from October 24 to November 1: candy hidden in every level, and trick-or-treaters knocking in the halls. Some give you treats. Some are not kids.</li>
+        <li>And on one special day in October, there is a surprise. Two secret achievements to find.</li>
+      </ul>
       <h2>Version 0.21.1: puzzle shortcuts</h2>
       <ul>
         <li>In the Electrical Station, the Carnival and the Silent Library, solving the puzzle now opens a secret shortcut that drops you a few steps from the exit, so you do not have to walk all the way back.</li>
@@ -473,6 +479,12 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.22: eventos</h2>
+      <ul>
+        <li>Quatro novos eventos aleatórios, além dos apagões. Um telefone toca em algum lugar: chegue a tempo e uma voz diz o caminho da saída. Uma debandada passa correndo e leva os monstros embora. Gás vaza de uma ventilação, então corra para sair. E portas começam a bater, cada vez mais perto: se esconda ou ande agachado antes que algo enorme passe.</li>
+        <li>Halloween, de 24 de outubro a 1º de novembro: doces escondidos em todo nível, e crianças pedindo doces batendo nos corredores. Algumas dão gostosuras. Algumas não são crianças.</li>
+        <li>E num dia especial de outubro, tem uma surpresa. Duas conquistas secretas para achar.</li>
+      </ul>
       <h2>Versão 0.21.1: atalhos dos quebra-cabeças</h2>
       <ul>
         <li>Na Estação Elétrica, no Carnaval e na Biblioteca Silenciosa, resolver o quebra-cabeça agora abre um atalho secreto que deixa você a poucos passos da saída, sem precisar andar tudo de volta.</li>
@@ -847,7 +859,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.21.1';
+const VERSION='0.22';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -1020,6 +1032,28 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'Somewhere {w}, a music box is playing happy birthday.':'Em algum lugar {w}, uma caixinha de música toca parabéns.',
+ 'Somewhere {w}, a telephone starts ringing. It sounds like it is for you. Find it before it stops.':'Em algum lugar {w}, um telefone começa a tocar. Parece que é para você. Encontre antes que pare.',
+ 'Somewhere {w}, a small voice calls out:':'Em algum lugar {w}, uma vozinha chama:',
+ 'Trick or treat!':'Gostosuras ou travessuras!',
+ 'A thunder of running feet sweeps past you and away into the distance. Everything nearby chases after it. For a little while, the way around you is clear.':'Um trovão de passos correndo passa por você e some na distância. Tudo por perto corre atrás. Por um tempinho, o caminho ao seu redor está livre.',
+ 'A vent hisses, and a sweet, heavy gas fills the air. Your head starts to swim. Sprint to get out of it!':'Uma ventilação chia, e um gás doce e pesado enche o ar. Sua cabeça começa a girar. Corra para sair dele!',
+ 'Far away, a door slams. Then another, closer. Something big is coming down the halls. Hide, or sneak, right now!':'Longe, uma porta bate. Depois outra, mais perto. Algo grande está vindo pelos corredores. Se esconda, ou ande agachado, agora!',
+ 'You pick up the phone. A calm voice says: the exit is {route}, about {n} steps away. Then the line goes dead. Next to the phone you find {item}.':'Você atende o telefone. Uma voz calma diz: a saída fica {route}, a uns {n} passos. Então a linha fica muda. Do lado do telefone você acha {item}.',
+ 'A small figure in a sheet holds out a bag. Then the sheet falls, and there is nothing underneath but teeth. Trick! You lose {n} sanity.':'Uma figurinha num lençol estende uma sacola. Então o lençol cai, e embaixo não tem nada além de dentes. Travessura! Você perde {n} de sanidade.',
+ 'A small figure in a sheet holds out a bag. You reach in and find {item}, and a candy that makes you feel a little better. Treat! The figure giggles and is gone.':'Uma figurinha num lençol estende uma sacola. Você enfia a mão e acha {item}, e um doce que faz você se sentir um pouco melhor. Gostosura! A figurinha ri e some.',
+ 'The phone stops ringing.':'O telefone para de tocar.',
+ 'The knocking stops. Whoever it was has gone.':'As batidas param. Quem quer que fosse, foi embora.',
+ 'You sprint out of the gas, coughing. The air clears.':'Você corre para fora do gás, tossindo. O ar limpa.',
+ 'The gas finally thins out. Your head clears.':'O gás finalmente se dissipa. Sua cabeça clareia.',
+ 'The gas makes your head spin. Get out of it!':'O gás deixa sua cabeça girando. Saia dele!',
+ 'Another door slams, much closer.':'Outra porta bate, bem mais perto.',
+ 'Something enormous thunders past, shaking the walls. It does not notice you. Then it is gone.':'Algo enorme passa estrondando, sacudindo as paredes. Não percebe você. Então some.',
+ 'Something enormous slams into you as it thunders past, and then it is gone. You lose {n} sanity.':'Algo enorme bate em você ao passar estrondando, e então some. Você perde {n} de sanidade.',
+ 'You find a birthday cake with a single candle burning. A card on it says: Happy birthday, Leo. From everyone down here. Somewhere, the Partygoers start singing, slightly wrong. You feel much better.':'Você acha um bolo de aniversário com uma única vela acesa. Um cartão diz: Feliz aniversário, Leo. De todo mundo aqui embaixo. Em algum lugar, os Festeiros começam a cantar, meio errado. Você se sente muito melhor.',
+ 'You find a piece of candy wrapped in orange paper. It tastes like almond water. That is {n} candy this Halloween.':'Você acha um doce embrulhado em papel laranja. Tem gosto de água de amêndoa. São {n} doces neste Halloween.',
+ 'Today is October 9, the birthday of Leo, who made this game. The Backrooms are celebrating too. Look for the birthday cake hidden in a level.':'Hoje é 9 de outubro, aniversário do Leo, que fez este jogo. Os Backrooms também estão comemorando. Procure o bolo de aniversário escondido num nível.',
+ 'Happy Halloween! Until November 1, there is candy hidden in every level, and trick-or-treaters wander the halls. Not all of them are kids.':'Feliz Halloween! Até 1º de novembro, tem doces escondidos em todo nível, e crianças pedindo doces andam pelos corredores. Nem todas são crianças.',
  'A bookshelf swings open beside you, revealing a hidden passage. You squeeze through and come out close to the exit.':'Uma estante se abre do seu lado, revelando uma passagem secreta. Você se espreme por ela e sai perto da saída.',
  'A tent flap blows open beside you, revealing a shortcut. You slip through and come out close to the exit.':'A lona de uma tenda se abre do seu lado, revelando um atalho. Você passa por ela e sai perto da saída.',
  'A service hatch clanks open in the floor. You crawl through a narrow duct and come out close to the exit.':'Um alçapão de manutenção se abre no chão. Você rasteja por um duto estreito e sai perto da saída.',
@@ -1730,8 +1764,8 @@ const BORDER=['trader','smiler','hound','skin','clump','party','moths','watcher'
 function seeMon(type){if(!BEST[type])return;const seen=lsGet('br_seen',{});if(seen[type])return;seen[type]=1;lsSet('br_seen',seen);
   G.extras.push({text:t('New entry in your bestiary: {name}.',{name:bareName(type)})});
   if(BORDER.filter(x=>x!=='marcus').every(x=>seen[x]))unlock('bestiary');}
-const ITEMNAME={en:{water:'a bottle of almond water',fire:'a firecracker',battery:'a battery',energy:'an energy bar',tape:'a cassette tape',flashlight:'a flashlight',radio:'a walkie-talkie',keycard:'a keycard',note:'a handwritten note',ration:'a Royal Ration',flare:'a flare',trap:'a bear trap',decoy:'a wind-up music box',firesalt:'a pouch of Firesalt',glow:'a glow stick',compass:'an old compass',adren:'an adrenaline shot',mystery:'a mystery bottle',pill:'a strange pill',jelly:'a jar of Moth Jelly',cashew:'a bottle of Cashew Water',chime:'a wind chime',camera:'a disposable camera'},
-  pt:{water:'uma garrafa de água de amêndoa',fire:'uma bombinha',battery:'uma pilha',energy:'uma barra de energia',tape:'uma fita cassete',flashlight:'uma lanterna',radio:'um walkie-talkie',keycard:'um cartão de acesso',note:'um bilhete escrito à mão',ration:'uma Ração Real',flare:'um sinalizador',trap:'uma armadilha de urso',decoy:'uma caixinha de música de corda',firesalt:'um saquinho de Sal de Fogo',glow:'um bastão luminoso',compass:'uma bússola velha',adren:'uma injeção de adrenalina',mystery:'uma garrafa misteriosa',pill:'uma pílula estranha',jelly:'um pote de Geleia de Mariposa',cashew:'uma garrafa de Água de Caju',chime:'um sino de vento',camera:'uma câmera descartável'}};
+const ITEMNAME={en:{cake:'a birthday cake',candy:'a piece of Halloween candy',water:'a bottle of almond water',fire:'a firecracker',battery:'a battery',energy:'an energy bar',tape:'a cassette tape',flashlight:'a flashlight',radio:'a walkie-talkie',keycard:'a keycard',note:'a handwritten note',ration:'a Royal Ration',flare:'a flare',trap:'a bear trap',decoy:'a wind-up music box',firesalt:'a pouch of Firesalt',glow:'a glow stick',compass:'an old compass',adren:'an adrenaline shot',mystery:'a mystery bottle',pill:'a strange pill',jelly:'a jar of Moth Jelly',cashew:'a bottle of Cashew Water',chime:'a wind chime',camera:'a disposable camera'},
+  pt:{cake:'um bolo de aniversário',candy:'um doce de Halloween',water:'uma garrafa de água de amêndoa',fire:'uma bombinha',battery:'uma pilha',energy:'uma barra de energia',tape:'uma fita cassete',flashlight:'uma lanterna',radio:'um walkie-talkie',keycard:'um cartão de acesso',note:'um bilhete escrito à mão',ration:'uma Ração Real',flare:'um sinalizador',trap:'uma armadilha de urso',decoy:'uma caixinha de música de corda',firesalt:'um saquinho de Sal de Fogo',glow:'um bastão luminoso',compass:'uma bússola velha',adren:'uma injeção de adrenalina',mystery:'uma garrafa misteriosa',pill:'uma pílula estranha',jelly:'um pote de Geleia de Mariposa',cashew:'uma garrafa de Água de Caju',chime:'um sino de vento',camera:'uma câmera descartável'}};
 const LX=k=>{const lv=L();return LANG==='pt'&&lv.pt[k]!==undefined?lv.pt[k]:lv[k];};
 
 /* ============================== state ============================== */
@@ -2442,7 +2476,8 @@ function showMain(prefix=''){
   $('#mContinue').hidden=!lsGet('br_save',null); $('#mLevels').hidden=chaptersOpen().length<2; $('#mExtra').hidden=!extrasOpen(); $('#mNgp').hidden=!extrasOpen();
   menuMusic();
   const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','daily challenge','endless mode','tutorial','settings','how to play','jukebox','bestiary','journal','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
-  show('menu',prefix+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
+  let ev='';if(!G.evTold){if(isBday())ev=t('Today is October 9, the birthday of Leo, who made this game. The Backrooms are celebrating too. Look for the birthday cake hidden in a level.')+' ';else if(isHalloween())ev=t('Happy Halloween! Until November 1, there is candy hidden in every level, and trick-or-treaters wander the halls. Not all of them are kids.')+' ';if(ev)G.evTold=true;}
+  show('menu',prefix+ev+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
 }
 function quitToMain(){
   $('#deadBar').hidden=true; G.state='menu'; clearAmb(); G.sneak=false; setSneakUI();
@@ -2507,6 +2542,7 @@ function newLevel(){
   if(it.radio&&!G.inv.radio)place('radio',c=>dist[c[1]][c[0]]>=3&&dist[c[1]][c[0]]<=bd*0.6&&onPath(c,2));
   if(it.keycard)place('keycard',([x,y])=>exD[y][x]>=bd*0.5&&dist[y][x]>=3);
   if(it.tape&&!G.tapes.has(lv.tape))place('tape',([x,y])=>dist[y][x]>=3);
+  if(!lv.calm&&!lv.run&&G.mode!=='tutorial'){if(isBday())place('cake',([x,y])=>dist[y][x]>=3);if(isHalloween()){place('candy',([x,y])=>dist[y][x]>=2);place('candy',([x,y])=>dist[y][x]>=2);}}
   if(G.mode==='story'&&!lv.secret&&G.level<NNOTES&&!lsGet('br_notes',[]).includes(G.level))place('note',([x,y])=>dist[y][x]>=2);
   ['water','fire','battery','energy'].forEach(ty=>{for(let i=0;i<(it[ty]||0);i++)place(ty,([x,y])=>dist[y][x]>=2);});
   if(lv.boss&&G.mode==='story'){['trap','trap','flare','flare','decoy','ration'].forEach(ty=>place(ty,([x,y])=>dist[y][x]>=1&&dist[y][x]<=bd*0.7));}
@@ -2551,7 +2587,7 @@ function newLevel(){
     const deals=TRADES.slice().sort(()=>Math.random()-.5).slice(0,3);G.mons.push({type:'trader',x:p2[0],y:p2[1],deals,greeted:false});}
   if(G.survOn){const c=cells.filter(([x,y])=>dist[y][x]>=3&&dist[y][x]<=bd-1);const p=pick(c.length?c:cells);G.mons.push({type:'survivor',x:p[0],y:p[1],name:pick(SURV_NAMES),fake:Math.random()<(lvn2>=8?0.45:0.3),greeted:false,helped:false});}
   if(G.mode==='story'&&G.ngp&&!lv.calm&&!lv.secret&&!lv.run){const far=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));for(let i=0;i<Math.min(3,G.ngp);i++){const p=pick(far.length?far:cells);G.mons.push({type:['hound','howler','wretch'][i%3],x:p[0],y:p[1],cool:4});}}
-  G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
+  G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.ev=null; G.cakeTold=false; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
   G.wasWet=false; G.mark=null; G.markSought=false; G.caughtLevel=false; G.inHide=false; G.hideNear=false; G.watchFreeze=0; G.train=0;
   G.spots=new Map(); {const n=lv.hides??(lv.calm||lv.run||lv.secret||lv.water?0:3);const sc=cells.filter(([x,y])=>dist[y][x]>=2&&!G.items.has(key(x,y))&&!isHazard(x,y)&&!isWater(x,y));for(let i=0;i<n&&sc.length;i++){const c=sc.splice(rand(sc.length),1)[0];G.spots.set(key(...c),i);}}
   G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
@@ -2893,6 +2929,10 @@ function lowSanity(){
 function pickupItems(parts){
   const k=key(G.x,G.y); const ty=G.items.get(k); if(!ty)return; const I=G.inv;
   G.items.delete(k); sfx(pickup);
+  if(ty==='cake'){G.sanity=Math.min(100,G.sanity+30);setTimeout(()=>sfx(hbTune,0,0.8),600);setTimeout(()=>sfx(partyHorn,0.5,0.6),300);play('giggle',{vol:0.4,pan:-0.6,muffle:0.4});
+    parts.push(t('You find a birthday cake with a single candle burning. A card on it says: Happy birthday, Leo. From everyone down here. Somewhere, the Partygoers start singing, slightly wrong. You feel much better.'));unlock('bday');return;}
+  if(ty==='candy'){G.sanity=Math.min(100,G.sanity+8);const n=lsGet('br_candy',0)+1;lsSet('br_candy',n);
+    parts.push(t('You find a piece of candy wrapped in orange paper. It tastes like almond water. That is {n} candy this Halloween.',{n}));if(n>=13)unlock('candy');return;}
   if(/^clue\d$/.test(ty)&&G.code){const i=+ty[4];G.code.found[i]=true;sfx(tapeClick);
     parts.push(t('You find a scrap of paper with a number on it. It says: the {pos} number of the door code is {d}.',{pos:[t('first'),t('second'),t('third')][i],d:G.code.digits[i]}));
     const nf=G.code.found.filter(Boolean).length;parts.push(nf===3?(codeStrict()?t('That is all three numbers. Remember them, or check your status. Then go to the exit door.'):t('That is all three. The code is {c}. Go to the exit door and say code, then the numbers.',{c:G.code.digits.join(' ')})):t('You have {n} of 3 numbers.',{n:nf}));}
@@ -2932,12 +2972,65 @@ function scareEvents(parts,caughtNow){
     return;
   }
   if(caughtNow||lv.calm||lv.run)return;
-  G.sinceScare++; const near=nearestHostile(bfs(G.x,G.y)); const d=near?near.d:99;
+  if(G.ev){eventTick(parts);return;}
+  G.sinceScare++;
+  if(G.mode!=='tutorial'&&G.steps>8&&G.sinceScare>12&&Math.random()<0.07){startEvent(parts);if(G.ev||G.sinceScare===0)return;} const near=nearestHostile(bfs(G.x,G.y)); const d=near?near.d:99;
   if(lv.lights&&G.steps>6&&G.sinceScare>10&&Math.random()<0.08){startBlackout();parts.push(t('The lights go out. All of them. The humming stops, and in the total darkness something takes a slow breath right behind you.'));return;}
   if(Math.random()<0.045){play(pick(['farscream','farscream2']),{pan:Math.random()*2-1,vol:0.35,muffle:0.65});parts.push(t('Somewhere far away, someone screams. Then silence.'));return;}
   if(d<=4&&d>1&&Math.random()<0.4){setTimeout(()=>sfx(footstep,0.45,0.5),950);if(!G.echoTold){G.echoTold=true;parts.push(t('Behind you, footsteps copy yours. When you stop, they stop.'));}}
   if(G.sanity<70&&Math.random()<0.06){play('breath2',{vol:0.7,pan:Math.random()<0.5?-0.9:0.9});const wi=rand(WHISPERS[LANG].length);G.extras.push({label:S.narr?'':t('A voice whispers in your ear:'),text:WHISPERS[LANG][wi],opts:{pitch:0.1,rate:0.6},vid:'whisper'+(wi+1),pos:V3(Math.random()<0.5?-1:1,0,0.2)});}
 }
+// ---------- calendar events ----------
+const evDate=()=>{const f=lsGet('br_fakedate',null);return f?new Date(f+'T12:00:00'):new Date();};
+const isBday=()=>{const d=evDate();return d.getMonth()===9&&d.getDate()===9;};
+const isHalloween=()=>{const d=evDate();return (d.getMonth()===9&&d.getDate()>=24)||(d.getMonth()===10&&d.getDate()<=1);};
+function ringPhone(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);[0,0.45].forEach(d=>{const o=osc('sine',440,t+d,0.4);const o2=osc('sine',480,t+d,0.4);const lfo=osc('square',20,t+d,0.4);const lg=gainNode(0.5);lfo.connect(lg);const g=gainNode(0);envelope(g,t+d,0.01,0.25,0.38);lg.connect(g.gain);o.connect(g);o2.connect(g);g.connect(out);});}
+function gasHiss(pan){const t=now();const n=noise(t,2.2);const g=gainNode(0);envelope(g,t,0.3,0.35,1.8);n.connect(filt('highpass',3500,0.7)).connect(g).connect(spot(pan,0.8,0.1));}
+function knock(pan,vol){const t=now();const out=spot(pan,vol,0.3);[0,0.22,0.44].forEach(d=>{const n=noise(t+d,0.06);const g=gainNode(0);envelope(g,t+d,0.002,0.8,0.05);n.connect(filt('lowpass',500)).connect(g).connect(out);});}
+function hbTune(pan,vol){const t=now();const out=spot(pan,vol,0.15);const N=[392,392,440,392,523.3,493.9,392,392,440,392,587.3,523.3];const D=[0.3,0.15,0.45,0.45,0.45,0.9,0.3,0.15,0.45,0.45,0.45,0.9];let tt=t;N.forEach((f,i)=>{const o=osc('triangle',f*(0.985+Math.random()*0.03),tt,D[i]+0.3);const g=gainNode(0);envelope(g,tt,0.005,0.16,D[i]+0.25);o.connect(g).connect(out);tt+=D[i];});}
+// ---------- random level events ----------
+function farCell(minD){const d=bfs(G.x,G.y);const c=[];let best=null,bd=-1;for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++){if(d[y][x]>=minD&&d[y][x]<99)c.push([x,y]);if(d[y][x]<99&&d[y][x]>bd){bd=d[y][x];best=[x,y];}}return c.length?pick(c):best;}
+function midCell(a,b){const d=bfs(G.x,G.y);const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(d[y][x]>=a&&d[y][x]<=b&&!(x===G.exit[0]&&y===G.exit[1])&&!G.items.has(key(x,y)))c.push([x,y]);return c.length?pick(c):null;}
+function startEvent(parts){
+  const ks=['phone','stampede','gas','coming'];if(isHalloween())ks.push('tot','tot');const k=pick(ks);G.sinceScare=0;
+  if(k==='phone'){const p=midCell(3,7);if(!p)return;G.ev={k,x:p[0],y:p[1],turns:14};const {w,pan}=relDirWords(p[0],p[1]);sfx(ringPhone,pan,0.8,0.3);
+    parts.push(t('Somewhere {w}, a telephone starts ringing. It sounds like it is for you. Find it before it stops.',{w}));return;}
+  if(k==='tot'){const p=midCell(3,6);if(!p)return;G.ev={k,x:p[0],y:p[1],turns:14,trick:Math.random()<0.4};const {w,pan}=relDirWords(p[0],p[1]);sfx(knock,pan,0.8);
+    G.extras.push({label:t('Somewhere {w}, a small voice calls out:',{w}),text:t('Trick or treat!'),opts:{v:voice2,pitch:1.6,rate:1.05},pos:pan});return;}
+  if(k==='stampede'){const p=farCell(8);if(!p)return;G.noise={x:p[0],y:p[1],turns:7};const side=Math.random()<0.5?-1:1;
+    for(let i=0;i<12;i++)setTimeout(()=>sfx(monStep,{type:pick(['hound','party','skin','hallmon'])},side*(-0.9+i*0.16),0.75,0.15),i*140);
+    parts.push(t('A thunder of running feet sweeps past you and away into the distance. Everything nearby chases after it. For a little while, the way around you is clear.'));return;}
+  if(k==='gas'){G.ev={k,turns:5};sfx(gasHiss,Math.random()*1.6-0.8);
+    parts.push(t('A vent hisses, and a sweet, heavy gas fills the air. Your head starts to swim. Sprint to get out of it!'));return;}
+  if(k==='coming'){G.ev={k,turns:3,side:Math.random()<0.5?-0.9:0.9,safe:false};play('impact',{pan:G.ev.side,vol:0.25,muffle:0.7});
+    parts.push(t('Far away, a door slams. Then another, closer. Something big is coming down the halls. Hide, or sneak, right now!'));return;}
+}
+function eventTick(parts){const e=G.ev;if(!e)return;
+  if(e.k==='phone'||e.k==='tot'){
+    if(G.x===e.x&&G.y===e.y){G.ev=null;
+      if(e.k==='phone'){const ed=bfs(G.exit[0],G.exit[1]);const s2=stepToward(ed,G.x,G.y);const gift=pick(['water','battery','fire','energy']);G.inv[gift]=(G.inv[gift]||0)+1;sfx(pickup);
+        parts.push(t('You pick up the phone. A calm voice says: the exit is {route}, about {n} steps away. Then the line goes dead. Next to the phone you find {item}.',{route:s2>=0?routeWords(s2):t('right here'),n:ed[G.y][G.x],item:ITEMNAME[LANG][gift]}));}
+      else if(e.trick){jumpscare();const hit=Math.round(DF().scare*0.8);G.sanity=Math.max(1,G.sanity-hit);G.hurt=performance.now();play('cackle',{vol:0.9});
+        parts.push(t('A small figure in a sheet holds out a bag. Then the sheet falls, and there is nothing underneath but teeth. Trick! You lose {n} sanity.',{n:hit}));}
+      else{const gift=pick(['water','fire','flare','glow','decoy']);G.inv[gift]=(G.inv[gift]||0)+1;G.sanity=Math.min(100,G.sanity+8);sfx(pickup);play('giggle',{vol:0.5,rate:1.3});
+        parts.push(t('A small figure in a sheet holds out a bag. You reach in and find {item}, and a candy that makes you feel a little better. Treat! The figure giggles and is gone.',{item:ITEMNAME[LANG][gift]}));}
+      return;}
+    if(--e.turns<=0){G.ev=null;parts.push(e.k==='phone'?t('The phone stops ringing.'):t('The knocking stops. Whoever it was has gone.'));return;}
+    const {pan}=relDirWords(e.x,e.y);const dd=bfs(G.x,G.y)[e.y][e.x];if(e.k==='phone')setTimeout(()=>sfx(ringPhone,pan,clamp(1-dd*0.08,0.2,0.9),clamp(dd*0.05,0,0.7)),500);else setTimeout(()=>sfx(knock,pan,clamp(1-dd*0.08,0.2,0.9)),500);return;}
+  if(e.k==='gas'){if(G.sprinted){G.ev=null;parts.push(t('You sprint out of the gas, coughing. The air clears.'));return;}
+    G.sanity=Math.max(1,G.sanity-3);G.hurt=performance.now();if(--e.turns<=0){G.ev=null;parts.push(t('The gas finally thins out. Your head clears.'));}else parts.push(t('The gas makes your head spin. Get out of it!'));return;}
+  if(e.k==='coming'){if(G.inHide||G.sneak)e.safe=true;e.turns--;
+    if(e.turns>0){play('impact',{pan:e.side*0.6,vol:0.45+0.25*(3-e.turns),muffle:0.4-0.15*(3-e.turns)});parts.push(t('Another door slams, much closer.'));return;}
+    G.ev=null;for(let i=0;i<8;i++)setTimeout(()=>sfx(monStep,{type:'chaser'},e.side*(1-i*0.25),1,0),i*180);
+    if(e.safe){parts.push(t('Something enormous thunders past, shaking the walls. It does not notice you. Then it is gone.'));unlock('passedby');}
+    else{jumpscare();G.sanity=Math.max(1,G.sanity-DF().scare);G.hurt=performance.now();parts.push(t('Something enormous slams into you as it thunders past, and then it is gone. You lose {n} sanity.',{n:DF().scare}));}
+    return;}
+}
+function crinkle(pan,vol){const t=now();const out=spot(pan,vol,0.2);for(let i=0;i<10;i++){const tt=t+i*0.04+Math.random()*0.03;const n=noise(tt,0.02);const g=gainNode(0);envelope(g,tt,0.001,0.3,0.015);n.connect(filt('highpass',5000)).connect(g).connect(out);}}
+function partyCues(parts){if(!G.items||!G.items.size||G.blackout>0)return;const d=bfs(G.x,G.y);
+  G.items.forEach((ty,k)=>{if(ty!=='cake'&&ty!=='candy')return;const [x,y]=k.split(',').map(Number);const dd=d[y][x];const {w,pan}=relDirWords(x,y);
+    if(ty==='cake'&&dd<=6&&(G.steps%3===0||!G.cakeTold)){setTimeout(()=>sfx(hbTune,pan,clamp(0.9-dd*0.12,0.15,0.8)),400);if(!G.cakeTold){G.cakeTold=true;parts.push(t('Somewhere {w}, a music box is playing happy birthday.',{w}));}}
+    if(ty==='candy'&&dd<=2)setTimeout(()=>sfx(crinkle,pan,0.6),300);});}
 function startBlackout(){G.blackout=3+rand(3);G.sinceScare=0;if(!A.ctx)return;A.amb.gain.setTargetAtTime(0,now(),0.03);stopAllMusic(0.4);play('breath',{vol:1,muffle:0.1,delay:1.8});}
 function restoreLights(){G.flash=performance.now();if(!A.ctx)return;A.amb.gain.setTargetAtTime(0.7,now(),0.05);levelMusic();}
 function behindScare(){
@@ -2978,7 +3071,7 @@ function afterMove(quiet){
   if(darkNow&&lv.dark<1&&!G.wasDark){parts.unshift(t('It is dark here.'));filler++;}
   G.wasDark=darkNow;
   const cue=G.blackout>0?'':monsterCues(false); if(cue)parts.push(cue);
-  skinLure(); scareEvents(parts,caughtNow); hallucinate(); marcusCall(); parts.push(hazardCue());
+  skinLure(); partyCues(parts); scareEvents(parts,caughtNow); hallucinate(); marcusCall(); parts.push(hazardCue());
   if(G.sanity<=0){gameOver(parts);return {stop:true};}
   const exDist=bfs(G.exit[0],G.exit[1])[G.y][G.x];
   if(G.cashew>0){G.cashew--;parts.push(t('Cashew Water.')+' '+cashewReport());if(G.cashew===0)parts.push(t('The sharp hearing fades.'));}
@@ -3249,6 +3342,7 @@ function hide(){
   if(G.inHide)return say(t('You are already hiding. Move to climb out.'));
   if(G.spots&&G.spots.has(key(G.x,G.y)))return enterHide();
   if(L().run)return say(t('There is nowhere to hide! Run!'));
+  if(G.ev&&G.ev.k==='coming')G.ev.safe=true;
   play('breath',{vol:0.5,muffle:0.4}); G.steps++; drain();
   const dist=bfs(G.x,G.y); const near=nearestHostile(dist);
   if(!near||near.d>4){updateHUD();return say(t('You crouch in a corner and hold your breath. Nothing comes. Only the hum. {paths}',{paths:pathsText()}));}
@@ -3383,6 +3477,7 @@ const SPOTS={en:{school:['a row of lockers','a teacher’s desk','a janitor’s 
   pt:{school:['uma fileira de armários','a mesa do professor','o armário do zelador'],mall:['um provador','uma arara de roupas','o balcão de um quiosque'],metro:['um armário de manutenção','uma bilheteria','um vão embaixo da plataforma'],motion:['um buraco pintado na parede','um vaso de flor gigante','uma árvore de desenho oca'],servers:['um rack de servidor vazio','o espaço embaixo do piso elevado','uma saída de ventilação'],hospital:['uma cama de hospital com cortina','um carrinho de suprimentos','um duto de roupa suja'],hotel:['um armário de quarto de hotel','um carrinho de serviço de quarto','uma banheira atrás de uma cortina'],frozen:['um monte de neve','um carro abandonado','um galpão congelado'],city:['uma caçamba de lixo','uma cabine telefônica','um ponto de ônibus'],library:['um vão entre as estantes','uma mesa de leitura','um carrinho de livros'],carnival:['uma bilheteria','uma barraca de prêmios','um baú de fantasias'],home:['o armário do corredor','o espaço debaixo da sua cama','a banheira, atrás da cortina'],hum:['uma mesa velha','um duto de ar'],drip:['um armário de metal','uma pilha de caixas'],pipes:['um duto de ar','um vão entre os canos'],electric:['um armário de metal','um armário de fusíveis'],office:['uma mesa','um armário de suprimentos','um armário de metal'],party:['uma mesa com uma toalha comprida','um baú de brinquedos'],void:['um armário de metal','um armário'],suburbs:['um galpão de jardim','um carro estacionado','um armário'],x:['um armário de metal']}};
 function spotName(k){const a=L().amb;const list=SPOTS[LANG][a]||SPOTS[LANG].x;return list[G.spots.get(k)%list.length];}
 function enterHide(){
+  if(G.ev&&G.ev.k==='coming')G.ev.safe=true;
   G.inHide=true; G.hideNear=false; sfx(creak); play('breath',{vol:0.35,muffle:0.5});
   say(t('You squeeze into {spot} and keep perfectly still. Nothing can find you in here, unless it gets lucky. Say listen to hear what is outside, or move to climb out.',{spot:spotName(key(G.x,G.y))}));
 }
@@ -3640,6 +3735,9 @@ const ACH=[
  {id:'company',en:['Good Company','Help three real survivors.'],pt:['Boa Companhia','Ajude três sobreviventes de verdade.']},
  {id:'journal',en:['Collector','Find all fifteen journal notes.'],pt:['Colecionador','Encontre as quinze anotações do diário.']},
  {id:'host',en:['Not Home Yet','Escape the Frontrooms without the Host ever catching you.'],pt:['Ainda Não Estou em Casa','Escape dos Quartos da Frente sem o Anfitrião pegar você.']},
+ {id:'bday',secret:true,en:['Happy Birthday, Leo','Find the birthday cake on October 9.'],pt:['Feliz Aniversário, Leo','Ache o bolo de aniversário em 9 de outubro.']},
+ {id:'candy',secret:true,en:['Sweet Tooth','Collect 13 pieces of Halloween candy.'],pt:['Formiguinha','Junte 13 doces de Halloween.']},
+ {id:'passedby',en:['It Passed Right By','Hide or sneak while something enormous thunders past.'],pt:['Passou Direto','Se esconda ou ande agachado enquanto algo enorme passa estrondando.']},
  {id:'school',en:['Skipping Class','Escape the School Halls.'],pt:['Matando Aula','Escape dos Corredores da Escola.']},
  {id:'mall',en:['Closing Time','Escape the Dead Mall.'],pt:['Hora de Fechar','Escape do Shopping Morto.']},
  {id:'metro',en:['Mind the Gap','Escape the Last Train.'],pt:['Cuidado com o Vão','Escape do Último Trem.']},
