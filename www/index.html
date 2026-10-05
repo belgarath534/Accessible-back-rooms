@@ -60,10 +60,11 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 #hud span b{color:var(--accent)}
 #sanityBar{height:10px;background:#333;border-radius:6px;overflow:hidden;margin-top:4px}
 #sanityFill{height:100%;background:var(--ok);width:100%;transition:width .3s}
-.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
-.acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0}
-@media (min-width:640px){.acts{grid-template-columns:repeat(5,1fr)}}
+.pad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
+.acts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0}
+@media (min-width:640px){.acts{grid-template-columns:repeat(5,minmax(0,1fr))}}
 .acts button{min-height:52px;padding:10px 6px}
+.pad button,.acts button{min-width:0;overflow-wrap:anywhere;hyphens:auto}
 #heard{color:var(--muted);min-height:1.5em;font-size:.95rem}
 #log{background:var(--panel);border:2px solid var(--border);border-radius:12px;padding:10px 14px;max-height:240px;overflow:auto}
 #log{margin:0;padding-left:2em}
@@ -271,6 +272,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.23.1: bug fixes</h2>
+      <ul>
+        <li>On small phones, the game screen buttons no longer stick out past the edge of the screen.</li>
+      </ul>
       <h2>Version 0.23: scarier</h2>
       <ul>
         <li>The Librarian now sometimes stops shushing to listen. When the shushing stops, freeze. If you move before it starts again, it hears you and comes fast. And you can finally hear its shush properly.</li>
@@ -487,6 +492,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.23.1: correções</h2>
+      <ul>
+        <li>Em celulares pequenos, os botões da tela do jogo não passam mais da borda da tela.</li>
+      </ul>
       <h2>Versão 0.23: mais medo</h2>
       <ul>
         <li>A Bibliotecária às vezes para de fazer shhh para escutar. Quando o shhh parar, congele. Se você se mexer antes de ele voltar, ela ouve e vem rápido. E agora dá para ouvir o shhh direito.</li>
@@ -875,7 +884,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.23';
+const VERSION='0.23.1';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
