@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.22**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.23**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.23**: the Librarian stops to listen (freeze or it hears you), Partygoers hum and sing happy birthday, Hounds hunt in packs, Smilers giggle in the dark, new jumpscares and screams that depend on the monster, real shush sound.
 - **0.22**: four new random events (ringing phone, stampede, gas leak, something coming), Halloween event (Oct 24 to Nov 1: candy, trick-or-treaters), a birthday surprise on October 9, three new achievements.
 - **0.21.1**: solving a puzzle opens a secret shortcut near the exit.
 - **0.21**: level artwork with spoken descriptions (describe command and button), bestiary portraits as they arrive; first pictures for Levels 0 to 2.
@@ -93,3 +94,5 @@ The `ios/` folder is a Capacitor 7 project (app ID `com.accessible.backrooms`, c
 - `AppDelegate.swift` sets the audio session to playback, so sound works with the silent switch on and mixes with VoiceOver.
 - `codemagic.yaml` builds an unsigned IPA, the same way as Dungeon Descent. After changing `www/`, run `npx cap sync ios`.
 - iCloud backup uses `capacitor-icloud-sync` (0.2.0 or newer). The game code is already in `www/`; it does nothing until the plugin is installed. To turn it on: `npm install capacitor-icloud-sync@^0.2.0`, `npx cap sync ios`, then in Xcode add the iCloud capability with CloudKit and a container (this needs the paid Apple Developer account). The website ignores iCloud and hides the buttons.
+
+More sound effects from Freesound.org, all CC0: child giggle (RaspberryTickle), Imp Laugh (scorpion67890), Insane girl laughter (mvVoiceActing), Weird Creepy Phased Laughter (DanJFilms), Shush! (OwlStorm), sh sound effect (connerdrake98), sssh (elliedixon), Jump scare sound 3 (dangthaiduy007), Intense Jumpscare (Unaxete), Jumpscare 1 (zombyKlr), Demonic Woman Scream (nick121087), Creepy Ghost Scream (epicdude959), Monster Screech (thegoose09).

@@ -271,6 +271,14 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.23: scarier</h2>
+      <ul>
+        <li>The Librarian now sometimes stops shushing to listen. When the shushing stops, freeze. If you move before it starts again, it hears you and comes fast. And you can finally hear its shush properly.</li>
+        <li>Partygoers hum happy birthday, slightly wrong, while they chase you. If one catches you, it sings.</li>
+        <li>Hounds hunt in packs. When one howls, the others answer from different directions and close in.</li>
+        <li>Smilers giggle right next to you in the dark.</li>
+        <li>New jumpscares and screams, and the monster that catches you changes what you hear.</li>
+      </ul>
       <h2>Version 0.22: events</h2>
       <ul>
         <li>Four new random events, on top of the blackouts. A telephone rings somewhere: reach it in time and a voice tells you the way out. A stampede rushes past and pulls the monsters away. Gas leaks from a vent, so sprint out of it. And doors start slamming, closer and closer: hide or sneak before something enormous comes through.</li>
@@ -479,6 +487,14 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.23: mais medo</h2>
+      <ul>
+        <li>A Bibliotecária às vezes para de fazer shhh para escutar. Quando o shhh parar, congele. Se você se mexer antes de ele voltar, ela ouve e vem rápido. E agora dá para ouvir o shhh direito.</li>
+        <li>Os Festeiros cantarolam parabéns, meio errado, enquanto perseguem você. Se um pegar você, ele canta.</li>
+        <li>Os Cães caçam em bando. Quando um uiva, os outros respondem de lados diferentes e vão cercando.</li>
+        <li>Os Sorridentes dão risadinhas bem do seu lado no escuro.</li>
+        <li>Novos sustos e gritos, e o monstro que pega você muda o que você ouve.</li>
+      </ul>
       <h2>Versão 0.22: eventos</h2>
       <ul>
         <li>Quatro novos eventos aleatórios, além dos apagões. Um telefone toca em algum lugar: chegue a tempo e uma voz diz o caminho da saída. Uma debandada passa correndo e leva os monstros embora. Gás vaza de uma ventilação, então corra para sair. E portas começam a bater, cada vez mais perto: se esconda ou ande agachado antes que algo enorme passe.</li>
@@ -769,7 +785,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <p>“Long deep impact”, ROHHSA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
     <p>“Horror Cinema 2”, “Horror Cinema 4”, Cadere Sounds, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>.</p>
     <p><span data-l="en">Public domain (CC0)</span><span data-l="pt">Domínio público (CC0)</span>: “Monster Snarls”, darsycho; “80 CC0 creature SFX”, rubberduck; “Ghost breath”, “Ghost monster voice”, “4 atmospheric ghostly loops”, qubodup; “Heartbeat sounds”, bart; “16 monster growls”, starninjas; “Horror scream”, Vinrax; “Evil screech”, “Group giggling”, “Evil cackle laugh”, Nocturnal_Vanguard; “Do you remember laughter”, Supergeek; “Frequency static”, bretbernhoft; “Bubble sound effects”, BMacZero.</p>
-    <p><span data-l="en">All sound effects found on</span><span data-l="pt">Todos os efeitos sonoros vêm do</span> <a href="https://opengameart.org">OpenGameArt.org</a>. <span data-l="en">Other sounds and the music box are generated live in your browser.</span><span data-l="pt">Os outros sons e a caixinha de música são gerados ao vivo no seu navegador.</span></p>
+    <p><span data-l="en">All sound effects found on</span><span data-l="pt">Todos os efeitos sonoros vêm do</span> <a href="https://opengameart.org">OpenGameArt.org</a>. <span data-l="en">More sounds from</span><span data-l="pt">Mais sons do</span> <a href="https://freesound.org">Freesound.org</a> (CC0): RaspberryTickle, scorpion67890, mvVoiceActing, DanJFilms, OwlStorm, connerdrake98, elliedixon, dangthaiduy007, Unaxete, zombyKlr, nick121087, epicdude959, thegoose09. <span data-l="en">Other sounds and the music box are generated live in your browser.</span><span data-l="pt">Os outros sons e a caixinha de música são gerados ao vivo no seu navegador.</span></p>
     <h2><span data-l="en">3D graphics</span><span data-l="pt">Gráficos 3D</span></h2>
     <p><a href="https://threejs.org">three.js</a>, <span data-l="en">MIT license</span><span data-l="pt">licença MIT</span>.</p>
     <div class="stack"><button class="backBtn primary"><span data-l="en">Back</span><span data-l="pt">Voltar</span></button></div>
@@ -859,7 +875,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.22';
+const VERSION='0.23';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -914,7 +930,7 @@ const PT={
  'New game. Step one: say voice commands, or buttons only. Step two: say easy, normal, or nightmare. Step three: normal lives, or say hardcore for one life. Then say start. Right now: {ctl}, {diff}.':'Novo jogo. Passo um: diga comandos de voz, ou só botões. Passo dois: diga fácil, normal ou pesadelo. Passo três: vidas normais, ou diga hardcore para uma vida só. Depois diga começar. Agora está: {ctl}, {diff}.',
  'voice commands':'comandos de voz','buttons only':'só botões',
  'Settings. Use the buttons, or say things like music off, faster, slower, jump scares off, easy, normal or nightmare. Say back when done.':'Configurações. Use os botões, ou diga coisas como desligar música, mais rápido, mais devagar, desligar sustos, fácil, normal ou pesadelo. Diga voltar quando terminar.',
- 'Credits. Music by Kevin MacLeod. Sound effects from OpenGameArt, credited on this page. Say back to return.':'Créditos. Música de Kevin MacLeod. Efeitos sonoros do OpenGameArt, com os créditos nesta página. Diga voltar para sair.',
+ 'Credits. Music by Kevin MacLeod. Sound effects from OpenGameArt and Freesound, credited on this page. Say back to return.':'Créditos. Música de Kevin MacLeod. Efeitos sonoros do OpenGameArt e do Freesound, com os créditos nesta página. Diga voltar para sair.',
  'How to play. Say back to return.':'Como jogar. Diga voltar para sair.',
  'What is new. Version {v}. Say back to return.':'Novidades. Versão {v}. Diga voltar para sair.',
  'You are in the main menu. Say play, continue, settings, how to play, or credits.':'Você está no menu principal. Diga jogar, continuar, configurações, como jogar ou créditos.',
@@ -1032,6 +1048,14 @@ const PT={
  'You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.':'Você abre a porta da frente. A luz do dia entra, mas algo está errado. Atrás da luz, uma voz cansada pede ajuda. Marcus. Você tem as oito fitas dele. Você volta para o escuro para encontrá-lo.',
  'You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!':'Você abre a porta da frente e sai na varanda. Sol. Passarinhos. Um vizinho cortando a grama acena para você. Seu celular vibra no bolso: trinta e sete chamadas perdidas. Você está em casa. Atrás de você, bem baixinho, algo zumbe como uma lâmpada fluorescente. Então para. Você escapou dos Backrooms!',
  'level select':'escolher nível',
+ 'Behind you, it starts singing happy birthday, slightly wrong.':'Atrás de você, ele começa a cantar parabéns, meio errado.',
+ 'You moved while it was listening. The Librarian heard you, {w}. It is coming fast!':'Você se mexeu enquanto ela escutava. A Bibliotecária ouviu você, {w}. Ela está vindo rápido!',
+ 'The shushing stops. Total silence. The Librarian is listening. Do not move until it starts shushing again.':'O shhh para. Silêncio total. A Bibliotecária está escutando. Não se mexa até ela voltar a fazer shhh.',
+ 'The shushing starts again. You can move.':'O shhh começa de novo. Você pode se mexer.',
+ 'A Hound howls {w}. Another one answers, from somewhere else. They are closing in from different sides.':'Um Cão uiva {w}. Outro responde, de outro lugar. Eles estão cercando você por lados diferentes.',
+ 'A Hound howls {w}. Far away, something howls back.':'Um Cão uiva {w}. Bem longe, algo uiva de volta.',
+ 'A Partygoer is humming happy birthday, {w}, slightly wrong. It is getting closer.':'Um Festeiro está cantarolando parabéns, {w}, meio errado. Ele está chegando mais perto.',
+ 'A quiet giggle, right next to you, {w}. Something is grinning in the dark.':'Uma risadinha baixa, bem do seu lado, {w}. Alguma coisa está sorrindo no escuro.',
  'Somewhere {w}, a music box is playing happy birthday.':'Em algum lugar {w}, uma caixinha de música toca parabéns.',
  'Somewhere {w}, a telephone starts ringing. It sounds like it is for you. Find it before it stops.':'Em algum lugar {w}, um telefone começa a tocar. Parece que é para você. Encontre antes que pare.',
  'Somewhere {w}, a small voice calls out:':'Em algum lugar {w}, uma vozinha chama:',
@@ -1439,10 +1463,10 @@ const DL=()=>t(DF().label);
 /* ============================== monsters ============================== */
 const MT={
   howler:{name:'the Howler',sound:'a long, wet howl',pt:{name:'o Uivador',sound:'um uivo longo e molhado'},sfx:['howl','moan','growl1'],sense:5,chase:0.45,hostile:true},
-  smiler:{name:'a Smiler',sound:'a quiet, giggling whisper',pt:{name:'um Sorridente',sound:'um sussurro baixo e risonho'},sfx:['ghost1','ghost2','ghost3','weird'],sense:5,chase:0.6,hostile:true},
+  smiler:{name:'a Smiler',sound:'a quiet, giggling whisper',pt:{name:'um Sorridente',sound:'um sussurro baixo e risonho'},sfx:['giggle_child','giggle_imp','giggle_phased','ghost1','weird'],sense:5,chase:0.6,hostile:true},
   hound:{name:'a Hound',sound:'a low, rumbling growl',pt:{name:'um Cão',sound:'um rosnado grave e longo'},sfx:['hound','hound2','growl2','growl3','growl4'],sense:6,chase:0.68,hostile:true},
   skin:{name:'the Skin-Stealer',sound:'footsteps that sound almost human',pt:{name:'o Ladrão de Pele',sound:'passos que parecem quase humanos'},sfx:['breath2','breath'],sense:6,chase:0.45,hostile:true,copier:true},
-  party:{name:'a Partygoer',sound:'giggling and a party horn',pt:{name:'um Festeiro',sound:'risadinhas e uma língua de sogra'},sfx:['giggle','cackle','laughter'],sense:6,chase:0.72,hostile:true},
+  party:{name:'a Partygoer',sound:'giggling and a party horn',pt:{name:'um Festeiro',sound:'risadinhas e uma língua de sogra'},sfx:['giggle','cackle','laughter','giggle_insane','giggle_child'],sense:6,chase:0.72,hostile:true},
   moths:{name:'a swarm of Deathmoths',sound:'the flutter of hundreds of wings',pt:{name:'um enxame de Mariposas da Morte',sound:'o bater de centenas de asas'},sfx:null,sense:7,chase:0.8,hostile:false},
   face:{name:'a Faceling',sound:'soft, tuneless humming',pt:{name:'um Sem-Rosto',sound:'um cantarolar baixo e sem melodia'},sfx:null,sense:0,chase:0,hostile:false,npc:true},
   deep:{name:'the Thing in the Water',sound:'a deep, rumbling song',pt:{name:'a Coisa na Água',sound:'um canto grave e retumbante'},sfx:null,sense:6,chase:0.6,hostile:true},
@@ -1923,7 +1947,7 @@ function heartbeat(){const t=now();[0,0.22].forEach((d,i)=>{const o=osc('sine',6
 function winSound(){const t=now();[261.6,329.6,392,523.3,659.3].forEach((f,i)=>{const o=osc('triangle',f,t+i*0.25,4);const g=gainNode(0);envelope(g,t+i*0.25,0.4,0.2,3.5);o.connect(g).connect(A.music);});}
 
 /* ---------- recorded sounds (see credits) ---------- */
-const SFXF=['attack','attack2','scream','scream2','farscream','farscream2','growl1','growl2','growl3','growl4','howl','moan','ghost1','ghost2','ghost3','breath','breath2','heartfast','heartslow','weird','hound','hound2','impact','bigscream','screech','sting','riser','giggle','cackle','laughter','static','bubbles'];
+const SFXF=['attack','attack2','scream','scream2','farscream','farscream2','growl1','growl2','growl3','growl4','howl','moan','ghost1','ghost2','ghost3','breath','breath2','heartfast','heartslow','weird','hound','hound2','impact','bigscream','screech','sting','riser','giggle','cackle','laughter','static','bubbles','giggle_child','giggle_imp','giggle_insane','giggle_phased','shush1','shush2','shush_long','js1','js2','js3','scream_demon','scream_ghost','screech_monster'];
 function loadAssets(){SFXF.forEach(n=>{fetch('audio/'+n+'.mp3').then(r=>r.arrayBuffer()).then(b=>new Promise((res,rej)=>A.ctx.decodeAudioData(b,res,rej))).then(buf=>{A.buf[n]=buf;}).catch(()=>{});});}
 function play(name,{pan=0,vol=1,muffle=0,rate=1,dest,delay=0}={}){if(!A.ctx)return false;const b=A.buf[name];if(!b)return false;const src=A.ctx.createBufferSource();src.buffer=b;src.playbackRate.value=rate;src.connect(spot(pan,vol,muffle,dest));src.start(now()+delay);return true;}
 function shush(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const n=noise(t,1.8);const g=gainNode(0);g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.5,t+0.35);g.gain.setValueAtTime(0.5,t+1.1);g.gain.linearRampToValueAtTime(0.0001,t+1.7);n.connect(filt('bandpass',4200,1.2)).connect(g).connect(out);}
@@ -1954,7 +1978,7 @@ function monStep(m,pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);
 function monSound(m,pan,vol,muffle){const T=MT[m.type];
   if(m.type==='patient'){sfx(squeak,pan,vol*0.8);setTimeout(()=>sfx(squeak,pan,vol*0.6),260);}
   if(m.type==='frost'){const t0=now();const out=spot(pan,vol,muffle);for(let i=0;i<4;i++){const tt=t0+i*0.09;const n=noise(tt,0.05);const g=gainNode(0);envelope(g,tt,0.001,0.5,0.04);n.connect(filt('highpass',3000)).connect(g).connect(out);}}
-  if(m.type==='librarian'){sfx(shush,pan,vol,muffle);if(Math.random()<0.4)play('breath',{pan,vol:vol*0.5,muffle:muffle+0.3,rate:0.7});return;}
+  if(m.type==='librarian'){if(!play(pick(['shush_long','shush2','shush_long']),{pan,vol:Math.min(1.3,vol*1.4),muffle:muffle*0.4,rate:0.9+Math.random()*0.15}))sfx(shush,pan,vol,muffle);if(Math.random()<0.4)play('breath',{pan,vol:vol*0.5,muffle:muffle+0.3,rate:0.7});return;}
   if(m.type==='jester'){sfx(jingle,pan,vol,muffle);if(Math.random()<0.5)return;}
   if(m.type==='moths')return sfx(flutter,pan,vol,muffle);
   if(m.type==='face')return sfx(hum,pan,vol*0.8);
@@ -2053,10 +2077,15 @@ function jumpscare(){
   // 3. the hit
   setTimeout(()=>{
     const t2=now();G.scareAt=performance.now();
-    D('impact',{vol:1.1,at:t2});D('sting',{vol:0.75,at:t2});
-    D('bigscream',{vol:1,rate:0.78,at:t2+0.02});
-    D('screech',{vol:0.65,rate:0.93,pan:-0.85,at:t2});D('screech',{vol:0.65,rate:1.07,pan:0.85,at:t2+0.03});
-    D(pick(['attack','attack2']),{vol:1,at:t2+0.05});
+    const jt=G.jsType;G.jsType=null;const hv=jt==='party'?4:jt==='smiler'?5:jt==='librarian'?6:rand(4);
+    D('impact',{vol:1.1,at:t2});
+    if(hv===0){D('sting',{vol:0.75,at:t2});D('bigscream',{vol:1,rate:0.78,at:t2+0.02});D('screech',{vol:0.65,rate:0.93,pan:-0.85,at:t2});D('screech',{vol:0.65,rate:1.07,pan:0.85,at:t2+0.03});D(pick(['attack','attack2']),{vol:1,at:t2+0.05});}
+    else if(hv===1){D('js1',{vol:1.1,at:t2});D('scream_demon',{vol:1.05,at:t2+0.03});D('screech',{vol:0.4,rate:0.85,pan:-0.6,at:t2});}
+    else if(hv===2){D('js2',{vol:1.1,at:t2});D('screech_monster',{vol:1.05,at:t2+0.02});D('attack2',{vol:0.8,at:t2+0.08});}
+    else if(hv===3){D('js3',{vol:1.1,at:t2});D('scream_ghost',{vol:1.05,rate:1.05,at:t2+0.02});D('sting',{vol:0.6,at:t2});}
+    else if(hv===4){D('js1',{vol:1,at:t2});D('giggle_insane',{vol:1.3,rate:1.1,pan:-0.4,at:t2});D('giggle_insane',{vol:1.1,rate:0.9,pan:0.4,at:t2+0.05});D('screech',{vol:0.5,at:t2});}
+    else if(hv===5){D('js3',{vol:1,at:t2});D('giggle_phased',{vol:1.4,rate:0.85,at:t2});D('scream_demon',{vol:0.8,rate:1.2,at:t2+0.1});}
+    else{D('js2',{vol:1,at:t2});D('scream_demon',{vol:1.15,rate:0.8,at:t2+0.02});D('shush_long',{vol:1,rate:0.7,at:t2+1.2});}
     const nb=noise(t2,0.3);const ng=gainNode(0);envelope(ng,t2,0.003,0.9,0.28);nb.connect(filt('highpass',150)).connect(ng).connect(comp);
     for(let k=0;k<6;k++){const tt=t2+0.12+k*0.16;[1046.5,1108.7,1480,1568].forEach(f=>{const o=osc('sawtooth',f*(1+(Math.random()-0.5)*0.01),tt,0.2);const og=gainNode(0);envelope(og,tt,0.004,0.07,0.14);o.connect(filt('bandpass',2600,0.8)).connect(og).connect(comp);});}
     buzz([600,80,300,80,900]);
@@ -2587,7 +2616,7 @@ function newLevel(){
     const deals=TRADES.slice().sort(()=>Math.random()-.5).slice(0,3);G.mons.push({type:'trader',x:p2[0],y:p2[1],deals,greeted:false});}
   if(G.survOn){const c=cells.filter(([x,y])=>dist[y][x]>=3&&dist[y][x]<=bd-1);const p=pick(c.length?c:cells);G.mons.push({type:'survivor',x:p[0],y:p[1],name:pick(SURV_NAMES),fake:Math.random()<(lvn2>=8?0.45:0.3),greeted:false,helped:false});}
   if(G.mode==='story'&&G.ngp&&!lv.calm&&!lv.secret&&!lv.run){const far=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));for(let i=0;i<Math.min(3,G.ngp);i++){const p=pick(far.length?far:cells);G.mons.push({type:['hound','howler','wretch'][i%3],x:p[0],y:p[1],cool:4});}}
-  G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.ev=null; G.cakeTold=false; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
+  G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.ev=null; G.cakeTold=false; G.partyTold=false; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
   G.wasWet=false; G.mark=null; G.markSought=false; G.caughtLevel=false; G.inHide=false; G.hideNear=false; G.watchFreeze=0; G.train=0;
   G.spots=new Map(); {const n=lv.hides??(lv.calm||lv.run||lv.secret||lv.water?0:3);const sc=cells.filter(([x,y])=>dist[y][x]>=2&&!G.items.has(key(x,y))&&!isHazard(x,y)&&!isWater(x,y));for(let i=0;i<n&&sc.length;i++){const c=sc.splice(rand(sc.length),1)[0];G.spots.set(key(...c),i);}}
   G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
@@ -2726,12 +2755,30 @@ function monstersTurn(){
     if(m.type==='librarian')sense=G.sneak?1:G.sprinted?14:T.sense+Df.sense;
     if(m.type==='frost')sense=T.sense+Df.sense+(G.sprinted?3:0);
     if(m.type==='hallmon'&&G.sprinted)sense+=8;
+    // the Librarian stops shushing to listen: moving during the silence gives you away
+    if(m.type==='librarian'){const nowT=performance.now();
+      if(m.listenUntil&&nowT<m.listenUntil){m.listenUntil=0;m.heard=4;const {w,pan}=relDirWords(m.x,m.y);play('scream_demon',{pan,vol:0.5,muffle:0.5,rate:0.75});G.extras.push({text:t('You moved while it was listening. The Librarian heard you, {w}. It is coming fast!',{w})});}
+      else if(m.listenUntil&&nowT>=m.listenUntil)m.listenUntil=0;
+      if(m.heard>0){m.heard--;moveMon(m,stepToward(dist,m.x,m.y));if(d>2)moveMon(m,stepToward(bfs(G.x,G.y),m.x,m.y));continue;}
+      if(!m.listenUntil&&d<=8&&d>1&&Math.random()<0.16){const msg=t('The shushing stops. Total silence. The Librarian is listening. Do not move until it starts shushing again.');
+        m.listenUntil=nowT+4200+msg.length*55/(S.rate||1);G.extras.push({text:msg});const mm=m;
+        setTimeout(()=>{if(G.state!=='play'||!G.mons.includes(mm)||!mm.listenUntil)return;mm.listenUntil=0;const {pan}=relDirWords(mm.x,mm.y);play('shush_long',{pan,vol:0.9,muffle:0.2});say(t('The shushing starts again. You can move.'));},m.listenUntil-nowT);
+        continue;}}
+    // Hounds hunt in packs: one howl, and the others answer
+    if(m.packAlert>0){m.packAlert--;sense+=6;}
     if(G.train>0)sense=Math.min(sense,1);
     if(m.type==='glitch'){if(G.inv.light&&d<=2&&G.inv.battery>0){G.inv.battery=Math.max(0,G.inv.battery-3);if(!m.drainTold||G.inv.battery<=0){m.drainTold=true;G.extras.push({text:t('Your flashlight flickers and buzzes. Something electrical is very close, eating your battery.')});}if(G.inv.battery<=0){G.inv.light=false;G.extras.push({text:t('Your flashlight flickers and dies.')});}}
       m.tp=(m.tp??(5+rand(3)))-1;if(m.tp<=0&&d>2&&d<=9){m.tp=5+rand(3);moveMon(m,stepToward(dist,m.x,m.y));moveMon(m,stepToward(dist,m.x,m.y));const {w,pan}=relDirWords(m.x,m.y);sfx(glitchBurst,pan,0.9,0.1);G.extras.push({text:t('A burst of static, {w}. The Glitch just skipped closer.',{w})});continue;}}
     if(m.type==='jester'){m.tp=(m.tp??(8+rand(4)))-1;if(m.tp<=0&&d>2){m.tp=9+rand(4);const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dist[y][x]>=3&&dist[y][x]<=5&&!(x===G.exit[0]&&y===G.exit[1]))c.push([x,y]);
       if(c.length){const p=pick(c);m.x=p[0];m.y=p[1];const {w,pan}=relDirWords(m.x,m.y);play('cackle',{pan,vol:0.8,muffle:0.1});sfx(jingle,pan,0.7);G.extras.push({text:t('A burst of laughter, {w}. The Jester was not there a moment ago.',{w})});continue;}}}
     let hunting=d<=sense;
+    if(m.type==='hound'&&hunting&&!m.packed){m.packed=true;const {w,pan}=relDirWords(m.x,m.y);play('howl',{pan,vol:0.9,muffle:0.1,rate:1.05});
+      const others=G.mons.filter(h=>h!==m&&h.type==='hound');others.forEach((h,i)=>{h.packAlert=5;const r=relDirWords(h.x,h.y);const dd=dist[h.y][h.x];setTimeout(()=>play('howl',{pan:r.pan,vol:clamp(0.9-dd*0.06,0.25,0.8),muffle:clamp(dd*0.05,0,0.7),rate:0.9+i*0.08}),1300+i*900);});
+      if(!others.length)setTimeout(()=>play('howl',{pan:-pan||0.8,vol:0.25,muffle:0.8,rate:0.85}),1500);
+      G.extras.push({text:others.length?t('A Hound howls {w}. Another one answers, from somewhere else. They are closing in from different sides.',{w}):t('A Hound howls {w}. Far away, something howls back.',{w})});}
+    if(m.type==='hound'&&!hunting&&d>sense+3)m.packed=false;
+    if(m.type==='party'&&hunting&&d>1&&(m.sing===undefined||G.steps-m.sing>5)){m.sing=G.steps;const {w,pan}=relDirWords(m.x,m.y);setTimeout(()=>sfx(hbTune,pan,clamp(1-d*0.1,0.25,0.8)),600);setTimeout(()=>play('giggle_insane',{pan,vol:0.45,muffle:clamp(d*0.08,0,0.6)}),3200);
+      if(!G.partyTold){G.partyTold=true;G.extras.push({text:t('A Partygoer is humming happy birthday, {w}, slightly wrong. It is getting closer.',{w})});}}
     if(m.type==='hallmon'&&hunting&&!(m.shriek>0)){m.shriek=10;const {w,pan}=relDirWords(m.x,m.y);sfx(whistle,pan,1,0.05);G.extras.push({text:t('A sharp whistle, {w}! The Hall Monitor has seen you. No running in the halls!',{w})});}
     if(m.type==='toon'&&hunting&&d===2&&Math.random()<0.4){moveMon(m,stepToward(dist,m.x,m.y));moveMon(m,stepToward(dist,m.x,m.y));const {w,pan}=relDirWords(m.x,m.y);sfx(slideWhistle,pan,1,0);G.extras.push({text:t('Boing! Rubber arms stretch toward you, {w}!',{w})});continue;}
     if(m.type==='wretch'&&hunting&&!(m.shriek>0)){m.shriek=8;G.alert=4;const {w,pan}=relDirWords(m.x,m.y);play('screech',{pan,vol:0.9,muffle:0.1});play('scream2',{pan,vol:0.5,rate:0.8,muffle:0.3});G.extras.push({text:t('A Wretch spots you and shrieks, {w}! Everything nearby heard that.',{w})});}
@@ -2739,7 +2786,9 @@ function monstersTurn(){
     if(m.type==='host'&&!m.burnt)m.burnt=false;
     if(m.type==='smiler'&&G.flare&&bfs(G.flare.x,G.flare.y)[m.y][m.x]<=3){moveMon(m,stepAway(bfs(G.flare.x,G.flare.y),m.x,m.y));continue;}
     if(m.type==='smiler'&&has('smilerward')&&d<=2){moveMon(m,stepAway(dist,m.x,m.y));continue;}
-    if(m.type==='smiler'){if(G.inv.light&&d<=3){moveMon(m,stepAway(dist,m.x,m.y));continue;} hunting=hunting&&isDark(G.x,G.y)&&!G.inv.light;}
+    if(m.type==='smiler'){if(G.inv.light&&d<=3){moveMon(m,stepAway(dist,m.x,m.y));continue;} hunting=hunting&&isDark(G.x,G.y)&&!G.inv.light;
+      if(hunting&&d<=2&&(!m.gig||G.steps-m.gig>3)){m.gig=G.steps;const {w,pan}=relDirWords(m.x,m.y);setTimeout(()=>play(pick(['giggle_child','giggle_imp']),{pan,vol:0.55,muffle:0.15,rate:0.85+Math.random()*0.25}),700);
+        G.extras.push({text:t('A quiet giggle, right next to you, {w}. Something is grinning in the dark.',{w})});if(Math.random()<0.5)continue;}}
     if(m.type==='moths')hunting=(G.inv.light||G.mothBait>0)&&d<=(G.mothBait>0?12:sense);
     if(hunting){if(Math.random()<T.chase*Df.chase){moveMon(m,stepToward(dist,m.x,m.y));if(m.type==='hound'&&d>3&&Math.random()<0.3)moveMon(m,stepToward(bfs(G.x,G.y),m.x,m.y));}}
     else if(Math.random()<0.5)wander(m);
@@ -2750,7 +2799,7 @@ function monstersTurn(){
     .forEach((o,k)=>{const {pan,behind}=relDirWords(o.m.x,o.m.y);setTimeout(()=>sfx(monStep,o.m,pan,clamp(1.05-o.d*0.13,0.12,1),clamp((o.d-1)*0.12+(behind?0.15:0),0,0.85)),380+k*260);});}
 }
 function caughtBy(m){seeMon(m.type);
-  jumpscare(); G.hurt=performance.now(); const hit=Math.round(DF().hit*(has('thick')?0.7:1)); G.sanity=Math.max(0,G.sanity-hit);
+  G.jsType=m.type; jumpscare(); G.hurt=performance.now(); const hit=Math.round(DF().hit*(has('thick')?0.7:1)); G.sanity=Math.max(0,G.sanity-hit);
   if(m.type==='hound'&&G.mode==='story'){G.houndHits=(G.houndHits||0)+1;if(G.houndHits>=3)setTimeout(()=>{if(G.sanity>0)learn('houndsense',t('You survived three Hound attacks.'));},10);}
   const dist=bfs(G.x,G.y);
   G.caughtLevel=true;
@@ -2767,7 +2816,8 @@ function caughtBy(m){seeMon(m.type);
     patient:'The Patient lurches off its gurney and grabs you with cold, bandaged hands!',bellhop:'The Bellhop takes your arm, smiling. Your room is ready. You tear yourself free!',frost:'Frozen hands close around your throat. You feel the cold all the way down to your bones!',
     wretch:'A Wretch tackles you, clawing and wheezing. Its eyes are completely empty!',librarian:'A long, cold finger presses against your lips. Shhh. Then its mouth opens wide, and it screams in your face!',
     jester:'The Jester pops up right in front of you. Ta-da! Its bells jingle as it grabs you, laughing!',mimic:'Someone you love smiles at you from the hallway. Then the smile keeps going, wider and wider, past their ears!'}[m.type];
-  return t('{how} You tear free and run blindly. You lose {n} sanity.',{how:how?t(how):t('{Name} grabs you!',{Name:cap(MN(m))}),n:hit});
+  if(m.type==='party')setTimeout(()=>{sfx(hbTune,0,1);play('giggle_insane',{vol:0.6,rate:1.1,delay:3});},5600);
+  return t('{how} You tear free and run blindly. You lose {n} sanity.',{how:how?t(how):t('{Name} grabs you!',{Name:cap(MN(m))}),n:hit})+(m.type==='party'?' '+t('Behind you, it starts singing happy birthday, slightly wrong.'):'');
 }
 function checkCaught(parts){if(G.inHide)return false;for(const m of G.mons){if(m.x===G.x&&m.y===G.y&&MT[m.type].hostile){
     if(G.adren>0&&m.type!=='chaser'){G.adren=0;seeMon(m.type);const dd=bfs(G.x,G.y);for(let k=0;k<3;k++)moveMon(m,stepAway(dd,m.x,m.y));if(m.x===G.x&&m.y===G.y){const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(dd[y][x]===3)c.push([x,y]);if(c.length){const p2=pick(c);m.x=p2[0];m.y=p2[1];}}
@@ -3866,7 +3916,7 @@ function run(c,n,r){
     if(c==='menu'||(c==='back'&&screen!=='game'))return screen==='menu'?narrateMenu(t('You are in the main menu. Say play, continue, settings, how to play, or credits.')):openMenu();
     if(c==='resume')return G.state==='paused'?resume():narrateMenu(t('There is nothing to resume.'));
     if(c==='settings')return show('settings',t('Settings. Use the buttons, or say things like music off, faster, slower, jump scares off, easy, normal or nightmare. Say back when done.'));
-    if(c==='credits')return show('credits',t('Credits. Music by Kevin MacLeod. Sound effects from OpenGameArt, credited on this page. Say back to return.'));
+    if(c==='credits')return show('credits',t('Credits. Music by Kevin MacLeod. Sound effects from OpenGameArt and Freesound, credited on this page. Say back to return.'));
     if(c==='howto')return show('howto',t('How to play. Say back to return.'));
     if(c==='news')return show('news',t('What is new. Version {v}. Say back to return.',{v:VERSION}));
     if(c==='help')return narrateMenu(t(screen==='menu'?'Say play, continue, level select, extra levels, new game plus, daily challenge, endless mode, tutorial, settings, how to play, achievements, what is new, or credits.':screen==='pause'?'Say resume, restart level, settings, how to play, or quit to main menu.':'Say back to return to the menu.'));
