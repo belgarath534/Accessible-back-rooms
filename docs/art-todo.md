@@ -7,12 +7,9 @@ Every prompt ends with this style line:
 
 Save as `www/img/<key>.jpg` (960x540, `ffmpeg -vf scale=960:540 -q:v 5`), then add the key with an English and Portuguese description to `ART` (levels) or `MONART` (monsters) in `www/index.html`. Describe what is actually in the picture.
 
-Done: lvl0, lvl1, lvl2.
+Done: lvl0, lvl1, lvl2, lvl3, lvl4, lvl5.
 
 ## Levels (key: prompt)
-- lvl3: Electrical Station. Cramped corridors of humming machines and transformers, live wires hanging and sparking blue, cables on the floor like vines, a maintenance door with sparks around its frame.
-- lvl4: Abandoned Office. Empty open-plan office at night, grey cubicles, old CRT computers, papers on the carpet, one chair facing the wall, a phone on a far desk, flickering lights.
-- lvl5: Lights Out. Near total darkness, a narrow flashlight beam on stained wallpaper and floating dust, two faint pale points like eyes at the edge of the dark.
 - lvl6: Thalassophobia. Flooded underground hall, black still water, narrow wet walkways, dim green light on the water, a huge vague shape far beneath the surface.
 - lvl7: The Suburbs. Empty suburban street at dusk, identical houses forever, all windows dark except one with a pale face against the glass, flickering streetlights.
 - lvl8: The Endless City. Empty city street at night, dark skyscrapers, broken traffic lights blinking yellow, abandoned cars, fog between buildings.

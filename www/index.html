@@ -272,6 +272,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.23.2: more pictures</h2>
+      <ul>
+        <li>New artwork for Levels 3, 4 and 5, with descriptions. Say describe to hear them.</li>
+      </ul>
       <h2>Version 0.23.1: bug fixes</h2>
       <ul>
         <li>On small phones, the game screen buttons no longer stick out past the edge of the screen.</li>
@@ -492,6 +496,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.23.2: mais imagens</h2>
+      <ul>
+        <li>Novas imagens dos Níveis 3, 4 e 5, com descrições. Diga descrever para ouvir.</li>
+      </ul>
       <h2>Versão 0.23.1: correções</h2>
       <ul>
         <li>Em celulares pequenos, os botões da tela do jogo não passam mais da borda da tela.</li>
@@ -884,7 +892,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.23.1';
+const VERSION='0.23.2';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -2651,6 +2659,9 @@ function loadCheckpoint(){const s=lsGet('br_save',null);if(!s)return false;
 const ART={
  lvl0:{en:'A long hallway of stained yellow wallpaper between square pillars. The brown carpet is wet and shines under a row of fluorescent ceiling panels that fades into the distance. Far away, at the very end, a tiny red light glows.',pt:'Um corredor comprido de papel de parede amarelo e manchado entre pilares quadrados. O carpete marrom está molhado e brilha sob uma fileira de lâmpadas fluorescentes que some na distância. Bem longe, no fim, uma luzinha vermelha brilha.'},
  lvl1:{en:'A huge dark concrete basement held up by thick pillars. Wooden crates are stacked in the shadows. A few lights hang from the ceiling, and their glow reflects in puddles on the floor. At the far end, a metal stairwell leads down.',pt:'Um porão enorme e escuro de concreto, sustentado por pilares grossos. Caixotes de madeira estão empilhados nas sombras. Algumas lâmpadas pendem do teto, e o brilho delas reflete nas poças do chão. No fundo, uma escada de metal desce.'},
+ lvl3:{en:'A cramped corridor between tall humming machines covered in coils and dials. Dozens of thick cables hang from the ceiling and cover the wet floor like vines. Near the ceiling, blue electric sparks crackle between the wires. At the far end stands a grey metal door, with sparks dancing around its frame.',pt:'Um corredor apertado entre máquinas altas que zumbem, cheias de bobinas e mostradores. Dezenas de cabos grossos pendem do teto e cobrem o chão molhado como cipós. Perto do teto, faíscas elétricas azuis estalam entre os fios. No fundo há uma porta cinza de metal, com faíscas dançando em volta do batente.'},
+ lvl4:{en:'An empty office at night. Rows of grey cubicles with old boxy computer monitors, and papers scattered all over the carpet. Only a few ceiling lights still work. At the far end, against a bare wall, a single office chair sits facing you, next to a small desk with a telephone on it.',pt:'Um escritório vazio à noite. Fileiras de baias cinzas com monitores antigos e quadradões, e papéis espalhados pelo carpete. Só algumas lâmpadas do teto ainda funcionam. No fundo, encostada numa parede vazia, uma única cadeira de escritório está virada para você, ao lado de uma mesinha com um telefone.'},
+ lvl5:{en:'Almost total darkness. A flashlight beam lights one small patch of old patterned wallpaper on the left wall. Everything else is black. Far down the hallway, right in the middle of the dark, two tiny pale eyes are looking back.',pt:'Escuridão quase total. O facho de uma lanterna ilumina um pedacinho de papel de parede antigo e estampado na parede da esquerda. Todo o resto é preto. Bem no fundo do corredor, bem no meio do escuro, dois olhinhos pálidos estão olhando de volta.'},
  lvl2:{en:'A narrow metal walkway runs through a tunnel crammed with rusty pipes, valve wheels and gauges. Steam drifts through the air. A few small orange lamps glow along the right wall, and the far end disappears into darkness.',pt:'Uma passarela estreita de metal atravessa um túnel cheio de canos enferrujados, registros e medidores. Vapor flutua no ar. Algumas lampadazinhas laranja brilham na parede da direita, e o fundo some na escuridão.'}
 };
 const MONART={};
