@@ -272,6 +272,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.23.7: ghost tap fix</h2>
+      <ul>
+        <li>Fixed: tapping Enter on the first screen could also press the menu button that appeared under your finger, like Endless mode or Extra levels. Taps right after a new screen opens are now ignored for a moment.</li>
+      </ul>
       <h2>Version 0.23.6: voice command fix</h2>
       <ul>
         <li>Fixed: with voice commands on, the microphone could hear the narration or VoiceOver reading a button, and press it by itself, like opening Play right after you enter. The game now ignores words it hears from its own narration and from VoiceOver.</li>
@@ -512,6 +516,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.23.7: correção do toque fantasma</h2>
+      <ul>
+        <li>Corrigido: tocar em Entrar na primeira tela podia também apertar o botão do menu que aparecia embaixo do seu dedo, como Modo infinito ou Níveis extras. Toques logo depois de abrir uma tela nova agora são ignorados por um instante.</li>
+      </ul>
       <h2>Versão 0.23.6: correção dos comandos de voz</h2>
       <ul>
         <li>Corrigido: com os comandos de voz ligados, o microfone podia ouvir a narração ou o VoiceOver lendo um botão, e apertar sozinho, como abrir Jogar logo depois de entrar. Agora o jogo ignora palavras que vêm da própria narração e do VoiceOver.</li>
@@ -924,7 +932,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.23.6';
+const VERSION='0.23.7';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -2543,7 +2551,11 @@ function parsePt(s){
 /* ============================== screens ============================== */
 const SCREENS=['splash','menu','pause','ach','levels','words','journal','bestiary','jukebox','skillpick','setup','settings','howto','news','credits','end','game'];
 let screen='splash';
+// a tap (or VoiceOver double-tap) that opened a screen must not also land on a button of the new screen
+let shownAt=0, shownId='';
+document.addEventListener('click',e=>{if(shownId&&performance.now()-shownAt<700&&e.target.closest&&e.target.closest('#'+shownId+' button')){e.stopImmediatePropagation();e.preventDefault();}},true);
 function show(id,announce){
+  if(id!==screen){shownAt=performance.now();shownId=id;}
   if(id!=='game'&&G.state==='transition'){G.state='menu';clearAmb();}// leaving during a fall cancels it
   SCREENS.forEach(s=>$('#'+s).hidden=(s!==id)); screen=id; syncChoices();
   const h=$('#'+id+' [tabindex="-1"]'); const first=$('#'+id+' button:not([hidden])');
