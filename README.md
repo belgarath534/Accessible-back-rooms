@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.23.3**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.23.4**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.23.4**: first recorded voice line (whisper1, ElevenLabs voice "Annie - Whispering British Girl").
 - **0.23.3**: artwork for Levels 6, 7 and 8.
 - **0.23.2**: artwork for Levels 3, 4 and 5.
 - **0.23.1**: bug sweep before 1.0; fixed game buttons overflowing on small phones.
