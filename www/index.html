@@ -272,6 +272,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 0.23.6: voice command fix</h2>
+      <ul>
+        <li>Fixed: with voice commands on, the microphone could hear the narration or VoiceOver reading a button, and press it by itself, like opening Play right after you enter. The game now ignores words it hears from its own narration and from VoiceOver.</li>
+      </ul>
       <h2>Version 0.23.5: Marcus speaks</h2>
       <ul>
         <li>Marcus now has a real recorded voice on six of his eight tapes, and on one of the calls you hear while you look for him. The rest still use your device voice for now.</li>
@@ -508,6 +512,10 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 0.23.6: correção dos comandos de voz</h2>
+      <ul>
+        <li>Corrigido: com os comandos de voz ligados, o microfone podia ouvir a narração ou o VoiceOver lendo um botão, e apertar sozinho, como abrir Jogar logo depois de entrar. Agora o jogo ignora palavras que vêm da própria narração e do VoiceOver.</li>
+      </ul>
       <h2>Versão 0.23.5: Marcus fala</h2>
       <ul>
         <li>Marcus agora tem voz gravada de verdade em seis das oito fitas (em inglês por enquanto), e numa das falas que você ouve enquanto procura por ele. O resto ainda usa a voz do aparelho.</li>
@@ -916,7 +924,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='0.23.5';
+const VERSION='0.23.6';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -2199,7 +2207,7 @@ function ambience(){
 
 /* ============================== speech output ============================== */
 const live=$('#live'), logEl=$('#log');
-let voice=null, voice2=null, speakingText='', speaking=false, lastSpeakEnd=0;
+let voice=null, voice2=null, speakingText='', speaking=false, lastSpeakEnd=0, speakStart=0;
 function pickVoice(){if(!('speechSynthesis' in window))return;const vs=speechSynthesis.getVoices();
   if(LANG==='pt'){const pt=vs.filter(v=>/^pt/i.test(v.lang));const br=pt.filter(v=>/BR/i.test(v.lang));const pool=br.length?br:pt;
     voice=pool.find(v=>/natural|google|luciana|francisca|felipe|antonio/i.test(v.name))||pool[0]||null;
@@ -2219,7 +2227,7 @@ function say(text,{log=true,extras}={}){
   live.textContent=''; setTimeout(()=>{live.textContent=full;},40);
   const tok=G.sayTok=(G.sayTok||0)+1;
   if(S.narr&&'speechSynthesis' in window){
-    speechSynthesis.cancel(); speakingText=full.toLowerCase(); speaking=true; duck(true); setTimeout(()=>{if(tok===G.sayTok&&!speaking)duck(false);},full.length*95/S.rate+2500);
+    speechSynthesis.cancel(); speakingText=full.toLowerCase(); speakStart=performance.now(); speaking=true; duck(true); setTimeout(()=>{if(tok===G.sayTok&&!speaking)duck(false);},full.length*95/S.rate+2500);
     const segs=[]; let grp=(text.match(/[^.!?]+[.!?]*/g)||[text]).map(p=>utter(p.trim()));
     ex.forEach(e=>{if(e.label)grp.push(utter(e.label));const clip=voClip(e);
       if(clip){segs.push(grp);grp=[];segs.push({clip,pos:e.pos});}
@@ -2277,11 +2285,22 @@ function setMic(on,silent){
   } else if(rec){try{rec.stop();}catch(e){}}
 }
 function setMicUI(){const b=$('#micBtn');b.setAttribute('aria-pressed',String(S.mic));b.textContent=t(S.mic?'Voice commands: on':'Voice commands: off');}
+// VoiceOver reads button names out loud, and the mic can hear it. Ignore a command that matches
+// what the screen reader just focused, for a few seconds after the focus moved.
+let lastFocus={label:'',at:0};
+document.addEventListener('focusin',e=>{const el=e.target;if(!el||el.tagName!=='BUTTON'||!el.textContent)return;lastFocus={label:norm(el.getAttribute('aria-label')||el.innerText||el.textContent),at:performance.now()};});
+// the narration only echoes the words it is saying right now: check near the current spot in the text
+function narrEcho(tx){const st=norm(speakingText),w=norm(tx);const pos=(performance.now()-speakStart)/62*(S.rate||1);let i=st.indexOf(w);
+  while(i>=0){if(i>=pos-70&&i<=pos+20)return true;i=st.indexOf(w,i+1);}return false;}
+function srEcho(tx){if(performance.now()-lastFocus.at>3500||!lastFocus.label.trim())return false;
+  const words=norm(tx).trim().split(' ').filter(w=>!['button','botao','heading','titulo','link','selected','selecionado','dimmed'].includes(w));
+  if(!words.length)return true;return lastFocus.label.includes(' '+words.join(' ')+' ');}
 function heardSpeech(alts){
   if(G.teach){if(!G.teach.until||performance.now()>G.teach.until)return;const cmd=G.teach.cmd;G.teach=null;$('#heard').textContent=t('Heard: “{t}”',{t:alts[0]});return saveAlias(alts[0],cmd);}
   const busy=speaking||('speechSynthesis' in window&&speechSynthesis.speaking)||performance.now()-lastSpeakEnd<350;
   for(const tx of alts){const cmd=parse(tx);if(!cmd)continue;
-    if(busy){const words=tx.split(/\s+/).length;if(words>3)continue;if(words>1&&speakingText.includes(tx))continue;}
+    if(busy){const words=tx.split(/\s+/).length;if(words>3)continue;if(narrEcho(tx))continue;}
+    if(srEcho(tx))continue;
     $('#heard').textContent=t('Heard: “{t}”',{t:tx}); run(cmd.c,cmd.n,cmd.r); return;}
   if(!busy)$('#heard').textContent=t('Heard: “{t}” (not a command)',{t:alts[0]});
 }
