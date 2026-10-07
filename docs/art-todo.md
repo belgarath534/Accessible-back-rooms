@@ -7,12 +7,9 @@ Every prompt ends with this style line:
 
 Save as `www/img/<key>.jpg` (960x540, `ffmpeg -vf scale=960:540 -q:v 5`), then add the key with an English and Portuguese description to `ART` (levels) or `MONART` (monsters) in `www/index.html`. Describe what is actually in the picture.
 
-Done: lvl0, lvl1, lvl2, lvl3, lvl4, lvl5.
+Done: lvl0 to lvl8.
 
 ## Levels (key: prompt)
-- lvl6: Thalassophobia. Flooded underground hall, black still water, narrow wet walkways, dim green light on the water, a huge vague shape far beneath the surface.
-- lvl7: The Suburbs. Empty suburban street at dusk, identical houses forever, all windows dark except one with a pale face against the glass, flickering streetlights.
-- lvl8: The Endless City. Empty city street at night, dark skyscrapers, broken traffic lights blinking yellow, abandoned cars, fog between buildings.
 - lvl9: The Poolrooms. Endless white-tiled rooms with shallow glowing turquoise pools, bright soft light, archways repeating forever, eerily calm.
 - lvl10: Fun. A party room, grey balloons, faded streamers, a rotting birthday cake on a table, party hats on empty chairs, a music box, cheerful but wrong.
 - lvl11: The Carnival. Abandoned night carnival, dark carousel, striped tents, a lone brass bell on a post, string lights half dead.
