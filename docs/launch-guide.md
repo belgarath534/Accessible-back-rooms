@@ -142,6 +142,8 @@ If anything is wrong, tell Claude and a new build goes up. Each new build needs 
 
 ## Part 9: Fill in the store page (You, Claude writes all the text)
 
+It is all ready in **docs/appstore/store-listing.md**, with every field in order, and the screenshots are in **docs/appstore/screenshots**. The privacy policy is live at https://backrooms-audio-game.netlify.app/privacy.html
+
 Claude prepares these in English and Portuguese, so you only copy and paste:
 
 1. **Description**, **subtitle** (30 characters), **promotional text**, and **keywords** (100 characters).
