@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.23.7**. Available in English and Brazilian Portuguese, including voice commands.
+Current version: **0.24**. Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **0.24**: every voice line recorded in English and Portuguese (ElevenLabs eleven_v3, voices listed in docs/art-todo.md), pictures with descriptions for every level, extra level and creature, title art on the main menu, the Howler added to the bestiary.
 - **0.23.7**: taps right after a screen change are ignored briefly, so tapping Enter no longer also presses the menu button under your finger.
 - **0.23.6**: voice commands ignore echoes of the narration and of VoiceOver reading a focused button.
 - **0.23.5**: Marcus's recorded voice (ElevenLabs "J Thomas - Warm, Raspy & Real") on tapes 1, 2, 4, 5, 7, 8 and the call marcus4.

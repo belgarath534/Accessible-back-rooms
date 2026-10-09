@@ -7,7 +7,7 @@ Every prompt ends with this style line:
 
 Save as `www/img/<key>.jpg` (960x540, `ffmpeg -vf scale=960:540 -q:v 5`), then add the key with an English and Portuguese description to `ART` (levels) or `MONART` (monsters) in `www/index.html`. Describe what is actually in the picture.
 
-Done: lvl0 to lvl8.
+Done: everything in this list (lvl0 to lvl14, last, x15 to x22, all monster portraits, title), in version 0.24. Keep this file as the prompt reference for new pictures.
 
 ## Levels (key: prompt)
 - lvl9: The Poolrooms. Endless white-tiled rooms with shallow glowing turquoise pools, bright soft light, archways repeating forever, eerily calm.
@@ -55,3 +55,8 @@ Done: lvl0 to lvl8.
 - mon_trader: a friendly wanderer with a big bag of bottles.
 - mon_marcus: a tired man in an old jacket holding a tape recorder.
 - title: Title art for the main menu: endless yellow Backrooms hallway, a lone figure seen from behind.
+
+## Voices (ElevenLabs, model eleven_v3)
+English: Marcus = "J Thomas - Warm, Raspy & Real"; lures = "Harry"; family = "Mother - Strong, Warm, Calm"; whispers = "Annie - Whispering British Girl"; radio voice id 7squ7rvxEIZ2rYy7KYPP.
+Portuguese: Marcus = "Jhony Tygas"; lures = "Fabio - Calmo"; family voice id CS2gH5fPqUCmkVNpHsy4; radio voice id Dps47AVoFamqqkDShRDS; whispers voice id cabLxBh81HurPAAJfEHo.
+Processing: tapes get highpass 180 Hz, lowpass 5500 Hz, compressor and loudnorm; radio gets a 350 to 3000 Hz band and soft clipping; everything else loudnorm only (-16 LUFS, mono 96k mp3).
