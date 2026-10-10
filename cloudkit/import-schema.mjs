@@ -5,7 +5,7 @@ import dbpkg from "@apple/cktool.database";
 import nodepkg from "@apple/cktool.target.nodejs";
 const { PromisesApi, CKEnvironment } = dbpkg; const { createConfiguration } = nodepkg;
 import { readFileSync } from "node:fs";
-const token=process.env.CK_MANAGEMENT_TOKEN; if(!token){console.log('no token');process.exit(1);}
+const token=(process.env.CK_MANAGEMENT_TOKEN||'').trim(); if(!token){console.log('no token');process.exit(1);}
 const teamId="ZPD555RW3A", containerId="iCloud.com.accessible.backrooms", environment=CKEnvironment.DEVELOPMENT;
 const api=new PromisesApi({configuration:createConfiguration(),security:{ManagementTokenAuth:token}});
 const show=e=>JSON.stringify(e?.response??e?.result??e?.message??e,null,1).slice(0,1500);
