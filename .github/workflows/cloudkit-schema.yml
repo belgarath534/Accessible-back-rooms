@@ -1,0 +1,22 @@
+name: CloudKit schema
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: [cloudkit/run-count.txt]
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Apple's CKTool JS
+        working-directory: cloudkit
+        run: npm install --no-save @apple/cktool.database@1.3.2 @apple/cktool.target.nodejs@1.3.2
+      - name: Add the iCloud save record type
+        working-directory: cloudkit
+        env:
+          CK_MANAGEMENT_TOKEN: ${{ secrets.CK_MANAGEMENT_TOKEN }}
+        run: node import-schema.mjs
