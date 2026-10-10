@@ -7,6 +7,14 @@ on:
 jobs:
   import:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - container: iCloud.com.accessible.backrooms
+            schema: schema-addition.ckdb
+          - container: iCloud.com.dungeon.descent
+            schema: dungeon-descent.ckdb
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -19,4 +27,6 @@ jobs:
         working-directory: cloudkit
         env:
           CK_MANAGEMENT_TOKEN: ${{ secrets.CK_MANAGEMENT_TOKEN }}
+          CK_CONTAINER: ${{ matrix.container }}
+          CK_SCHEMA: ${{ matrix.schema }}
         run: node import-schema.mjs

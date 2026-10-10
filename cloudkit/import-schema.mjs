@@ -6,7 +6,7 @@ import nodepkg from "@apple/cktool.target.nodejs";
 const { PromisesApi, CKEnvironment } = dbpkg; const { createConfiguration } = nodepkg;
 import { readFileSync } from "node:fs";
 const token=(process.env.CK_MANAGEMENT_TOKEN||'').trim(); if(!token){console.log('no token');process.exit(1);}
-const teamId="ZPD555RW3A", containerId="iCloud.com.accessible.backrooms", environment=CKEnvironment.DEVELOPMENT;
+const teamId="ZPD555RW3A", containerId=process.env.CK_CONTAINER||"iCloud.com.accessible.backrooms", environment=CKEnvironment.DEVELOPMENT;
 const api=new PromisesApi({configuration:createConfiguration(),security:{ManagementTokenAuth:token}});
 const toText=async r=>typeof r==='string'?r:(r&&typeof r.text==='function')?await r.text():(r&&typeof r.schema==='string')?r.schema:JSON.stringify(r);
 const show=e=>JSON.stringify(e?.response??e?.result??e?.message??e,null,1).slice(0,1500);
@@ -14,9 +14,11 @@ try{
   const ex=await api.exportSchema({teamId,containerId,environment});
   const cur=await toText(ex.result);
   console.log('== current dev schema ==\n'+cur);
-  if(/RECORD TYPE PluginSaveData/.test(cur)){console.log('already there');process.exit(0);}
+  const addFile=process.env.CK_SCHEMA||'schema-addition.ckdb';const addText=readFileSync(new URL('./'+addFile, import.meta.url),'utf8');const typeName=(addText.match(/RECORD TYPE (\w+)/)||[])[1];
+  console.log('container',containerId,'adding',typeName);
+  if(new RegExp('RECORD TYPE '+typeName+'\\b').test(cur)){console.log('already there');process.exit(0);}
   let base=cur.trim(); if(!/DEFINE\s+SCHEMA/.test(base))base='DEFINE SCHEMA';
-  const text=base+'\n\n'+readFileSync(new URL('./schema-addition.ckdb', import.meta.url),'utf8');
+  const text=base+'\n\n'+addText;
   const file=new File([text],'schema.ckdb',{type:'text/plain'});
   const v=await api.validateSchema({teamId,containerId,environment,file});console.log('validate:',show(v.result??v));
   const im=await api.importSchema({teamId,containerId,environment,file:new File([text],'schema.ckdb',{type:'text/plain'})});console.log('import ok',show(im.result??im));
