@@ -4,7 +4,8 @@
   "private": true,
   "description": "Accessible Backrooms: a voice-controlled audio horror game",
   "scripts": {
-    "sync": "npx cap sync ios"
+    "sync": "npx cap sync ios",
+    "postinstall": "node scripts/apply-native-patches.js"
   },
   "dependencies": {
     "@capacitor-community/speech-recognition": "^7.0.1",
