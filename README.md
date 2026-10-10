@@ -4,10 +4,11 @@ An accessible, voice-controlled audio horror game set in the Backrooms. Everythi
 
 Play it online: https://backrooms-audio-game.netlify.app
 
-Current version: **0.24**. Privacy policy: https://backrooms-audio-game.netlify.app/privacy.html Available in English and Brazilian Portuguese, including voice commands.
+Current version: **1.0**. Privacy policy: https://backrooms-audio-game.netlify.app/privacy.html Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 
+- **1.0**: first App Store release, signed build with iCloud backup (CloudKit), minimum iOS 15.
 - **0.24**: every voice line recorded in English and Portuguese (ElevenLabs eleven_v3, voices listed in docs/art-todo.md), pictures with descriptions for every level, extra level and creature, title art on the main menu, the Howler added to the bestiary.
 - **0.23.7**: taps right after a screen change are ignored briefly, so tapping Enter no longer also presses the menu button under your finger.
 - **0.23.6**: voice commands ignore echoes of the narration and of VoiceOver reading a focused button.
