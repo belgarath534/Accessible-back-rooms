@@ -1,0 +1,10 @@
+Accessible Backrooms Uploader
+
+1. Unzip this folder on your Windows computer.
+2. Copy your key file into this folder. It is the file you downloaded from Apple, named AuthKey_ followed by letters, ending in .p8.
+3. Double click "Upload screenshots.bat".
+4. When it asks, paste your Issuer ID and press Enter.
+5. Wait until it says ALL DONE, then refresh App Store Connect.
+
+Your key stays on your computer. It is only sent to Apple, to sign in.
+You can run it again safely: it replaces the screenshots instead of adding copies.
