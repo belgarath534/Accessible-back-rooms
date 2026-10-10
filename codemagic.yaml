@@ -80,3 +80,16 @@ workflows:
       app_store_connect:
         auth: integration
         submit_to_testflight: true
+
+  cloudkit-schema:
+    name: CloudKit schema (one time)
+    max_build_duration: 15
+    instance_type: mac_mini_m2
+    environment:
+      groups:
+        - cloudkit
+      xcode: latest
+    scripts:
+      - name: Add the iCloud save record type
+        script: |
+          ./cloudkit/import-schema.sh
