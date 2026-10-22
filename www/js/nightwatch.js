@@ -9,7 +9,8 @@
 // Registers a Portuguese translation next to its English text.
 const L=(en,pt,v)=>{if(pt)PT[en]=pt;return t(en,v);};
 
-const HOUR=50;            // seconds of real time per hour, 12 AM to 6 AM
+const HOUR=50;
+const NIGHT_MUSIC=0.28;    // music volume during a night            // seconds of real time per hour, 12 AM to 6 AM
 const NIGHTS=6;
 const CAMS=[null,
   {en:'Yellow Hall',pt:'Corredor Amarelo'},{en:'Left Corridor',pt:'Corredor Esquerdo'},
@@ -158,7 +159,7 @@ function repel(m,d){slam(DOOR_POS[d]);buzz([120]);
   say(m.k==='stealer'?L('The knocking at {d} stops. Footsteps walk away.','As batidas em {d} param. Passos se afastam.',{d:doorName(d)})
     :L('Something slams into {d}, then retreats.','Algo se joga contra {d}, e depois recua.',{d:doorName(d)}));retreat(m);}
 function caught(k,d){
-  W.over=true;stopLoop();clearAmb();
+  W.over=true;stopLoop();clearAmb();onlyMusic({},0.3);
   if(S.scares!==false){play(pick(['js1','js2','js3']),{vol:1.2});play('bigscream',{vol:0.8,delay:0.15});}
   buzz([500,80,300]);
   const hh=W.hour===0?12:W.hour;
@@ -169,7 +170,7 @@ function caught(k,d){
   setTimeout(()=>{renderEnd(false,msg);say(msg+' '+L('Say try again, or menu.','Diga tentar de novo, ou menu.'));},1600);
 }
 function powerOut(){
-  clearAmb();W.doors={L:false,R:false,V:false};W.cam=0;
+  clearAmb();W.doors={L:false,R:false,V:false};W.cam=0;onlyMusic({musicbox:1},1);
   say(L('The power is out. The lights die, and every door slides open. Hold on until six A M.','A energia acabou. As luzes apagam e todas as portas se abrem. Aguente até as seis da manhã.'));
   render();
   // in the dark, the Hound comes for you, unless the morning comes first
@@ -177,7 +178,7 @@ function powerOut(){
 }
 function winNight(){
   W.over=true;stopLoop();clearAmb();chime(6);buzz([80,80,80]);
-  const n=W.night;if(n>=best()&&n<NIGHTS)lsSet('br_nw_night',n+1);if(n===NIGHTS)lsSet('br_nw_done',true);
+  const n=W.night;onlyMusic(n===NIGHTS?{nw_end:0.7}:{},n===NIGHTS?4:1.5);if(n>=best()&&n<NIGHTS)lsSet('br_nw_night',n+1);if(n===NIGHTS)lsSet('br_nw_done',true);
   const msg=n<NIGHTS?L('Six A M! You survived night {n}. The doors unlock for the day, and you hear the tape recorder click. Night {m} is open.','Seis da manhã! Você sobreviveu à noite {n}. As portas destrancam durante o dia, e você ouve o gravador fazer clique. A noite {m} está liberada.',{n,m:n+1})
     :L('Six A M. A heavy click. The security door swings open by itself. Outside, on a desk, lies a stack of tapes, each one labeled with a name. Dana is there. The newest tape has your name on it. You walk out into the hum of the Backrooms. You survived the Night Watch.',
        'Seis da manhã. Um clique pesado. A porta de segurança se abre sozinha. Lá fora, numa mesa, há uma pilha de fitas, cada uma com um nome. Dana está lá. A fita mais nova tem o seu nome. Você sai para o zumbido dos Backrooms. Você sobreviveu à Vigia Noturna.');
@@ -239,7 +240,7 @@ function status(){
 /* ------------------------------ screens ------------------------------ */
 function stopLoop(){clearInterval(timer);timer=null;}
 function lobby(prefix){
-  stopLoop();W=null;clearAmb();menuMusic();
+  stopLoop();W=null;clearAmb();onlyMusic({nw_lobby:0.7},2);
   const n=Math.min(best(),NIGHTS);
   $('#nwLobby').hidden=false;$('#nwPlay').hidden=true;$('#nwEnd').hidden=true;
   $('#nwStart').textContent=n===1?L('Start night 1','Começar a noite 1'):L('Continue: night {n}','Continuar: noite {n}',{n});
@@ -256,7 +257,7 @@ const HOW_EN='Each night runs from 12 A M to 6 A M, about five minutes. Monsters
 const HOW_PT='Cada noite vai da meia-noite às seis da manhã, uns cinco minutos. Os monstros andam até você por dois corredores, um para cada porta, e depois pela ventilação em cima de você. Escolha uma câmera para ouvir o que tem lá, e diga olhar para ouvir o que a câmera mostra. Quando algo está bem do lado de fora, você ouve daquele lado: respiração na esquerda quer dizer feche a porta esquerda. Portas, câmeras e a lanterna gastam energia. Se a energia acabar, todas as portas se abrem. A lanterna mostra o que tem no corredor e espanta o Sorridente silencioso, mas a luz atrai os outros até você. Comandos: porta esquerda, porta direita, ventilação, lanterna esquerda, lanterna direita, câmera 1 a 6, desligar câmeras, olhar, e status. No teclado: Q e E para as portas, W para a ventilação, A e D para a lanterna, números para as câmeras, zero para desligar, L para olhar, S para status.';
 function how(){say(LANG==='pt'?HOW_PT:HOW_EN);}
 function start(n){
-  initAudio();onlyMusic({},1.5);clearAmb();newNight(n);
+  initAudio();onlyMusic({['nw_n'+n]:NIGHT_MUSIC},2);clearAmb();newNight(n);
   $('#nwLobby').hidden=true;$('#nwPlay').hidden=false;$('#nwEnd').hidden=true;
   W.paused=true;render();hum();
   const tape=TAPES[n],intro=L('Night {n}. 12 A M. The tape recorder clicks on.','Noite {n}. Meia-noite. O gravador liga sozinho.',{n})+' '+(LANG==='pt'?tape[1]:tape[0]);
@@ -297,6 +298,9 @@ function quit(){stopLoop();if(W)W.over=true;clearAmb();lobby(L('You leave the ni
 
 /* ------------------------------ hooking into the game ------------------------------ */
 SCREENS.push('watch');
+// Music by Kevin MacLeod: one song for the office menu, one per night, one for the ending.
+// Night songs stay quiet so the monsters can be heard over them.
+TRACKS.push('nw_lobby','nw_n1','nw_n2','nw_n3','nw_n4','nw_n5','nw_n6','nw_end');
 const host=document.createElement('section');host.id='watch';host.className='screen';host.hidden=true;host.setAttribute('aria-labelledby','nwTitle');
 host.innerHTML=`<div class="menuBg"><h1 id="nwTitle" class="title" tabindex="-1">Night Watch</h1>
 <div id="nwLobby"><p id="nwIntro"></p><div class="stack"><button id="nwStart" class="primary"></button><button id="nwHowBtn"></button><h2 id="nwPickH"></h2><div id="nwPick" class="stack"></div><button id="nwBack"></button></div></div>

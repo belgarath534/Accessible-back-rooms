@@ -272,12 +272,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
-      <h2>Version 1.1: Night Watch (test)</h2>
+      <h2>Version 1.1: Night Watch</h2>
       <ul>
         <li>New mode, Night Watch: you are locked in a security office deep in the Backrooms. Survive six nights.</li>
         <li>Listen to six cameras, close the left door, the right door and the vent, and watch your power.</li>
         <li>The flashlight scares off the silent Smiler, but the light draws everything else to you.</li>
         <li>Dana, the guard before you, left a tape for every night.</li>
+        <li>Its own music by Kevin MacLeod: a song for the office and a different song for every night. When the power dies, only a music box plays.</li>
       </ul>
       <h2>Version 1.0: on the App Store</h2>
       <ul>
@@ -535,12 +536,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
-      <h2>Versão 1.1: Vigia Noturna (teste)</h2>
+      <h2>Versão 1.1: Vigia Noturna</h2>
       <ul>
         <li>Novo modo, Vigia Noturna: você está trancado numa sala de segurança no fundo dos Backrooms. Sobreviva seis noites.</li>
         <li>Escute seis câmeras, feche a porta esquerda, a porta direita e a ventilação, e cuide da energia.</li>
         <li>A lanterna espanta o Sorridente silencioso, mas a luz atrai todo o resto até você.</li>
         <li>Dana, a vigia antes de você, deixou uma fita para cada noite.</li>
+        <li>Música própria de Kevin MacLeod: uma para o escritório e uma diferente para cada noite. Quando a energia acaba, só toca uma caixinha de música.</li>
       </ul>
       <h2>Versão 1.0: na App Store</h2>
       <ul>
@@ -874,7 +876,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <p data-l="en"><b>Accessible Backrooms</b>, designed and built with Claude Code. Inspired by the Backrooms, a shared internet legend, and the community wiki that grew around it.</p>
     <p data-l="pt"><b>Backrooms Acessível</b>, criado e construído com o Claude Code. Inspirado nos Backrooms, uma lenda compartilhada da internet, e na wiki da comunidade que cresceu em volta dela.</p>
     <h2><span data-l="en">Music</span><span data-l="pt">Música</span></h2>
-    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four”, “Echoes of Time v2”, “Spider Eyes”, “Ossuary 6 - Air”, “The Dread”, “Night of Chaos”, “Hush”, “Unnatural Situation”, “Oppressive Gloom”, “Ghost Story”, “Darkling”, “Ghostpocalypse - 7 Master”, “Ghost Processional”, “Static Motion”, “The House of Leaves”, “Bathed in the Light”, “Dark Times”, “Monkeys Spinning Monkeys”, “Anguish”. <span data-l="en">Licensed under</span><span data-l="pt">Licença</span> <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
+    <p>Kevin MacLeod (<a href="https://incompetech.com">incompetech.com</a>): “Dark Hallway”, “Unseen Horrors”, “Dark Fog”, “Penumbra”, “Gathering Darkness”, “Lightless Dawn”, “Long Note Four”, “Echoes of Time v2”, “Spider Eyes”, “Ossuary 6 - Air”, “The Dread”, “Night of Chaos”, “Hush”, “Unnatural Situation”, “Oppressive Gloom”, “Ghost Story”, “Darkling”, “Ghostpocalypse - 7 Master”, “Ghost Processional”, “Static Motion”, “The House of Leaves”, “Bathed in the Light”, “Dark Times”, “Monkeys Spinning Monkeys”, “Anguish”, <span data-l="en">and for Night Watch</span><span data-l="pt">e para a Vigia Noturna</span>: “Late Night Radio”, “Night Vigil”, “Graveyard Shift”, “Interloper”, “Tenebrous Brothers Carnival - Act One”, “Corruption”, “Malicious”, “Dreamy Flashback”. <span data-l="en">Licensed under</span><span data-l="pt">Licença</span> <a href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution 4.0</a>.</p>
     <h2><span data-l="en">Sound effects</span><span data-l="pt">Efeitos sonoros</span></h2>
     <p>“Female Screams”, congusbongus, <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
     <p>“Long deep impact”, ROHHSA, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
@@ -970,7 +972,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='1.0';
+const VERSION='1.1';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
