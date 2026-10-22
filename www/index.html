@@ -272,6 +272,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 1.1: Night Watch (test)</h2>
+      <ul>
+        <li>New mode, Night Watch: you are locked in a security office deep in the Backrooms. Survive six nights.</li>
+        <li>Listen to six cameras, close the left door, the right door and the vent, and watch your power.</li>
+        <li>The flashlight scares off the silent Smiler, but the light draws everything else to you.</li>
+        <li>Dana, the guard before you, left a tape for every night.</li>
+      </ul>
       <h2>Version 1.0: on the App Store</h2>
       <ul>
         <li>Accessible Backrooms is now a real iPhone app on the App Store.</li>
@@ -528,6 +535,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 1.1: Vigia Noturna (teste)</h2>
+      <ul>
+        <li>Novo modo, Vigia Noturna: você está trancado numa sala de segurança no fundo dos Backrooms. Sobreviva seis noites.</li>
+        <li>Escute seis câmeras, feche a porta esquerda, a porta direita e a ventilação, e cuide da energia.</li>
+        <li>A lanterna espanta o Sorridente silencioso, mas a luz atrai todo o resto até você.</li>
+        <li>Dana, a vigia antes de você, deixou uma fita para cada noite.</li>
+      </ul>
       <h2>Versão 1.0: na App Store</h2>
       <ul>
         <li>Backrooms Acessível agora é um app de iPhone de verdade, na App Store.</li>
@@ -2600,7 +2614,7 @@ function showMain(prefix=''){
   if(G.jukeAmb){G.jukeAmb=null;clearAmb();}
   $('#mContinue').hidden=!lsGet('br_save',null); $('#mLevels').hidden=chaptersOpen().length<2; $('#mExtra').hidden=!extrasOpen(); $('#mNgp').hidden=!extrasOpen();
   menuMusic();
-  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','daily challenge','endless mode','tutorial','settings','how to play','jukebox','bestiary','journal','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
+  const opts=['play',$('#mContinue').hidden?null:'continue',$('#mLevels').hidden?null:'level select',$('#mExtra').hidden?null:'extra levels',$('#mNgp').hidden?null:'new game plus','daily challenge','endless mode','night watch','tutorial','settings','how to play','jukebox','bestiary','journal','achievements','what is new','credits'].filter(Boolean).map(o=>t(o));
   let ev='';if(!G.evTold){if(isBday())ev=t('Today is October 9, the birthday of Leo, who made this game. The Backrooms are celebrating too. Look for the birthday cake hidden in a level.')+' ';else if(isHalloween())ev=t('Happy Halloween! Until November 1, there is candy hidden in every level, and trick-or-treaters wander the halls. Not all of them are kids.')+' ';if(ev)G.evTold=true;}
   show('menu',prefix+ev+t('Main menu. Say or choose: {opts}.',{opts:opts.join(', ')}));
 }
@@ -4266,5 +4280,6 @@ applyLang(); syncChoices();
 </script>
 <script src="js/three.min.js"></script>
 <script src="js/r3d.js"></script>
+<script src="js/nightwatch.js"></script>
 </body>
 </html>
