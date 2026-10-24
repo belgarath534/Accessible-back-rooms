@@ -272,13 +272,19 @@ function status(){
 }
 const HELP_EN='Commands. Left door, right door and vent close or open them. Flash left or flash right checks a hall with the flashlight. Camera 1 to 6 shows a camera, and cameras off saves power. Wait lets time pass. These all take a turn, and the monsters move after each one. Free, without using a turn: listen, look again, status, repeat, and help. If you stay idle for a while, time passes on its own.';
 const HELP_PT='Comandos. Porta esquerda, porta direita e ventilação fecham ou abrem. Lanterna esquerda ou lanterna direita ilumina um corredor. Câmera 1 a 6 mostra uma câmera, e desligar câmeras economiza energia. Esperar deixa o tempo passar. Tudo isso gasta um turno, e os monstros se mexem depois de cada um. De graça, sem gastar turno: escutar, olhar de novo, status, repetir, e ajuda. Se você ficar parado por um tempo, o tempo passa sozinho.';
-function help(){say(LANG==='pt'?HELP_PT:HELP_EN,{log:false});resetIdle();}
+function help(){
+  let h=LANG==='pt'?HELP_PT:HELP_EN;
+  if(!S.narr)h=h.replace(' If you stay idle for a while, time passes on its own.',' With a screen reader, time only passes when you act, so take all the time you need.')
+    .replace(' Se você ficar parado por um tempo, o tempo passa sozinho.',' Com leitor de tela, o tempo só passa quando você age, então use o tempo que precisar.');
+  say(h,{log:false});resetIdle();}
 
 // Like the main game: if you do nothing for a while, a turn passes on its own.
 // The wait starts after the narrator has finished speaking.
 function stopIdle(){clearTimeout(idleTimer);idleTimer=null;}
 function idleMs(){return Math.round(DF().idle*1.5);}
 function resetIdle(){stopIdle();if(!playing())return;
+  // With a screen reader, the game cannot tell how long you are reading, so time only passes when you act.
+  if(!S.narr)return;
   const quiet=Math.max(0,(G.quietUntil||0)-performance.now());
   idleTimer=setTimeout(()=>{if(!playing()||screen!=='watch')return;
     if((G.quietUntil||0)>performance.now()+200)return resetIdle();
@@ -297,8 +303,11 @@ function lobby(prefix){
   $('#nwIntro').textContent=L('You wake up locked in a small office deep in the Backrooms. Monitors, a tape recorder, two security doors and a vent. A note on the desk says: survive six nights. The monsters move after every thing you do, so take your time and think. Difficulty: {d}. You can change it in Settings.','Você acorda trancado num pequeno escritório no fundo dos Backrooms. Monitores, um gravador, duas portas de segurança e uma ventilação. Um bilhete na mesa diz: sobreviva seis noites. Os monstros se mexem depois de cada coisa que você faz, então vá com calma e pense. Dificuldade: {d}. Você pode mudar nas Configurações.',{d:DL()});
   $('#nwHowBtn').textContent=L('How it works','Como funciona');$('#nwBack').textContent=L('Back to the main menu','Voltar ao menu principal');
   $('#nwPickH').textContent=L('Choose a night','Escolha uma noite');
-  $('#nwTitle').textContent=L('Night Watch','Vigia Noturna');
-  show('watch',(prefix||'')+L('Night Watch. {i} Say start, how it works, or back.','Vigia Noturna. {i} Diga começar, como funciona, ou voltar.',{i:$('#nwIntro').textContent}));
+  $('#nwTitle').textContent=L('Night Watch (Beta)','Vigia Noturna (Beta)');
+  $('#nwBeta').textContent=L('Beta: Night Watch is an early experiment. It may change a lot, or be removed. Does it fit Accessible Backrooms? Tell us with the feedback button.','Beta: a Vigia Noturna é um experimento inicial. Pode mudar muito, ou ser removida. Ela combina com o Backrooms Acessível? Conte para nós com o botão de opinião.');
+  $('#nwFbBtn').textContent=L('Send feedback about Night Watch','Enviar opinião sobre a Vigia Noturna');
+  $('#nwFb').hidden=true;
+  show('watch',(prefix||'')+L('Night Watch, beta. {b} {i} Say start, how it works, or back.','Vigia Noturna, beta. {b} {i} Diga começar, como funciona, ou voltar.',{b:$('#nwBeta').textContent,i:$('#nwIntro').textContent}));
 }
 const HOW_EN='Each night runs from 12 A M to 6 A M. Every action takes ten minutes, and after each one the monsters move. They walk toward you along two halls, one to each door, and later through the vent above you. When one reaches a door, you hear it from that side and the narrator tells you. You then have one action to close that door, sometimes more. Choose a camera to hear and see what is there. Listen tells you everything you can hear, for free. Closed doors, cameras and the flashlight use power. If the power runs out, every door opens. The flashlight checks a hall and scares off the silent Smiler, but the light draws the others. Say help during a night to hear the commands.';
 const HOW_PT='Cada noite vai da meia-noite às seis da manhã. Cada ação leva dez minutos, e depois de cada uma os monstros se mexem. Eles andam até você por dois corredores, um para cada porta, e depois pela ventilação em cima de você. Quando um chega numa porta, você ouve daquele lado e o narrador avisa. Aí você tem uma ação para fechar a porta, às vezes mais. Escolha uma câmera para ouvir e ver o que tem lá. Escutar conta tudo que você consegue ouvir, de graça. Portas fechadas, câmeras e a lanterna gastam energia. Se a energia acabar, todas as portas se abrem. A lanterna ilumina um corredor e espanta o Sorridente silencioso, mas a luz atrai os outros. Diga ajuda durante uma noite para ouvir os comandos.';
@@ -307,9 +316,11 @@ function start(n){
   initAudio();stopIdle();onlyMusic({[MUSIC[n]]:NIGHT_MUSIC},2);clearAmb();newNight(n);
   $('#nwLobby').hidden=true;$('#nwPlay').hidden=false;$('#nwEnd').hidden=true;
   render();hum();show('watch');setTimeout(()=>$('#nwSkip').focus(),60);
+  if(!S.narr)$('#nwSkip').textContent=L('Start the night','Começar a noite');
   say(L('Night {n}. 12 A M. The tape recorder clicks on.','Noite {n}. Meia-noite. O gravador liga sozinho.',{n})+' '+tx(TAPES[n]));
   const check=()=>{if(!W||W.night!==n||!W.tape||W.over)return;if((G.quietUntil||0)>performance.now())return setTimeout(check,500);beginNight(L('The tape ends.','A fita acaba.'));};
-  setTimeout(check,1500);
+  // with a screen reader the tape waits until you press Skip or Start the night
+  if(S.narr)setTimeout(check,1500);
 }
 function beginNight(prefix){
   if(!W||!W.tape)return;W.tape=false;render();setTimeout(()=>$('#nwDoorL').focus(),40);
@@ -347,7 +358,8 @@ function leave(){stopIdle();W=null;clearAmb();}
 SCREENS.push('watch');
 const host=document.createElement('section');host.id='watch';host.className='screen';host.hidden=true;host.setAttribute('aria-labelledby','nwTitle');
 host.innerHTML=`<div class="menuBg"><h1 id="nwTitle" class="title" tabindex="-1">Night Watch</h1>
-<div id="nwLobby"><p id="nwIntro"></p><div class="stack"><button id="nwStart" class="primary"></button><button id="nwHowBtn"></button><h2 id="nwPickH"></h2><div id="nwPick" class="stack"></div><button id="nwBack"></button></div></div>
+<div id="nwLobby"><p id="nwBeta"></p><p id="nwIntro"></p><div class="stack"><button id="nwStart" class="primary"></button><button id="nwHowBtn"></button><button id="nwFbBtn"></button>
+<div id="nwFb" class="stack" hidden><h2 id="nwFbH" tabindex="-1"></h2><p id="nwFbNote"></p><div id="nwFbFits" class="stack"></div><label for="nwFbText" id="nwFbL"></label><textarea id="nwFbText" rows="4" maxlength="1000"></textarea><button id="nwFbSend" class="primary"></button></div><h2 id="nwPickH"></h2><div id="nwPick" class="stack"></div><button id="nwBack"></button></div></div>
 <div id="nwPlay" hidden><p id="nwStat" aria-live="off"></p><div class="stack">
 <button id="nwSkip"></button><button id="nwDoorL" class="primary"></button><button id="nwDoorR" class="primary"></button><button id="nwVent"></button>
 <button id="nwListen"></button><button id="nwFlashL"></button><button id="nwFlashR"></button><button id="nwWait"></button>
@@ -357,6 +369,36 @@ host.innerHTML=`<div class="menuBg"><h1 id="nwTitle" class="title" tabindex="-1"
 const gameSec=$('#game');gameSec.parentNode.insertBefore(host,gameSec);
 $('#nwStart').addEventListener('click',()=>start(Math.min(best(),NIGHTS)));
 $('#nwHowBtn').addEventListener('click',how);
+// Feedback goes to the developer's email through Formspree, like reports in Dungeon Descent.
+const FB_URL='https://formspree.io/f/mkjnkenn';let fbFits='';
+function openFeedback(){
+  const f=$('#nwFb');f.hidden=false;fbFits='';
+  $('#nwFbH').textContent=L('Does Night Watch fit Accessible Backrooms?','A Vigia Noturna combina com o Backrooms Acessível?');
+  $('#nwFbNote').textContent=L('Your answer goes to the developer by email. Do not include personal information.','Sua resposta vai para o desenvolvedor por e-mail. Não inclua informações pessoais.');
+  const fits=$('#nwFbFits');fits.innerHTML='';
+  [['yes','Yes, keep it','Sim, mantenha'],['no','No, it does not fit','Não, não combina'],['unsure','Not sure','Não tenho certeza']].forEach(([v,en,pt])=>{
+    const b=document.createElement('button');b.textContent=LANG==='pt'?pt:en;b.setAttribute('aria-pressed','false');
+    b.addEventListener('click',()=>{fbFits=v;fits.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));say(L('Selected: {a}','Selecionado: {a}',{a:b.textContent}),{log:false});});
+    fits.appendChild(b);});
+  $('#nwFbL').textContent=L('Anything else? What would make it better? (optional)','Mais alguma coisa? O que deixaria melhor? (opcional)');
+  $('#nwFbSend').textContent=L('Send','Enviar');
+  setTimeout(()=>$('#nwFbH').focus(),40);
+  say(L('Feedback. Does Night Watch fit Accessible Backrooms? Choose yes, no, or not sure, add a comment if you want, then press Send.','Opinião. A Vigia Noturna combina com o Backrooms Acessível? Escolha sim, não, ou não tenho certeza, escreva um comentário se quiser, e aperte Enviar.'),{log:false});
+}
+async function sendFeedback(){
+  const msg=$('#nwFbText').value.trim();
+  if(!fbFits&&!msg)return say(L('Choose an answer or write a comment first.','Escolha uma resposta ou escreva um comentário primeiro.'),{log:false});
+  $('#nwFbSend').disabled=true;
+  try{
+    const r=await fetch(FB_URL,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},
+      body:JSON.stringify({_subject:'Night Watch feedback (Accessible Backrooms)',game:'Accessible Backrooms',mode:'Night Watch beta',fits:fbFits||'(no answer)',message:msg||'(none)',language:LANG,best_night:best()})});
+    if(!r.ok)throw new Error(r.status);
+    $('#nwFbText').value='';$('#nwFb').hidden=true;$('#nwFbBtn').focus();
+    say(L('Thank you! Your feedback was sent.','Obrigado! Sua opinião foi enviada.'));
+  }catch(e){say(L('Sorry, the feedback could not be sent. Check your internet connection and try again.','Desculpe, não foi possível enviar. Verifique sua internet e tente de novo.'));}
+  $('#nwFbSend').disabled=false;
+}
+$('#nwFbBtn').addEventListener('click',openFeedback);$('#nwFbSend').addEventListener('click',sendFeedback);
 $('#nwBack').addEventListener('click',()=>{leave();showMain();});
 $('#nwDoorL').addEventListener('click',()=>toggle('L'));$('#nwDoorR').addEventListener('click',()=>toggle('R'));$('#nwVent').addEventListener('click',()=>toggle('V'));
 $('#nwFlashL').addEventListener('click',()=>flash('L'));$('#nwFlashR').addEventListener('click',()=>flash('R'));
@@ -367,7 +409,7 @@ $('#nwStatus').addEventListener('click',status);$('#nwHelp').addEventListener('c
 $('#nwAgain').addEventListener('click',e=>start(+e.currentTarget.dataset.n));$('#nwEndMenu').addEventListener('click',()=>lobby());
 
 // main menu button
-const mb=document.createElement('button');mb.id='mWatch';mb.innerHTML='<span data-l="en">Night Watch</span><span data-l="pt">Vigia Noturna</span>';
+const mb=document.createElement('button');mb.id='mWatch';mb.innerHTML='<span data-l="en">Night Watch (Beta)</span><span data-l="pt">Vigia Noturna (Beta)</span>';
 $('#mEndless').after(mb);mb.addEventListener('click',()=>{initAudio();lobby();});
 
 
