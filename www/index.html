@@ -57,6 +57,13 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 .bArt{display:block;width:100%;max-width:480px;border-radius:10px;margin:.4em 0}
 #view3d{position:absolute;left:0;top:0;width:100%;height:100%;aspect-ratio:auto}
 #hud{display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 0;font-weight:650;font-size:.95rem}
+.pad button.blocked{opacity:.32}
+.compass{margin:6px 0;padding:8px 12px;border:2px solid #f2c94b;border-radius:10px;font-weight:700;font-size:1.05rem;display:flex;align-items:center;gap:10px}
+.compass .arrow{font-size:2rem;line-height:1}
+.lostTip{margin:6px 0;padding:8px 12px;border-radius:10px;background:#3a2f0a;color:#ffe08a;font-weight:650}
+[data-cmd="listen"].glow{animation:listenGlow 1.2s ease-in-out infinite}
+@keyframes listenGlow{0%,100%{box-shadow:0 0 0 0 #f2c94b00}50%{box-shadow:0 0 0 4px #f2c94bcc}}
+@media (prefers-reduced-motion:reduce){[data-cmd="listen"].glow{animation:none;box-shadow:0 0 0 3px #f2c94b}}
 #hud span b{color:var(--accent)}
 #sanityBar{height:10px;background:#333;border-radius:6px;overflow:hidden;margin-top:4px}
 #sanityFill{height:100%;background:var(--ok);width:100%;transition:width .3s}
@@ -272,6 +279,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 1.2: easier to find your way</h2>
+      <ul>
+        <li>For players who look at the screen: movement buttons that lead into a wall are now dimmed, so you can see which ways are open.</li>
+        <li>When you hear the exit, an arrow appears at the top of the screen showing which way the sound comes from, how many steps away it is, and which opening leads there.</li>
+        <li>If you wander for a while without listening, the game reminds you: tap Listen to hear where the exit is. The Listen button glows until you do.</li>
+        <li>Screen reader players already hear all of this, so nothing changes for VoiceOver.</li>
+      </ul>
       <h2>Version 1.1: Night Watch (Beta)</h2>
       <ul>
         <li>Fixed: the music kept playing after you left the app, even from the home screen, and drained the battery. Now all sound pauses when you leave and picks up where it was when you come back.</li>
@@ -539,6 +553,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 1.2: mais fácil achar o caminho</h2>
+      <ul>
+        <li>Para quem olha a tela: os botões de movimento que levam a uma parede agora ficam apagados, então dá para ver quais caminhos estão abertos.</li>
+        <li>Quando você ouve a saída, uma seta aparece no topo da tela mostrando de que lado vem o som, a quantos passos está, e qual abertura leva até lá.</li>
+        <li>Se você andar um tempo sem escutar, o jogo lembra: toque em Escutar para ouvir onde fica a saída. O botão Escutar brilha até você tocar.</li>
+        <li>Quem usa leitor de tela já ouve tudo isso, então nada muda no VoiceOver.</li>
+      </ul>
       <h2>Versão 1.1: Vigia Noturna (Beta)</h2>
       <ul>
         <li>Corrigido: a música continuava tocando depois que você saía do app, até na tela inicial, e gastava a bateria. Agora todo o som pausa quando você sai e continua de onde parou quando você volta.</li>
@@ -916,6 +937,8 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       <button id="dMenu"><span data-l="en">Main menu</span><span data-l="pt">Menu principal</span></button>
     </div>
     <div id="hud" aria-hidden="true"></div>
+    <div id="exitCompass" class="compass" aria-hidden="true" hidden></div>
+    <div id="lostTip" class="lostTip" aria-hidden="true" hidden></div>
     <div id="sanityBar" aria-hidden="true"><div id="sanityFill"></div></div>
     <h2 class="sr-only"><span data-l="en">Movement</span><span data-l="pt">Movimento</span></h2>
     <div class="pad">
@@ -978,7 +1001,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='1.1';
+const VERSION='1.2';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -2900,7 +2923,36 @@ function updateHUD(){
   if(G.maze&&G.state==='play'){const tr=nearTrader();if(!tr)$('#tradeBtns').hidden=true;else if($('#tradeBtns').hidden)renderTrades(tr);}
   {const atEx=G.exit&&G.x===G.exit[0]&&G.y===G.exit[1];$('#codeBtn').hidden=!(G.code&&!G.code.done&&atEx);$('#memBtns').hidden=!(G.mem&&!G.mem.done&&atEx);}
   $('#hud').innerHTML=bits.map(([k,v])=>`<span>${k?k+': ':''}<b>${v}</b></span>`).join('');
+  updateGuide();
   const fill=$('#sanityFill'); fill.style.width=G.sanity+'%'; fill.style.background=G.sanity>50?'var(--ok)':G.sanity>25?'#f2c94b':'var(--danger)';
+}
+/* ---------- guidance for sighted players ----------
+   The narrator says which ways are open and, on Listen, where the exit is. Sighted players
+   who play without the narrator never get that, so the screen shows the same things:
+   moves into a wall are dimmed, the exit gets an arrow while its sound is heard, and
+   players who wander a long time without listening get a tip. All of it is hidden from
+   screen readers, which already hear the same information. */
+Object.assign(PT,{'Exit sound: {w}, about {n} steps.':'Som da saída: {w}, a uns {n} passos.','Exit sound: {w}, 1 step.':'Som da saída: {w}, a 1 passo.',
+  'Way there: {route}.':'Caminho: {route}.','Lost? Tap Listen to hear where the exit is.':'Perdido? Toque em Escutar para ouvir onde fica a saída.'});
+const GUIDE_PAD={forward:0,right:1,back:2,left:3};
+const ARROWS=['↑','↗','→','↘','↓','↙','←','↖'];
+let compassTimer=null;
+function showExitCompass(d,s){
+  const el=$('#exitCompass');if(!el||!G.exit)return;
+  const {w,pan}=relDirWords(G.exit[0],G.exit[1]);
+  const ang=Math.atan2(pan.x,-pan.z)*180/Math.PI; // 0 ahead, 90 right
+  const arrow=ARROWS[((Math.round(ang/45)%8)+8)%8];
+  el.innerHTML='<span class="arrow">'+arrow+'</span><span>'+(d===1?t('Exit sound: {w}, 1 step.',{w}):t('Exit sound: {w}, about {n} steps.',{w,n:d}))+' '+t('Way there: {route}.',{route:routeWords(s)})+'</span>';
+  el.hidden=false;clearTimeout(compassTimer);compassTimer=setTimeout(()=>{el.hidden=true;},12000);
+}
+function updateGuide(){
+  const play=!!(G.maze&&G.state==='play');
+  $$('.pad [data-cmd]').forEach(b=>{const r=GUIDE_PAD[b.dataset.cmd];if(r===undefined)return;b.classList.toggle('blocked',play&&!isOpen(G.x,G.y,abs(r)));});
+  const tip=$('#lostTip'),lb=$('[data-cmd="listen"]');if(!tip)return;
+  const lost=play&&G.mode!=='tutorial'&&(G.steps||0)-(G.lastListenStep||0)>=14;
+  tip.hidden=!lost;if(lost)tip.textContent=t('Lost? Tap Listen to hear where the exit is.');
+  if(lb)lb.classList.toggle('glow',lost);
+  if(!play){const c=$('#exitCompass');if(c)c.hidden=true;}
 }
 function drain(mult=1){let d=DF().drain*mult;if(G.sneak&&!has('quiet'))d*=1.2;if(isDark(G.x,G.y)&&!G.inv.light)d*=L().dark>=1?1.15:1.35;if(L().calm)d*=0.4;G.sanity=Math.max(0,G.sanity-d);
   if(G.inv.light){G.inv.battery=Math.max(0,G.inv.battery-(has('steady')?0.75:1.5));if(G.inv.battery<=0){G.inv.light=false;G.extras.push({text:t('Your flashlight flickers and dies.')});sfx(clickSound,false);}}}
@@ -3067,6 +3119,7 @@ function exitCue(auto){
   const {pan,behind}=relDirWords(G.exit[0],G.exit[1]);
   if(!auto||d<=3)sfx(beacon,pan,clamp(1.1-d*0.07,0.15,1),clamp(d*0.06+(behind?0.2:0),0,0.85));
   if(s<0)return '';
+  showExitCompass(d,s);
   return t(d===1?'You hear {what}. The way to it leads {route}, 1 step away.':'You hear {what}. The way to it leads {route}, about {n} steps away.',{what:LX('exitWhat'),route:routeWords(s),n:d});
 }
 const PUZN={breaker:{en:['a breaker switch','breaker switches','flip'],pt:['um disjuntor','disjuntores','acionar']},
@@ -3358,6 +3411,7 @@ function look(){
 }
 function listen(){
   if(G.state!=='play')return notPlaying();
+  G.lastListenStep=G.steps||0; updateGuide();
   if(G.sanity<25&&Math.random()<0.3)return say(t('You try to listen, but the sounds come from everywhere at once. You cannot focus.'));
   if(G.mem&&!G.mem.done&&G.x===G.exit[0]&&G.y===G.exit[1])return say(memIntro());
   const ex=(L().locked&&!G.inv.keycard)?keycardCue():(G.puz&&!G.puz.done)?puzzleCue():(G.code&&!G.code.done&&G.code.found.includes(false))?clueCue():(G.code&&!G.code.done&&!codeStrict())?exitCue(false)+' '+codeSoFar()+' '+t('At the door, say code, then the numbers.'):exitCue(false);
