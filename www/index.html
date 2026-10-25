@@ -274,6 +274,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <div data-l="en">
       <h2>Version 1.1: Night Watch (Beta)</h2>
       <ul>
+        <li>Fixed: the music kept playing after you left the app, even from the home screen, and drained the battery. Now all sound pauses when you leave and picks up where it was when you come back.</li>
         <li>New mode, Night Watch: you are locked in a security office deep in the Backrooms. Survive six nights.</li>
         <li>Night Watch is a beta: an early experiment that may change a lot or be removed. Use Send feedback in Night Watch to tell us if it fits Accessible Backrooms.</li>
         <li>With a screen reader, time in Night Watch only passes when you act, and the tape waits for you to start the night.</li>
@@ -540,6 +541,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <div data-l="pt">
       <h2>Versão 1.1: Vigia Noturna (Beta)</h2>
       <ul>
+        <li>Corrigido: a música continuava tocando depois que você saía do app, até na tela inicial, e gastava a bateria. Agora todo o som pausa quando você sai e continua de onde parou quando você volta.</li>
         <li>Novo modo, Vigia Noturna: você está trancado numa sala de segurança no fundo dos Backrooms. Sobreviva seis noites.</li>
         <li>A Vigia Noturna é um beta: um experimento inicial que pode mudar muito ou ser removido. Use Enviar opinião na Vigia Noturna para contar se ela combina com o Backrooms Acessível.</li>
         <li>Com leitor de tela, o tempo na Vigia Noturna só passa quando você age, e a fita espera você começar a noite.</li>
@@ -2117,14 +2119,28 @@ function fadeTrack(name,v,sec=2){if(!A.ctx)return;if(name==='musicbox'){musicBox
   if(v>0&&tr.el.paused){const pr=tr.el.play();if(pr&&pr.catch)pr.catch(()=>{});}
   clearTimeout(tr.to);if(v===0)tr.to=setTimeout(()=>{if(tr.want===0)tr.el.pause();},sec*1000+800);}
 // iPhone pauses web audio when the microphone or a call takes over. Bring it back.
-function audioWake(){if(!A.ctx)return;try{if(A.ctx.state!=='running'&&A.ctx.state!=='closed')A.ctx.resume().catch(()=>{});}catch(e){}
+function audioWake(){if(!A.ctx||A.bg)return;try{if(A.ctx.state!=='running'&&A.ctx.state!=='closed')A.ctx.resume().catch(()=>{});}catch(e){}
   Object.values(TR).forEach(tr=>{if(tr.want>0&&tr.el.paused){const pr=tr.el.play();if(pr&&pr.catch)pr.catch(()=>{});}});
   if(A.master&&A.master.gain.value<0.01&&performance.now()-(G.lastJump||0)>6000){A.master.gain.cancelScheduledValues(now());A.master.gain.setValueAtTime(0.9,now());}}
 setInterval(audioWake,1000);
 // Safari 17+: tell iOS this page plays sound (and records when voice commands are on), so speech and the mic do not shut the music off
 function audioSession(rec){try{if(navigator.audioSession)navigator.audioSession.type=rec?'play-and-record':'playback';}catch(e){}}
 ['pointerdown','keydown','touchend'].forEach(ev=>document.addEventListener(ev,audioWake,{passive:true,capture:true}));
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(audioWake,300);});
+// Leaving the app (home screen, another app, locking the phone) pauses all sound so it does not keep
+// playing in the background and draining the battery. audioWake above stays off until the player is back.
+function audioBackground(away){
+  if(away===!!A.bg)return; A.bg=away;
+  if(away){
+    Object.values(TR).forEach(tr=>{try{tr.el.pause();}catch(e){}});
+    try{if('speechSynthesis' in window)speechSynthesis.cancel();}catch(e){}
+    try{if(A.ctx&&A.ctx.state==='running')A.ctx.suspend();}catch(e){}
+  }else setTimeout(audioWake,300);
+}
+document.addEventListener('visibilitychange',()=>audioBackground(document.hidden));
+window.addEventListener('pagehide',()=>audioBackground(true));
+window.addEventListener('pageshow',()=>{if(!document.hidden)audioBackground(false);});
+try{const AppP=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.App;
+  if(AppP&&AppP.addListener)AppP.addListener('appStateChange',st=>audioBackground(!st.isActive));}catch(e){}
 function duck(on){if(!A.ctx||!A.music)return;const v=(on&&S.duck)?S.music*0.35:S.music;A.music.gain.cancelScheduledValues(now());A.music.gain.setTargetAtTime(v,now(),on?0.12:0.6);}
 function unlockTracks(){TRACKS.forEach(n=>{const tr=track(n);const pr=tr.el.play();if(pr&&pr.then)pr.then(()=>{if(tr.want===0)tr.el.pause();}).catch(()=>{});});}
 let chaseLevel=-1;
