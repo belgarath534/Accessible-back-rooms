@@ -58,6 +58,18 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 #view3d{position:absolute;left:0;top:0;width:100%;height:100%;aspect-ratio:auto}
 #hud{display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 0;font-weight:650;font-size:.95rem}
 .pad button.blocked{opacity:.32}
+body.vis [data-cmd="listen"]{display:none}
+body.vis #viewWrap{touch-action:none;-webkit-user-select:none;user-select:none}
+#viewWrap img{-webkit-user-drag:none}
+body:not(.vis) .vo{display:none} body.vis .nv{display:none}
+body.vis .memB.m0{background:#7a1414;border-color:#ff5a5a;color:#fff} body.vis .memB.m1{background:#14602a;border-color:#5aff8a;color:#fff} body.vis .memB.m2{background:#16357a;border-color:#5a9bff;color:#fff}
+.caption{margin:8px 0;padding:10px 14px;background:#050505;border:2px solid var(--border);border-radius:10px;font-size:1.05rem;line-height:1.45;color:#f5f0e0;max-height:9.5em;overflow:auto}
+#dread{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(ellipse at center,rgba(0,0,0,0) 40%,rgba(140,0,0,.9) 100%)}
+.keypad{margin:8px 0;padding:12px;border:3px solid #f2c94b;border-radius:12px;background:#111}
+.kpTitle{margin:0 0 4px;font-weight:700}
+.kpScreen{margin:0 0 10px;font:700 2.2rem ui-monospace,monospace;text-align:center;letter-spacing:.35em;color:#7dff9a}
+.kpKeys{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kpKeys button{font-size:1.4rem;padding:14px 0}
 .compass{margin:6px 0;padding:8px 12px;border:2px solid #f2c94b;border-radius:10px;font-weight:700;font-size:1.05rem;display:flex;align-items:center;gap:10px}
 .compass .arrow{font-size:2rem;line-height:1}
 .pad button.way{border:3px solid #f2c94b;box-shadow:0 0 10px #f2c94b88}
@@ -66,6 +78,7 @@ canvas{display:block;width:100%;height:auto;aspect-ratio:16/9}
 #sanityFill{height:100%;background:var(--ok);width:100%;transition:width .3s}
 .pad{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
 .acts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0}
+#memBtns:not([hidden]){display:contents}
 @media (min-width:640px){.acts{grid-template-columns:repeat(5,minmax(0,1fr))}}
 .acts button{min-height:52px;padding:10px 6px}
 .pad button,.acts button{min-width:0;overflow-wrap:anywhere;hyphens:auto}
@@ -98,6 +111,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       <div class="stack">
         <button id="enterNarrated" class="primary" autofocus><span data-l="en">Enter, with spoken narration</span><span data-l="pt">Entrar, com narração falada</span></button>
         <button id="enterSR" class="primary"><span data-l="en">Enter, I use a screen reader</span><span data-l="pt">Entrar, eu uso leitor de tela</span></button>
+        <button id="enterVisual" class="primary"><span data-l="en">Enter, I want to see the game (Visual mode)</span><span data-l="pt">Entrar, quero ver o jogo (Modo visual)</span></button>
       </div>
       <p class="version"><span data-l="en">Version</span><span data-l="pt">Versão</span> <span class="ver"></span></p>
     </div>
@@ -179,7 +193,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <div class="setRow" role="group" aria-labelledby="sl1"><span class="lab" id="sl1"><span data-l="en">Controls</span><span data-l="pt">Controles</span></span><div class="opts">
       <button class="choice" data-set="voice" data-val="1"><span data-l="en">Voice commands</span><span data-l="pt">Comandos de voz</span></button><button class="choice" data-set="voice" data-val="0"><span data-l="en">Buttons only</span><span data-l="pt">Só botões</span></button></div></div>
     <div class="setRow" role="group" aria-labelledby="sl2"><span class="lab" id="sl2"><span data-l="en">Narration</span><span data-l="pt">Narração</span></span><div class="opts">
-      <button class="choice" data-set="narr" data-val="1"><span data-l="en">Spoken narration</span><span data-l="pt">Narração falada</span></button><button class="choice" data-set="narr" data-val="0"><span data-l="en">Screen reader</span><span data-l="pt">Leitor de tela</span></button></div></div>
+      <button class="choice" data-set="narr" data-val="1"><span data-l="en">Spoken narration</span><span data-l="pt">Narração falada</span></button><button class="choice" data-set="narr" data-val="0"><span data-l="en">Screen reader</span><span data-l="pt">Leitor de tela</span></button><button class="choice" data-set="narr" data-val="vis"><span data-l="en">Visual mode</span><span data-l="pt">Modo visual</span></button></div></div>
     <div class="setRow" role="group" aria-labelledby="sl3"><span class="lab" id="sl3"><span data-l="en">Speech speed</span><span data-l="pt">Velocidade da fala</span>: <span id="rateVal">1.1</span></span><div class="opts">
       <button id="slowerBtn"><span data-l="en">Slower</span><span data-l="pt">Mais devagar</span></button><button id="fasterBtn"><span data-l="en">Faster</span><span data-l="pt">Mais rápido</span></button></div></div>
     <div class="setRow" role="group" aria-labelledby="sl4"><span class="lab" id="sl4"><span data-l="en">Music volume</span><span data-l="pt">Volume da música</span></span><div class="opts">
@@ -276,6 +290,15 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 1.3: Visual mode</h2>
+      <ul>
+        <li>New: Visual mode, for players who want to see the game instead of listening to it. Choose "I want to see the game" on the first screen, or Visual mode in Settings under Narration.</li>
+        <li>The narrator stays quiet and the story shows under the picture. Swipe the picture to turn and walk. The Listen button is gone: follow the gold path and the map.</li>
+        <li>Visual puzzles: door code numbers are scrawled on the walls (some only show with your flashlight), switches have scratch marks that tell you the order, and the drain valve flashes colored lights you have to repeat on a keypad of colors. The exit door has a real keypad.</li>
+        <li>Scarier for everyone who looks at the screen: the edges of the picture bleed red when something is close, the lights flicker, monsters twitch when they are near you, and sometimes something stands at the end of the hallway. Sometimes.</li>
+        <li>The gold path now leads to what you need next, like the keycard, a switch or a code number, before it leads to the exit.</li>
+        <li>Nothing changes for VoiceOver or spoken narration.</li>
+      </ul>
       <h2>Version 1.2: easier to find your way</h2>
       <ul>
         <li>For players who look at the screen: movement buttons that lead into a wall are now dimmed, so you can see which ways are open.</li>
@@ -550,6 +573,15 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 1.3: Modo visual</h2>
+      <ul>
+        <li>Novo: Modo visual, para quem quer ver o jogo em vez de ouvir. Escolha "quero ver o jogo" na primeira tela, ou Modo visual nos Ajustes, em Narração.</li>
+        <li>O narrador fica quieto e a história aparece embaixo da imagem. Deslize na imagem para virar e andar. O botão Escutar some: siga o caminho dourado e o mapa.</li>
+        <li>Quebra-cabeças visuais: os números do código da porta estão rabiscados nas paredes (alguns só aparecem com a lanterna), os interruptores têm marcas riscadas que mostram a ordem, e a válvula do ralo pisca luzes coloridas que você tem que repetir com botões de cores. A porta da saída tem um teclado de verdade.</li>
+        <li>Mais assustador para quem olha a tela: as bordas da imagem ficam vermelhas quando algo está perto, as luzes piscam, os monstros se contorcem quando estão perto de você, e às vezes tem alguém parado no fim do corredor. Às vezes.</li>
+        <li>O caminho dourado agora leva primeiro ao que você precisa, como o cartão, um interruptor ou um número do código, e só depois à saída.</li>
+        <li>Nada muda no VoiceOver nem na narração falada.</li>
+      </ul>
       <h2>Versão 1.2: mais fácil achar o caminho</h2>
       <ul>
         <li>Para quem olha a tela: os botões de movimento que levam a uma parede agora ficam apagados, então dá para ver quais caminhos estão abertos.</li>
@@ -928,6 +960,18 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       <canvas id="view3d" aria-hidden="true"></canvas>
       <canvas id="view" width="960" height="540" aria-hidden="true"></canvas>
       <img id="artCard" alt="" hidden>
+      <div id="dread" aria-hidden="true"></div>
+    </div>
+    <div id="caption" class="caption" aria-hidden="true" hidden></div>
+    <div id="keypad" class="keypad" role="group" aria-labelledby="kpTitle" hidden>
+      <p id="kpTitle" class="kpTitle"><span data-l="en">Door keypad</span><span data-l="pt">Teclado da porta</span></p>
+      <p id="kpScreen" class="kpScreen" aria-live="polite">_ _ _</p>
+      <div class="kpKeys">
+        <button data-kp="1">1</button><button data-kp="2">2</button><button data-kp="3">3</button>
+        <button data-kp="4">4</button><button data-kp="5">5</button><button data-kp="6">6</button>
+        <button data-kp="7">7</button><button data-kp="8">8</button><button data-kp="9">9</button>
+        <button data-kp="clear"><span data-l="en">Clear</span><span data-l="pt">Apagar</span></button><button data-kp="0">0</button><button data-kp="close"><span data-l="en">Close</span><span data-l="pt">Fechar</span></button>
+      </div>
     </div>
     <div id="deadBar" class="stack" hidden>
       <button id="dRetry" class="primary"><span data-l="en">Try again</span><span data-l="pt">Tentar de novo</span></button>
@@ -949,7 +993,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
     <div class="acts">
       <button data-cmd="listen"><span data-l="en">Listen</span><span data-l="pt">Escutar</span></button>
       <button data-cmd="code" id="codeBtn" hidden><span data-l="en">Enter code</span><span data-l="pt">Digitar código</span></button>
-      <span id="memBtns" hidden><button data-cmd="note" data-n="0"><span data-l="en">Low note</span><span data-l="pt">Nota grave</span></button><button data-cmd="note" data-n="1"><span data-l="en">Middle note</span><span data-l="pt">Nota média</span></button><button data-cmd="note" data-n="2"><span data-l="en">High note</span><span data-l="pt">Nota aguda</span></button></span>
+      <span id="memBtns" hidden><button data-cmd="note" data-n="0" class="memB m0"><span class="nv"><span data-l="en">Low note</span><span data-l="pt">Nota grave</span></span><span class="vo"><span data-l="en">Red</span><span data-l="pt">Vermelho</span></span></button><button data-cmd="note" data-n="1" class="memB m1"><span class="nv"><span data-l="en">Middle note</span><span data-l="pt">Nota média</span></span><span class="vo"><span data-l="en">Green</span><span data-l="pt">Verde</span></span></button><button data-cmd="note" data-n="2" class="memB m2"><span class="nv"><span data-l="en">High note</span><span data-l="pt">Nota aguda</span></span><span class="vo"><span data-l="en">Blue</span><span data-l="pt">Azul</span></span></button><button id="memShow" class="vo"><span data-l="en">Show the lights again</span><span data-l="pt">Mostrar as luzes de novo</span></button></span>
       <button data-cmd="use"><span data-l="en">Use</span><span data-l="pt">Usar</span></button>
       <button data-cmd="look"><span data-l="en">Look</span><span data-l="pt">Olhar</span></button>
       <button data-cmd="picture"><span data-l="en">Describe picture</span><span data-l="pt">Descrever imagem</span></button>
@@ -997,7 +1041,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='1.2';
+const VERSION='1.3';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -1461,6 +1505,7 @@ const PT={
 
  'You already used this one.':'Você já usou este.',
  'There is {obj} here. It makes a {pitch} sound. Say use to {verb} it.':'Há {obj} aqui. Faz um som {pitch}. Diga usar para {verb}.',
+ 'There is {obj} here, with scratch marks on it. Tap Use to {verb} it.':'Há {obj} aqui, com marcas riscadas. Toque em Usar para {verb}.',
  'The exit is sealed. {n} of 3 {objs} are done. Say listen to find the rest.':'A saída está lacrada. Você já usou {n} de 3 {objs}. Diga escutar para achar o resto.',
  'The exit is sealed. Somewhere on this level are three {objs}. Use them in order, from the lowest sound to the highest. If you get the order wrong, an alarm calls every monster to you.':'A saída está lacrada. Em algum lugar deste nível há três {objs}. Use na ordem, do som mais grave ao mais agudo. Se errar a ordem, um alarme chama todos os monstros até você.',
  'The exit is sealed. {n} of 3 {objs} are done.':'A saída está lacrada. Você já usou {n} de 3 {objs}.',
@@ -1573,7 +1618,7 @@ function applyLang(){
 }
 
 /* ============================== settings ============================== */
-const S={ voice:lsGet('br_voice',true), narr:lsGet('br_narr',true), rate:lsGet('br_rate',1.1), music:lsGet('br_musicv',0.7),
+const S={ voice:lsGet('br_voice',true), narr:lsGet('br_narr',true), vis:lsGet('br_vis',false), rate:lsGet('br_rate',1.1), music:lsGet('br_musicv',0.7),
   fx:lsGet('br_fx',1), scares:lsGet('br_scares',true), gfx:lsGet('br_gfx','3d'), hard:false, vvol:lsGet('br_vvol',1), duck:lsGet('br_duck',true), diff:lsGet('br_diff','normal'), mic:false };
 const DIFFS={
   easy:{label:'Easy',drain:0.5,hit:18,scare:5,water:2,chase:0.7,idle:15000,sense:-1,moth:3},
@@ -2669,7 +2714,7 @@ function openSetup(){
 }
 function syncChoices(){
   $$('.choice').forEach(b=>{const k=b.dataset.set,v=b.dataset.val;let cur;
-    if(k==='voice')cur=S.voice?'1':'0'; else if(k==='narr')cur=S.narr?'1':'0'; else if(k==='scares')cur=S.scares?'1':'0';
+    if(k==='voice')cur=S.voice?'1':'0'; else if(k==='narr')cur=S.vis?'vis':S.narr?'1':'0'; else if(k==='scares')cur=S.scares?'1':'0';
     else if(k==='music')cur=String(S.music); else if(k==='fx')cur=String(S.fx); else if(k==='diff')cur=S.diff; else if(k==='gfx')cur=S.gfx; else if(k==='hard')cur=S.hard?'1':'0'; else if(k==='vvol')cur=String(S.vvol); else if(k==='duck')cur=S.duck?'1':'0'; else if(k==='lang')cur=LANG;
     b.setAttribute('aria-pressed',String(cur===v));});
   $('#rateVal').textContent=S.rate;
@@ -2678,7 +2723,7 @@ function applySetting(k,v,quiet){
   let msg='';
   if(k==='lang'){LANG=v==='pt'?'pt':'en';lsSet('br_lang',LANG);applyLang();msg=t('English selected.');}
   if(k==='voice'){S.voice=v==='1';lsSet('br_voice',S.voice);setMic(S.voice,true);msg=t(S.voice?(SR?'Voice commands on.':'Voice commands are not supported in this browser.'):'Buttons only. Microphone off.');}
-  if(k==='narr'){S.narr=v==='1';lsSet('br_narr',S.narr);live.setAttribute('aria-live',S.narr?'off':'assertive');if(!S.narr&&'speechSynthesis' in window)speechSynthesis.cancel();msg=t(S.narr?'Spoken narration on.':'Screen reader mode. Narration off.');}
+  if(k==='narr'){S.vis=v==='vis';lsSet('br_vis',S.vis);document.body.classList.toggle('vis',S.vis);S.narr=v==='1';lsSet('br_narr',S.narr);live.setAttribute('aria-live',S.narr?'off':'assertive');if(!S.narr&&'speechSynthesis' in window)speechSynthesis.cancel();msg=S.vis?t('Visual mode. Narration off. The story shows under the picture.'):t(S.narr?'Spoken narration on.':'Screen reader mode. Narration off.');}
   if(k==='music'){S.music=+v;lsSet('br_musicv',S.music);if(A.ctx)A.music.gain.setTargetAtTime(S.music,now(),0.2);msg=t('Music volume {v}.',{v:t({0:'off',0.4:'low',0.7:'medium',1:'high'}[S.music])});}
   if(k==='fx'){S.fx=+v;lsSet('br_fx',S.fx);if(A.ctx)A.fx.gain.setTargetAtTime(S.fx,now(),0.1);msg=t('Sound effects {v}.',{v:t({0.5:'low',0.75:'medium',1:'high'}[S.fx])});sfx(pickup);}
   if(k==='scares'){S.scares=v==='1';lsSet('br_scares',S.scares);msg=t(S.scares?'Jump scares on. Good luck.':'Jump scares off.');}
@@ -2768,7 +2813,7 @@ function newLevel(){
   if(G.survOn){const c=cells.filter(([x,y])=>dist[y][x]>=3&&dist[y][x]<=bd-1);const p=pick(c.length?c:cells);G.mons.push({type:'survivor',x:p[0],y:p[1],name:pick(SURV_NAMES),fake:Math.random()<(lvn2>=8?0.45:0.3),greeted:false,helped:false});}
   if(G.mode==='story'&&G.ngp&&!lv.calm&&!lv.secret&&!lv.run){const far=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));for(let i=0;i<Math.min(3,G.ngp);i++){const p=pick(far.length?far:cells);G.mons.push({type:['hound','howler','wretch'][i%3],x:p[0],y:p[1],cool:4});}}
   G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.ev=null; G.cakeTold=false; G.partyTold=false; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
-  G.wasWet=false; G.mark=null; G.markSought=false; G.caughtLevel=false; G.inHide=false; G.hideNear=false; G.watchFreeze=0; G.train=0;
+  G.wasWet=false; G.wallWriting=new Map(); G.writingAt=0; G.mark=null; G.markSought=false; G.caughtLevel=false; G.inHide=false; G.hideNear=false; G.watchFreeze=0; G.train=0;
   G.spots=new Map(); {const n=lv.hides??(lv.calm||lv.run||lv.secret||lv.water?0:3);const sc=cells.filter(([x,y])=>dist[y][x]>=2&&!G.items.has(key(x,y))&&!isHazard(x,y)&&!isWater(x,y));for(let i=0;i<n&&sc.length;i++){const c=sc.splice(rand(sc.length),1)[0];G.spots.set(key(...c),i);}}
   G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
   updateHUD(); ambience(); levelMusic(); if(A.ctx)A.amb.gain.setTargetAtTime(0.7,now(),0.1);
@@ -2929,13 +2974,33 @@ function updateHUD(){
    the route, and a small map in the corner of the view draws the hallways walked so far
    plus the path to the exit. Monsters are never shown. All of it is hidden from screen
    readers, which already hear the same information. */
-Object.assign(PT,{'Way to the exit: {route}, {n} steps.':'Caminho para a saída: {route}, {n} passos.','Way to the exit: {route}, 1 step.':'Caminho para a saída: {route}, 1 passo.',
-  'You are at the exit.':'Você está na saída.'});
+Object.assign(PT,{'Way to the exit: {route}, {steps}.':'Caminho para a saída: {route}, {steps}.','Way to the keycard: {route}, {steps}.':'Caminho para o cartão: {route}, {steps}.',
+  'Way to {obj}: {route}, {steps}.':'Caminho para {obj}: {route}, {steps}.','Way to the next number on the wall: {route}, {steps}.':'Caminho para o próximo número na parede: {route}, {steps}.',
+  'Way to the next scrap of paper: {route}, {steps}.':'Caminho para o próximo papel: {route}, {steps}.','{n} steps':'{n} passos','1 step':'1 passo',
+  'You are at the exit.':'Você está na saída.','It is right here: tap Use.':'Está bem aqui: toque em Usar.',
+  'Visual mode. Narration off. The story shows under the picture.':'Modo visual. Narração desligada. A história aparece embaixo da imagem.',
+  'The exit is sealed. Somewhere on this level are three {objs}, each with scratch marks on it. Use them in order: the one with one mark, then two, then three. If you get the order wrong, an alarm calls every monster to you.':'A saída está lacrada. Em algum lugar deste nível há três {objs}, cada um com marcas riscadas. Use na ordem: o de uma marca, depois duas, depois três. Se errar a ordem, um alarme chama todos os monstros até você.',
+  'The exit door here is locked with a keypad code. Three numbers are scrawled on the walls somewhere on this level. Some are in the dark.':'A porta da saída aqui está trancada com um código. Três números estão rabiscados nas paredes em algum lugar deste nível. Alguns estão no escuro.',
+  'The drain that leads out is shut by a valve with three colored lights. You will have to repeat its pattern.':'O ralo que leva para fora está fechado por uma válvula com três luzes coloridas. Você vai ter que repetir a sequência.',
+  'Something is scrawled on the wall here, but it is too dark to read. Turn on your flashlight.':'Tem algo rabiscado na parede aqui, mas está escuro demais para ler. Ligue a lanterna.',
+  'Something is scrawled on the wall here, in red.':'Tem algo rabiscado na parede aqui, em vermelho.',
+  'That is all three numbers. Remember them, then go to the exit door and tap Enter code.':'Esses são os três números. Lembre deles, depois vá até a porta da saída e toque em Digitar código.',
+  'You have seen {n} of 3 numbers.':'Você viu {n} de 3 números.',
+  'Wrong color. The pipes groan, and your head throbs. Start again from the first light. Tap Show the lights again to watch it again.':'Cor errada. Os canos gemem, e sua cabeça lateja. Comece de novo da primeira luz. Toque em Mostrar as luzes de novo para ver outra vez.'});
+// what the player needs next: the keycard, a puzzle object, a code number, or the exit
+function guideGoal(){
+  if(!G.exit)return null; const near=list=>{if(!list.length)return null;const d=bfs(G.x,G.y);let b=null,bd=Infinity;list.forEach(c=>{const v=d[c[1]][c[0]];if(v<bd){bd=v;b=c;}});return b;};
+  const items=re=>{const l=[];G.items.forEach((ty,k)=>{if(re.test(ty))l.push(k.split(',').map(Number));});return l;};
+  if(L().locked&&!G.inv.keycard){const c=near(items(/^keycard$/));if(c)return {x:c[0],y:c[1],kind:'keycard'};}
+  if(G.puz&&!G.puz.done){const c=near(G.puz.cells.filter(q=>!q.on).map(q=>[q.x,q.y]));if(c)return {x:c[0],y:c[1],kind:'puz'};}
+  if(G.code&&!G.code.done&&G.code.found.includes(false)){const c=near(items(/^clue\d$/));if(c)return {x:c[0],y:c[1],kind:'clue'};}
+  return {x:G.exit[0],y:G.exit[1],kind:'exit'};
+}
 const GUIDE_PAD={forward:0,right:1,back:2,left:3};
 const ARROWS=['↑','→','↓','←'];
 function guideRoute(){
-  if(!G.exit)return [];
-  const dist=bfs(G.exit[0],G.exit[1]);if(dist[G.y][G.x]===Infinity)return [];
+  const g=guideGoal(); G.goal=g; if(!g)return [];
+  const dist=bfs(g.x,g.y);if(dist[G.y][G.x]===Infinity)return [];
   const path=[[G.x,G.y]];let x=G.x,y=G.y;
   while(dist[y][x]>0&&path.length<200){let nd=-1;for(let d=0;d<4;d++){if(isOpen(x,y,d)&&dist[y+DY[d]][x+DX[d]]<dist[y][x]){nd=d;break;}}if(nd<0)break;x+=DX[nd];y+=DY[nd];path.push([x,y]);}
   return path;
@@ -2951,9 +3016,11 @@ function updateGuide(){
     else if(!way&&st)st.remove();});
   const el=$('#exitCompass');if(!el)return;
   if(!play||!route.length){el.hidden=true;return;}
-  const n=route.length-1;
-  if(n===0)el.innerHTML='<span class="arrow">★</span><span>'+t('You are at the exit.')+'</span>';
-  else el.innerHTML='<span class="arrow">'+ARROWS[rel(s)]+'</span><span>'+(n===1?t('Way to the exit: {route}, 1 step.',{route:routeWords(s)}):t('Way to the exit: {route}, {n} steps.',{route:routeWords(s),n}))+'</span>';
+  const n=route.length-1, g=G.goal;
+  if(n===0)el.innerHTML='<span class="arrow">★</span><span>'+(g.kind==='puz'?t('It is right here: tap Use.'):t('You are at the exit.'))+'</span>';
+  else{const v={route:routeWords(s),steps:n===1?t('1 step'):t('{n} steps',{n})};
+    const msg=g.kind==='keycard'?t('Way to the keycard: {route}, {steps}.',v):g.kind==='puz'?t('Way to {obj}: {route}, {steps}.',{...v,obj:PUZ()[0]}):g.kind==='clue'?(S.vis?t('Way to the next number on the wall: {route}, {steps}.',v):t('Way to the next scrap of paper: {route}, {steps}.',v)):t('Way to the exit: {route}, {steps}.',v);
+    el.innerHTML='<span class="arrow">'+ARROWS[rel(s)]+'</span><span>'+msg+'</span>';}
   el.hidden=false;
 }
 function drawGuideMap(){
@@ -2970,6 +3037,7 @@ function drawGuideMap(){
       const r=onRoute.has(key(x,y))&&onRoute.has(key(nx,ny));cx.strokeStyle=r?'#f2c94b':'rgba(230,220,180,0.55)';cx.lineWidth=r?C*0.42:C*0.32;cx.beginPath();cx.moveTo(px,py);cx.lineTo(qx,qy);cx.stroke();}
     cx.fillStyle=onRoute.has(key(x,y))?'#f2c94b':'rgba(230,220,180,0.55)';cx.fillRect(px-C*0.2,py-C*0.2,C*0.4,C*0.4);}
   const [ex,ey]=pos(G.exit[0],G.exit[1]);cx.fillStyle='#ff3b30';cx.beginPath();cx.arc(ex,ey,C*0.32,0,7);cx.fill();
+  if(G.goal&&G.goal.kind!=='exit'){const [gx,gy]=pos(G.goal.x,G.goal.y);cx.fillStyle='#fff6c8';cx.font='bold '+Math.round(C*0.8)+'px system-ui';cx.textAlign='center';cx.textBaseline='middle';cx.fillText('★',gx,gy);cx.textBaseline='alphabetic';}
   const [mx,my]=pos(G.x,G.y);cx.fillStyle='#4bd1ff';cx.beginPath();cx.moveTo(mx,my-C*0.4);cx.lineTo(mx+C*0.3,my+C*0.3);cx.lineTo(mx-C*0.3,my+C*0.3);cx.closePath();cx.fill();
   cx.restore();
 }
@@ -3148,11 +3216,11 @@ const PITCH=()=>LANG==='pt'?['grave','médio','agudo']:['low','middle','high'];
 function puzAt(x,y){return G.puz&&G.puz.cells.find(c=>c.x===x&&c.y===y);}
 function puzTone(tone,pan,muffle){const t=now();const f=[220,330,494][tone];const out=spot(pan,0.9,muffle);
   [1,2,3].forEach((m,k)=>{const o=osc(G.puz&&G.puz.kind==='breaker'?'sawtooth':'sine',f*m,t,1.6);const g=gainNode(0);envelope(g,t,0.01,[0.25,0.07,0.03][k],1.4);o.connect(filt('lowpass',2400)).connect(g).connect(out);});}
-function puzzleHint(){if(!G.puz)return '';return ' '+t('The exit is sealed. Somewhere on this level are three {objs}. Use them in order, from the lowest sound to the highest. If you get the order wrong, an alarm calls every monster to you.',{objs:PUZ()[1]});}
+function puzzleHint(){if(!G.puz)return '';if(S.vis)return ' '+t('The exit is sealed. Somewhere on this level are three {objs}, each with scratch marks on it. Use them in order: the one with one mark, then two, then three. If you get the order wrong, an alarm calls every monster to you.',{objs:PUZ()[1]});return ' '+t('The exit is sealed. Somewhere on this level are three {objs}. Use them in order, from the lowest sound to the highest. If you get the order wrong, an alarm calls every monster to you.',{objs:PUZ()[1]});}
 function introText(){let x=LX('intro')+puzzleHint();
   if(has('pathfinder')&&G.exit)x+=' '+t('Pathfinder: your gut says the exit is somewhere {w}.',{w:relDirWords(G.exit[0],G.exit[1]).w});
-  if(G.code)x+=' '+t('The exit door here is locked with a keypad code. Find the three numbers written on scraps of paper.');
-  if(G.mem)x+=' '+t('The drain that leads out is shut by a singing valve. You will have to repeat its tune.');
+  if(G.code)x+=' '+(S.vis?t('The exit door here is locked with a keypad code. Three numbers are scrawled on the walls somewhere on this level. Some are in the dark.'):t('The exit door here is locked with a keypad code. Find the three numbers written on scraps of paper.'));
+  if(G.mem)x+=' '+(S.vis?t('The drain that leads out is shut by a valve with three colored lights. You will have to repeat its pattern.'):t('The drain that leads out is shut by a singing valve. You will have to repeat its tune.'));
   return x;}
 function puzzleCue(){
   const left=G.puz.cells.filter(c=>!c.on); if(!left.length)return exitCue(false); let best=null,bd=Infinity;
@@ -3183,7 +3251,7 @@ function enterCode(v){
   G.noise={x:G.x,y:G.y,turns:5};G.alert=4;sfx(alarmBlare);const parts=[t('Wrong code. The keypad screams an alarm, and something heard it.'),codeSoFar()];
   if(!itemTurn(parts))return; say([...parts,monsterCues(false),pathsText()].filter(Boolean).join(' '));
 }
-const MEMW=()=>LANG==='pt'?['grave','médio','agudo']:['low','middle','high'];
+const MEMW=()=>S.vis?(LANG==='pt'?['Vermelho','Verde','Azul']:['Red','Green','Blue']):LANG==='pt'?['grave','médio','agudo']:['low','middle','high'];
 function memIntro(){if(!G.mem)return '';G.mem.pos=0;G.mem.tune.forEach((n,i)=>setTimeout(()=>sfx(puzTone,n,0,0),1200+i*700));
   return t('The drain is shut by a valve with three pipes. When you touch it, it plays a tune of {n} notes. Repeat the tune: say low, middle or high, one note at a time. Say listen to hear it again.',{n:G.mem.tune.length});}
 function memNote(n){
@@ -3193,7 +3261,7 @@ function memNote(n){
   if(G.mem.tune[G.mem.pos]===n){G.mem.pos++;if(G.mem.pos>=G.mem.tune.length){G.mem.done=true;bumpStat('puzzles');unlock('puzzle');setTimeout(()=>sfx(ping,0,0.8,0),600);return levelComplete([t('The pipes sing the whole tune back to you. The valve turns, and the drain opens!')]);}
     return say(t('{w}. Right. {n} of {total}.',{w:MEMW()[n],n:G.mem.pos,total:G.mem.tune.length}),{log:false});}
   G.mem.pos=0;G.sanity=Math.max(0,G.sanity-4);G.hurt=performance.now();updateHUD();sfx(denied);
-  say(t('Wrong note. The pipes groan, and your head throbs. Start again from the first note. Say listen to hear the tune again.'));
+  say(S.vis?t('Wrong color. The pipes groan, and your head throbs. Start again from the first light. Tap Show the lights again to watch it again.'):t('Wrong note. The pipes groan, and your head throbs. Start again from the first note. Say listen to hear the tune again.'));
 }
 function usePuzzle(){
   if(G.state!=='play')return notPlaying();
@@ -3230,11 +3298,14 @@ function lowSanity(){
 }
 function pickupItems(parts){
   const k=key(G.x,G.y); const ty=G.items.get(k); if(!ty)return; const I=G.inv;
+  if(S.vis&&/^clue\d$/.test(ty)&&G.code&&isDark(G.x,G.y)&&!G.inv.light){parts.push(t('Something is scrawled on the wall here, but it is too dark to read. Turn on your flashlight.'));return;}
   G.items.delete(k); sfx(pickup);
   if(ty==='cake'){G.sanity=Math.min(100,G.sanity+30);setTimeout(()=>sfx(hbTune,0,0.8),600);setTimeout(()=>sfx(partyHorn,0.5,0.6),300);play('giggle',{vol:0.4,pan:-0.6,muffle:0.4});
     parts.push(t('You find a birthday cake with a single candle burning. A card on it says: Happy birthday, Leo. From everyone down here. Somewhere, the Partygoers start singing, slightly wrong. You feel much better.'));unlock('bday');return;}
   if(ty==='candy'){G.sanity=Math.min(100,G.sanity+8);const n=lsGet('br_candy',0)+1;lsSet('br_candy',n);
     parts.push(t('You find a piece of candy wrapped in orange paper. It tastes like almond water. That is {n} candy this Halloween.',{n}));if(n>=13)unlock('candy');return;}
+  if(/^clue\d$/.test(ty)&&G.code&&S.vis){const i=+ty[4];G.code.found[i]=true;sfx(tapeClick);(G.wallWriting=G.wallWriting||new Map()).set(k,i);G.writingAt=performance.now();
+    const nf=G.code.found.filter(Boolean).length;parts.push(t('Something is scrawled on the wall here, in red.'),nf===3?t('That is all three numbers. Remember them, then go to the exit door and tap Enter code.'):t('You have seen {n} of 3 numbers.',{n:nf}));return;}
   if(/^clue\d$/.test(ty)&&G.code){const i=+ty[4];G.code.found[i]=true;sfx(tapeClick);
     parts.push(t('You find a scrap of paper with a number on it. It says: the {pos} number of the door code is {d}.',{pos:[t('first'),t('second'),t('third')][i],d:G.code.digits[i]}));
     const nf=G.code.found.filter(Boolean).length;parts.push(nf===3?(codeStrict()?t('That is all three numbers. Remember them, or check your status. Then go to the exit door.'):t('That is all three. The code is {c}. Go to the exit door and say code, then the numbers.',{c:G.code.digits.join(' ')})):t('You have {n} of 3 numbers.',{n:nf}));}
@@ -3354,7 +3425,7 @@ function afterMove(quiet){
   if(G.watchFreeze>0)G.watchFreeze--;
   if(G.spots&&G.spots.has(k)&&!L().run)parts.push(t('There is {spot} here. Say hide to get inside.',{spot:spotName(k)}));
   if(G.mark&&G.markSought&&G.x===G.mark.x&&G.y===G.mark.y){G.markSought=false;sfx(ping,V3(0,0,-0.3),0.6,0);parts.push(t('You are back at your mark.'));unlock('mapper');}
-  const pz=puzAt(G.x,G.y); if(pz){sfx(puzTone,pz.tone,0,0.5);parts.push(pz.on?t('You already used this one.'):t('There is {obj} here. It makes a {pitch} sound. Say use to {verb} it.',{obj:PUZ()[0],pitch:PITCH()[pz.tone],verb:PUZ()[2]}));}
+  const pz=puzAt(G.x,G.y); if(pz&&S.vis){parts.push(pz.on?t('You already used this one.'):t('There is {obj} here, with scratch marks on it. Tap Use to {verb} it.',{obj:PUZ()[0],verb:PUZ()[2]}));} else if(pz){sfx(puzTone,pz.tone,0,0.5);parts.push(pz.on?t('You already used this one.'):t('There is {obj} here. It makes a {pitch} sound. Say use to {verb} it.',{obj:PUZ()[0],pitch:PITCH()[pz.tone],verb:PUZ()[2]}));}
   if(G.x===G.exit[0]&&G.y===G.exit[1]){
     if(lv.locked&&!G.inv.keycard&&has('lockpick')){G.inv.keycard=true;sfx(clickSound,true);parts.push(t('No keycard, but you do not need one. You pick the lock in a few seconds.'));}
     if(lv.locked&&!G.inv.keycard){sfx(denied);parts.push(t('A heavy elevator door with a card reader. It is locked. You need the keycard.'));}
@@ -4222,7 +4293,7 @@ function run(c,n,r){
   }
 }
 function enter(narr){
-  applySetting('narr',narr?'1':'0',true); initAudio(); if(S.voice)setMic(true,true);
+  applySetting('narr',narr==='vis'?'vis':narr?'1':'0',true); initAudio(); if(S.voice)setMic(true,true);
   G.state='menu'; showMain();
 }
 
@@ -4290,7 +4361,7 @@ function draw(){
   const vg=cx.createRadialGradient(W/2,H/2,H*0.2,W/2,H/2,W*0.65);vg.addColorStop(0,'rgba(0,0,0,0)');vg.addColorStop(1,`rgba(0,0,0,${0.55+(100-G.sanity)/250})`);cx.fillStyle=vg;cx.fillRect(0,0,W,H);
   const hd=tm-(G.hurt||0); if(hd<700){cx.fillStyle=`rgba(160,0,0,${0.55*(1-hd/700)})`;cx.fillRect(0,0,W,H);}
   if(G.state==='dead'){cx.fillStyle='rgba(0,0,0,0.75)';cx.fillRect(0,0,W,H);cx.fillStyle='#ff7b6b';cx.font='bold 48px system-ui';cx.textAlign='center';cx.fillText(t('YOU LOST YOUR MIND'),W/2,H/2+16);}
-  drawGuideMap();
+  drawGuideMap(); if(window.VIS)VIS.draw(cx,W,H,tm);
   cx.fillStyle='rgba(0,0,0,0.5)';cx.fillRect(W-130,12,118,40);cx.fillStyle='#f2d64b';cx.font='bold 22px system-ui';cx.textAlign='center';cx.fillText(DIRN(G.f).toUpperCase(),W-71,40);
 }
 function drawFace(p){
@@ -4312,6 +4383,7 @@ draw();
 /* ============================== wiring ============================== */
 $('#enterNarrated').addEventListener('click',()=>enter(true));
 $('#enterSR').addEventListener('click',()=>enter(false));
+$('#enterVisual').addEventListener('click',()=>enter('vis'));
 $('#pResume').addEventListener('click',resume);
 $('#pRestart').addEventListener('click',retryLevel);
 $('#pSettings').addEventListener('click',()=>run('settings'));
@@ -4371,10 +4443,12 @@ document.addEventListener('keydown',e=>{
   if(c){e.preventDefault();run(c,n,0);}
 });
 live.setAttribute('aria-live',S.narr?'off':'assertive');
+document.body.classList.toggle('vis',!!S.vis);
 applyLang(); syncChoices();
 </script>
 <script src="js/three.min.js"></script>
 <script src="js/r3d.js"></script>
 <script src="js/nightwatch.js"></script>
+<script src="js/visual.js"></script>
 </body>
 </html>

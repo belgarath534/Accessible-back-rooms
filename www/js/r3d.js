@@ -129,6 +129,15 @@ function build(){
   puzMeshes=[]; if(G.puz)G.puz.cells.forEach(c=>{const d=[0,1,2,3].find(d=>!isOpen(c.x,c.y,d));const o=d===undefined?0:CS/2-0.25;
     const m=new T.Mesh(new T.BoxGeometry(0.5,0.7,0.2),new T.MeshBasicMaterial({color:0x553322}));m.position.set(c.x*CS+(d===undefined?0:DX[d]*o),1.3,c.y*CS+(d===undefined?0:DY[d]*o));
     m.rotation.y=d===undefined?0:[0,-Math.PI/2,Math.PI,Math.PI/2][d];m.userData.cell=c;scene.add(m);puzMeshes.push(m);});
+  // visual mode: code numbers scrawled on walls, scratch marks above puzzle switches
+  if(S.vis){
+    if(G.code)G.items.forEach((ty,k)=>{if(!/^clue\d$/.test(ty))return;const i=+ty[4],[x,y]=k.split(',').map(Number);
+      const txt=[0,1,2].map(j=>j===i?String(G.code.digits[i]):'_').join(' ');
+      decal(x,y,2.6,1.3,1.7,canvasTex(256,(g,s)=>{g.clearRect(0,0,s,s);g.font='bold 96px Georgia,serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#9a0b0b';g.fillText(txt,s/2,s/2);
+        g.fillStyle='rgba(130,8,8,0.9)';for(let d=0;d<6;d++)g.fillRect(rnd(40,s-40),s/2+30,4,rnd(20,60));}));});
+    if(G.puz)G.puz.cells.forEach(c=>decal(c.x,c.y,0.9,0.9,2.15,canvasTex(128,(g,s)=>{g.clearRect(0,0,s,s);g.strokeStyle='#efe8d4';g.lineWidth=9;g.lineCap='round';
+      const n=c.tone+1;for(let k=0;k<n;k++){const mx=s/2+(k-(n-1)/2)*26;g.beginPath();g.moveTo(mx-4,18);g.lineTo(mx+4,s-18);g.stroke();}})));
+  }
   // water
   water=null; if(G.wet&&G.wet.size){const wmat=new T.MeshLambertMaterial({color:0x0b2a44,transparent:true,opacity:0.82,emissive:0x041422});const wi2=new T.InstancedMesh(new T.PlaneGeometry(CS,CS),wmat,G.wet.size);let i=0;
     G.wet.forEach(k=>{const [x,y]=k.split(',').map(Number);e.set(-Math.PI/2,0,0);q.setFromEuler(e);m4.compose(new T.Vector3(x*CS,0.12,y*CS),q,one);wi2.setMatrixAt(i++,m4);});scene.add(wi2);water=wmat;}
@@ -138,6 +147,19 @@ function build(){
   built=G.maze; lastCell='';
   cam.position.set(G.x*CS,EYE,G.y*CS); curYaw=-G.f*Math.PI/2; cam.rotation.set(0,curYaw,0);
 }
+// a flat picture on the first wall of a cell, facing into the cell (or on the floor if the cell has no walls)
+function decal(x,y,w,h,ht,tex){tex.wrapS=tex.wrapT=T.ClampToEdgeWrapping;tex.repeat.set(1,1);const d=[0,1,2,3].find(d=>!isOpen(x,y,d));
+  const m=new T.Mesh(new T.PlaneGeometry(w,h),new T.MeshLambertMaterial({map:tex,transparent:true,depthWrite:false}));
+  if(d===undefined){m.rotation.x=-Math.PI/2;m.position.set(x*CS,0.03,y*CS);}
+  else{const o=CS/2-0.14;m.position.set(x*CS+DX[d]*o,ht,y*CS+DY[d]*o);m.rotation.y=[0,-Math.PI/2,Math.PI,Math.PI/2][d];}
+  scene.add(m);return m;}
+// a dark figure at the far end of the hallway ahead, gone a moment later. Purely visual: it is never there.
+let ghost=null;
+function glimpse(){if(!scene||ghost||G.state!=='play')return false;let x=G.x,y=G.y,k=0;const cells=[];
+  while(k<7&&isOpen(x,y,G.f)){x+=DX[G.f];y+=DY[G.f];k++;if(k>=3)cells.push([x,y]);}
+  if(!cells.length)return false;const [gx,gy]=cells[cells.length-1];
+  ghost=new T.Sprite(new T.SpriteMaterial({map:paintMon('shade'),transparent:true,fog:true}));ghost.scale.set(1.7,2.8,1);ghost.position.set(gx*CS,1.4,gy*CS);scene.add(ghost);
+  const g=ghost;setTimeout(()=>{if(scene)scene.remove(g);g.material.dispose();if(ghost===g)ghost=null;},rnd(380,650));return true;}
 function nearLit(){const lv=L();if(!lv.lights)return [];const d=bfs(G.x,G.y);const c=[];for(let y=0;y<G.h;y++)for(let x=0;x<G.w;x++)if(!isDark(x,y)&&d[y][x]<6)c.push([d[y][x],x,y]);c.sort((a,b)=>a[0]-b[0]);return c.slice(0,3);}
 function frame(){
   if(!init())return false;
@@ -171,9 +193,11 @@ function frame(){
     const sz=MSIZE[m.type]||[1.7,2.7]; s.position.x+=(m.x*CS-s.position.x)*k*0.8; s.position.z+=(m.y*CS-s.position.z)*k*0.8;
     s.position.y=m.type==='deep'?(isWater(m.x,m.y)?0.4:-2):m.type==='watcher'?2.0:sz[1]/2+(m.type==='moths'?0.3+0.15*Math.sin(now/200):0);
     const near=Math.abs(m.x-G.x)+Math.abs(m.y-G.y); const vis=!isDark(m.x,m.y)||m.type==='face'||m.type==='marcus'||(G.inv.light&&near<=3);
-    s.visible=vis&&!(m.type==='deep'&&!isWater(m.x,m.y));}
+    s.visible=vis&&!(m.type==='deep'&&!isWater(m.x,m.y));
+    // up close, hostile things twitch
+    if(!reduceMotion&&MT[m.type]&&MT[m.type].hostile&&near<=2){s.position.x+=rnd(-0.07,0.07);s.position.z+=rnd(-0.07,0.07);s.material.rotation=rnd(-0.06,0.06);}else s.material.rotation=0;}
   monMeshes.forEach((s,m)=>{if(!seen.has(m)){scene.remove(s);s.material.dispose();monMeshes.delete(m);}});
   ren.render(scene,cam); return true;
 }
-window.R3={available:hasGL, on:()=>hasGL&&S.gfx!=='classic'&&ren!==false, frame:()=>{try{return frame();}catch(e){console.error(e);ren=false;return false;}}, reset:()=>{built=null;}};
+window.R3={available:hasGL, on:()=>hasGL&&S.gfx!=='classic'&&ren!==false, frame:()=>{try{return frame();}catch(e){console.error(e);ren=false;return false;}}, reset:()=>{built=null;}, glimpse:()=>{try{return glimpse();}catch(e){return false;}}};
 })();
