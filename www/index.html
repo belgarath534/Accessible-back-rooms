@@ -290,6 +290,11 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
+      <h2>Version 1.3.1: VoiceOver fix at the exit</h2>
+      <ul>
+        <li>Fixed: when you reached an exit, the next level started while VoiceOver was still reading what happened, and the VoiceOver cursor jumped away mid-story. Now the game waits: read the whole story, then tap Continue to the next level (or any movement button). Thanks to Angela for reporting it!</li>
+        <li>With spoken narration, the next level now waits until the narrator finishes the exit story, instead of cutting it off.</li>
+      </ul>
       <h2>Version 1.3: Visual mode</h2>
       <ul>
         <li>New: Visual mode, for players who want to see the game instead of listening to it. Choose "I want to see the game" on the first screen, or Visual mode in Settings under Narration.</li>
@@ -573,6 +578,11 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
+      <h2>Versão 1.3.1: correção do VoiceOver na saída</h2>
+      <ul>
+        <li>Corrigido: ao chegar numa saída, o próximo nível começava enquanto o VoiceOver ainda lia o que aconteceu, e o cursor do VoiceOver pulava no meio da história. Agora o jogo espera: leia a história toda e toque em Continuar para o próximo nível (ou qualquer botão de movimento). Obrigado à Angela por avisar!</li>
+        <li>Com a narração falada, o próximo nível agora espera o narrador terminar a história da saída, em vez de cortá-la.</li>
+      </ul>
       <h2>Versão 1.3: Modo visual</h2>
       <ul>
         <li>Novo: Modo visual, para quem quer ver o jogo em vez de ouvir. Escolha "quero ver o jogo" na primeira tela, ou Modo visual nos Ajustes, em Narração.</li>
@@ -973,6 +983,9 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
         <button data-kp="clear"><span data-l="en">Clear</span><span data-l="pt">Apagar</span></button><button data-kp="0">0</button><button data-kp="close"><span data-l="en">Close</span><span data-l="pt">Fechar</span></button>
       </div>
     </div>
+    <div id="nextBar" class="stack" hidden>
+      <button id="nextBtn" class="primary"><span data-l="en">Continue to the next level</span><span data-l="pt">Continuar para o próximo nível</span></button>
+    </div>
     <div id="deadBar" class="stack" hidden>
       <button id="dRetry" class="primary"><span data-l="en">Try again</span><span data-l="pt">Tentar de novo</span></button>
       <button id="dMenu"><span data-l="en">Main menu</span><span data-l="pt">Menu principal</span></button>
@@ -1041,7 +1054,7 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
 
 <script>
 "use strict";
-const VERSION='1.3';
+const VERSION='1.3.1';
 /* ============================== helpers ============================== */
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const rand=n=>Math.floor(Math.random()*n);
@@ -2679,11 +2692,12 @@ let screen='splash';
 let shownAt=0, shownId='';
 document.addEventListener('click',e=>{if(shownId&&performance.now()-shownAt<700&&e.target.closest&&e.target.closest('#'+shownId+' button')){e.stopImmediatePropagation();e.preventDefault();}},true);
 function show(id,announce){
-  if(id!==screen){shownAt=performance.now();shownId=id;}
+  const changed=id!==screen;
+  if(changed){shownAt=performance.now();shownId=id;}
   if(id!=='game'&&G.state==='transition'){G.state='menu';clearAmb();}// leaving during a fall cancels it
   SCREENS.forEach(s=>$('#'+s).hidden=(s!==id)); screen=id; syncChoices();
   const h=$('#'+id+' [tabindex="-1"]'); const first=$('#'+id+' button:not([hidden])');
-  setTimeout(()=>{(id==='game'?$('#viewWrap'):(h||first)).focus();},30);
+  if(changed)setTimeout(()=>{(id==='game'?$('#viewWrap'):(h||first)).focus();},30);
   if(announce)narrateMenu(announce);
 }
 // in a game: pause menu. Otherwise: main menu.
@@ -2748,7 +2762,7 @@ function genDark(frac){
   G.dark.delete(key(G.x,G.y));
 }
 function newLevel(){
-  $('#deadBar').hidden=true;
+  $('#deadBar').hidden=true; $('#nextBar').hidden=true; G.nextFn=null;
   const lv=L(); G.w=lv.w;G.h=lv.h; G.maze=genMaze(lv.w,lv.h,lv.loops);
   if(lv.run){G.x=0;G.y=rand(G.h);}else{G.x=rand(G.w);G.y=rand(G.h);}
   G.f=pick([0,1,2,3].filter(d=>isOpen(G.x,G.y,d)));
@@ -2977,7 +2991,7 @@ function updateHUD(){
 Object.assign(PT,{'Way to the exit: {route}, {steps}.':'Caminho para a saída: {route}, {steps}.','Way to the keycard: {route}, {steps}.':'Caminho para o cartão: {route}, {steps}.',
   'Way to {obj}: {route}, {steps}.':'Caminho para {obj}: {route}, {steps}.','Way to the next number on the wall: {route}, {steps}.':'Caminho para o próximo número na parede: {route}, {steps}.',
   'Way to the next scrap of paper: {route}, {steps}.':'Caminho para o próximo papel: {route}, {steps}.','{n} steps':'{n} passos','1 step':'1 passo',
-  'You are at the exit.':'Você está na saída.','It is right here: tap Use.':'Está bem aqui: toque em Usar.',
+  'You are at the exit.':'Você está na saída.','When you are ready, tap Continue to the next level.':'Quando estiver pronto, toque em Continuar para o próximo nível.','It is right here: tap Use.':'Está bem aqui: toque em Usar.',
   'Visual mode. Narration off. The story shows under the picture.':'Modo visual. Narração desligada. A história aparece embaixo da imagem.',
   'The exit is sealed. Somewhere on this level are three {objs}, each with scratch marks on it. Use them in order: the one with one mark, then two, then three. If you get the order wrong, an alarm calls every monster to you.':'A saída está lacrada. Em algum lugar deste nível há três {objs}, cada um com marcas riscadas. Use na ordem: o de uma marca, depois duas, depois três. Se errar a ordem, um alarme chama todos os monstros até você.',
   'The exit door here is locked with a keypad code. Three numbers are scrawled on the walls somewhere on this level. Some are in the dark.':'A porta da saída aqui está trancada com um código. Três números estão rabiscados nas paredes em algum lugar deste nível. Alguns estão no escuro.',
@@ -3770,16 +3784,16 @@ function levelComplete(parts){
   if(G.mode==='daily')return dailyWin(parts);
   if(G.mode==='extra'){
     G.xn++; if(G.xn>lsGet('br_extra',FIRSTX))lsSet('br_extra',G.xn); if(G.xn>=20)unlock('extra20'); if(G.xn>=50)unlock('extra50');
-    say([...parts,exitText,t('You feel yourself falling deeper.')].filter(Boolean).join(' '));
-    setTimeout(()=>{if(G.state!=='transition')return;G.sanity=Math.min(100,G.sanity+25);G.sneak=false;setSneakUI();G.edef=extraDef(G.xn);G.level=G.edef.base??0;
+    say([...parts,exitText,t('You feel yourself falling deeper.'),continueHint()].filter(Boolean).join(' '));
+    afterExit(()=>{G.sanity=Math.min(100,G.sanity+25);G.sneak=false;setSneakUI();G.edef=extraDef(G.xn);G.level=G.edef.base??0;
       initAudio();newLevel();show('game');say(introText()+' '+pathsText());},4500);
     return;
   }
   if(G.mode==='endless'){
     G.depth++; const best=lsGet('br_best',0); if(G.depth>best)lsSet('br_best',G.depth);
     if(G.depth>=10)unlock('deep10'); if(G.depth>=25)unlock('deep25');
-    say([...parts,exitText,t('You feel yourself falling deeper.')].filter(Boolean).join(' '));
-    setTimeout(()=>{if(G.state!=='transition')return;G.sanity=Math.min(100,G.sanity+20);G.sneak=false;setSneakUI();G.edef=endlessDef(G.depth);G.level=G.edef.base;
+    say([...parts,exitText,t('You feel yourself falling deeper.'),continueHint()].filter(Boolean).join(' '));
+    afterExit(()=>{G.sanity=Math.min(100,G.sanity+20);G.sneak=false;setSneakUI();G.edef=endlessDef(G.depth);G.level=G.edef.base;
       initAudio();newLevel();show('game');say(t('Depth {n}.',{n:G.depth})+' '+introText()+' '+pathsText());},4500);
     return;
   }
@@ -3794,8 +3808,8 @@ function levelComplete(parts){
   if(lv.amb==='city')unlock('city'); if(lv.amb==='library')unlock('library'); if(lv.amb==='carnival')unlock('carnival');
   if(lv.final){
     if(G.tapes.size>=NTAPES){
-      say([...parts,t('You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.')].join(' '));
-      setTimeout(()=>{if(G.state!=='transition')return;G.level=LEVELS.length-1;G.sanity=100;G.sneak=false;setSneakUI();enterLevel('');},6500);
+      say([...parts,t('You open the front door. Daylight floods in, but something is wrong. Behind the light, a tired voice is calling for help. Marcus. You have all eight of his tapes. You step back into the dark to find him.'),continueHint()].filter(Boolean).join(' '));
+      afterExit(()=>{G.level=LEVELS.length-1;G.sanity=100;G.sneak=false;setSneakUI();enterLevel('');},6500);
       return;
     }
     G.state='won'; clearAmb(); stopAllMusic(3); setTimeout(()=>sfx(winSound),1500); lsDel('br_save'); escapeAchievements(); lsSet('br_beat',1);
@@ -3806,10 +3820,25 @@ function levelComplete(parts){
     showEnd(t('YOU ESCAPED'),finishStats(),[...parts,t('You open your front door and step out onto the porch. Sunlight. Birds. A neighbor mowing the lawn waves at you. Your phone buzzes in your pocket: thirty-seven missed calls. You are home. Behind you, very faintly, something hums like a fluorescent light. Then it stops. You escaped the Backrooms!'),hint].join(' '));
     return;
   }
-  say([...parts,exitText,t('You feel yourself falling through reality.')].join(' '));
+  say([...parts,exitText,t('You feel yourself falling through reality.'),continueHint()].filter(Boolean).join(' '));
   const pickNow=[2,5,8,11].includes(G.level);
   const adv=()=>{G.level++;G.sanity=Math.min(100,G.sanity+25);G.sneak=false;setSneakUI();enterLevel(t('Checkpoint saved.'));};
-  setTimeout(()=>{if(G.state!=='transition')return;if(pickNow&&offerSkills(adv))return;adv();},4500);
+  afterExit(()=>{if(pickNow&&offerSkills(adv))return;adv();},4500);
+}
+// After an exit, the next level waits until the exit story has been heard. The narrator's
+// speech is waited out; with VoiceOver (or Visual mode) nobody knows how long reading takes,
+// so the player taps Continue. Starting the level on a timer used to cut VoiceOver off mid-story.
+function continueHint(){return S.narr?'':t('When you are ready, tap Continue to the next level.');}
+function afterExit(fn,ms){
+  G.nextFn=null;
+  if(!S.narr){G.nextFn=fn;$('#nextBar').hidden=false;return;}
+  const wait=()=>{if(G.state!=='transition')return;if(speaking||performance.now()<(G.quietUntil||0)){setTimeout(wait,400);return;}fn();};
+  setTimeout(wait,ms);
+}
+function continueNext(){
+  const fn=G.nextFn; G.nextFn=null; $('#nextBar').hidden=true;
+  if(!fn||G.state!=='transition')return false;
+  fn(); setTimeout(()=>{if(screen==='game')$('#viewWrap').focus();},60); return true;
 }
 function gameOver(parts){
   G.deaths++; jumpscare(); clearAmb(); stopAllMusic(0.5);
@@ -4221,6 +4250,7 @@ setInterval(()=>{
 /* ============================== command router ============================== */
 function run(c,n,r){
   G.lastAct=performance.now();
+  if(G.state==='transition'&&G.nextFn&&['forward','back','left','right','next','continue','go','use'].includes(c)&&continueNext())return;
   if(c==='repeat')return say(G.lastText||t('Nothing to repeat yet.'),{log:false});
   if(c==='history')return showHistory();
   if(c==='faster'||c==='slower'){S.rate=clamp(+(S.rate+(c==='faster'?0.2:-0.2)).toFixed(1),0.6,2.4);lsSet('br_rate',S.rate);syncChoices();return say(t('Speech rate {r}.',{r:S.rate}),{log:false});}
@@ -4384,6 +4414,7 @@ draw();
 $('#enterNarrated').addEventListener('click',()=>enter(true));
 $('#enterSR').addEventListener('click',()=>enter(false));
 $('#enterVisual').addEventListener('click',()=>enter('vis'));
+$('#nextBtn').addEventListener('click',continueNext);
 $('#pResume').addEventListener('click',resume);
 $('#pRestart').addEventListener('click',retryLevel);
 $('#pSettings').addEventListener('click',()=>run('settings'));
