@@ -20,7 +20,19 @@ const rnd=(a,b)=>a+Math.random()*(b-a);
 
 /* ---------- the story under the picture ---------- */
 const capEl=$('#caption');
-function showCaption(){if(!capEl)return;if(!on()||!G.lastText){capEl.hidden=true;return;}capEl.textContent=G.lastText;capEl.hidden=false;capEl.scrollTop=0;}
+// The story was written for the narrator and voice commands: "say use", "listen for it".
+// Here there is no Listen button and players tap, so sentences about listening go and
+// "say X" becomes "tap X". Watchers freeze when you Look instead (see look below).
+const cap1=w=>w.charAt(0).toUpperCase()+w.slice(1);
+function visText(s){
+  s=s.replace(/Listen, and it freezes\./g,'Look at it, and it freezes.').replace(/Escute, e ele congela\./g,'Olhe para ele, e ele congela.');
+  return (s.match(/[^.!?]+[.!?]*\s*/g)||[s]).filter(x=>!/\b(say listen|listen for|listen works|diga escutar|escute o|escute os|escute a)\b/i.test(x)&&!/^\s*listen\b/i.test(x)).join('')
+    .replace(/\bsay (code|código)(, then the numbers| and the numbers|, e depois os números| e os números)?/gi,(m)=>LANG==='pt'?'toque em Digitar código':'tap Enter code')
+    .replace(/\b(S|s)ay ([a-z]+(?: (?:mark|stick|trap|bottle|water|box|again|picture))?)/g,(m,c,w)=>(c==='S'?'Tap ':'tap ')+cap1(w))
+    .replace(/\b(D|d)iga ([a-zçãéêáóíú]+(?: (?:marca|de novo|luz))?)/g,(m,c,w)=>(c==='D'?'Toque em ':'toque em ')+cap1(w)).trim();}
+function showCaption(){if(!capEl)return;if(!on()||!G.lastText){capEl.hidden=true;return;}capEl.textContent=visText(G.lastText);capEl.hidden=false;capEl.scrollTop=0;}
+const _look=look;
+look=function(){if(on()&&G.state==='play'&&G.mons.some(m=>m.type==='watcher'))G.watchFreeze=3;return _look.apply(this,arguments);};
 const _say=say;
 say=function(text,o){const r=_say(text,o);showCaption();return r;};
 

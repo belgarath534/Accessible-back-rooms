@@ -192,7 +192,7 @@ function frame(){
     if(!s){s=new T.Sprite(new T.SpriteMaterial({map:paintMon(m.type),transparent:true,fog:true}));const sz=MSIZE[m.type]||[1.7,2.7];s.scale.set(sz[0],sz[1],1);s.position.set(m.x*CS,sz[1]/2,m.y*CS);scene.add(s);monMeshes.set(m,s);}
     const sz=MSIZE[m.type]||[1.7,2.7]; s.position.x+=(m.x*CS-s.position.x)*k*0.8; s.position.z+=(m.y*CS-s.position.z)*k*0.8;
     s.position.y=m.type==='deep'?(isWater(m.x,m.y)?0.4:-2):m.type==='watcher'?2.0:sz[1]/2+(m.type==='moths'?0.3+0.15*Math.sin(now/200):0);
-    const near=Math.abs(m.x-G.x)+Math.abs(m.y-G.y); const vis=!isDark(m.x,m.y)||m.type==='face'||m.type==='marcus'||(G.inv.light&&near<=3);
+    const near=Math.abs(m.x-G.x)+Math.abs(m.y-G.y); const vis=(!isDark(m.x,m.y)||m.type==='face'||m.type==='marcus'||(G.inv.light&&near<=3))&&!m.disguised&&m.type!=='wallcrawler';
     s.visible=vis&&!(m.type==='deep'&&!isWater(m.x,m.y));
     // up close, hostile things twitch
     if(!reduceMotion&&MT[m.type]&&MT[m.type].hostile&&near<=2){s.position.x+=rnd(-0.07,0.07);s.position.z+=rnd(-0.07,0.07);s.material.rotation=rnd(-0.06,0.06);}else s.material.rotation=0;}
