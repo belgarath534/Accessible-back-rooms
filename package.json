@@ -15,6 +15,7 @@
     "@capacitor/ios": "^7.0.0",
     "@capacitor/keyboard": "^7.0.0",
     "@capacitor/status-bar": "^7.0.0",
-    "capacitor-icloud-sync": "^0.2.0"
+    "capacitor-icloud-sync": "^0.2.0",
+    "leo-game-center": "file:native/game-center"
   }
 }

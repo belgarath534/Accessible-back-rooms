@@ -1,0 +1,734 @@
+{
+ "achievements": [
+  {
+   "id": "br_first",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "First Steps",
+    "desc": "Escape Level 0."
+   },
+   "pt": {
+    "name": "Primeiros Passos",
+    "desc": "Escape do Nível 0."
+   }
+  },
+  {
+   "id": "br_untouchable",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Untouchable",
+    "desc": "Finish a level without being caught."
+   },
+   "pt": {
+    "name": "Intocável",
+    "desc": "Termine um nível sem ser pego."
+   }
+  },
+  {
+   "id": "br_shocked",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Live Wire",
+    "desc": "Walk into a live wire at the Electrical Station."
+   },
+   "pt": {
+    "name": "Fio Desencapado",
+    "desc": "Leve um choque na Estação Elétrica."
+   }
+  },
+  {
+   "id": "br_party",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Party Pooper",
+    "desc": "Escape Level 10, Fun."
+   },
+   "pt": {
+    "name": "Estraga-Festa",
+    "desc": "Escape do Nível 10, Diversão."
+   }
+  },
+  {
+   "id": "br_swim",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Sea Legs",
+    "desc": "Escape Thalassophobia."
+   },
+   "pt": {
+    "name": "Pernas de Marinheiro",
+    "desc": "Escape de Talassofobia."
+   }
+  },
+  {
+   "id": "br_escape",
+   "points": 40,
+   "hidden": false,
+   "en": {
+    "name": "Escapee",
+    "desc": "Escape the Backrooms."
+   },
+   "pt": {
+    "name": "Fugitivo",
+    "desc": "Escape dos Backrooms."
+   }
+  },
+  {
+   "id": "br_nightmare",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Nightmare Survivor",
+    "desc": "Escape on Nightmare difficulty."
+   },
+   "pt": {
+    "name": "Sobrevivente do Pesadelo",
+    "desc": "Escape na dificuldade Pesadelo."
+   }
+  },
+  {
+   "id": "br_thirst",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Dry Mouth",
+    "desc": "Escape without drinking any almond water."
+   },
+   "pt": {
+    "name": "Boca Seca",
+    "desc": "Escape sem beber nenhuma água de amêndoa."
+   }
+  },
+  {
+   "id": "br_speed",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Speedrunner",
+    "desc": "Escape in under 25 minutes, starting from Level 0."
+   },
+   "pt": {
+    "name": "Speedrunner",
+    "desc": "Escape em menos de 25 minutos, começando do Nível 0."
+   }
+  },
+  {
+   "id": "br_archivist",
+   "points": 40,
+   "hidden": false,
+   "en": {
+    "name": "Archivist",
+    "desc": "Find all eight tapes."
+   },
+   "pt": {
+    "name": "Arquivista",
+    "desc": "Encontre as oito fitas."
+   }
+  },
+  {
+   "id": "br_marcus",
+   "points": 20,
+   "hidden": true,
+   "en": {
+    "name": "Not Alone",
+    "desc": "Bring Marcus home."
+   },
+   "pt": {
+    "name": "Não Está Sozinho",
+    "desc": "Leve Marcus para casa."
+   }
+  },
+  {
+   "id": "br_hider",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Hold Your Breath",
+    "desc": "Hide from monsters 5 times."
+   },
+   "pt": {
+    "name": "Prenda a Respiração",
+    "desc": "Esconda-se dos monstros 5 vezes."
+   }
+  },
+  {
+   "id": "br_boom",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Fireworks",
+    "desc": "Throw 10 firecrackers."
+   },
+   "pt": {
+    "name": "Fogos de Artifício",
+    "desc": "Atire 10 bombinhas."
+   }
+  },
+  {
+   "id": "br_friend",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Faceless Friend",
+    "desc": "Talk to Facelings 3 times."
+   },
+   "pt": {
+    "name": "Amigo Sem Rosto",
+    "desc": "Converse com os Sem-Rosto 3 vezes."
+   }
+  },
+  {
+   "id": "br_mapper",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Cartographer",
+    "desc": "Find your way back to a mark."
+   },
+   "pt": {
+    "name": "Cartógrafo",
+    "desc": "Encontre o caminho de volta até uma marca."
+   }
+  },
+  {
+   "id": "br_lookback",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Do Not Look Back",
+    "desc": "Survive turning around into a monster."
+   },
+   "pt": {
+    "name": "Não Olhe Para Trás",
+    "desc": "Sobreviva ao se virar de cara com um monstro."
+   }
+  },
+  {
+   "id": "br_deep10",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Going Deeper",
+    "desc": "Reach depth 10 in Endless mode."
+   },
+   "pt": {
+    "name": "Cada Vez Mais Fundo",
+    "desc": "Chegue à profundidade 10 no modo infinito."
+   }
+  },
+  {
+   "id": "br_tutorial",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Graduate",
+    "desc": "Finish the tutorial."
+   },
+   "pt": {
+    "name": "Formado",
+    "desc": "Termine o tutorial."
+   }
+  },
+  {
+   "id": "br_hideseek",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Hide and Seek",
+    "desc": "Stay hidden while a monster sniffs right outside."
+   },
+   "pt": {
+    "name": "Esconde-Esconde",
+    "desc": "Fique escondido enquanto um monstro fareja bem do lado de fora."
+   }
+  },
+  {
+   "id": "br_office",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Wrong Number",
+    "desc": "Escape the Abandoned Office."
+   },
+   "pt": {
+    "name": "Número Errado",
+    "desc": "Escape do Escritório Abandonado."
+   }
+  },
+  {
+   "id": "br_suburbs",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Nobody Home",
+    "desc": "Escape the Suburbs."
+   },
+   "pt": {
+    "name": "Ninguém em Casa",
+    "desc": "Escape do Subúrbio."
+   }
+  },
+  {
+   "id": "br_city",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Rush Hour",
+    "desc": "Escape the Endless City."
+   },
+   "pt": {
+    "name": "Hora do Rush",
+    "desc": "Escape da Cidade Sem Fim."
+   }
+  },
+  {
+   "id": "br_library",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Quiet Please",
+    "desc": "Escape the Silent Library."
+   },
+   "pt": {
+    "name": "Silêncio, Por Favor",
+    "desc": "Escape da Biblioteca Silenciosa."
+   }
+  },
+  {
+   "id": "br_carnival",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Last Ride",
+    "desc": "Escape the Carnival."
+   },
+   "pt": {
+    "name": "Última Volta",
+    "desc": "Escape do Carnaval."
+   }
+  },
+  {
+   "id": "br_extra20",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Beyond the Story",
+    "desc": "Reach Level 20 in the extra levels."
+   },
+   "pt": {
+    "name": "Além da História",
+    "desc": "Chegue ao Nível 20 nos níveis extras."
+   }
+  },
+  {
+   "id": "br_extra50",
+   "points": 40,
+   "hidden": false,
+   "en": {
+    "name": "There Is No Bottom",
+    "desc": "Reach Level 50 in the extra levels."
+   },
+   "pt": {
+    "name": "Não Tem Fundo",
+    "desc": "Chegue ao Nível 50 nos níveis extras."
+   }
+  },
+  {
+   "id": "br_puzzle",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Electrician",
+    "desc": "Solve a puzzle."
+   },
+   "pt": {
+    "name": "Eletricista",
+    "desc": "Resolva um quebra-cabeça."
+   }
+  },
+  {
+   "id": "br_trapper",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Trapper",
+    "desc": "Catch a monster in a bear trap."
+   },
+   "pt": {
+    "name": "Caçador",
+    "desc": "Pegue um monstro numa armadilha de urso."
+   }
+  },
+  {
+   "id": "br_ironwill",
+   "points": 40,
+   "hidden": false,
+   "en": {
+    "name": "Iron Will",
+    "desc": "Finish the story in Hardcore mode."
+   },
+   "pt": {
+    "name": "Vontade de Ferro",
+    "desc": "Termine a história no modo Hardcore."
+   }
+  },
+  {
+   "id": "br_ngplus",
+   "points": 40,
+   "hidden": false,
+   "en": {
+    "name": "Again and Again",
+    "desc": "Finish New Game Plus."
+   },
+   "pt": {
+    "name": "De Novo e de Novo",
+    "desc": "Termine o Novo Jogo Mais."
+   }
+  },
+  {
+   "id": "br_company",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Good Company",
+    "desc": "Help three real survivors."
+   },
+   "pt": {
+    "name": "Boa Companhia",
+    "desc": "Ajude três sobreviventes de verdade."
+   }
+  },
+  {
+   "id": "br_journal",
+   "points": 40,
+   "hidden": false,
+   "en": {
+    "name": "Collector",
+    "desc": "Find all fifteen journal notes."
+   },
+   "pt": {
+    "name": "Colecionador",
+    "desc": "Encontre as quinze anotações do diário."
+   }
+  },
+  {
+   "id": "br_host",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Not Home Yet",
+    "desc": "Escape the Frontrooms without the Host ever catching you."
+   },
+   "pt": {
+    "name": "Ainda Não Estou em Casa",
+    "desc": "Escape dos Quartos da Frente sem o Anfitrião pegar você."
+   }
+  },
+  {
+   "id": "br_bday",
+   "points": 20,
+   "hidden": true,
+   "en": {
+    "name": "Happy Birthday, Leo",
+    "desc": "Find the birthday cake on October 9."
+   },
+   "pt": {
+    "name": "Feliz Aniversário, Leo",
+    "desc": "Ache o bolo de aniversário em 9 de outubro."
+   }
+  },
+  {
+   "id": "br_candy",
+   "points": 20,
+   "hidden": true,
+   "en": {
+    "name": "Sweet Tooth",
+    "desc": "Collect 13 pieces of Halloween candy."
+   },
+   "pt": {
+    "name": "Formiguinha",
+    "desc": "Junte 13 doces de Halloween."
+   }
+  },
+  {
+   "id": "br_passedby",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "It Passed Right By",
+    "desc": "Hide or sneak while something enormous thunders past."
+   },
+   "pt": {
+    "name": "Passou Direto",
+    "desc": "Se esconda ou ande agachado enquanto algo enorme passa estrondando."
+   }
+  },
+  {
+   "id": "br_school",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Skipping Class",
+    "desc": "Escape the School Halls."
+   },
+   "pt": {
+    "name": "Matando Aula",
+    "desc": "Escape dos Corredores da Escola."
+   }
+  },
+  {
+   "id": "br_mall",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Closing Time",
+    "desc": "Escape the Dead Mall."
+   },
+   "pt": {
+    "name": "Hora de Fechar",
+    "desc": "Escape do Shopping Morto."
+   }
+  },
+  {
+   "id": "br_metro",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Mind the Gap",
+    "desc": "Escape the Last Train."
+   },
+   "pt": {
+    "name": "Cuidado com o Vão",
+    "desc": "Escape do Último Trem."
+   }
+  },
+  {
+   "id": "br_motion",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "That’s All, Folks",
+    "desc": "Escape Motion."
+   },
+   "pt": {
+    "name": "Isso É Tudo, Pessoal",
+    "desc": "Escape do Movimento."
+   }
+  },
+  {
+   "id": "br_servers",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Logged Out",
+    "desc": "Escape the Server Farm."
+   },
+   "pt": {
+    "name": "Desconectado",
+    "desc": "Escape da Fazenda de Servidores."
+   }
+  },
+  {
+   "id": "br_hospital",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Discharged",
+    "desc": "Escape the Hospital."
+   },
+   "pt": {
+    "name": "Alta Médica",
+    "desc": "Escape do Hospital."
+   }
+  },
+  {
+   "id": "br_hotel",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Checked Out",
+    "desc": "Escape the Endless Hotel."
+   },
+   "pt": {
+    "name": "Check-out",
+    "desc": "Escape do Hotel Sem Fim."
+   }
+  },
+  {
+   "id": "br_frozen",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Cold Feet",
+    "desc": "Escape the Frozen Field."
+   },
+   "pt": {
+    "name": "Pés Frios",
+    "desc": "Escape do Campo Congelado."
+   }
+  },
+  {
+   "id": "br_daily",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Daily Visitor",
+    "desc": "Finish a daily challenge."
+   },
+   "pt": {
+    "name": "Visitante Diário",
+    "desc": "Termine um desafio diário."
+   }
+  },
+  {
+   "id": "br_daily7",
+   "points": 40,
+   "hidden": false,
+   "en": {
+    "name": "Seven Days",
+    "desc": "Finish the daily challenge seven days in a row."
+   },
+   "pt": {
+    "name": "Sete Dias",
+    "desc": "Termine o desafio diário sete dias seguidos."
+   }
+  },
+  {
+   "id": "br_bestiary",
+   "points": 40,
+   "hidden": false,
+   "en": {
+    "name": "Monster Hunter",
+    "desc": "Meet every creature in the Backrooms."
+   },
+   "pt": {
+    "name": "Caçador de Monstros",
+    "desc": "Encontre todas as criaturas dos Backrooms."
+   }
+  },
+  {
+   "id": "br_trader",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Haggler",
+    "desc": "Make three trades with the Trader."
+   },
+   "pt": {
+    "name": "Pechincheiro",
+    "desc": "Faça três trocas com o Comerciante."
+   }
+  },
+  {
+   "id": "br_deep25",
+   "points": 40,
+   "hidden": false,
+   "en": {
+    "name": "No Way Out",
+    "desc": "Reach depth 25 in Endless mode."
+   },
+   "pt": {
+    "name": "Sem Saída",
+    "desc": "Chegue à profundidade 25 no modo infinito."
+   }
+  },
+  {
+   "id": "br_hunt1",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Turnabout",
+    "desc": "Catch the wanderer in Hunter mode."
+   },
+   "pt": {
+    "name": "Virada de Jogo",
+    "desc": "Pegue o andarilho no modo Caçador."
+   }
+  },
+  {
+   "id": "br_huntall",
+   "points": 40,
+   "hidden": false,
+   "en": {
+    "name": "Apex",
+    "desc": "Win a hunt as every monster."
+   },
+   "pt": {
+    "name": "Predador Supremo",
+    "desc": "Vença uma caçada com cada monstro."
+   }
+  },
+  {
+   "id": "br_hunt10",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Predator",
+    "desc": "Win 10 hunts."
+   },
+   "pt": {
+    "name": "Predador",
+    "desc": "Vença 10 caçadas."
+   }
+  },
+  {
+   "id": "br_huntquiet",
+   "points": 13,
+   "hidden": false,
+   "en": {
+    "name": "Not a Sound",
+    "desc": "Win a hunt as the Hound or the Lookalike without the wanderer ever hearing you."
+   },
+   "pt": {
+    "name": "Nem um Pio",
+    "desc": "Vença uma caçada como o Cão ou o Sósia sem o andarilho ouvir você."
+   }
+  }
+ ],
+ "leaderboards": [
+  {
+   "id": "br_endless_depth",
+   "en": {
+    "name": "Deepest in Endless Mode",
+    "one": " level",
+    "many": " levels"
+   },
+   "pt": {
+    "name": "Mais Fundo no Modo Infinito",
+    "one": " nível",
+    "many": " níveis"
+   }
+  },
+  {
+   "id": "br_hunter_wins",
+   "en": {
+    "name": "Hunter Mode Catches",
+    "one": " catch",
+    "many": " catches"
+   },
+   "pt": {
+    "name": "Capturas no Modo Caçador",
+    "one": " captura",
+    "many": " capturas"
+   }
+  },
+  {
+   "id": "br_daily_streak",
+   "en": {
+    "name": "Daily Challenge Streak",
+    "one": " day",
+    "many": " days"
+   },
+   "pt": {
+    "name": "Sequência do Desafio Diário",
+    "one": " dia",
+    "many": " dias"
+   }
+  }
+ ]
+}

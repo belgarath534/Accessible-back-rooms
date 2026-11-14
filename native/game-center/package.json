@@ -1,0 +1,9 @@
+{
+  "name": "leo-game-center",
+  "version": "1.0.0",
+  "description": "Game Center (sign in, achievements, leaderboards) for Leo Productions games",
+  "main": "index.js",
+  "license": "MIT",
+  "capacitor": { "ios": { "src": "ios" } },
+  "peerDependencies": { "@capacitor/core": "^7.0.0" }
+}

@@ -93,3 +93,16 @@ workflows:
       - name: Add the iCloud save record type
         script: |
           ./cloudkit/import-schema.sh
+
+  game-center-setup:
+    name: Game Center setup (achievements and leaderboards)
+    max_build_duration: 20
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: Accessible Backrooms
+    scripts:
+      - name: Create the achievements and leaderboards in App Store Connect
+        script: |
+          python3 -m venv /tmp/gcenv
+          /tmp/gcenv/bin/pip install --quiet pyjwt cryptography requests
+          /tmp/gcenv/bin/python tools/gamecenter/create.py

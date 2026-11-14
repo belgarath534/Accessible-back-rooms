@@ -16,6 +16,7 @@ def capacitor_pods
   pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
   pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
   pod 'CapacitorIcloudSync', :path => '../../node_modules/capacitor-icloud-sync'
+  pod 'LeoGameCenter', :path => '../../native/game-center'
 end
 
 target 'App' do
