@@ -111,3 +111,41 @@ workflows:
           python3 -m venv /tmp/gcenv
           /tmp/gcenv/bin/pip install --quiet pyjwt cryptography requests
           /tmp/gcenv/bin/python tools/gamecenter/create.py
+
+  # The Swift version (1.6), from the swift-rewrite branch, to TestFlight.
+  backrooms-swift-testflight:
+    name: Accessible Backrooms Swift (1.6) TestFlight
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: Accessible Backrooms
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.accessible.backrooms
+      xcode: latest
+    scripts:
+      - name: Signing profile with Game Center
+        script: |
+          python3 -m venv /tmp/gcenv
+          /tmp/gcenv/bin/pip install --quiet pyjwt cryptography requests
+          /tmp/gcenv/bin/python tools/signing/gc_profile.py
+      - name: Generate the Xcode project
+        working-directory: swift/App
+        script: |
+          brew list xcodegen >/dev/null 2>&1 || brew install xcodegen
+          sed -i '' "s/CURRENT_PROJECT_VERSION: \"1\"/CURRENT_PROJECT_VERSION: \"$BUILD_NUMBER\"/" project.yml
+          xcodegen generate
+      - name: Use the App Store signing profile
+        script: |
+          xcode-project use-profiles --project swift/App/Backrooms.xcodeproj
+      - name: Build signed IPA
+        script: |
+          xcode-project build-ipa --project swift/App/Backrooms.xcodeproj --scheme Backrooms
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: false
