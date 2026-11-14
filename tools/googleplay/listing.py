@@ -46,8 +46,8 @@ def call(method, url, **kw):
 
 edit = call("POST", f"{API}/edits")["id"]
 print("Edit", edit)
-call("PATCH", f"{API}/edits/{edit}/details", json={"defaultLanguage": "en-US", "contactWebsite": cfg["contactWebsite"]})
-print("Default language and website set")
+call("PATCH", f"{API}/edits/{edit}/details", json={"defaultLanguage": "en-US", "contactWebsite": cfg["contactWebsite"], "contactEmail": cfg["contactEmail"]})
+print("Default language, website and contact email set")
 
 for lang, text in cfg["listings"].items():
     call("PUT", f"{API}/edits/{edit}/listings/{lang}", json={"language": lang, **text})
