@@ -36,6 +36,7 @@ def token():
 
 
 H = {"Authorization": "Bearer " + token()}
+icon_problems = []
 
 
 def call(method, url, retry=True, **kw):
@@ -105,69 +106,77 @@ def create(kind, body):
         raise
 
 
-items = json.load(open(os.path.join(HERE, "..", "gamecenter", "items.json")))
-ids, problems, icon_problems = {}, [], []
+def main():
+    items = json.load(open(os.path.join(HERE, "..", "gamecenter", "items.json")))
+    ids, problems = {}, []
 
-existing = dedupe("achievements")
-have = {t: a["id"] for t, a in existing.items()}
-print(f"Achievements already there: {len(have)}")
-for rank, a in enumerate(items["achievements"], 1):
-    tok = a["id"]
-    pts = 40 if a["points"] >= 40 else 20 if a["points"] >= 20 else 10   # Google: multiples of 5, 1000 in total
-    body = {"kind": "gamesConfiguration#achievementConfiguration", "token": tok, "achievementType": "STANDARD",
-            "initialState": "HIDDEN" if a["hidden"] else "REVEALED",
-            "draft": {"kind": "gamesConfiguration#achievementConfigurationDetail",
-                      "name": bundle({k: a[k]["name"] for k in LOCALES}), "description": bundle({k: a[k]["desc"] for k in LOCALES}),
-                      "pointValue": pts, "sortRank": rank}}
-    if tok in have:
-        ids[tok] = have[tok]
-        icon(have[tok], "ACHIEVEMENT_ICON", existing[tok])
-        if os.environ.get("PLAYGAMES_PT"):          # add the Portuguese texts to what is there
-            try:
-                call("PUT", f"https://gamesconfiguration.googleapis.com/games/v1configuration/achievements/{have[tok]}", json={**body, "id": have[tok]})
-                print("Updated", tok)
-            except Exception as e:
-                problems.append(f"{tok}: {e}"); print("  !!", tok, e)
-        continue
-    try:
-        made = create("achievements", body)
-        ids[tok] = made["id"]
-        icon(made["id"], "ACHIEVEMENT_ICON")
-        print("Achievement", tok, "->", made["id"])
-    except Exception as e:
-        problems.append(f"{tok}: {e}"); print("  !!", tok, e)
+    known = json.load(open(os.path.join(HERE, "ids.json"))) if os.path.exists(os.path.join(HERE, "ids.json")) else {}
+    existing = dedupe("achievements")
+    have = {t: a["id"] for t, a in existing.items()}
+    have.update({t: i for t, i in known.items() if t.startswith("br_") and not t.startswith(("br_endless", "br_hunter_wins", "br_daily_streak"))})
+    print(f"Achievements already there: {len(have)}")
+    for rank, a in enumerate(items["achievements"], 1):
+        tok = a["id"]
+        pts = 40 if a["points"] >= 40 else 20 if a["points"] >= 20 else 10   # Google: multiples of 5, 1000 in total
+        body = {"kind": "gamesConfiguration#achievementConfiguration", "token": tok, "achievementType": "STANDARD",
+                "initialState": "HIDDEN" if a["hidden"] else "REVEALED",
+                "draft": {"kind": "gamesConfiguration#achievementConfigurationDetail",
+                          "name": bundle({k: a[k]["name"] for k in LOCALES}), "description": bundle({k: a[k]["desc"] for k in LOCALES}),
+                          "pointValue": pts, "sortRank": rank}}
+        if tok in have:
+            ids[tok] = have[tok]
+            icon(have[tok], "ACHIEVEMENT_ICON", existing.get(tok))
+            if os.environ.get("PLAYGAMES_PT"):          # add the Portuguese texts to what is there
+                try:
+                    call("PUT", f"https://gamesconfiguration.googleapis.com/games/v1configuration/achievements/{have[tok]}", json={**body, "id": have[tok]})
+                    print("Updated", tok)
+                except Exception as e:
+                    problems.append(f"{tok}: {e}"); print("  !!", tok, e)
+            continue
+        try:
+            made = create("achievements", body)
+            ids[tok] = made["id"]
+            icon(made["id"], "ACHIEVEMENT_ICON")
+            print("Achievement", tok, "->", made["id"])
+        except Exception as e:
+            problems.append(f"{tok}: {e}"); print("  !!", tok, e)
 
-existing = dedupe("leaderboards")
-have = {t: b["id"] for t, b in existing.items()}
-for rank, b in enumerate(items["leaderboards"], 1):
-    tok = b["id"]
-    suffix = lambda key: bundle({k: b[k][key].strip() and " " + b[k][key].strip() for k in LOCALES})
-    body = {"kind": "gamesConfiguration#leaderboardConfiguration", "token": tok, "scoreOrder": "LARGER_IS_BETTER",
-            "draft": {"kind": "gamesConfiguration#leaderboardConfigurationDetail", "name": bundle({k: b[k]["name"] for k in LOCALES}),
-                      "scoreFormat": {"numberFormatType": "NUMERIC", "numDecimalPlaces": 0,
-                                      "suffix": {"one": suffix("one"), "many": suffix("many"), "other": suffix("many")}},
-                      "sortRank": rank}}
-    if tok in have:
-        ids[tok] = have[tok]
-        icon(have[tok], "LEADERBOARD_ICON", existing[tok])
-        if os.environ.get("PLAYGAMES_PT"):
-            try:
-                call("PUT", f"https://gamesconfiguration.googleapis.com/games/v1configuration/leaderboards/{have[tok]}", json={**body, "id": have[tok]})
-                print("Updated", tok)
-            except Exception as e:
-                problems.append(f"{tok}: {e}"); print("  !!", tok, e)
-        continue
-    try:
-        made = create("leaderboards", body)
-        ids[tok] = made["id"]
-        icon(made["id"], "LEADERBOARD_ICON")
-        print("Leaderboard", tok, "->", made["id"])
-    except Exception as e:
-        problems.append(f"{tok}: {e}"); print("  !!", tok, e)
+    existing = dedupe("leaderboards")
+    have = {t: b["id"] for t, b in existing.items()}
+    have.update({t: known[t] for t in ("br_endless_depth", "br_hunter_wins", "br_daily_streak") if t in known})
+    for rank, b in enumerate(items["leaderboards"], 1):
+        tok = b["id"]
+        suffix = lambda key: bundle({k: b[k][key].strip() and " " + b[k][key].strip() for k in LOCALES})
+        body = {"kind": "gamesConfiguration#leaderboardConfiguration", "token": tok, "scoreOrder": "LARGER_IS_BETTER",
+                "draft": {"kind": "gamesConfiguration#leaderboardConfigurationDetail", "name": bundle({k: b[k]["name"] for k in LOCALES}),
+                          "scoreFormat": {"numberFormatType": "NUMERIC", "numDecimalPlaces": 0,
+                                          "suffix": {"one": suffix("one"), "many": suffix("many"), "other": suffix("many")}},
+                          "sortRank": rank}}
+        if tok in have:
+            ids[tok] = have[tok]
+            icon(have[tok], "LEADERBOARD_ICON", existing.get(tok))
+            if os.environ.get("PLAYGAMES_PT"):
+                try:
+                    call("PUT", f"https://gamesconfiguration.googleapis.com/games/v1configuration/leaderboards/{have[tok]}", json={**body, "id": have[tok]})
+                    print("Updated", tok)
+                except Exception as e:
+                    problems.append(f"{tok}: {e}"); print("  !!", tok, e)
+            continue
+        try:
+            made = create("leaderboards", body)
+            ids[tok] = made["id"]
+            icon(made["id"], "LEADERBOARD_ICON")
+            print("Leaderboard", tok, "->", made["id"])
+        except Exception as e:
+            problems.append(f"{tok}: {e}"); print("  !!", tok, e)
 
-print("\nPLAYGAMES_IDS " + json.dumps(ids, separators=(",", ":")))
-if icon_problems:
-    print(f"\n{len(icon_problems)} icon(s) not uploaded (Google's image service was busy); run again to retry them.")
-if problems:
-    print(f"\n{len(problems)} problem(s):"); [print(" -", p) for p in problems]; sys.exit(1)
-print(f"\nDone: {len(items['achievements'])} achievements and {len(items['leaderboards'])} leaderboards in Play Games.")
+    print("\nPLAYGAMES_IDS " + json.dumps(ids, separators=(",", ":")))
+    if icon_problems:
+        print(f"\n{len(icon_problems)} icon(s) not uploaded (Google's image service was busy); run again to retry them.")
+    if problems:
+        print(f"\n{len(problems)} problem(s):"); [print(" -", p) for p in problems]; sys.exit(1)
+    print(f"\nDone: {len(items['achievements'])} achievements and {len(items['leaderboards'])} leaderboards in Play Games.")
+
+
+if __name__ == "__main__":
+    main()

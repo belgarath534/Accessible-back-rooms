@@ -3,6 +3,7 @@
 # repository secret GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS (the whole JSON file).
 #   playgames  – create / fix the Play Games achievements and leaderboards
 #                (English and Portuguese), and print their ids
+#   playgames-cleanup – delete leftover copies not in tools/playgames/ids.json, retry icons
 #   listing    – fill in the Google Play store listing
 name: Google Play
 
@@ -12,7 +13,7 @@ on:
       job:
         description: Which job
         type: choice
-        options: [playgames, listing]
+        options: [playgames, playgames-cleanup, listing]
         default: playgames
 
 jobs:
@@ -32,7 +33,11 @@ jobs:
           PLAYGAMES_PT: "1"
         run: |
           if [ -z "$GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS" ]; then echo "::error::Add the GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS secret first"; exit 1; fi
-          if [ "${{ inputs.job }}" = listing ]; then python -u tools/googleplay/listing.py; else python -u tools/playgames/create.py | tee playgames.log; fi
+          case "${{ inputs.job }}" in
+            listing) python -u tools/googleplay/listing.py ;;
+            playgames-cleanup) cd tools/playgames && python -u cleanup.py ;;
+            *) python -u tools/playgames/create.py | tee playgames.log ;;
+          esac
       - uses: actions/upload-artifact@v4
         if: always()
         with:
