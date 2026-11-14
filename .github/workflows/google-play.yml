@@ -1,0 +1,41 @@
+# Google Play jobs for Accessible Backrooms, run by hand (Actions → Google Play
+# → Run workflow). They use the Google Play service account key saved as the
+# repository secret GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS (the whole JSON file).
+#   playgames  – create / fix the Play Games achievements and leaderboards
+#                (English and Portuguese), and print their ids
+#   listing    – fill in the Google Play store listing
+name: Google Play
+
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: Which job
+        type: choice
+        options: [playgames, listing]
+        default: playgames
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install
+        run: pip install --quiet pyjwt cryptography requests
+      - name: Run
+        env:
+          GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS }}
+          PLAYGAMES_PT: "1"
+        run: |
+          if [ -z "$GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS" ]; then echo "::error::Add the GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS secret first"; exit 1; fi
+          if [ "${{ inputs.job }}" = listing ]; then python -u tools/googleplay/listing.py; else python -u tools/playgames/create.py | tee playgames.log; fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: google-play-log
+          path: playgames.log
+          if-no-files-found: ignore
