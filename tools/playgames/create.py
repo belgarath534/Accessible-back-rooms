@@ -76,14 +76,21 @@ have = {a["token"]: a["id"] for a in listed("achievements") if a.get("token")}
 print(f"Achievements already there: {len(have)}")
 for rank, a in enumerate(items["achievements"], 1):
     tok = a["id"]
-    if tok in have:
-        ids[tok] = have[tok]; continue
     pts = 40 if a["points"] >= 40 else 20 if a["points"] >= 20 else 10   # Google: multiples of 5, 1000 in total
     body = {"kind": "gamesConfiguration#achievementConfiguration", "token": tok, "achievementType": "STANDARD",
             "initialState": "HIDDEN" if a["hidden"] else "REVEALED",
             "draft": {"kind": "gamesConfiguration#achievementConfigurationDetail",
                       "name": bundle({k: a[k]["name"] for k in LOCALES}), "description": bundle({k: a[k]["desc"] for k in LOCALES}),
                       "pointValue": pts, "sortRank": rank}}
+    if tok in have:
+        ids[tok] = have[tok]
+        if os.environ.get("PLAYGAMES_PT"):          # add the Portuguese texts to what is there
+            try:
+                call("PUT", f"https://gamesconfiguration.googleapis.com/games/v1configuration/achievements/{have[tok]}", json={**body, "id": have[tok]})
+                print("Updated", tok)
+            except Exception as e:
+                problems.append(f"{tok}: {e}"); print("  !!", tok, e)
+        continue
     try:
         made = call("POST", f"{API}/achievements", json=body)
         ids[tok] = made["id"]
@@ -95,14 +102,21 @@ for rank, a in enumerate(items["achievements"], 1):
 have = {b["token"]: b["id"] for b in listed("leaderboards") if b.get("token")}
 for rank, b in enumerate(items["leaderboards"], 1):
     tok = b["id"]
-    if tok in have:
-        ids[tok] = have[tok]; continue
     suffix = lambda key: bundle({k: b[k][key].strip() and " " + b[k][key].strip() for k in LOCALES})
     body = {"kind": "gamesConfiguration#leaderboardConfiguration", "token": tok, "scoreOrder": "LARGER_IS_BETTER",
             "draft": {"kind": "gamesConfiguration#leaderboardConfigurationDetail", "name": bundle({k: b[k]["name"] for k in LOCALES}),
                       "scoreFormat": {"numberFormatType": "NUMERIC", "numDecimalPlaces": 0,
                                       "suffix": {"one": suffix("one"), "many": suffix("many"), "other": suffix("many")}},
                       "sortRank": rank}}
+    if tok in have:
+        ids[tok] = have[tok]
+        if os.environ.get("PLAYGAMES_PT"):
+            try:
+                call("PUT", f"https://gamesconfiguration.googleapis.com/games/v1configuration/leaderboards/{have[tok]}", json={**body, "id": have[tok]})
+                print("Updated", tok)
+            except Exception as e:
+                problems.append(f"{tok}: {e}"); print("  !!", tok, e)
+        continue
     try:
         made = call("POST", f"{API}/leaderboards", json=body)
         ids[tok] = made["id"]
