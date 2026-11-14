@@ -150,58 +150,6 @@ workflows:
     artifacts:
       - android/app/build/outputs/apk/debug/*.apk
 
-  # Android: the signed app bundle for Google Play, sent to the internal testing track.
-  backrooms-android-release:
-    name: Accessible Backrooms Android (Google Play)
-    max_build_duration: 60
-    instance_type: mac_mini_m2
-    environment:
-      java: 21
-      node: v20.14.0
-      android_signing:
-        - dungeon-descent-android
-      groups:
-        - google_credentials
-    scripts:
-      - name: Install dependencies
-        script: |
-          npm install --legacy-peer-deps
-      - name: Capacitor sync
-        script: |
-          npx cap sync android
-      - name: Set the version code
-        script: |
-          sed -i '' "s/versionCode [0-9]*/versionCode $((BUILD_NUMBER + 1))/" android/app/build.gradle
-          grep versionCode android/app/build.gradle
-      - name: Build signed AAB and APK
-        script: |
-          cd android
-          chmod +x gradlew
-          ./gradlew bundleRelease assembleRelease
-    artifacts:
-      - android/app/build/outputs/bundle/release/*.aab
-      - android/app/build/outputs/apk/release/*.apk
-    publishing:
-      google_play:
-        credentials: $GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS
-        track: internal
-
-  # Google Play: fills in the store listing (texts in English and Portuguese,
-  # icon, feature graphic, screenshots). The app must exist in Play Console first.
-  backrooms-play-listing:
-    name: Accessible Backrooms Google Play listing
-    max_build_duration: 15
-    instance_type: mac_mini_m2
-    environment:
-      groups:
-        - google_credentials
-    scripts:
-      - name: Fill in the store listing
-        script: |
-          python3 -m venv /tmp/gpenv
-          /tmp/gpenv/bin/pip install --quiet pyjwt cryptography requests
-          /tmp/gpenv/bin/python tools/googleplay/listing.py
-
   # Android: the signed bundle (AAB) only, without sending it anywhere. Google
   # Play wants the very first upload of a new app done by hand in Play Console.
   backrooms-android-bundle:
