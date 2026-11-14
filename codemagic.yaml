@@ -61,6 +61,11 @@ workflows:
       - name: Capacitor sync
         script: |
           npx cap sync ios
+      - name: Signing profile with Game Center
+        script: |
+          python3 -m venv /tmp/gcenv
+          /tmp/gcenv/bin/pip install --quiet pyjwt cryptography requests
+          /tmp/gcenv/bin/python tools/signing/gc_profile.py
       - name: Use the App Store signing profile
         script: |
           xcode-project use-profiles
