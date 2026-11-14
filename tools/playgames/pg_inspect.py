@@ -1,30 +1,38 @@
 #!/usr/bin/env python3
-"""Shows one Play Games achievement exactly as Google stores it, then tries
-the icon upload in a few ways and prints each answer."""
-import json, os, sys
+"""Checks every Play Games achievement and leaderboard as Google stores it and
+lists anything that looks incomplete: no icon, missing English or Portuguese
+name or description, points not a multiple of 5, and the points total."""
 import create
-import requests
 
 ach = create.listed("achievements")
 print("achievements:", len(ach))
-a = ach[0]
-print(json.dumps(a, indent=1, ensure_ascii=False)[:3000])
-rid = a["id"]
-png = open(os.path.join(create.HERE, "icon.png"), "rb").read()
-small = open(os.path.join(create.HERE, "icon-small.png"), "rb").read()
-tries = [
-    ("media png", f"{create.IMG}/{rid}/imageType/ACHIEVEMENT_ICON?uploadType=media", small, {"Content-Type": "image/png"}),
-    ("no uploadType", f"{create.IMG}/{rid}/imageType/ACHIEVEMENT_ICON", small, {"Content-Type": "image/png"}),
-    ("big png", f"{create.IMG}/{rid}/imageType/ACHIEVEMENT_ICON?uploadType=media", png, {"Content-Type": "image/png"}),
-]
-for name, url, data, h in tries:
-    r = requests.post(url, data=data, headers={**create.H, **h}, timeout=120)
-    print(f"\n{name}: {r.status_code} {r.text[:500]}")
-    if r.status_code < 300:
-        break
-# multipart
-boundary = "xyzzyboundary"
-body = (f"--{boundary}\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n{{}}\r\n--{boundary}\r\nContent-Type: image/png\r\n\r\n").encode() + small + f"\r\n--{boundary}--\r\n".encode()
-r = requests.post(f"{create.IMG}/{rid}/imageType/ACHIEVEMENT_ICON?uploadType=multipart", data=body,
-                  headers={**create.H, "Content-Type": f"multipart/related; boundary={boundary}"}, timeout=120)
-print(f"\nmultipart: {r.status_code} {r.text[:500]}")
+total, bad = 0, 0
+for a in ach:
+    d = a.get("draft") or {}
+    pts = d.get("pointValue", 0)
+    total += pts
+    issues = []
+    if not d.get("iconUrl"):
+        issues.append("no icon")
+    if pts % 5 or not 5 <= pts <= 200:
+        issues.append(f"points {pts}")
+    for field in ("name", "description"):
+        locs = {t["locale"]: t["value"] for t in (d.get(field) or {}).get("translations", [])}
+        for want in ("en-US", "pt-BR"):
+            if not locs.get(want):
+                issues.append(f"{field} {want} missing")
+    other = {k for k in d if k not in ("kind", "name", "description", "pointValue", "iconUrl", "sortRank")}
+    name = next((t["value"] for t in (d.get("name") or {}).get("translations", []) if t["locale"] == "en-US"), a["id"])
+    if issues:
+        bad += 1
+    print(f"{'!!' if issues else 'ok'} {name} [{a['achievementType']}, {a['initialState']}, steps {a.get('stepsToUnlock')}]"
+          f"{' -> ' + ', '.join(issues) if issues else ''}{' extra:' + ','.join(other) if other else ''}")
+print(f"\npoints total: {total} (Google allows at most 1000)")
+print(f"achievements with problems: {bad}")
+
+boards = create.listed("leaderboards")
+print("\nleaderboards:", len(boards))
+for b in boards:
+    d = b.get("draft") or {}
+    locs = {t["locale"] for t in (d.get("name") or {}).get("translations", [])}
+    print(" ", b["id"], "icon" if d.get("iconUrl") else "NO ICON", sorted(locs), d.get("scoreFormat", {}).get("numberFormatStyle"))
