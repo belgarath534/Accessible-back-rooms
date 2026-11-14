@@ -36,6 +36,9 @@ final class AppModel: ObservableObject {
         defaults.set(narrator, forKey: "narrator")
     }
 
+    /// A command's name as the game says it ("flashlight", "lanterna").
+    func cmd(_ k: String) -> String { (GameData.shared.commandNames[lang.rawValue]?[k] ?? k).capitalizedFirst }
+
     func t(_ s: String, _ v: [String: CustomStringConvertible] = [:]) -> String { Words(lang: lang).t(s, v) }
 
     func appeared() {

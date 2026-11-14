@@ -84,6 +84,11 @@ struct GameView: View {
                     }
                     BigButton(title: model.t("Listen"), primary: true) { model.act { $0.listen() } }.keyboardShortcut("l", modifiers: [])
                     LazyVGrid(columns: cols, spacing: 12) {
+                        BigButton(title: model.cmd("sprint")) { model.act { $0.sprint(0) } }.keyboardShortcut(.upArrow, modifiers: .shift)
+                        BigButton(title: model.cmd("sneak") + (g.sneaking ? " ✓" : "")) { model.act { $0.sneak() } }.keyboardShortcut("n", modifiers: [])
+                        BigButton(title: model.cmd("light") + (g.inv.light ? " ✓" : "")) { model.act { $0.light() } }.keyboardShortcut("f", modifiers: [])
+                        BigButton(title: model.cmd("throw")) { model.act { $0.throwFirecracker(0) } }.keyboardShortcut("t", modifiers: [])
+                        BigButton(title: model.cmd("eat")) { model.act { $0.eat() } }.keyboardShortcut("e", modifiers: [])
                         BigButton(title: model.t("Look around")) { model.act { $0.look() } }.keyboardShortcut("k", modifiers: [])
                         BigButton(title: model.t("Drink almond water")) { model.act { $0.drink() } }.keyboardShortcut("d", modifiers: [])
                         BigButton(title: model.t("Status")) { model.act { $0.status() } }.keyboardShortcut("s", modifiers: [])

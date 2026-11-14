@@ -17,6 +17,7 @@ public struct GameData: Decodable, Sendable {
     public let notes: [String: [String]]
     public let firstExtra: Int
     public let tracks: [String]
+    public let commandNames: [String: [String: String]]
 
     public static let shared: GameData = {
         guard let url = Bundle.module.url(forResource: "gamedata", withExtension: "json"),

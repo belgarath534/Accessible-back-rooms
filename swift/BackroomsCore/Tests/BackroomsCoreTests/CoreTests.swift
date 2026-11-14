@@ -72,4 +72,21 @@ final class CoreTests: XCTestCase {
             return
         }
     }
+
+    func testItemsAndActions() {
+        let g = Game(dice: Dice(SeededRandom(seed: 9)))
+        g.start(mode: .extra, level: 20)
+        XCTAssertTrue(g.light(true).hasPrefix("Flashlight on"))
+        XCTAssertEqual(g.light(false), "Flashlight off.")
+        XCTAssertTrue(g.sneak().contains("crouch"))
+        XCTAssertTrue(g.eat().contains("no Royal Rations"))
+        g.inv.energy = 1
+        let s = g.sprint(0)
+        XCTAssertFalse(s.isEmpty)
+        let fire = g.throwFirecracker(0)
+        XCTAssertTrue(fire.contains("firecracker") || fire.contains("wall"), fire)
+        let p = Game(lang: .pt, dice: Dice(SeededRandom(seed: 9)))
+        p.start(mode: .story, level: 2)
+        XCTAssertTrue(p.light(true).hasPrefix("Lanterna"), p.light(false))
+    }
 }

@@ -63,6 +63,9 @@ final class AudioEngine {
         case .turn(let side): play(buf("turn"), at: SoundPos(Double(side) * 0.6, 0, -0.5), volume: 0.4)
         case .pickup: play(buf("pickup"), at: .center, volume: 0.6)
         case .drink: play(buf("drink"), at: .center, volume: 0.7)
+        case .eat: play(buf("crunch"), at: .center, volume: 0.7)
+        case .click(let on): play(buf(on ? "clickOn" : "clickOff"), at: .center, volume: 0.5)
+        case .bang(let at, let v, let m): play(buf("bang"), at: at, volume: v, muffle: m); play(sample("impact"), at: at, volume: v * 0.5, muffle: m)
         case .beacon(_, let at, let v, let m): play(buf("beacon"), at: at, volume: v, muffle: m)
         case .monster(let type, let at, let v, let m): play(monsterBuffer(type), at: at, volume: v, muffle: m)
         case .monsterStep(_, let at, let v, let m): play(buf("monstep"), at: at, volume: v, muffle: m)
@@ -129,6 +132,10 @@ final class AudioEngine {
         buffers["monstep"] = synth(0.6) { t, n in Self.thud(t, 0) * 0.6 + Self.burst(t, 0, 0.1) * n * 0.4 + Self.thud(t, 0.3) * 0.6 + Self.burst(t, 0.3, 0.1) * n * 0.4 }
         buffers["growl"] = synth(1.2) { t, n in (sin(2 * .pi * 58 * t + sin(2 * .pi * 23 * t) * 3) * 0.6 + n * 0.2) * sin(.pi * t / 1.2) }
         buffers["heart"] = synth(0.6) { t, _ in Self.thud(t, 0) + Self.thud(t, 0.22) * 0.7 }
+        buffers["crunch"] = synth(1.2) { t, n in (0..<5).reduce(0.0) { a, i in a + Self.burst(t, Double(i) * 0.2, 0.08) * n * 0.5 } }
+        buffers["clickOn"] = synth(0.06) { t, _ in sin(2 * .pi * 2400 * t) * exp(-t * 80) * 0.5 }
+        buffers["clickOff"] = synth(0.06) { t, _ in sin(2 * .pi * 1600 * t) * exp(-t * 80) * 0.5 }
+        buffers["bang"] = synth(0.8) { t, n in n * exp(-t * 9) + sin(2 * .pi * 60 * t) * exp(-t * 12) * 0.6 }
         buffers["noclip"] = synth(2.4) { t, n in n * sin(.pi * t / 2.4) * 0.6 }
     }
 

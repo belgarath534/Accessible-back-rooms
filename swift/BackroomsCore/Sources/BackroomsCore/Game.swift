@@ -15,6 +15,9 @@ public enum SoundEvent: Equatable, Sendable {
     case turn(side: Int)                       // -1 left, 0 around, 1 right
     case pickup
     case drink
+    case eat
+    case click(on: Bool)
+    case bang(at: SoundPos, volume: Double, muffle: Double)
     case beacon(kind: String, at: SoundPos, volume: Double, muffle: Double)
     case monster(type: String, at: SoundPos, volume: Double, muffle: Double)
     case monsterStep(type: String, at: SoundPos, volume: Double, muffle: Double)
@@ -67,6 +70,9 @@ public final class Game {
     public private(set) var caughtThisLevel = false
     public var sounds: [SoundEvent] = []
 
+    public private(set) var sneaking = false
+    private var sprinted = false
+    private var noise: (at: Cell, turns: Int)? = nil
     private var entBand = 99
     private var warned30 = false, warned15 = false
     private var wasDark = false
@@ -227,6 +233,87 @@ public final class Game {
                  ["s": Int(sanity.rounded()), "n": inv.water])
     }
 
+    public func eat() -> String {
+        guard state == .play else { return notPlaying() }
+        if inv.ration == 0 { return t("You have no Royal Rations. They are hidden around the levels.") }
+        inv.ration -= 1; sanity = min(100, sanity + 35); inv.energy += 1; sounds.append(.eat)
+        return t("You eat a Royal Ration. It tastes like your favorite meal, warm and perfect. Sanity is now {s} percent, and you feel strong enough for one more sprint. {n} left.",
+                 ["s": Int(sanity.rounded()), "n": inv.ration])
+    }
+
+    /// Flashlight: nil switches it, true on, false off.
+    public func light(_ on: Bool? = nil) -> String {
+        guard state == .play else { return notPlaying() }
+        if !inv.flashlight { return t("You do not have a flashlight yet.") }
+        let want = on ?? !inv.light
+        if want && inv.battery <= 0 { return t("The flashlight is dead. You need a battery.") }
+        inv.light = want; wasDark = false
+        sounds.append(.click(on: want))
+        guard want else { return t("Flashlight off.") }
+        var extra = ""
+        let dist = maze.distances(from: pos)
+        if monsters.contains(where: { $0.type == "smiler" && dist[$0.at] <= 3 }) { extra = t(" Something hisses and scrambles away from the light.") }
+        if monsters.contains(where: { $0.type == "moths" }) { extra += t(" Somewhere in the dark, wings start to flutter.") }
+        return t("Flashlight on. Battery {n} percent.{extra}", ["n": Int(inv.battery.rounded()), "extra": extra])
+    }
+
+    public func sneak(_ on: Bool? = nil) -> String {
+        guard state == .play else { return notPlaying() }
+        sneaking = on ?? !sneaking
+        return t(sneaking ? "You crouch low and move quietly. Monsters only notice you up close, but sneaking wears on your nerves." : "You stand up and walk normally.")
+    }
+
+    /// Throws a firecracker down an open hall (r relative, like move). Monsters go to the bang.
+    public func throwFirecracker(_ r0: Int = 0) -> String {
+        guard state == .play else { return notPlaying() }
+        if inv.fire == 0 { return t("You have no firecrackers.") }
+        var r = r0
+        if r == 0 && !maze.isOpen(pos, abs(0)), let o = [1, 3, 2].first(where: { maze.isOpen(pos, abs($0)) }) { r = o }
+        let d = abs(r)
+        var c = pos, n = 0
+        while n < 4 && maze.isOpen(c, d) { c = c.step(d); n += 1 }
+        if n == 0 { return t("There is a wall {dir}. Throw it down an open path. {paths}", ["dir": words.relName(r), "paths": pathsText()]) }
+        inv.fire -= 1
+        noise = (c, 5)
+        let rd = relDir(c)
+        sounds.append(.bang(at: rd.pos, volume: min(1, max(0.3, 1 - Double(n) * 0.15)), muffle: Double(n) * 0.1))
+        let nd0 = maze.distances(from: c)
+        let lured = monsters.contains { (data.monsters[$0.type]?.hostile ?? false) && $0.type != "chaser" && nd0[$0.at] <= 10 }
+        steps += 1; drain(0.5); monstersTurn()
+        var parts: [String] = []
+        _ = checkCaught(&parts)
+        if sanity <= 0 { gameOver(&parts); return parts.joined(separator: " ") }
+        return t("You light a firecracker and throw it {dir}. It bangs {n} rooms away. Anything nearby will go to the noise. {caught} {paths}",
+                 ["dir": r == 0 ? t("down the hall ahead") : words.relName(r), "n": n,
+                  "caught": (lured ? t("Something rushes toward the bang.") + " " : "") + parts.joined(separator: " "), "paths": pathsText()])
+    }
+
+    /// Runs two rooms at once, using one sprint. Loud: monsters notice you from farther away.
+    public func sprint(_ r: Int = 0) -> String {
+        guard state == .play else { return notPlaying() }
+        if inv.energy <= 0 { return t("You are too tired to sprint. Find energy bars. {paths}", ["paths": pathsText()]) }
+        let d0 = abs(r)
+        guard maze.isOpen(pos, d0) else { sounds.append(.bump); return t("A wall blocks your way {dir}. {paths}", ["dir": words.relName(r), "paths": pathsText()]) }
+        inv.energy -= 1; sprinted = true; facing = d0
+        var moved = 0
+        var early: [String] = []
+        for i in 0..<2 {
+            guard maze.isOpen(pos, facing) else { break }
+            pos = pos.step(facing); moved += 1
+            sounds.append(.footstep(surface: level.step))
+            if i == 0 {
+                visited.insert(pos)
+                if checkCaught(&early) || items[pos] != nil || pos == exit { break }
+            }
+        }
+        let res = afterMove()
+        sprinted = false
+        if res.stop { return (early + res.parts).filter { !$0.isEmpty }.joined(separator: " ") }
+        let dir = r == 0 ? t("forward") : words.relName(r)
+        return ([t(moved > 1 ? "You sprint {dir}, two rooms!" : "You sprint {dir}!", ["dir": dir])] + early + res.parts + [pathsText()])
+            .filter { !$0.isEmpty }.joined(separator: " ")
+    }
+
     public func status() -> String {
         [level.name(lang) + ".", t("Sanity") + " " + "\(Int(sanity.rounded()))%.", t("You are facing {d}.", ["d": words.dirName(facing)]), pathsText()].joined(separator: " ")
     }
@@ -272,6 +359,7 @@ public final class Game {
 
     func drain(_ mult: Double = 1) {
         var d = difficulty.drain * mult
+        if sneaking { d *= 1.2 }
         if isDark(pos) && !inv.light { d *= level.dark >= 1 ? 1.15 : 1.35 }
         if level.calm == true { d *= 0.4 }
         sanity = max(0, sanity - d)
@@ -312,13 +400,21 @@ public final class Game {
     func monstersTurn() {
         let dist = maze.distances(from: pos)
         let before = monsters.map(\.at)
+        var nd: Distances? = nil
+        if let n = noise { nd = maze.distances(from: n.at); noise = n.turns <= 1 ? nil : (n.at, n.turns - 1) }
         for i in monsters.indices {
             var m = monsters[i]
             guard let T = data.monsters[m.type] else { continue }
             let d = dist[m.at]
             if m.stuck > 0 { m.stuck -= 1; monsters[i] = m; continue }
             if T.npc == true { if dice.chance(0.3) { wander(&m) }; monsters[i] = m; continue }
+            if let nd, T.hostile, m.type != "chaser", nd[m.at] <= 10, nd[m.at] > 0 {
+                if dice.chance(0.95), let s = maze.step(from: m.at, toward: nd, dice: dice) { m.at = m.at.step(s) }
+                monsters[i] = m; continue
+            }
             var sense = T.sense + difficulty.sense
+            if sneaking { sense = min(sense, 2) }
+            if sprinted { sense += 3 }
             if m.packAlert > 0 { m.packAlert -= 1; sense += 6 }
             var hunting = d <= sense
             if m.type == "hound" && hunting && !m.packed {
