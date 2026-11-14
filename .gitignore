@@ -6,3 +6,4 @@ ios/App/App/config.xml
 ios/DerivedData/
 build/
 *.p8
+__pycache__/
