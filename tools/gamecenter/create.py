@@ -19,7 +19,19 @@ problems = []
 
 
 def token():
-    key = os.environ["APP_STORE_CONNECT_PRIVATE_KEY"]
+    key = os.environ["APP_STORE_CONNECT_PRIVATE_KEY"].strip().strip('"').strip("'")
+    if os.path.isfile(key):
+        key = open(key).read()
+    key = key.replace("\\n", "\n").replace("\r", "").strip()
+    if "BEGIN" not in key:
+        body = "".join(key.split())
+        key = "-----BEGIN PRIVATE KEY-----\n" + "\n".join(body[i:i + 64] for i in range(0, len(body), 64)) + "\n-----END PRIVATE KEY-----"
+    else:
+        # one long line, or spaces instead of line breaks: rebuild the PEM framing
+        head, _, rest = key.partition("-----BEGIN PRIVATE KEY-----")
+        body = rest.split("-----END PRIVATE KEY-----")[0]
+        body = "".join(body.split())
+        key = "-----BEGIN PRIVATE KEY-----\n" + "\n".join(body[i:i + 64] for i in range(0, len(body), 64)) + "\n-----END PRIVATE KEY-----\n"
     now = int(time.time())
     return jwt.encode({"iss": os.environ["APP_STORE_CONNECT_ISSUER_ID"], "iat": now, "exp": now + 1100, "aud": "appstoreconnect-v1"},
                       key, algorithm="ES256", headers={"kid": os.environ["APP_STORE_CONNECT_KEY_IDENTIFIER"], "typ": "JWT"})
