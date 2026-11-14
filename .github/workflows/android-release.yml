@@ -1,8 +1,10 @@
 # Builds Accessible Backrooms for Android, signs it with the upload key, and
 # sends it to Google Play's Closed testing track. Free on GitHub (no Codemagic).
 # Run by hand: Actions → Android release → Run workflow.
-# Secrets: ANDROID_KEYSTORE_BASE64 (the .jks file as base64), ANDROID_KEYSTORE_PASSWORD,
-# ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD, GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS.
+# The upload key (.jks or .keystore) is read from the private repository
+# belgarath534/iOS-certificates with the PRIVATE_REPO_TOKEN secret.
+# Other secrets: ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS, ANDROID_KEY_PASSWORD,
+# GOOGLE_PLAY_SERVICE_ACCOUNT_CREDENTIALS.
 name: Android release
 
 on:
@@ -31,13 +33,19 @@ jobs:
         run: |
           npm install --legacy-peer-deps
           npx cap sync android
+      - name: Fetch the signing key from the private repository
+        uses: actions/checkout@v4
+        with:
+          repository: belgarath534/iOS-certificates
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: private-keys
       - name: Signing key
-        env:
-          KS: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
         run: |
-          if [ -z "$KS" ]; then echo "::error::Add the ANDROID_KEYSTORE_BASE64 secret first"; exit 1; fi
-          echo "$KS" | tr -d ' \r\n' | base64 -d > $RUNNER_TEMP/upload.jks
-          ls -la $RUNNER_TEMP/upload.jks
+          KS=$(find private-keys -type f \( -name '*.jks' -o -name '*.keystore' \) | head -1)
+          if [ -z "$KS" ]; then echo "::error::No .jks or .keystore file in iOS-certificates"; exit 1; fi
+          echo "Using $(basename "$KS")"
+          cp "$KS" $RUNNER_TEMP/upload.jks
+          rm -rf private-keys
       - name: Build signed AAB
         env:
           CM_KEYSTORE_PATH: ${{ runner.temp }}/upload.jks
