@@ -71,9 +71,11 @@ def icon(resource_id, kind, item=None):
     if item and (item.get("draft") or {}).get("iconUrl"):
         return
     try:
-        with open(os.path.join(HERE, "icon.jpg"), "rb") as f:
-            call("POST", f"{IMG}/{resource_id}/imageType/{kind}?uploadType=media", retry=False, data=f.read(), headers={"Content-Type": "image/jpeg"})
+        with open(os.path.join(HERE, "icon.png"), "rb") as f:
+            call("POST", f"{IMG}/{resource_id}/imageType/{kind}?uploadType=media", retry=False, data=f.read(), headers={"Content-Type": "image/png"})
     except Exception as e:
+        if not icon_problems:
+            print("  first icon problem:", str(e)[:700])
         icon_problems.append(resource_id)
 
 
