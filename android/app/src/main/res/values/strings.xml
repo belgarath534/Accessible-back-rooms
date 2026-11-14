@@ -4,4 +4,5 @@
     <string name="title_activity_main">Accessible Backrooms</string>
     <string name="package_name">com.accessible.backrooms</string>
     <string name="custom_url_scheme">com.accessible.backrooms</string>
+    <string name="game_services_project_id" translatable="false">705759620608</string>
 </resources>
