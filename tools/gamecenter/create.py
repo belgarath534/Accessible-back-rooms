@@ -20,6 +20,16 @@ problems = []
 
 def token():
     key = os.environ["APP_STORE_CONNECT_PRIVATE_KEY"].strip().strip('"').strip("'")
+    # Codemagic's integration may give a reference instead of the key: @file:<path> or @env:<NAME>
+    for _ in range(3):
+        if key.startswith("@file:"):
+            print("Key comes from a file")
+            key = open(os.path.expanduser(key[6:].strip())).read().strip()
+        elif key.startswith("@env:"):
+            print("Key comes from another variable")
+            key = os.environ.get(key[5:].strip(), "").strip()
+        else:
+            break
     if os.path.isfile(key):
         key = open(key).read()
     key = key.replace("\\n", "\n").replace("\r", "").strip()
