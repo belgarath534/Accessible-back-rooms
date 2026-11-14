@@ -17,7 +17,9 @@ APP_ID = "705759620608"          # Play Games Services project for Accessible Ba
 HERE = os.path.dirname(os.path.abspath(__file__))
 API = f"https://gamesconfiguration.googleapis.com/games/v1configuration/applications/{APP_ID}"
 IMG = "https://gamesconfiguration.googleapis.com/upload/games/v1configuration/images"
-LOCALES = {"en": "en-US", "pt": "pt-BR"}
+# Portuguese only once the Play Games project has Portuguese (Brazil) added as a
+# language (Play Console, Play Games Services, Configuration); set PLAYGAMES_PT=1 then.
+LOCALES = {"en": "en-US", "pt": "pt-BR"} if os.environ.get("PLAYGAMES_PT") else {"en": "en-US"}
 
 
 def token():
