@@ -61,6 +61,6 @@ for lang, text in cfg["listings"].items():
                 call("POST", f"{UPLOAD}/edits/{edit}/listings/{lang}/{kind}?uploadType=media", data=fh.read(), headers={"Content-Type": "image/png"})
         print(f"  {kind}: {len(files)} uploaded")
 
-res = call("POST", f"{API}/edits/{edit}:commit?changesNotSentForReview=true")
+res = call("POST", f"{API}/edits/{edit}:commit")
 print("Saved to Google Play:", res.get("id"))
 print("Done. The store listing is filled in. Answer the App content questions in Play Console to finish.")
