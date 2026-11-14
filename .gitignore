@@ -7,3 +7,6 @@ ios/DerivedData/
 build/
 *.p8
 __pycache__/
+swift/BackroomsCore/.build/
+swift/App/Backrooms.xcodeproj/
+swift/App/build/

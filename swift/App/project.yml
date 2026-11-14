@@ -1,0 +1,56 @@
+# XcodeGen spec for the Swift version of Accessible Backrooms (1.6).
+# `xcodegen generate` turns this into Backrooms.xcodeproj, so the project
+# file is never edited by hand or committed.
+#
+# Same bundle ID and entitlements (iCloud, Game Center) as the current app,
+# so it installs over it on TestFlight and signs with the same profiles.
+name: Backrooms
+options:
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+settings:
+  base:
+    MARKETING_VERSION: "1.6"
+    CURRENT_PROJECT_VERSION: "1"
+packages:
+  BackroomsCore:
+    path: ../BackroomsCore
+targets:
+  Backrooms:
+    type: application
+    platform: iOS
+    sources:
+      - path: Backrooms
+      # The web version's sounds and music, used as-is (one copy in the repo).
+      - path: ../../www/audio
+        type: folder
+        buildPhase: resources
+    dependencies:
+      - package: BackroomsCore
+    info:
+      path: Backrooms/Info.plist
+      properties:
+        CFBundleDisplayName: Accessible Backrooms
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [en, pt-BR]
+        LSApplicationCategoryType: public.app-category.adventure-games
+        ITSAppUsesNonExemptEncryption: false
+        UILaunchScreen: {}
+        UIRequiresFullScreen: false
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        UISupportedInterfaceOrientations~ipad: [UIInterfaceOrientationPortrait, UIInterfaceOrientationPortraitUpsideDown, UIInterfaceOrientationLandscapeLeft, UIInterfaceOrientationLandscapeRight]
+        NSMicrophoneUsageDescription: Accessible Backrooms listens for your voice commands, like forward, listen and hide, so you can play hands-free.
+        NSSpeechRecognitionUsageDescription: Accessible Backrooms turns your voice commands into game moves, so you can play hands-free.
+    entitlements:
+      path: Backrooms/Backrooms.entitlements
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.accessible.backrooms
+        TARGETED_DEVICE_FAMILY: "1,2"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_VERSION: "5.9"
+        CODE_SIGN_STYLE: Manual
