@@ -2,9 +2,9 @@
 
 An accessible, voice-controlled audio horror game set in the Backrooms. Everything is spoken and played as sound, so it can be played with your voice, a screen reader, a keyboard or touch.
 
-Play it online: https://backrooms-audio-game.netlify.app
+Play it online: https://accessible-backrooms.leonardomachado39137.workers.dev
 
-Current version: **1.0**. Privacy policy: https://backrooms-audio-game.netlify.app/privacy.html Available in English and Brazilian Portuguese, including voice commands.
+Current version: **1.0**. Privacy policy: https://accessible-backrooms.leonardomachado39137.workers.dev/privacy Available in English and Brazilian Portuguese, including voice commands.
 
 ## Versions
 

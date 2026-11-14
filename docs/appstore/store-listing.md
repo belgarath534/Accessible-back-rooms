@@ -13,13 +13,13 @@ Primary: Games, then Adventure. Secondary: Games, then Puzzle.
 Free. Availability: all countries.
 
 ### Privacy policy URL
-https://backrooms-audio-game.netlify.app/privacy.html
+https://accessible-backrooms.leonardomachado39137.workers.dev/privacy
 
 ### Support URL
 https://github.com/belgarath534/Accessible-back-rooms/issues
 
 ### Marketing URL (optional)
-https://backrooms-audio-game.netlify.app
+https://accessible-backrooms.leonardomachado39137.workers.dev
 
 ### Copyright
 2026 Leo Productions
