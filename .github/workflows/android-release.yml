@@ -54,6 +54,13 @@ jobs:
           CM_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           # Codemagic's builds used version codes up to the low tens; GitHub's start above them.
+          # use the alias from the secret if the key file has it, otherwise its only key
+          ALIASES=$(keytool -list -keystore "$CM_KEYSTORE_PATH" -storepass "$CM_KEYSTORE_PASSWORD" 2>/dev/null | grep -i "PrivateKeyEntry" | cut -d, -f1)
+          echo "Keys in the file: $(echo "$ALIASES" | wc -l)"
+          if ! echo "$ALIASES" | grep -qxF "$CM_KEY_ALIAS"; then
+            if [ "$(echo "$ALIASES" | grep -c .)" = 1 ]; then export CM_KEY_ALIAS="$ALIASES"; echo "The alias secret does not match; using the only key in the file."
+            else echo "::error::The alias secret does not match any key in the file. Aliases in the file: $ALIASES"; exit 1; fi
+          fi
           sed -i "s/versionCode [0-9]*/versionCode $((GITHUB_RUN_NUMBER + 100))/" android/app/build.gradle
           grep versionCode android/app/build.gradle
           cd android && chmod +x gradlew && ./gradlew bundleRelease
