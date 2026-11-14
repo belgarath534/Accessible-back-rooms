@@ -13,7 +13,7 @@ on:
       job:
         description: Which job
         type: choice
-        options: [playgames, playgames-cleanup, listing]
+        options: [playgames, playgames-cleanup, playgames-inspect, listing]
         default: playgames
 
 jobs:
@@ -36,6 +36,7 @@ jobs:
           case "${{ inputs.job }}" in
             listing) python -u tools/googleplay/listing.py ;;
             playgames-cleanup) cd tools/playgames && python -u cleanup.py ;;
+            playgames-inspect) cd tools/playgames && python -u inspect.py ;;
             *) python -u tools/playgames/create.py | tee playgames.log ;;
           esac
       - uses: actions/upload-artifact@v4
