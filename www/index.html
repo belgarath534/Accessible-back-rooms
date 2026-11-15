@@ -290,12 +290,11 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
-      <h2>Version 1.6 (test build A): Smart monsters</h2>
+      <h2>Version 1.6 (test build B): Machine-learning monsters</h2>
       <ul>
-        <li>Monsters no longer know where you are. They only know where they last heard you. They go there, search around, and give up after a while, but they remember the area.</li>
-        <li>Standing still is silent, and sneaking is almost silent. Running and firecrackers are loud.</li>
-        <li>On Normal and Nightmare, monsters that hear you call the others, and they try to cut you off from different sides.</li>
-        <li>They learn your habits: if you hide a lot, they start checking the hiding spots near where they lost you.</li>
+        <li>The monsters have a brain that learned to hunt by itself, by playing thousands of practice rounds in a practice maze.</li>
+        <li>They have the same senses as before: they only know where they last heard you, never where you are. Standing still is silent, sneaking is almost silent, running is loud.</li>
+        <li>How they search, where they look and when they give up is all their own idea.</li>
       </ul>
       <h2>Version 1.5.1: Achievements go live</h2>
       <ul>
@@ -597,12 +596,11 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
-      <h2>Versão 1.6 (teste A): monstros espertos</h2>
+      <h2>Versão 1.6 (teste B): monstros com aprendizado de máquina</h2>
       <ul>
-        <li>Os monstros não sabem mais onde você está. Eles só sabem onde ouviram você por último. Eles vão até lá, procuram em volta e desistem depois de um tempo, mas lembram da área.</li>
-        <li>Ficar parado é silencioso, e andar agachado é quase silencioso. Correr e bombinhas fazem barulho.</li>
-        <li>No Normal e no Pesadelo, os monstros que ouvem você chamam os outros, e eles tentam cercar você por lados diferentes.</li>
-        <li>Eles aprendem seus hábitos: se você se esconde muito, eles começam a checar os esconderijos perto de onde perderam você.</li>
+        <li>Os monstros têm um cérebro que aprendeu a caçar sozinho, jogando milhares de rodadas num labirinto de treino.</li>
+        <li>Eles têm os mesmos sentidos de antes: só sabem onde ouviram você por último, nunca onde você está. Ficar parado é silencioso, andar agachado é quase silencioso, correr faz barulho.</li>
+        <li>Como eles procuram, onde olham e quando desistem é tudo ideia deles.</li>
       </ul>
       <h2>Versão 1.5.1: conquistas no ar</h2>
       <ul>
@@ -1090,6 +1088,8 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <div id="live" class="sr-only" aria-live="assertive" aria-atomic="true"></div>
 </div>
 
+<script src="js/mlbrain.js"></script>
+<script src="js/mlweights.js"></script>
 <script>
 "use strict";
 const VERSION='1.6';
@@ -2920,7 +2920,7 @@ function newLevel(){
   if(G.survOn){const c=cells.filter(([x,y])=>dist[y][x]>=3&&dist[y][x]<=bd-1);const p=pick(c.length?c:cells);G.mons.push({type:'survivor',x:p[0],y:p[1],name:pick(SURV_NAMES),fake:Math.random()<(lvn2>=8?0.45:0.3),greeted:false,helped:false});}
   if(G.mode==='story'&&G.ngp&&!lv.calm&&!lv.secret&&!lv.run){const far=cells.filter(([x,y])=>dist[y][x]>=Math.max(5,bd*0.5));for(let i=0;i<Math.min(3,G.ngp);i++){const p=pick(far.length?far:cells);G.mons.push({type:['hound','howler','wretch'][i%3],x:p[0],y:p[1],cool:4});}}
   G.visited=new Set([key(G.x,G.y)]); G.entBand=99; G.blackout=0; G.ev=null; G.cakeTold=false; G.partyTold=false; G.sinceScare=0; G.echoTold=false; G.noise=null; G.mothTold=false; G.wasDark=false;
-  G.wasWet=false; G.wallWriting=new Map(); G.writingAt=0; G.mark=null; G.markSought=false; G.caughtLevel=false; G.inHide=false; G.hideNear=false; G.watchFreeze=0; G.train=0; G.staticCall=0; G._pPos=null;
+  G.wasWet=false; G.wallWriting=new Map(); G.writingAt=0; G.mark=null; G.markSought=false; G.caughtLevel=false; G.inHide=false; G.hideNear=false; G.watchFreeze=0; G.train=0; G.staticCall=0; G._pPos=null; G.dSpot=undefined;
   G.spots=new Map(); {const n=lv.hides??(lv.calm||lv.run||lv.secret||lv.water?0:3);const sc=cells.filter(([x,y])=>dist[y][x]>=2&&!G.items.has(key(x,y))&&!isHazard(x,y)&&!isWater(x,y));for(let i=0;i<n&&sc.length;i++){const c=sc.splice(rand(sc.length),1)[0];G.spots.set(key(...c),i);}}
   G.state='play'; G.inv.light=G.inv.light&&G.inv.battery>0;
   updateHUD(); ambience(); levelMusic(); if(A.ctx)A.amb.gain.setTargetAtTime(0.7,now(),0.1);
@@ -3204,9 +3204,9 @@ function janitorClean(m){const k=key(m.x,m.y);let took='';
 // last HEARD you: they go there, search the area (and the hiding spots near
 // it if you like to hide), tell each other, and give up after a while.
 // Standing still and sneaking keep you quiet. They also learn your habits.
-const BRAIN='smart';
+const BRAIN=window.ML_WEIGHTS&&window.MLB?'ml':'smart';
 const SMARTD=()=>({easy:{search:3,share:0,spots:0,memory:6,flank:0},normal:{search:5,share:0.35,spots:0.5,memory:12,flank:0.5},nightmare:{search:7,share:0.85,spots:0.85,memory:20,flank:0.8}})[S.diff]||{search:5,share:0.5,spots:0.5,memory:12,flank:0.5};
-const smartOK=(m,T)=>BRAIN==='smart'&&T.hostile&&!T.npc&&!['chaser','moths','wallcrawler','deep'].includes(m.type);
+const smartOK=(m,T)=>(BRAIN==='smart'||BRAIN==='ml')&&T.hostile&&!T.npc&&!['chaser','moths','wallcrawler','deep'].includes(m.type);
 function habits(){if(!G.habit){G.habit=lsGet('br_habit',{t:0,hide:0,sprint:0});}return G.habit;}
 function habitTick(){const h=habits();h.t++;if(G.inHide)h.hide++;if(G.sprinted)h.sprint++;
   if(h.t>600){h.t=Math.round(h.t/2);h.hide=Math.round(h.hide/2);h.sprint=Math.round(h.sprint/2);}if(h.t%20===0)lsSet('br_habit',h);}
@@ -3226,7 +3226,7 @@ function shareHeard(m,dist){const sm=SMARTD();if(!sm.share)return;const md=bfs(m
     o.mem={x:tx,y:ty,age:0,search:0,goal:null};n++;}
   if(n&&dist[m.y][m.x]<=9){const {w}=relDirWords(m.x,m.y);brainSay('flank',t('Footsteps {w}, and more footsteps from another direction. They are splitting up to cut you off.',{w}));}}
 function smartHunt(m,T,d,heard,Df,dist){const sm=SMARTD();
-  if(heard){const fresh=!m.mem||m.mem.age>3;m.mem={x:G.x,y:G.y,age:0,search:0,goal:null};m.hot=null;if(fresh)shareHeard(m,dist);}
+  if(heard){const fresh=BRAIN==='smart'&&(!m.mem||m.mem.age>3);m.mem={x:G.x,y:G.y,age:0,search:0,goal:null};m.hot=null;if(fresh)shareHeard(m,dist);}
   const mem=m.mem;
   if(!mem){if(m.hot&&m.hot.turns-->0&&Math.random()<0.35){moveMon(m,stepToward(bfs(m.hot.x,m.hot.y),m.x,m.y));return;}if(Math.random()<0.5)wander(m);return;}
   mem.age++;
@@ -3238,6 +3238,22 @@ function smartHunt(m,T,d,heard,Df,dist){const sm=SMARTD();
   if(!mem.goal||(m.x===mem.goal.x&&m.y===mem.goal.y))mem.goal=searchGoal(m,mem);
   if(Math.random()<0.75)moveMon(m,stepToward(bfs(mem.goal.x,mem.goal.y),m.x,m.y));
   if(mem.search<=0){m.hot={x:mem.x,y:mem.y,turns:sm.memory};m.mem=null;if(d<=8&&!G.inHide){const {w}=relDirWords(m.x,m.y);brainSay('lost',t('The footsteps {w} wander off. It lost your trail, for now.',{w}));}}}
+// build B: the learned brain (js/mlbrain.js + js/mlweights.js) decides every move
+function spotDist(){if(!G.spots||!G.spots.size)return null;const D=[...Array(G.h)].map(()=>Array(G.w).fill(Infinity));const q=[];
+  for(const k of G.spots.keys()){const [x,y]=k.split(',').map(Number);D[y][x]=0;q.push([x,y]);}
+  for(let i=0;i<q.length;i++){const [x,y]=q[i];for(let d=0;d<4;d++){if(!isOpen(x,y,d))continue;const nx=x+DX[d],ny=y+DY[d];if(D[ny][nx]>D[y][x]+1){D[ny][nx]=D[y][x]+1;q.push([nx,ny]);}}}return D;}
+function mlHunt(m,T,d,heard,Df,dist){
+  if(heard)m.mem={x:G.x,y:G.y,age:0};
+  if(m.mem){m.mem.age++;if(m.mem.age>30){m.mem=null;if(d<=8&&!G.inHide){const {w}=relDirWords(m.x,m.y);brainSay('lost',t('The footsteps {w} wander off. It lost your trail, for now.',{w}));}}}
+  if(!m.lv||m.lv.length!==G.w*G.h)m.lv=new Array(G.w*G.h).fill(-1);
+  m.lv[m.y*G.w+m.x]=G.steps;
+  if(m.mem&&m.x===m.mem.x&&m.y===m.mem.y&&!m.mem.told&&d<=6&&!G.inHide){m.mem.told=true;const {w}=relDirWords(m.x,m.y);brainSay('search',t('The footsteps {w} slow down. It is searching the spot where it last heard you.',{w}));}
+  if(Math.random()>(m.mem?T.chase*Df.chase:0.5))return;
+  if(G.dSpot===undefined)G.dSpot=spotDist();
+  const o={cx:m.x,cy:m.y,w:G.w,t:G.steps,mem:m.mem,heard,dMem:m.mem?bfs(m.mem.x,m.mem.y):null,dSpot:G.dSpot,lastVisit:m.lv,deg:(x,y)=>[0,1,2,3].filter(k=>isOpen(x,y,k)).length};
+  const opts=[{nx:m.x,ny:m.y,stay:true}];for(let k=0;k<4;k++)if(isOpen(m.x,m.y,k))opts.push({nx:m.x+DX[k],ny:m.y+DY[k],d:k});
+  const ch=MLB.choose(window.ML_WEIGHTS,o,opts,Math.random);if(!ch.stay)moveMon(m,ch.d);}
+const brainHunt=(...a)=>BRAIN==='ml'?mlHunt(...a):smartHunt(...a);
 function monstersTurn(){
   const dist=bfs(G.x,G.y); const Df=DF(); let nd=null; const before=G.mons.map(m=>[m.x,m.y]);
   const still=!!(G._pPos&&G._pPos[0]===G.x&&G._pPos[1]===G.y&&!G.sprinted); if(BRAIN==='smart')habitTick();
@@ -3259,7 +3275,7 @@ function monstersTurn(){
     if(m.type==='lookalike'&&lookalikeTurn(m,d))continue;
     if(m.type==='janitor'&&G.steps%2){janitorClean(m);continue;}
     if(m.type==='static'&&G.staticCall>0){G.staticCall--;moveMon(m,stepToward(dist,m.x,m.y));if(Math.random()<0.6)moveMon(m,stepToward(bfs(G.x,G.y),m.x,m.y));continue;}
-    if(G.inHide&&T.hostile&&m.type!=='chaser'){if(smartOK(m,T)&&m.mem)smartHunt(m,T,d,false,Df,dist);else if(Math.random()<0.5)wander(m);continue;}
+    if(G.inHide&&T.hostile&&m.type!=='chaser'){if(smartOK(m,T)&&m.mem)brainHunt(m,T,d,false,Df,dist);else if(Math.random()<0.5)wander(m);continue;}
     if(m.type==='watcher'&&G.watchFreeze>0)continue;
     if(m.type==='mannequin'&&G.inv.light)continue;
     if(m.type==='clump'&&G.steps%2)continue;
@@ -3304,7 +3320,7 @@ function monstersTurn(){
       if(hunting&&d<=2&&(!m.gig||G.steps-m.gig>3)){m.gig=G.steps;const {w,pan}=relDirWords(m.x,m.y);setTimeout(()=>play(pick(['giggle_child','giggle_imp']),{pan,vol:0.55,muffle:0.15,rate:0.85+Math.random()*0.25}),700);
         G.extras.push({text:t('A quiet giggle, right next to you, {w}. Something is grinning in the dark.',{w})});if(Math.random()<0.5)continue;}}
     if(m.type==='moths')hunting=(G.inv.light||G.mothBait>0)&&d<=(G.mothBait>0?12:sense);
-    if(smartOK(m,T))smartHunt(m,T,d,hunting,Df,dist);
+    if(smartOK(m,T))brainHunt(m,T,d,hunting,Df,dist);
     else if(hunting){if(Math.random()<T.chase*Df.chase){moveMon(m,stepToward(dist,m.x,m.y));if(m.type==='hound'&&d>3&&Math.random()<0.3)moveMon(m,stepToward(bfs(G.x,G.y),m.x,m.y));}}
     else if(Math.random()<0.5)wander(m);
     if(m.type==='janitor')janitorClean(m);
