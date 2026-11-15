@@ -299,6 +299,8 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
         <li>Smart: monsters no longer know where you are. They only know where they last heard you. They go there, search, call each other to cut you off, and learn your habits, like where you like to hide.</li>
         <li>Learned: a brain that taught itself to hunt by playing thousands of practice rounds. Same senses as Smart, but how it searches is all its own idea.</li>
         <li>With Smart and Learned, standing still is silent, sneaking is almost silent, and running is loud. It works with every difficulty.</li>
+        <li>New creature: the Echo. It has no sound of its own. It copies your footsteps, your firecrackers and the creak of your hiding spot, from somewhere else, a moment too late. Listen for the delay. It lives in Endless mode and in the extra levels.</li>
+        <li>New footsteps: real recorded steps for carpet, concrete, tile, metal, wood, grass and snow, with many different steps for each, so walking never sounds the same twice. Your own steps are close and dry, so you can tell them apart from anything copying them.</li>
       </ul>
       <h2>Version 1.5.1: Achievements go live</h2>
       <ul>
@@ -607,6 +609,8 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
         <li>Esperto: os monstros não sabem mais onde você está. Eles só sabem onde ouviram você por último. Eles vão até lá, procuram, chamam uns aos outros para cercar você e aprendem seus hábitos, como onde você gosta de se esconder.</li>
         <li>Aprendido: um cérebro que aprendeu a caçar sozinho, jogando milhares de rodadas de treino. Os mesmos sentidos do Esperto, mas o jeito de procurar é ideia dele.</li>
         <li>No Esperto e no Aprendido, ficar parado é silencioso, andar agachado é quase silencioso e correr faz barulho. Funciona com todas as dificuldades.</li>
+        <li>Nova criatura: o Eco. Ele não tem som próprio. Ele copia seus passos, suas bombinhas e o rangido do seu esconderijo, de outro lugar, um instante atrasado. Preste atenção no atraso. Ele vive no modo infinito e nos níveis extras.</li>
+        <li>Passos novos: passos gravados de verdade para carpete, concreto, piso, metal, madeira, grama e neve, com vários passos diferentes para cada um, então andar nunca soa igual duas vezes. Seus próprios passos soam perto e secos, para você diferenciar de qualquer coisa que esteja copiando.</li>
       </ul>
       <h2>Versão 1.5.1: conquistas no ar</h2>
       <ul>
@@ -1227,6 +1231,10 @@ const PT={
  'You find a keycard! Now the exit door will open.':'Você encontra um cartão de acesso! Agora a porta de saída vai abrir.',
  'You find a cassette tape and press play.':'Você encontra uma fita cassete e aperta play.',
  'Your flashlight flickers and dies.':'Sua lanterna pisca e apaga.',
+ 'Somewhere {w}, footsteps copy yours, a moment too late. Listen closely. They are not yours.':'Em algum lugar {w}, passos copiam os seus, um instante atrasados. Escute com atenção. Não são seus.',
+ 'Breathing, {w}, perfectly in time with yours.':'Uma respiração, {w}, perfeitamente no ritmo da sua.',
+ 'Listen closely: somewhere {w}, footsteps copy yours, a moment too late. That is the Echo.':'Escute com atenção: em algum lugar {w}, passos copiam os seus, um instante atrasados. É o Eco.',
+ 'Your own footsteps stop right behind you. You turn around, and something is standing there with your shape. The Echo grabs you!':'Seus próprios passos param bem atrás de você. Você se vira, e tem algo parado ali com a sua forma. O Eco agarra você!',
  'Monster brain: Classic. The monsters you know.':'Cérebro dos monstros: Clássico. Os monstros que você conhece.',
  'Monster brain: Smart. They only know where they last heard you. They search, call each other, and learn your habits.':'Cérebro dos monstros: Esperto. Eles só sabem onde ouviram você por último. Eles procuram, chamam uns aos outros e aprendem seus hábitos.',
  'Monster brain: Learned. A brain that taught itself to hunt. Good luck.':'Cérebro dos monstros: Aprendido. Um cérebro que aprendeu a caçar sozinho. Boa sorte.',
@@ -1722,6 +1730,7 @@ const MT={
   wallcrawler:{name:'the Wall Crawler',sound:'scratching inside the walls',pt:{name:'o Rastejador das Paredes',sound:'arranhões dentro das paredes'},sfx:null,sense:7,chase:0.65,hostile:true},
   janitor:{name:'the Janitor',sound:'a squeaking cart and a wet mop',pt:{name:'o Zelador',sound:'um carrinho rangendo e um esfregão molhado'},sfx:null,sense:5,chase:0.5,hostile:true},
   static:{name:'the Static',sound:'a hiss of radio static that rises and falls like breathing',pt:{name:'a Estática',sound:'um chiado de estática de rádio que sobe e desce como uma respiração'},sfx:null,sense:4,chase:0.6,hostile:true},
+  echo:{name:'the Echo',sound:'your own footsteps, a moment too late',pt:{name:'o Eco',sound:'seus próprios passos, um instante atrasados'},sfx:null,sense:5,chase:0.55,hostile:true},
   chaser:{name:'something enormous',sound:'thundering footsteps',pt:{name:'algo enorme',sound:'passos estrondosos'},sfx:['growl4','attack','attack2'],sense:99,chase:0.72,hostile:true}
 };
 const MN=m=>LANG==='pt'?MT[m.type].pt.name:MT[m.type].name;
@@ -2022,7 +2031,8 @@ BEST.lookalike={en:['Something that folds itself up small and pretends to be wha
 BEST.wallcrawler={en:['Long fingers inside the walls, scratching along beside you.','It cannot reach the middle of a hallway. Keep moving. If you stand still or hide next to the wall it is in, it reaches through.'],pt:['Dedos compridos dentro das paredes, arranhando ao seu lado.','Ele não alcança o meio do corredor. Continue andando. Se você ficar parado ou se esconder perto da parede onde ele está, ele atravessa.']};
 BEST.janitor={en:['A faceless figure in grey overalls, pushing a squeaking cart, mopping the same floor forever.','It is slow, but it never stops. It cleans up whatever you leave behind: glow sticks, wind chimes and your mark.'],pt:['Uma figura sem rosto de macacão cinza, empurrando um carrinho que range, esfregando o mesmo chão para sempre.','Ele é lento, mas nunca para. Ele limpa tudo o que você deixa para trás: bastões de luz, sinos de vento e a sua marca.']};
 BEST.static={en:['A shape made of radio noise, drifting through the dark.','It is nearly deaf, but radio is like a scream to it. Every time you use your walkie-talkie, it comes straight for you.'],pt:['Uma forma feita de chiado de rádio, flutuando pelo escuro.','Ela é quase surda, mas rádio é como um grito para ela. Toda vez que você usa o walkie-talkie, ela vem direto até você.']};
-const BORDER=['trader','smiler','hound','howler','skin','clump','party','moths','watcher','deep','face','wretch','jester','librarian','chaser','mimic','host','survivor','patient','bellhop','frost','hallmon','mannequin','crawler','toon','glitch','lookalike','wallcrawler','janitor','static','marcus'];
+BEST.echo={en:['A shape that has no sound of its own. It only has yours.','It copies your footsteps, your firecrackers, even the creak of your hiding spot, a moment too late and a little bit wrong. Listen for the delay. Stand still, and it has nothing to copy.'],pt:['Uma forma que não tem som próprio. Ela só tem o seu.','Ela copia seus passos, suas bombinhas, até o rangido do seu esconderijo, um instante atrasada e um pouco errada. Preste atenção no atraso. Fique parado, e ela não tem nada para copiar.']};
+const BORDER=['echo','trader','smiler','hound','howler','skin','clump','party','moths','watcher','deep','face','wretch','jester','librarian','chaser','mimic','host','survivor','patient','bellhop','frost','hallmon','mannequin','crawler','toon','glitch','lookalike','wallcrawler','janitor','static','marcus'];
 function seeMon(type){if(!BEST[type])return;const seen=lsGet('br_seen',{});if(seen[type])return;seen[type]=1;lsSet('br_seen',seen);
   G.extras.push({text:t('New entry in your bestiary: {name}.',{name:bareName(type)})});
   if(BORDER.filter(x=>x!=='marcus').every(x=>seen[x]))unlock('bestiary');}
@@ -2103,7 +2113,24 @@ const rndPos=(up=0)=>{const a=Math.random()*Math.PI*2;return V3(Math.sin(a),up,-
 function sfx(fn,...args){if(!A.ctx)return;try{fn(...args);}catch(e){}}
 
 /* ---------- synthesized sounds ---------- */
+// recorded footsteps (www/audio/steps, CC0 recordings from OpenGameArt): several per floor, never the same one twice in a row
+const STEPN={carpet:14,concrete:12,grass:8,snow:8,wood:3}, STEPMAP={carpet:'carpet',concrete:'concrete',tile:'concrete',metal:'concrete',wood:'wood',grass:'grass',snow:'snow'};
+function loadSteps(){A.steps={};Object.entries(STEPN).forEach(([k,n])=>{A.steps[k]=[];for(let i=1;i<=n;i++)fetch('audio/steps/'+k+i+'.mp3').then(r=>r.arrayBuffer()).then(b=>new Promise((res,rej)=>A.ctx.decodeAudioData(b,res,rej))).then(buf=>A.steps[k].push(buf)).catch(()=>{});});}
+let lastStepBuf=null;
+function stepSample(surface,t,{pan=0,vol=1,muffle=0,dest,rate=1}={}){
+  const set=A.steps&&A.steps[STEPMAP[surface]||'concrete'];if(!set||!set.length)return false;
+  let i=rand(set.length);if(set.length>1&&set[i]===lastStepBuf)i=(i+1)%set.length;const b=set[i];lastStepBuf=b;
+  const src=A.ctx.createBufferSource();src.buffer=b;src.playbackRate.value=rate*(0.94+Math.random()*0.12);let node=src;
+  if(surface==='tile'){const f=filt('highshelf',2200);f.gain.value=7;node.connect(f);node=f;}
+  if(surface==='metal'){const f=filt('peaking',1800,3);f.gain.value=8;node.connect(f);node=f;}
+  const out=spot(pan,1,muffle,dest);const g=gainNode(vol*(0.85+Math.random()*0.3));node.connect(g).connect(out);src.start(t);
+  if(surface==='metal'){const o=osc('sine',880+rand(80),t,0.25);const og=gainNode(0);envelope(og,t,0.002,0.08*vol,0.22);o.connect(og).connect(out);}
+  return true;}
 function footstep(vol=1,muffle=0){const t=now(),st=isWater(G.x,G.y)?'water':L().step;
+  echoMimic('step');
+  if(st!=='water'&&A.steps){const gap=G.sprinted?0.19:G.sneak?0.42:0.29;const soft=G.sneak?0.4:1;let ok=true;
+    for(let i=0;i<2;i++)ok=stepSample(st,t+i*gap+(i?(Math.random()-0.5)*0.04:0),{pan:i?0.12:-0.12,vol:vol*soft*(st==='carpet'?1.15:0.9),muffle:muffle+(G.sneak?0.2:0),dest:A.fx,rate:G.sneak?0.93:G.sprinted?1.05:1})&&ok;
+    if(ok)return;}
   if(st==='grass'){for(let i=0;i<2;i++){const tt=t+i*0.3;const n=noise(tt,0.2);const g=gainNode(0);envelope(g,tt,0.02,0.4*vol*(G.sneak?0.35:1),0.15);n.connect(filt('bandpass',2500,0.6)).connect(g).connect(spot(i?0.15:-0.15,1,muffle));}return;}
   if(st==='snow'){for(let i=0;i<2;i++){const tt=t+i*0.32;const n=noise(tt,0.25);const g=gainNode(0);envelope(g,tt,0.01,0.55*vol*(G.sneak?0.5:1),0.2);n.connect(filt('lowpass',1800,0.7)).connect(g).connect(spot(i?0.15:-0.15,1,muffle));}return;}
   if(st==='water'){for(let i=0;i<2;i++){const tt=t+i*0.3;const n=noise(tt,0.4);const g=gainNode(0);envelope(g,tt,0.02,0.5*vol,0.3);n.connect(filt('bandpass',700+rand(300),0.8)).connect(g).connect(spot(i?0.2:-0.2,1,muffle));}return;}for(let i=0;i<2;i++){const tt=t+i*0.27;const out=spot(i?0.15:-0.15,(st==='carpet'?0.9:0.75)*vol*(G.sneak?0.35:1),muffle);
@@ -2186,11 +2213,22 @@ function winSound(){const t=now();[261.6,329.6,392,523.3,659.3].forEach((f,i)=>{
 
 /* ---------- recorded sounds (see credits) ---------- */
 const SFXF=['attack','attack2','scream','scream2','farscream','farscream2','growl1','growl2','growl3','growl4','howl','moan','ghost1','ghost2','ghost3','breath','breath2','heartfast','heartslow','weird','hound','hound2','impact','bigscream','screech','sting','riser','giggle','cackle','laughter','static','bubbles','giggle_child','giggle_imp','giggle_insane','giggle_phased','shush1','shush2','shush_long','js1','js2','js3','scream_demon','scream_ghost','screech_monster'];
-function loadAssets(){SFXF.forEach(n=>{fetch('audio/'+n+'.mp3').then(r=>r.arrayBuffer()).then(b=>new Promise((res,rej)=>A.ctx.decodeAudioData(b,res,rej))).then(buf=>{A.buf[n]=buf;}).catch(()=>{});});}
+function loadAssets(){loadSteps();SFXF.forEach(n=>{fetch('audio/'+n+'.mp3').then(r=>r.arrayBuffer()).then(b=>new Promise((res,rej)=>A.ctx.decodeAudioData(b,res,rej))).then(buf=>{A.buf[n]=buf;}).catch(()=>{});});}
 function play(name,{pan=0,vol=1,muffle=0,rate=1,dest,delay=0}={}){if(!A.ctx)return false;const b=A.buf[name];if(!b)return false;const src=A.ctx.createBufferSource();src.buffer=b;src.playbackRate.value=rate;src.connect(spot(pan,vol,muffle,dest));src.start(now()+delay);return true;}
 function shush(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const n=noise(t,1.8);const g=gainNode(0);g.gain.setValueAtTime(0.0001,t);g.gain.linearRampToValueAtTime(0.5,t+0.35);g.gain.setValueAtTime(0.5,t+1.1);g.gain.linearRampToValueAtTime(0.0001,t+1.7);n.connect(filt('bandpass',4200,1.2)).connect(g).connect(out);}
 function jingle(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);for(let i=0;i<9;i++){const tt=t+i*0.07+Math.random()*0.04;const f=2800+rand(1600);[1,2.4].forEach((m,k)=>{const o=osc('sine',f*m,tt,0.25);const g=gainNode(0);envelope(g,tt,0.002,k?0.04:0.12,0.2);o.connect(g).connect(out);});}}
 // every monster walks differently, so you can hear what is coming, and from where
+// the Echo copies your sounds from somewhere else, a moment too late and slightly wrong
+function echoMimic(kind){if(!A.ctx||G.state!=='play'||!G.mons)return;const m=G.mons.find(m=>m.type==='echo');if(!m||m.stuck>0)return;
+  const d=bfs(G.x,G.y)[m.y][m.x];if(d<3||d>10)return;
+  if(G.echoCool>0){G.echoCool--;return;}
+  if(Math.random()>(kind==='step'?0.35:0.6))return;G.echoCool=kind==='step'?1:3;
+  const {w,pan}=relDirWords(m.x,m.y);const far=clamp(d*0.07,0.1,0.6);const vol=clamp(1.1-d*0.08,0.3,0.9);
+  if(kind==='step'){const st=L().step;const t0=now()+0.38+Math.random()*0.2;const gap=(G.sprinted?0.19:G.sneak?0.42:0.29)+0.03;
+    for(let i=0;i<2;i++)stepSample(st,t0+i*gap,{pan,vol:vol*(G.sneak?0.5:1),muffle:far,rate:0.95});}
+  else if(kind==='bang')setTimeout(()=>{if(G.state==='play')sfx(bang,pan,clamp(1-d*0.06,0.3,0.8),far);},1200+Math.random()*900);
+  else if(kind==='creak')setTimeout(()=>{if(G.state==='play')sfx(creakAt,pan,vol);},900+Math.random()*700);
+  if(!G.echoTold){G.echoTold=true;seeMon('echo');G.extras.push({text:t('Somewhere {w}, footsteps copy yours, a moment too late. Listen closely. They are not yours.',{w})});}}
 function monStep(m,pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const ty=m.type;
   const thud=(tt,f,amp,len)=>{const o=osc('sine',f,tt,len+0.05);o.frequency.exponentialRampToValueAtTime(f*0.55,tt+len);const g=gainNode(0);envelope(g,tt,0.004,amp,len);o.connect(g).connect(out);const n=noise(tt,0.06);const ng=gainNode(0);envelope(ng,tt,0.002,amp*0.5,0.05);n.connect(filt('lowpass',600)).connect(ng).connect(out);};
   const tap=(tt,f,amp,len)=>{const n=noise(tt,len+0.02);const g=gainNode(0);envelope(g,tt,0.001,amp,len);n.connect(filt('bandpass',f,2.5)).connect(g).connect(out);};
@@ -2221,6 +2259,7 @@ function wallScratch(pan,vol,muffle){const t=now();const out=spot(pan,vol,Math.m
   const f=filt('bandpass',1800+rand(1400),3);f.frequency.setValueAtTime(1400+rand(800),tt);f.frequency.linearRampToValueAtTime(2600+rand(900),tt+0.08);n.connect(f).connect(g).connect(out);}}
 function mopSlap(pan,vol,muffle){const t=now();const out=spot(pan,vol,muffle);const n=noise(t,0.35);const g=gainNode(0);envelope(g,t,0.01,0.6,0.3);n.connect(filt('lowpass',700,0.8)).connect(g).connect(out);}
 function monSound(m,pan,vol,muffle){const T=MT[m.type];
+  if(m.type==='echo'){stepSample(L().step,now(),{pan,vol,muffle,rate:0.9});play('breath',{pan,vol:vol*0.5,muffle,rate:0.8,delay:0.4});return;}
   if(m.type==='lookalike'){if(m.disguised)return sfx(itemChime,pan,vol,muffle,true);}
   if(m.type==='wallcrawler')return sfx(wallScratch,pan,vol,muffle);
   if(m.type==='janitor'){sfx(squeak,pan,vol*0.7);setTimeout(()=>sfx(squeak,pan,vol*0.5),300);setTimeout(()=>sfx(mopSlap,pan,vol,muffle),650);return;}
@@ -3338,7 +3377,7 @@ function monstersTurn(){
   G._pPos=[G.x,G.y];
   if(G.noise&&G.noise.turns<=0)G.noise=null;
   // footsteps of whatever just moved nearby, nearest first
-  if(A.ctx&&!G.inHide){const d2=bfs(G.x,G.y);G.mons.map((m,i)=>({m,moved:before[i]&&(before[i][0]!==m.x||before[i][1]!==m.y),d:d2[m.y][m.x]})).filter(o=>o.moved&&o.d<=(has('keen')?9:7)&&o.d>0&&o.m.type!=='wallcrawler').sort((a,b)=>a.d-b.d).slice(0,2)
+  if(A.ctx&&!G.inHide){const d2=bfs(G.x,G.y);G.mons.map((m,i)=>({m,moved:before[i]&&(before[i][0]!==m.x||before[i][1]!==m.y),d:d2[m.y][m.x]})).filter(o=>o.moved&&o.d<=(has('keen')?9:7)&&o.d>0&&o.m.type!=='wallcrawler'&&o.m.type!=='echo').sort((a,b)=>a.d-b.d).slice(0,2)
     .forEach((o,k)=>{const {pan,behind}=relDirWords(o.m.x,o.m.y);setTimeout(()=>sfx(monStep,o.m,pan,clamp(1.05-o.d*0.13,0.12,1),clamp((o.d-1)*0.12+(behind?0.15:0),0,0.85)),380+k*260);});}
 }
 function caughtBy(m){seeMon(m.type);
@@ -3360,6 +3399,7 @@ function caughtBy(m){seeMon(m.type);
     wretch:'A Wretch tackles you, clawing and wheezing. Its eyes are completely empty!',librarian:'A long, cold finger presses against your lips. Shhh. Then its mouth opens wide, and it screams in your face!',
     lookalike:'The almond water in your hand turns warm, and soft, and grabs back. The Lookalike wraps itself around your arm!',wallcrawler:'Long grey fingers burst out of the wall and close around you! The Wall Crawler drags you against the plaster!',
     janitor:'A wet mop slaps across your face, and cold hands shove you into the cart. The Janitor is cleaning up!',static:'The Static pours into your ears, louder and louder, until it is the only thing in the world!',
+    echo:'Your own footsteps stop right behind you. You turn around, and something is standing there with your shape. The Echo grabs you!',
     jester:'The Jester pops up right in front of you. Ta-da! Its bells jingle as it grabs you, laughing!',mimic:'Someone you love smiles at you from the hallway. Then the smile keeps going, wider and wider, past their ears!'}[m.type];
   if(m.type==='party')setTimeout(()=>{sfx(hbTune,0,1);play('giggle_insane',{vol:0.6,rate:1.1,delay:3});},5600);
   return t('{how} You tear free and run blindly. You lose {n} sanity.',{how:how?t(how):t('{Name} grabs you!',{Name:cap(MN(m))}),n:hit})+(m.type==='party'?' '+t('Behind you, it starts singing happy birthday, slightly wrong.'):'');
@@ -3380,6 +3420,7 @@ function monsterCues(force){
     if(m.type==='wallcrawler'){const md=Math.abs(m.x-G.x)+Math.abs(m.y-G.y);const {w:cw,pan:cp}=relDirWords(m.x,m.y);
       if(md<=4){sfx(wallScratch,cp,clamp(1.1-md*0.18,0.2,1),clamp(0.45+md*0.08,0.45,0.85));txt.push(md<=1?t('Scratching right inside the wall beside you, {w}. Do not stand still!',{w:cw}):t('Scratching inside the walls, {w}.',{w:cw}));if(md<=1)setTimeout(()=>heart(true),900);}
       continue;}
+    if(m.type==='echo'){if(d<=2)txt.push(t('Breathing, {w}, perfectly in time with yours.',{w}));else if(force&&d<=8)txt.push(t('Listen closely: somewhere {w}, footsteps copy yours, a moment too late. That is the Echo.',{w}));continue;}
     if(m.type==='marcus'){if(d<=2)txt.push(t('Marcus is very close now, {w}. You can hear him breathing.',{w}));continue;}
     if(m.type==='trader'){
       if(!m.greeted&&d<=4){m.greeted=true;G.extras.push({label:t('Somewhere {w}, someone calls out cheerfully:',{w}),text:t('Hello there! Trading post is open! I take almond water, the only money that matters down here.'),opts:{v:voice2,pitch:0.9,rate:1},pos:pan});}
@@ -3874,7 +3915,7 @@ function throwCracker(r){
   let x=G.x,y=G.y,n=0; const d=abs(r); while(n<4&&isOpen(x,y,d)){x+=DX[d];y+=DY[d];n++;}
   if(n===0)return say(t('There is a wall {dir}. Throw it down an open path. {paths}',{dir:RELN(r),paths:pathsText()}));
   G.inv.fire--; G.noise={x,y,turns:5}; sfx(fuse); if(bumpStat('throws')>=10)unlock('boom');
-  const {pan}=relDirWords(x,y); setTimeout(()=>{sfx(bang,pan,clamp(1-n*0.15,0.3,1),n*0.1);play('impact',{pan,vol:clamp(0.5-n*0.08,0.15,0.5),rate:1.5,muffle:n*0.1});},900);
+  echoMimic('bang'); const {pan}=relDirWords(x,y); setTimeout(()=>{sfx(bang,pan,clamp(1-n*0.15,0.3,1),n*0.1);play('impact',{pan,vol:clamp(0.5-n*0.08,0.15,0.5),rate:1.5,muffle:n*0.1});},900);
   const nd0=bfs(x,y); const lured=G.mons.filter(m=>MT[m.type].hostile&&m.type!=='chaser'&&nd0[m.y][m.x]<=10);
   if(lured.length){const m=lured[0];setTimeout(()=>{if(G.state==='play'){const w=relDirWords(m.x,m.y);sfx(monSound,m,w.pan,0.6,0.3);}},2200);}
   G.steps++; drain(0.5); monstersTurn(); const parts=[]; checkCaught(parts); updateHUD();
@@ -4100,7 +4141,7 @@ const SPOTS={en:{school:['a row of lockers','a teacher’s desk','a janitor’s 
 function spotName(k){const a=L().amb;const list=SPOTS[LANG][a]||SPOTS[LANG].x;return list[G.spots.get(k)%list.length];}
 function enterHide(){
   if(G.ev&&G.ev.k==='coming')G.ev.safe=true;
-  G.inHide=true; G.hideNear=false; sfx(creak); play('breath',{vol:0.35,muffle:0.5});
+  G.inHide=true; G.hideNear=false; sfx(creak); echoMimic('creak'); play('breath',{vol:0.35,muffle:0.5});
   say(t('You squeeze into {spot} and keep perfectly still. Nothing can find you in here, unless it gets lucky. Say listen to hear what is outside, or move to climb out.',{spot:spotName(key(G.x,G.y))}));
 }
 function exitHide(){if(!G.inHide)return '';G.inHide=false;sfx(creak);return t('You climb out.');}
@@ -4175,6 +4216,7 @@ function endlessDef(depth){
   const def={...b,base,w:sz,h:Math.max(5,sz-1),mons:[...b.mons],items:{...b.items}};
   delete def.items.tape; delete def.items.flashlight; delete def.items.radio;
   for(let i=0;i<Math.floor(depth/4);i++)def.mons.push(pick(['howler','hound','smiler','party']));
+  if(depth>=3&&Math.random()<0.35)def.mons.push('echo');
   if(def.mons.some(m=>MT[m].hostile))def.calm=false;
   def.pt={...b.pt}; return def;
 }
@@ -4277,7 +4319,7 @@ function extraDef(n){
   const k=n-FIRSTX, sz=Math.min(9+Math.floor(k/2),16);
   const def={...b,base,w:sz,h:Math.max(7,sz-1),mons:[...b.mons],items:{...b.items},dark:Math.min(0.85,(b.dark||0)+0.03*k),final:false};
   delete def.items.tape; delete def.items.flashlight; delete def.items.radio;
-  const X=['howler','hound','smiler','party','wretch','clump'];for(let i=0;i<Math.min(4,1+Math.floor(k/4));i++)def.mons.push(X[(n+i)%X.length]); def.calm=false;
+  const X=['howler','hound','smiler','party','wretch','clump'];for(let i=0;i<Math.min(4,1+Math.floor(k/4));i++)def.mons.push(X[(n+i)%X.length]); if(k>=2&&n%3===0)def.mons.push('echo'); def.calm=false;
   const low=x=>x.replace(/^(The|O|A|Os|As) /,m=>m.toLowerCase()); const title=b.name.replace(/^[^,]*, /,''), tpt=b.pt.name.replace(/^[^,]*, /,'');
   def.name=`Level ${n}, ${title}`; def.short=String(n); def.music=['music15','music16','music17','music18','music19','music20','music21','music22','music23'][n%9];
   def.intro=`Level ${n}. It looks like ${low(title)}, but deeper, darker, and something here has been waiting for you. `+b.intro.slice(b.intro.indexOf('. ')+2);

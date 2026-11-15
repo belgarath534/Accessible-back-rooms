@@ -1,0 +1,7 @@
+Footstep recordings (all CC0 / public domain, from OpenGameArt.org), trimmed,
+normalized and converted for the game. Carpet steps are the concrete, stone
+and wood steps softened with filters.
+- "Footsteps" (subway, concrete): https://opengameart.org/content/footsteps-0
+- Fantozzi's footsteps (grass/sand, stone): https://opengameart.org/content/fantozzis-footsteps-grasssand-stone
+- 42 snow and gravel footsteps (Corsica_S, extracted by Iwan Gabovitch): https://opengameart.org/content/42-snow-and-gravel-footsteps
+- Different steps on wood, stone, leaves, gravel and mud: https://opengameart.org/content/different-steps-on-wood-stone-leaves-gravel-and-mud
