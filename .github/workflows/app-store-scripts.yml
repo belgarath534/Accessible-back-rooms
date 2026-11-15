@@ -1,0 +1,40 @@
+# App Store Connect jobs that need no Mac. Run by hand: Actions → App Store scripts.
+#   game-center-create: adds any new achievements and leaderboards from
+#                       tools/gamecenter/items.json (safe to run again)
+#   game-center-attach: attaches Game Center to the version waiting to be submitted
+name: App Store scripts
+
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: What to run
+        type: choice
+        options: [game-center-create, game-center-attach]
+        default: game-center-create
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: belgarath534/iOS-certificates
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: .certs
+          fetch-depth: 0
+      - name: Pick the working key
+        run: |
+          pip install --quiet pyjwt cryptography requests
+          python tools/signing/asc_env.py .certs
+      - name: Run
+        run: |
+          cd tools/gamecenter
+          case "${{ inputs.job }}" in
+            game-center-create) python -u create.py ;;
+            game-center-attach) python -u attach_version.py ;;
+          esac
