@@ -15,6 +15,10 @@ on:
         type: choice
         options: [build-and-game-center, build, game-center-only]
         default: build-and-game-center
+      testflight_note:
+        description: TestFlight "What to Test" note (blank = none)
+        type: string
+        default: ''
       key_id:
         description: App Store Connect key to use (blank = the first that works)
         type: string
@@ -142,6 +146,14 @@ jobs:
       - name: Remove the temporary certificate
         if: always() && env.SIGN_CERT_ID != ''
         run: /tmp/gcenv/bin/python -u tools/signing/temp_cert.py cleanup
+      - name: TestFlight note
+        if: inputs.what != 'game-center-only' && inputs.testflight_note != ''
+        env:
+          TESTFLIGHT_NOTE: ${{ inputs.testflight_note }}
+        run: |
+          export TF_VERSION=$(grep -m1 MARKETING_VERSION ios/App/App.xcodeproj/project.pbxproj | sed 's/[^0-9.]//g')
+          export TF_BUILD=$(( ${{ github.run_number }} + 100 ))
+          cd tools/gamecenter && /tmp/gcenv/bin/python -u testflight_note.py
       - name: Logs
         if: failure()
         uses: actions/upload-artifact@v4
