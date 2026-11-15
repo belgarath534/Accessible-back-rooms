@@ -118,7 +118,14 @@ def main():
         gc = call("POST", "/gameCenterDetails", {"data": {"type": "gameCenterDetails", "relationships": {"app": rel("apps", app_id)}}})["data"]
     gc_id = gc["id"]
 
-    have = {a["attributes"]["vendorIdentifier"]: a["id"] for a in all_pages(f"/gameCenterDetails/{gc_id}/gameCenterAchievements?limit=200")}
+    listed = all_pages(f"/gameCenterDetails/{gc_id}/gameCenterAchievements?limit=200")
+    have = {a["attributes"]["vendorIdentifier"]: a["id"] for a in listed}
+    pts = {a["attributes"]["vendorIdentifier"]: a["attributes"].get("points") for a in listed}
+    # points changed in items.json: lower ones first, so the 1000-point total is never exceeded
+    for a in sorted(items["achievements"], key=lambda a: a["points"] - (pts.get(a["id"]) or 0)):
+        if a["id"] in have and pts.get(a["id"]) is not None and pts[a["id"]] != a["points"]:
+            print(f"Points for {a['id']}: {pts[a['id']]} -> {a['points']}")
+            step(a["id"] + " points", lambda: call("PATCH", f"/gameCenterAchievements/{have[a['id']]}", {"data": {"type": "gameCenterAchievements", "id": have[a["id"]], "attributes": {"points": a["points"]}}}))
     print(f"Achievements already there: {len(have)}")
     for a in items["achievements"]:
         vid = a["id"]

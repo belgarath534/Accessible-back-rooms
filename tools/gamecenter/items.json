@@ -691,7 +691,7 @@
   },
   {
    "id": "br_outsmart",
-   "points": 20,
+   "points": 10,
    "hidden": false,
    "en": {
     "name": "Outsmarted",
@@ -700,6 +700,19 @@
    "pt": {
     "name": "Mais Esperto",
     "desc": "Escape de um nível com o cérebro de monstro Aprendido sem ser pego."
+   }
+  },
+  {
+   "id": "br_echo",
+   "points": 10,
+   "hidden": false,
+   "en": {
+    "name": "That Wasn’t Me",
+    "desc": "Escape a level with the Echo in it without being caught."
+   },
+   "pt": {
+    "name": "Não Fui Eu",
+    "desc": "Escape de um nível com o Eco sem ser pego."
    }
   }
  ],
