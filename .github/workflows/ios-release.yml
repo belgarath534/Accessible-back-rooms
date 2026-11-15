@@ -37,6 +37,7 @@ jobs:
           repository: belgarath534/iOS-certificates
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           path: .certs
+          fetch-depth: 0
       - name: Pick the working key
         run: |
           python3 -m venv /tmp/gcenv

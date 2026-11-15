@@ -11,7 +11,12 @@ issuer = os.environ.get("APP_STORE_CONNECT_ISSUER_ID", "").strip()
 if not issuer:
     sys.exit("Add the APP_STORE_CONNECT_ISSUER_ID secret first (App Store Connect > Users and Access > Integrations > Issuer ID).")
 want = os.environ.get("APP_STORE_CONNECT_KEY_IDENTIFIER", "").strip()
-keys = sorted(glob.glob(os.path.join(folder, "**", "AuthKey_*.p8"), recursive=True))
+import subprocess
+def added(path):  # newest key first: the time it was added to the private repository
+    out = subprocess.run(["git", "-C", folder, "log", "-1", "--format=%ct", "--", os.path.relpath(path, folder)],
+                         capture_output=True, text=True).stdout.strip()
+    return int(out or 0)
+keys = sorted(glob.glob(os.path.join(folder, "**", "AuthKey_*.p8"), recursive=True), key=added, reverse=True)
 if want:
     keys = [k for k in keys if want in os.path.basename(k)] or keys
 print("Keys found:", ", ".join(os.path.basename(k) for k in keys) or "none")
