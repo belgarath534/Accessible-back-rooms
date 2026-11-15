@@ -1,0 +1,110 @@
+# Builds Accessible Backrooms for iPhone, signs it and uploads it to App Store
+# Connect. Free on GitHub (no Codemagic). Run by hand: Actions → iOS release.
+# The App Store Connect API key (AuthKey_*.p8) is read from the private
+# repository belgarath534/iOS-certificates with the PRIVATE_REPO_TOKEN secret.
+# Secret needed: APP_STORE_CONNECT_ISSUER_ID.
+# Signing is Apple's cloud signing (Xcode with the API key), so no
+# certificate files are needed.
+name: iOS release
+
+on:
+  workflow_dispatch:
+    inputs:
+      what:
+        description: What to do
+        type: choice
+        options: [build-and-game-center, build, game-center-only]
+        default: build-and-game-center
+
+jobs:
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 90
+    env:
+      APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      WHATS_NEW_EN: "Game Center is here: all 53 achievements and three leaderboards are now live, for Endless mode depth, Hunter mode catches and your daily challenge streak. Achievements you already earned are sent when you sign in."
+      WHATS_NEW_PT: "O Game Center chegou: as 53 conquistas e três placares agora estão no ar, para profundidade no modo infinito, capturas no Modo Caçador e sequência do desafio diário. Conquistas que você já ganhou são enviadas quando você entra."
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch the App Store key from the private repository
+        uses: actions/checkout@v4
+        with:
+          repository: belgarath534/iOS-certificates
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: .certs
+      - name: Pick the working key
+        run: |
+          python3 -m venv /tmp/gcenv
+          /tmp/gcenv/bin/pip install --quiet pyjwt cryptography requests
+          /tmp/gcenv/bin/python tools/signing/asc_env.py .certs
+
+      - name: Game Center on the new version, and What's New
+        if: inputs.what != 'build'
+        run: cd tools/gamecenter && /tmp/gcenv/bin/python -u attach_version.py
+
+      - name: Pick the newest Xcode
+        if: inputs.what != 'game-center-only'
+        run: |
+          X=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+          sudo xcode-select -s "$X"
+          xcodebuild -version
+      - uses: actions/setup-node@v4
+        if: inputs.what != 'game-center-only'
+        with:
+          node-version: 20
+      - name: Install and sync
+        if: inputs.what != 'game-center-only'
+        run: |
+          npm install --legacy-peer-deps
+          npx cap sync ios
+      - name: Build number
+        if: inputs.what != 'game-center-only'
+        run: |
+          N=$(( ${{ github.run_number }} + 100 ))
+          sed -i '' "s/CURRENT_PROJECT_VERSION = [0-9]*;/CURRENT_PROJECT_VERSION = $N;/" ios/App/App.xcodeproj/project.pbxproj
+          grep -m1 MARKETING_VERSION ios/App/App.xcodeproj/project.pbxproj
+          echo "Build number $N"
+      - name: Archive
+        if: inputs.what != 'game-center-only'
+        run: |
+          xcodebuild archive \
+            -workspace ios/App/App.xcworkspace -scheme App -configuration Release \
+            -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$APP_STORE_CONNECT_PRIVATE_KEY" \
+            -authenticationKeyID "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
+            -authenticationKeyIssuerID "$APP_STORE_CONNECT_ISSUER_ID" \
+            DEVELOPMENT_TEAM="$APPLE_TEAM_ID" CODE_SIGN_STYLE=Automatic \
+            | tee "$RUNNER_TEMP/archive.log" | grep -E "error:|warning: .*(sign|provision)|ARCHIVE" || true
+          test -d "$RUNNER_TEMP/App.xcarchive" || { tail -60 "$RUNNER_TEMP/archive.log"; exit 1; }
+      - name: Sign and upload to App Store Connect
+        if: inputs.what != 'game-center-only'
+        run: |
+          cat > "$RUNNER_TEMP/export.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>teamID</key><string>$APPLE_TEAM_ID</string>
+            <key>manageAppVersionAndBuildNumber</key><false/>
+            <key>uploadSymbols</key><true/>
+          </dict></plist>
+          PLIST
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/export.plist" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$APP_STORE_CONNECT_PRIVATE_KEY" \
+            -authenticationKeyID "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
+            -authenticationKeyIssuerID "$APP_STORE_CONNECT_ISSUER_ID"
+          echo "Uploaded. Apple takes 5 to 30 minutes to process the build before it can be picked for the version."
+      - name: Logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-logs
+          path: ${{ runner.temp }}/*.log
+          if-no-files-found: ignore
