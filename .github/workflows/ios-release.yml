@@ -82,8 +82,10 @@ jobs:
             DEVELOPMENT_TEAM="$APPLE_TEAM_ID" CODE_SIGN_STYLE=Automatic \
             | tee "$RUNNER_TEMP/archive.log" | grep -E "error:|warning: .*(sign|provision)|ARCHIVE" || true
           test -d "$RUNNER_TEMP/App.xcarchive" || { tail -60 "$RUNNER_TEMP/archive.log"; exit 1; }
-      - name: Sign and upload to App Store Connect
+      - name: Sign and upload to App Store Connect (Apple cloud signing)
+        id: cloud
         if: inputs.what != 'game-center-only'
+        continue-on-error: true
         run: |
           cat > "$RUNNER_TEMP/export.plist" <<PLIST
           <?xml version="1.0" encoding="UTF-8"?>
@@ -106,6 +108,39 @@ jobs:
             -authenticationKeyID "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
             -authenticationKeyIssuerID "$APP_STORE_CONNECT_ISSUER_ID"
           echo "Uploaded. Apple takes 5 to 30 minutes to process the build before it can be picked for the version."
+      - name: Temporary signing certificate (when cloud signing is not allowed)
+        if: inputs.what != 'game-center-only' && steps.cloud.outcome == 'failure'
+        run: /tmp/gcenv/bin/python -u tools/signing/temp_cert.py create "$RUNNER_TEMP/sign"
+      - name: Sign and upload to App Store Connect (temporary certificate)
+        if: inputs.what != 'game-center-only' && steps.cloud.outcome == 'failure'
+        run: |
+          cat > "$RUNNER_TEMP/export-manual.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>signingStyle</key><string>manual</string>
+            <key>signingCertificate</key><string>Apple Distribution</string>
+            <key>teamID</key><string>$APPLE_TEAM_ID</string>
+            <key>provisioningProfiles</key><dict>
+              <key>com.accessible.backrooms</key><string>$SIGN_PROFILE_NAME</string>
+            </dict>
+            <key>manageAppVersionAndBuildNumber</key><false/>
+            <key>uploadSymbols</key><true/>
+          </dict></plist>
+          PLIST
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/export-manual.plist" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -authenticationKeyPath "$APP_STORE_CONNECT_PRIVATE_KEY" \
+            -authenticationKeyID "$APP_STORE_CONNECT_KEY_IDENTIFIER" \
+            -authenticationKeyIssuerID "$APP_STORE_CONNECT_ISSUER_ID"
+          echo "Uploaded. Apple takes 5 to 30 minutes to process the build before it can be picked for the version."
+      - name: Remove the temporary certificate
+        if: always() && env.SIGN_CERT_ID != ''
+        run: /tmp/gcenv/bin/python -u tools/signing/temp_cert.py cleanup
       - name: Logs
         if: failure()
         uses: actions/upload-artifact@v4
