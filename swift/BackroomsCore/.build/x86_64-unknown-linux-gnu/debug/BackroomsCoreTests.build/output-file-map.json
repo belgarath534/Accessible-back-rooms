@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/master.swiftdeps"
+  },
+  "/home/user/accessible-back-rooms/swift/BackroomsCore/Tests/BackroomsCoreTests/CoreTests.swift": {
+    "dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/CoreTests.d",
+    "object": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/CoreTests.swift.o",
+    "swiftmodule": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/CoreTests~partial.swiftmodule",
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/CoreTests.swiftdeps"
+  }
+}

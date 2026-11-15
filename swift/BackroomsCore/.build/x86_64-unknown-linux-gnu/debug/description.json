@@ -1,0 +1,797 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.xctest",
+      "packagePath" : "/home/user/accessible-back-rooms/swift/BackroomsCore",
+      "productName" : "BackroomsCorePackageTests"
+    }
+  ],
+  "copyCommands" : {
+    "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore_BackroomsCore.resources/Info.plist" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Info.plist"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore_BackroomsCore.resources/Info.plist"
+        }
+      ]
+    },
+    "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore_BackroomsCore.resources/gamedata.json" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Resources/gamedata.json"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore_BackroomsCore.resources/gamedata.json"
+        }
+      ]
+    }
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+    "BackroomsCorePackageDiscoveredTests"
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.BackroomsCore-x86_64-unknown-linux-gnu-debug.module" : {
+      "executable" : "/opt/swift/usr/bin/swiftc",
+      "fileList" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/sources",
+      "importPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Game.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/GameData.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Maze.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Random.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Text.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/DerivedSources/resource_bundle_accessor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-6A52383ED409C6A7.txt"
+        },
+        {
+          "kind" : "virtual",
+          "name" : "<BackroomsCore-x86_64-unknown-linux-gnu-debug.module-resources>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "BackroomsCore",
+      "moduleOutputPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCore.swiftmodule",
+      "objects" : [
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Game.swift.o",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/GameData.swift.o",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Maze.swift.o",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Random.swift.o",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Text.swift.o",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/resource_bundle_accessor.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-unknown-linux-gnu",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j4",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-g",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "backroomscore",
+        "-Xcc",
+        "-fno-omit-frame-pointer"
+      ],
+      "outputFileMapPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Game.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/GameData.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Maze.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Random.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Text.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/resource_bundle_accessor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCore.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Game.swift",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/GameData.swift",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Maze.swift",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Random.swift",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Text.swift",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/DerivedSources/resource_bundle_accessor.swift"
+      ],
+      "tempsPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.BackroomsCorePackageDiscoveredTests-x86_64-unknown-linux-gnu-debug.module" : {
+      "executable" : "/opt/swift/usr/bin/swiftc",
+      "fileList" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/sources",
+      "importPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/BackroomsCoreTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/all-discovered-tests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-6A52383ED409C6A7.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCoreTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "BackroomsCorePackageDiscoveredTests",
+      "moduleOutputPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCorePackageDiscoveredTests.swiftmodule",
+      "objects" : [
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/BackroomsCoreTests.swift.o",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/all-discovered-tests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-unknown-linux-gnu",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j4",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-g",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "backroomscore",
+        "-Xcc",
+        "-fno-omit-frame-pointer"
+      ],
+      "outputFileMapPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/BackroomsCoreTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/all-discovered-tests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCorePackageDiscoveredTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/BackroomsCoreTests.swift",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/all-discovered-tests.swift"
+      ],
+      "tempsPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.BackroomsCorePackageTests-x86_64-unknown-linux-gnu-debug.module" : {
+      "executable" : "/opt/swift/usr/bin/swiftc",
+      "fileList" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.build/sources",
+      "importPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-6A52383ED409C6A7.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCoreTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCorePackageDiscoveredTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "BackroomsCorePackageTests",
+      "moduleOutputPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCorePackageTests.swiftmodule",
+      "objects" : [
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-unknown-linux-gnu",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j4",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-g",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "backroomscore",
+        "-Xcc",
+        "-fno-omit-frame-pointer"
+      ],
+      "outputFileMapPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCorePackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.BackroomsCoreTests-x86_64-unknown-linux-gnu-debug.module" : {
+      "executable" : "/opt/swift/usr/bin/swiftc",
+      "fileList" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/sources",
+      "importPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Tests/BackroomsCoreTests/CoreTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-6A52383ED409C6A7.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCore.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "BackroomsCoreTests",
+      "moduleOutputPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCoreTests.swiftmodule",
+      "objects" : [
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/CoreTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "x86_64-unknown-linux-gnu",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-Xfrontend",
+        "-enable-cross-import-overlays",
+        "-j4",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-g",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "backroomscore",
+        "-Xcc",
+        "-fno-omit-frame-pointer"
+      ],
+      "outputFileMapPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/CoreTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCoreTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/home/user/accessible-back-rooms/swift/BackroomsCore/Tests/BackroomsCoreTests/CoreTests.swift"
+      ],
+      "tempsPath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "BackroomsCore" : [
+      "/opt/swift/usr/bin/swiftc",
+      "-module-name",
+      "BackroomsCore",
+      "-package-name",
+      "backroomscore",
+      "-incremental",
+      "-c",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Game.swift",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/GameData.swift",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Maze.swift",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Random.swift",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Text.swift",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/DerivedSources/resource_bundle_accessor.swift",
+      "-I",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "-target",
+      "x86_64-unknown-linux-gnu",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j4",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-g",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "backroomscore",
+      "-Xcc",
+      "-fno-omit-frame-pointer",
+      "-driver-use-frontend-path",
+      "/opt/swift/usr/bin/swiftc"
+    ],
+    "BackroomsCorePackageDiscoveredTests" : [
+      "/opt/swift/usr/bin/swiftc",
+      "-module-name",
+      "BackroomsCorePackageDiscoveredTests",
+      "-package-name",
+      "backroomscore",
+      "-incremental",
+      "-c",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/BackroomsCoreTests.swift",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/all-discovered-tests.swift",
+      "-I",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "-target",
+      "x86_64-unknown-linux-gnu",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j4",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-g",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "backroomscore",
+      "-Xcc",
+      "-fno-omit-frame-pointer",
+      "-driver-use-frontend-path",
+      "/opt/swift/usr/bin/swiftc"
+    ],
+    "BackroomsCorePackageTests" : [
+      "/opt/swift/usr/bin/swiftc",
+      "-module-name",
+      "BackroomsCorePackageTests",
+      "-package-name",
+      "backroomscore",
+      "-incremental",
+      "-c",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.derived/runner.swift",
+      "-I",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "-target",
+      "x86_64-unknown-linux-gnu",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j4",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-g",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "backroomscore",
+      "-Xcc",
+      "-fno-omit-frame-pointer",
+      "-driver-use-frontend-path",
+      "/opt/swift/usr/bin/swiftc"
+    ],
+    "BackroomsCoreTests" : [
+      "/opt/swift/usr/bin/swiftc",
+      "-module-name",
+      "BackroomsCoreTests",
+      "-package-name",
+      "backroomscore",
+      "-incremental",
+      "-c",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/Tests/BackroomsCoreTests/CoreTests.swift",
+      "-I",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules",
+      "-target",
+      "x86_64-unknown-linux-gnu",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-Xfrontend",
+      "-enable-cross-import-overlays",
+      "-j4",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-g",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "backroomscore",
+      "-Xcc",
+      "-fno-omit-frame-pointer",
+      "-driver-use-frontend-path",
+      "/opt/swift/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "BackroomsCore" : [
+
+    ],
+    "BackroomsCorePackageDiscoveredTests" : [
+      "BackroomsCoreTests",
+      "BackroomsCore"
+    ],
+    "BackroomsCorePackageTests" : [
+      "BackroomsCorePackageDiscoveredTests",
+      "BackroomsCoreTests",
+      "BackroomsCore"
+    ],
+    "BackroomsCoreTests" : [
+      "BackroomsCore"
+    ]
+  },
+  "testDiscoveryCommands" : {
+    "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/all-discovered-tests.swift" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/CoreTests.swift.o"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/BackroomsCoreTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/all-discovered-tests.swift"
+        }
+      ]
+    }
+  },
+  "testEntryPointCommands" : {
+    "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.derived/runner.swift" : {
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/Modules/BackroomsCorePackageDiscoveredTests.swiftmodule"
+        }
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "traitConfiguration" : {
+    "enableAllTraits" : false
+  },
+  "writeCommands" : {
+    "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Game.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/GameData.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Maze.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Random.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Text.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/DerivedSources/resource_bundle_accessor.swift"
+        }
+      ],
+      "outputFilePath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/sources"
+    },
+    "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/BackroomsCoreTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/all-discovered-tests.swift"
+        }
+      ],
+      "outputFilePath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/sources"
+    },
+    "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.build/sources"
+    },
+    "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/BackroomsCore.swiftmodule.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Game.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/GameData.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Maze.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Random.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Text.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/resource_bundle_accessor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/BackroomsCorePackageDiscoveredTests.swiftmodule.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/BackroomsCoreTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/all-discovered-tests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.build/BackroomsCorePackageTests.swiftmodule.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/BackroomsCoreTests.swiftmodule.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/CoreTests.swift.o"
+        }
+      ],
+      "outputFilePath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageTests.product/Objects.LinkFileList"
+    },
+    "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/home/user/accessible-back-rooms/swift/BackroomsCore/Tests/BackroomsCoreTests/CoreTests.swift"
+        }
+      ],
+      "outputFilePath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCoreTests.build/sources"
+    },
+    "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-6A52383ED409C6A7.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/opt/swift/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/swift-version-6A52383ED409C6A7.txt"
+    }
+  }
+}

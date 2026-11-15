@@ -1,0 +1,41 @@
+{
+  "": {
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/master.swiftdeps"
+  },
+  "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Game.swift": {
+    "dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Game.d",
+    "object": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Game.swift.o",
+    "swiftmodule": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Game~partial.swiftmodule",
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Game.swiftdeps"
+  },
+  "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/GameData.swift": {
+    "dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/GameData.d",
+    "object": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/GameData.swift.o",
+    "swiftmodule": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/GameData~partial.swiftmodule",
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/GameData.swiftdeps"
+  },
+  "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Maze.swift": {
+    "dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Maze.d",
+    "object": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Maze.swift.o",
+    "swiftmodule": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Maze~partial.swiftmodule",
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Maze.swiftdeps"
+  },
+  "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Random.swift": {
+    "dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Random.d",
+    "object": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Random.swift.o",
+    "swiftmodule": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Random~partial.swiftmodule",
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Random.swiftdeps"
+  },
+  "/home/user/accessible-back-rooms/swift/BackroomsCore/Sources/BackroomsCore/Text.swift": {
+    "dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Text.d",
+    "object": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Text.swift.o",
+    "swiftmodule": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Text~partial.swiftmodule",
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/Text.swiftdeps"
+  },
+  "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/DerivedSources/resource_bundle_accessor.swift": {
+    "dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/resource_bundle_accessor.d",
+    "object": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/resource_bundle_accessor.swift.o",
+    "swiftmodule": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/resource_bundle_accessor~partial.swiftmodule",
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCore.build/resource_bundle_accessor.swiftdeps"
+  }
+}

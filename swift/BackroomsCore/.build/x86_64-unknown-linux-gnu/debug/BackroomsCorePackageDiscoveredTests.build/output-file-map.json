@@ -1,0 +1,17 @@
+{
+  "": {
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/master.swiftdeps"
+  },
+  "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/BackroomsCoreTests.swift": {
+    "dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/BackroomsCoreTests.d",
+    "object": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/BackroomsCoreTests.swift.o",
+    "swiftmodule": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/BackroomsCoreTests~partial.swiftmodule",
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/BackroomsCoreTests.swiftdeps"
+  },
+  "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.derived/all-discovered-tests.swift": {
+    "dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/all-discovered-tests.d",
+    "object": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/all-discovered-tests.swift.o",
+    "swiftmodule": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/all-discovered-tests~partial.swiftmodule",
+    "swift-dependencies": "/home/user/accessible-back-rooms/swift/BackroomsCore/.build/x86_64-unknown-linux-gnu/debug/BackroomsCorePackageDiscoveredTests.build/all-discovered-tests.swiftdeps"
+  }
+}
