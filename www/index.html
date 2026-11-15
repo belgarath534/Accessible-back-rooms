@@ -3997,6 +3997,7 @@ function escapeAchievements(){
 function levelComplete(parts){
   sfx(noclip); const lv=L(); G.state='transition'; G.blackout=0; G.inv.keycard=false; updateHUD();
   if(!G.caughtLevel&&!lv.calm)unlock('untouchable');
+  if(!G.caughtLevel&&!lv.calm&&BRAIN_()==='ml'&&G.mons.some(m=>MT[m.type].hostile&&!MT[m.type].npc))unlock('outsmart');
   const exitText=LX('exitText');
   if(lv.amb==='hospital')unlock('hospital'); if(lv.amb==='hotel')unlock('hotel'); if(lv.amb==='frozen')unlock('frozen'); if(['school','mall','metro','motion','servers'].includes(lv.amb))unlock(lv.amb);
   if(G.mode==='daily')return dailyWin(parts);
@@ -4372,7 +4373,8 @@ const ACH=[
  {id:'daily7',en:['Seven Days','Finish the daily challenge seven days in a row.'],pt:['Sete Dias','Termine o desafio diário sete dias seguidos.']},
  {id:'bestiary',en:['Monster Hunter','Meet every creature in the Backrooms.'],pt:['Caçador de Monstros','Encontre todas as criaturas dos Backrooms.']},
  {id:'trader',en:['Haggler','Make three trades with the Trader.'],pt:['Pechincheiro','Faça três trocas com o Comerciante.']},
- {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']}
+ {id:'deep25',en:['No Way Out','Reach depth 25 in Endless mode.'],pt:['Sem Saída','Chegue à profundidade 25 no modo infinito.']},
+ {id:'outsmart',en:['Outsmarted','Escape a level with the Learned monster brain without being caught.'],pt:['Mais Esperto','Escape de um nível com o cérebro de monstro Aprendido sem ser pego.']}
 ];
 const ACHV=lsGet('br_ach',{}); const STATS=lsGet('br_stats',{});
 function bumpStat(k){STATS[k]=(STATS[k]||0)+1;lsSet('br_stats',STATS);return STATS[k];}
