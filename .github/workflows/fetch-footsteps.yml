@@ -1,0 +1,38 @@
+# One-time helper: downloads Kenney's free "Impact Sounds" pack (CC0, public
+# domain), converts the footstep recordings to small mp3 files for the game
+# (www/audio/steps/) and commits them to the branch it was run on.
+name: Fetch footstep sounds
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download and convert
+        run: |
+          set -e
+          sudo apt-get install -y -qq ffmpeg >/dev/null 2>&1 || true
+          curl -sL -o /tmp/k.zip https://codeload.github.com/Loppansson/kenney-impact-sounds-for-godot/zip/0dd04139bb9e1a3477afd4f26434efdc6d86aac5
+          mkdir -p /tmp/k && unzip -qo /tmp/k.zip -d /tmp/k
+          echo "Files in the pack:"; find /tmp/k -iname "*.ogg" -o -iname "*.wav" | sed 's|.*/||' | sort | tr '\n' ' '; echo
+          find /tmp/k -iname "*licen*" -exec cat {} \; | head -40
+          mkdir -p www/audio/steps
+          for f in $(find /tmp/k -iname "footstep*.ogg" -o -iname "footstep*.wav" | sort); do
+            n=$(basename "${f%.*}" | tr 'A-Z' 'a-z')
+            ffmpeg -loglevel error -y -i "$f" -ac 1 -ar 44100 -b:a 96k "www/audio/steps/$n.mp3"
+          done
+          lic=$(find /tmp/k -iname "license*" | head -1); [ -n "$lic" ] && cp "$lic" www/audio/steps/LICENSE-kenney.txt
+          ls -la www/audio/steps
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add www/audio/steps
+          git commit -m "Footstep recordings from Kenney Impact Sounds (CC0)" || echo "nothing new"
+          git push
