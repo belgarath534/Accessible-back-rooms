@@ -1,0 +1,34 @@
+# Attaches the newest processed iPhone build to the version waiting in App
+# Store Connect and submits it for App Review. Waits for Apple's processing.
+# Run by hand: Actions → iOS submit for review.
+name: iOS submit for review
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_number:
+        description: Build number (blank = newest)
+        type: string
+        default: ''
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      BUILD_NUMBER: ${{ inputs.build_number }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: belgarath534/iOS-certificates
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: .certs
+          fetch-depth: 0
+      - name: Pick the working key
+        run: |
+          pip install --quiet pyjwt cryptography requests
+          python tools/signing/asc_env.py .certs
+      - name: Attach the build and submit
+        run: cd tools/gamecenter && python -u submit_version.py
