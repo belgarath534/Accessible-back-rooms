@@ -15,6 +15,10 @@ on:
         type: choice
         options: [build-and-game-center, build, game-center-only]
         default: build-and-game-center
+      key_id:
+        description: App Store Connect key to use (blank = the first that works)
+        type: string
+        default: ''
 
 jobs:
   ios:
@@ -22,6 +26,7 @@ jobs:
     timeout-minutes: 90
     env:
       APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      APP_STORE_CONNECT_KEY_IDENTIFIER: ${{ inputs.key_id }}
       WHATS_NEW_EN: "Game Center is here: all 53 achievements and three leaderboards are now live, for Endless mode depth, Hunter mode catches and your daily challenge streak. Achievements you already earned are sent when you sign in."
       WHATS_NEW_PT: "O Game Center chegou: as 53 conquistas e três placares agora estão no ar, para profundidade no modo infinito, capturas no Modo Caçador e sequência do desafio diário. Conquistas que você já ganhou são enviadas quando você entra."
     steps:
