@@ -212,6 +212,8 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       <button class="choice" data-set="gfx" data-val="3d"><span data-l="en">3D</span><span data-l="pt">3D</span></button><button class="choice" data-set="gfx" data-val="classic"><span data-l="en">Classic</span><span data-l="pt">Clássico</span></button></div></div>
     <div class="setRow" role="group" aria-labelledby="sl7"><span class="lab" id="sl7"><span data-l="en">Difficulty</span><span data-l="pt">Dificuldade</span></span><div class="opts">
       <button class="choice" data-set="diff" data-val="easy"><span data-l="en">Easy</span><span data-l="pt">Fácil</span></button><button class="choice" data-set="diff" data-val="normal">Normal</button><button class="choice" data-set="diff" data-val="nightmare"><span data-l="en">Nightmare</span><span data-l="pt">Pesadelo</span></button></div></div>
+    <div class="setRow" role="group" aria-labelledby="sl9"><span class="lab" id="sl9"><span data-l="en">Monster brain</span><span data-l="pt">Cérebro dos monstros</span></span><div class="opts">
+      <button class="choice" data-set="brain" data-val="classic"><span data-l="en">Classic</span><span data-l="pt">Clássico</span></button><button class="choice" data-set="brain" data-val="smart"><span data-l="en">Smart</span><span data-l="pt">Esperto</span></button><button class="choice" data-set="brain" data-val="ml"><span data-l="en">Learned</span><span data-l="pt">Aprendido</span></button></div></div>
     <div class="stack">
       <button id="cloudSave"><span data-l="en">Back up to iCloud now</span><span data-l="pt">Fazer backup no iCloud agora</span></button>
       <button id="cloudLoad"><span data-l="en">Restore from iCloud</span><span data-l="pt">Restaurar do iCloud</span></button>
@@ -290,11 +292,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
   <section id="news" class="screen news" hidden aria-labelledby="newsTitle">
     <h1 id="newsTitle" tabindex="-1"><span data-l="en">What's new</span><span data-l="pt">Novidades</span></h1>
     <div data-l="en">
-      <h2>Version 1.6 (test build B): Machine-learning monsters</h2>
+      <h2>Version 1.6: The Monster Brain Update</h2>
       <ul>
-        <li>The monsters have a brain that learned to hunt by itself, by playing thousands of practice rounds in a practice maze.</li>
-        <li>They have the same senses as before: they only know where they last heard you, never where you are. Standing still is silent, sneaking is almost silent, running is loud.</li>
-        <li>How they search, where they look and when they give up is all their own idea.</li>
+        <li>New setting, Monster brain, in Settings. Choose how smart the monsters are.</li>
+        <li>Classic: the monsters you know. Nothing changes unless you pick something else.</li>
+        <li>Smart: monsters no longer know where you are. They only know where they last heard you. They go there, search, call each other to cut you off, and learn your habits, like where you like to hide.</li>
+        <li>Learned: a brain that taught itself to hunt by playing thousands of practice rounds. Same senses as Smart, but how it searches is all its own idea.</li>
+        <li>With Smart and Learned, standing still is silent, sneaking is almost silent, and running is loud. It works with every difficulty.</li>
       </ul>
       <h2>Version 1.5.1: Achievements go live</h2>
       <ul>
@@ -596,11 +600,13 @@ select,input[type=text]{font:inherit;padding:.6em;border-radius:10px;border:2px 
       </ul>
     </div>
     <div data-l="pt">
-      <h2>Versão 1.6 (teste B): monstros com aprendizado de máquina</h2>
+      <h2>Versão 1.6: a Atualização do Cérebro dos Monstros</h2>
       <ul>
-        <li>Os monstros têm um cérebro que aprendeu a caçar sozinho, jogando milhares de rodadas num labirinto de treino.</li>
-        <li>Eles têm os mesmos sentidos de antes: só sabem onde ouviram você por último, nunca onde você está. Ficar parado é silencioso, andar agachado é quase silencioso, correr faz barulho.</li>
-        <li>Como eles procuram, onde olham e quando desistem é tudo ideia deles.</li>
+        <li>Nova opção, Cérebro dos monstros, nas Configurações. Escolha o quanto os monstros são espertos.</li>
+        <li>Clássico: os monstros que você conhece. Nada muda se você não escolher outra opção.</li>
+        <li>Esperto: os monstros não sabem mais onde você está. Eles só sabem onde ouviram você por último. Eles vão até lá, procuram, chamam uns aos outros para cercar você e aprendem seus hábitos, como onde você gosta de se esconder.</li>
+        <li>Aprendido: um cérebro que aprendeu a caçar sozinho, jogando milhares de rodadas de treino. Os mesmos sentidos do Esperto, mas o jeito de procurar é ideia dele.</li>
+        <li>No Esperto e no Aprendido, ficar parado é silencioso, andar agachado é quase silencioso e correr faz barulho. Funciona com todas as dificuldades.</li>
       </ul>
       <h2>Versão 1.5.1: conquistas no ar</h2>
       <ul>
@@ -1221,6 +1227,9 @@ const PT={
  'You find a keycard! Now the exit door will open.':'Você encontra um cartão de acesso! Agora a porta de saída vai abrir.',
  'You find a cassette tape and press play.':'Você encontra uma fita cassete e aperta play.',
  'Your flashlight flickers and dies.':'Sua lanterna pisca e apaga.',
+ 'Monster brain: Classic. The monsters you know.':'Cérebro dos monstros: Clássico. Os monstros que você conhece.',
+ 'Monster brain: Smart. They only know where they last heard you. They search, call each other, and learn your habits.':'Cérebro dos monstros: Esperto. Eles só sabem onde ouviram você por último. Eles procuram, chamam uns aos outros e aprendem seus hábitos.',
+ 'Monster brain: Learned. A brain that taught itself to hunt. Good luck.':'Cérebro dos monstros: Aprendido. Um cérebro que aprendeu a caçar sozinho. Boa sorte.',
  'Footsteps {w}, and more footsteps from another direction. They are splitting up to cut you off.':'Passos {w}, e mais passos vindo de outra direção. Eles estão se separando para cercar você.',
  'The footsteps {w} slow down. It is searching the spot where it last heard you.':'Os passos {w} ficam mais lentos. Ele está vasculhando o lugar onde ouviu você por último.',
  'The footsteps {w} wander off. It lost your trail, for now.':'Os passos {w} se afastam. Ele perdeu seu rastro, por enquanto.',
@@ -1673,7 +1682,7 @@ function applyLang(){
 
 /* ============================== settings ============================== */
 const S={ voice:lsGet('br_voice',true), narr:lsGet('br_narr',true), vis:lsGet('br_vis',false), rate:lsGet('br_rate',1.1), music:lsGet('br_musicv',0.7),
-  fx:lsGet('br_fx',1), scares:lsGet('br_scares',true), gfx:lsGet('br_gfx','3d'), hard:false, vvol:lsGet('br_vvol',1), duck:lsGet('br_duck',true), diff:lsGet('br_diff','normal'), mic:false };
+  fx:lsGet('br_fx',1), scares:lsGet('br_scares',true), gfx:lsGet('br_gfx','3d'), hard:false, vvol:lsGet('br_vvol',1), duck:lsGet('br_duck',true), diff:lsGet('br_diff','normal'), brain:lsGet('br_brain','classic'), mic:false };
 const DIFFS={
   easy:{label:'Easy',drain:0.5,hit:18,scare:5,water:2,chase:0.7,idle:15000,sense:-1,moth:3},
   normal:{label:'Normal',drain:0.8,hit:25,scare:10,water:0,chase:1,idle:10000,sense:0,moth:5},
@@ -2820,7 +2829,7 @@ function openSetup(){
 function syncChoices(){
   $$('.choice').forEach(b=>{const k=b.dataset.set,v=b.dataset.val;let cur;
     if(k==='voice')cur=S.voice?'1':'0'; else if(k==='narr')cur=S.vis?'vis':S.narr?'1':'0'; else if(k==='scares')cur=S.scares?'1':'0';
-    else if(k==='music')cur=String(S.music); else if(k==='fx')cur=String(S.fx); else if(k==='diff')cur=S.diff; else if(k==='gfx')cur=S.gfx; else if(k==='hard')cur=S.hard?'1':'0'; else if(k==='vvol')cur=String(S.vvol); else if(k==='duck')cur=S.duck?'1':'0'; else if(k==='lang')cur=LANG;
+    else if(k==='music')cur=String(S.music); else if(k==='fx')cur=String(S.fx); else if(k==='diff')cur=S.diff; else if(k==='brain')cur=S.brain; else if(k==='gfx')cur=S.gfx; else if(k==='hard')cur=S.hard?'1':'0'; else if(k==='vvol')cur=String(S.vvol); else if(k==='duck')cur=S.duck?'1':'0'; else if(k==='lang')cur=LANG;
     b.setAttribute('aria-pressed',String(cur===v));});
   $('#rateVal').textContent=S.rate;
 }
@@ -2833,6 +2842,7 @@ function applySetting(k,v,quiet){
   if(k==='fx'){S.fx=+v;lsSet('br_fx',S.fx);if(A.ctx)A.fx.gain.setTargetAtTime(S.fx,now(),0.1);msg=t('Sound effects {v}.',{v:t({0.5:'low',0.75:'medium',1:'high'}[S.fx])});sfx(pickup);}
   if(k==='scares'){S.scares=v==='1';lsSet('br_scares',S.scares);msg=t(S.scares?'Jump scares on. Good luck.':'Jump scares off.');}
   if(k==='diff'){S.diff=v;lsSet('br_diff',v);msg=t('Difficulty: {d}.',{d:DL()});}
+  if(k==='brain'){S.brain=['classic','smart','ml'].includes(v)?v:'classic';lsSet('br_brain',S.brain);msg=t({classic:'Monster brain: Classic. The monsters you know.',smart:'Monster brain: Smart. They only know where they last heard you. They search, call each other, and learn your habits.',ml:'Monster brain: Learned. A brain that taught itself to hunt. Good luck.'}[S.brain]);}
   if(k==='vvol'){S.vvol=+v;lsSet('br_vvol',S.vvol);msg=t('Narrator volume {v}.',{v:t({0.6:'low',0.8:'medium',1:'high'}[S.vvol])});}
   if(k==='duck'){S.duck=v==='1';lsSet('br_duck',S.duck);msg=t(S.duck?'The music will get quieter while the narrator speaks.':'The music stays at the same volume while the narrator speaks.');}
   if(k==='hard'){S.hard=v==='1';msg=t(S.hard?'Hardcore. One life. No second chances.':'Normal. You will have checkpoints.');}
@@ -3204,9 +3214,9 @@ function janitorClean(m){const k=key(m.x,m.y);let took='';
 // last HEARD you: they go there, search the area (and the hiding spots near
 // it if you like to hide), tell each other, and give up after a while.
 // Standing still and sneaking keep you quiet. They also learn your habits.
-const BRAIN=window.ML_WEIGHTS&&window.MLB?'ml':'smart';
+const BRAIN_=()=>S.brain==='ml'&&window.ML_WEIGHTS&&window.MLB?'ml':S.brain==='smart'?'smart':'classic';
 const SMARTD=()=>({easy:{search:3,share:0,spots:0,memory:6,flank:0},normal:{search:5,share:0.35,spots:0.5,memory:12,flank:0.5},nightmare:{search:7,share:0.85,spots:0.85,memory:20,flank:0.8}})[S.diff]||{search:5,share:0.5,spots:0.5,memory:12,flank:0.5};
-const smartOK=(m,T)=>(BRAIN==='smart'||BRAIN==='ml')&&T.hostile&&!T.npc&&!['chaser','moths','wallcrawler','deep'].includes(m.type);
+const smartOK=(m,T)=>(BRAIN_()==='smart'||BRAIN_()==='ml')&&T.hostile&&!T.npc&&!['chaser','moths','wallcrawler','deep'].includes(m.type);
 function habits(){if(!G.habit){G.habit=lsGet('br_habit',{t:0,hide:0,sprint:0});}return G.habit;}
 function habitTick(){const h=habits();h.t++;if(G.inHide)h.hide++;if(G.sprinted)h.sprint++;
   if(h.t>600){h.t=Math.round(h.t/2);h.hide=Math.round(h.hide/2);h.sprint=Math.round(h.sprint/2);}if(h.t%20===0)lsSet('br_habit',h);}
@@ -3226,7 +3236,7 @@ function shareHeard(m,dist){const sm=SMARTD();if(!sm.share)return;const md=bfs(m
     o.mem={x:tx,y:ty,age:0,search:0,goal:null};n++;}
   if(n&&dist[m.y][m.x]<=9){const {w}=relDirWords(m.x,m.y);brainSay('flank',t('Footsteps {w}, and more footsteps from another direction. They are splitting up to cut you off.',{w}));}}
 function smartHunt(m,T,d,heard,Df,dist){const sm=SMARTD();
-  if(heard){const fresh=BRAIN==='smart'&&(!m.mem||m.mem.age>3);m.mem={x:G.x,y:G.y,age:0,search:0,goal:null};m.hot=null;if(fresh)shareHeard(m,dist);}
+  if(heard){const fresh=BRAIN_()==='smart'&&(!m.mem||m.mem.age>3);m.mem={x:G.x,y:G.y,age:0,search:0,goal:null};m.hot=null;if(fresh)shareHeard(m,dist);}
   const mem=m.mem;
   if(!mem){if(m.hot&&m.hot.turns-->0&&Math.random()<0.35){moveMon(m,stepToward(bfs(m.hot.x,m.hot.y),m.x,m.y));return;}if(Math.random()<0.5)wander(m);return;}
   mem.age++;
@@ -3253,10 +3263,10 @@ function mlHunt(m,T,d,heard,Df,dist){
   const o={cx:m.x,cy:m.y,w:G.w,t:G.steps,mem:m.mem,heard,dMem:m.mem?bfs(m.mem.x,m.mem.y):null,dSpot:G.dSpot,lastVisit:m.lv,deg:(x,y)=>[0,1,2,3].filter(k=>isOpen(x,y,k)).length};
   const opts=[{nx:m.x,ny:m.y,stay:true}];for(let k=0;k<4;k++)if(isOpen(m.x,m.y,k))opts.push({nx:m.x+DX[k],ny:m.y+DY[k],d:k});
   const ch=MLB.choose(window.ML_WEIGHTS,o,opts,Math.random);if(!ch.stay)moveMon(m,ch.d);}
-const brainHunt=(...a)=>BRAIN==='ml'?mlHunt(...a):smartHunt(...a);
+const brainHunt=(...a)=>BRAIN_()==='ml'?mlHunt(...a):smartHunt(...a);
 function monstersTurn(){
   const dist=bfs(G.x,G.y); const Df=DF(); let nd=null; const before=G.mons.map(m=>[m.x,m.y]);
-  const still=!!(G._pPos&&G._pPos[0]===G.x&&G._pPos[1]===G.y&&!G.sprinted); if(BRAIN==='smart')habitTick();
+  const still=!!(G._pPos&&G._pPos[0]===G.x&&G._pPos[1]===G.y&&!G.sprinted); if(BRAIN_()==='smart')habitTick();
   if(G.noise){nd=bfs(G.noise.x,G.noise.y);G.noise.turns--;}
   if(G.alert>0)G.alert--;
   const xamb=L().amb;
@@ -3281,7 +3291,7 @@ function monstersTurn(){
     if(m.type==='clump'&&G.steps%2)continue;
     if(m.type==='deep'){if(isWater(G.x,G.y)){const wd=bfs(G.x,G.y,G.wet);if(wd[m.y][m.x]<=T.sense+DF().sense&&Math.random()<T.chase*Df.chase){moveMon(m,stepToward(wd,m.x,m.y));continue;}}if(Math.random()<0.5)wander(m);continue;}
     if(nd&&T.hostile&&m.type!=='chaser'&&nd[m.y][m.x]<=10&&nd[m.y][m.x]>0){if(Math.random()<0.95)moveMon(m,stepToward(nd,m.x,m.y));if(smartOK(m,T))m.mem={x:G.noise.x,y:G.noise.y,age:0,search:0,goal:null};continue;}
-    let sense=T.sense+Df.sense+(G.mode==='story'&&G.ngp?1:0)+(G.mode==='daily'&&L().twist===3?2:0); if(G.sneak)sense=Math.min(sense,2); if(G.sprinted)sense+=3+(BRAIN==='smart'&&sprintsALot()?1:0); if(G.alert>0)sense+=3; if(BRAIN==='smart'&&smartOK(m,T)){if(G.sneak)sense=Math.min(sense,1);if(still)sense=0;}
+    let sense=T.sense+Df.sense+(G.mode==='story'&&G.ngp?1:0)+(G.mode==='daily'&&L().twist===3?2:0); if(G.sneak)sense=Math.min(sense,2); if(G.sprinted)sense+=3+(BRAIN_()==='smart'&&sprintsALot()?1:0); if(G.alert>0)sense+=3; if(smartOK(m,T)){if(G.sneak)sense=Math.min(sense,1);if(still)sense=0;}
     if(m.type==='librarian')sense=G.sneak?1:G.sprinted?14:T.sense+Df.sense;
     if(m.type==='frost')sense=T.sense+Df.sense+(G.sprinted?3:0);
     if(m.type==='hallmon'&&G.sprinted)sense+=8;
