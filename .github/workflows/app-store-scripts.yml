@@ -12,6 +12,18 @@ on:
         type: choice
         options: [game-center-create, game-center-attach]
         default: game-center-create
+      version:
+        description: Version for game-center-attach (made if it does not exist yet)
+        type: string
+        default: ''
+      whats_new_en:
+        description: What's New, English (blank = leave as is)
+        type: string
+        default: ''
+      whats_new_pt:
+        description: What's New, Portuguese (blank = leave as is)
+        type: string
+        default: ''
 
 jobs:
   run:
@@ -19,6 +31,9 @@ jobs:
     timeout-minutes: 40
     env:
       APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      GC_VERSION: ${{ inputs.version }}
+      WHATS_NEW_EN: ${{ inputs.whats_new_en }}
+      WHATS_NEW_PT: ${{ inputs.whats_new_pt }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4

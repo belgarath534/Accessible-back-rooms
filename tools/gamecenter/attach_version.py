@@ -26,6 +26,11 @@ def main():
     editable = [v for v in versions if v["attributes"]["appStoreState"] in
                 ("PREPARE_FOR_SUBMISSION", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED", "INVALID_BINARY")]
     pick = [v for v in (versions if want else editable) if not want or v["attributes"]["versionString"] == want]
+    if not pick and want and not any(v["attributes"]["versionString"] == want for v in versions):
+        print("Creating version", want, "in App Store Connect")
+        made = call("POST", "/appStoreVersions", {"data": {"type": "appStoreVersions", "attributes": {"platform": "IOS", "versionString": want},
+                    "relationships": {"app": rel("apps", app_id)}}})["data"]
+        pick = [made]
     if not pick:
         sys.exit(f"No editable version found (asked for: {want or 'any'}). Versions: " +
                  ", ".join(f"{v['attributes']['versionString']} {v['attributes']['appStoreState']}" for v in versions[:8]))
