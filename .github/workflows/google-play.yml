@@ -13,7 +13,7 @@ on:
       job:
         description: Which job
         type: choice
-        options: [playgames, playgames-cleanup, playgames-inspect, playgames-delete-achievements, playgames-fetch-ids, listing]
+        options: [playgames, playgames-cleanup, playgames-inspect, playgames-delete-achievements, playgames-fetch-ids, playgames-add-new, listing]
         default: playgames
 
 jobs:
@@ -39,6 +39,7 @@ jobs:
             playgames-inspect) cd tools/playgames && python -u pg_inspect.py ;;
             playgames-delete-achievements) cd tools/playgames && python -u delete_achievements.py ;;
             playgames-fetch-ids) cd tools/playgames && python -u fetch_ids.py ;;
+            playgames-add-new) cd tools/playgames && python -u add_new.py ;;
             *) python -u tools/playgames/create.py | tee playgames.log ;;
           esac
       - uses: actions/upload-artifact@v4

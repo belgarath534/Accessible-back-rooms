@@ -688,6 +688,32 @@
     "name": "Nem um Pio",
     "desc": "Vença uma caçada como o Cão ou o Sósia sem o andarilho ouvir você."
    }
+  },
+  {
+   "id": "br_outsmart",
+   "points": 10,
+   "hidden": false,
+   "en": {
+    "name": "Outsmarted",
+    "desc": "Escape a level with the Learned monster brain without being caught."
+   },
+   "pt": {
+    "name": "Mais Esperto",
+    "desc": "Escape de um nível com o cérebro de monstro Aprendido sem ser pego."
+   }
+  },
+  {
+   "id": "br_echo",
+   "points": 10,
+   "hidden": false,
+   "en": {
+    "name": "That Wasn’t Me",
+    "desc": "Escape a level with the Echo in it without being caught."
+   },
+   "pt": {
+    "name": "Não Fui Eu",
+    "desc": "Escape de um nível com o Eco sem ser pego."
+   }
   }
  ],
  "leaderboards": [
