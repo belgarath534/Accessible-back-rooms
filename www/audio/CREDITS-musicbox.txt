@@ -1,0 +1,3 @@
+Music box songs (musicbox_waltz.mp3 = "Spooky Waltz", musicbox_sad.mp3 = "Sad Tune")
+by Aureolus_Omicron, "4 Music Box Tracks", CC0 (public domain):
+https://opengameart.org/content/4-music-box-tracks
